@@ -34,12 +34,25 @@ const readStored = (key, fallback) => {
 };
 const writeStored = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
+function setMobileMenuOpen(isOpen) {
+  const toggle = $("mobile-menu-toggle");
+  $("landing-nav").classList.toggle("is-open", isOpen);
+  toggle.setAttribute("aria-expanded", String(isOpen));
+  toggle.setAttribute("aria-label", isOpen ? "Tutup menu navigasi" : "Buka menu navigasi");
+}
+
+function closeMobileMenu() {
+  setMobileMenuOpen(false);
+}
+
 function showScreen(screenId) {
   if (screenId !== "reviews-view" && screenId !== "landing-view" && reviewRefreshId !== null) {
     clearInterval(reviewRefreshId);
     reviewRefreshId = null;
   }
+  closeMobileMenu();
   $("landing-nav").classList.toggle("hidden", screenId !== "landing-view" || Boolean(currentUser()));
+  $("mobile-menu-toggle").classList.toggle("hidden", screenId !== "landing-view" || Boolean(currentUser()));
   screens.forEach((id) => $(id).classList.toggle("hidden", id !== screenId));
 }
 
@@ -540,6 +553,13 @@ async function restoreUserSession() {
 
 function initialize() {
   syncHeader();
+  $("mobile-menu-toggle").addEventListener("click", () => {
+    setMobileMenuOpen($("mobile-menu-toggle").getAttribute("aria-expanded") !== "true");
+  });
+  $("landing-nav").querySelectorAll("a, button").forEach((item) => item.addEventListener("click", closeMobileMenu));
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeMobileMenu();
+  });
   $("start-test-button").addEventListener("click", showLogin);
   $("nav-start-test-button").addEventListener("click", showLogin);
   $("back-to-landing-button").addEventListener("click", showLanding);
