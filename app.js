@@ -2,13 +2,14 @@ const STORAGE = {
   users: "ruangskd.users",
   currentUser: "ruangskd.currentUser",
   history: "ruangskd.history",
-  questionRotation: "ruangskd.questionRotation"
+  questionRotation: "ruangskd.questionRotation",
+  reviews: "ruangskd.reviews"
 };
 const QUESTIONS_PER_SESSION = 10;
 const SESSION_SECONDS = 12 * 60;
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 const LEVEL_LABELS = { mudah: "Mudah", menengah: "Menengah", sulit: "Sulit" };
-const screens = ["auth-view", "dashboard-view", "quiz-view", "result-view"];
+const screens = ["auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view"];
 
 let selectedLevel = "mudah";
 let sessionQuestions = [];
@@ -37,6 +38,12 @@ function showScreen(screenId) {
 
 function currentUser() {
   return localStorage.getItem(STORAGE.currentUser);
+}
+
+function accountDisplayName(email) {
+  const users = readStored(STORAGE.users, {});
+  const user = users && users[email];
+  return user && typeof user.name === "string" && user.name.trim() ? user.name.trim() : email.split("@")[0];
 }
 
 function syncHeader() {
@@ -118,6 +125,15 @@ function showDashboard() {
   showScreen("dashboard-view");
 }
 
+function showReviews() {
+  if (!currentUser()) {
+    showScreen("auth-view");
+    return;
+  }
+  renderReviews();
+  showScreen("reviews-view");
+}
+
 function renderHistory() {
   const history = readStored(STORAGE.history, []).filter((item) => item.email === currentUser()).slice(0, 4);
   const list = $("history-list");
@@ -128,6 +144,77 @@ function renderHistory() {
   list.innerHTML = history.map((item) => `
     <div class="history-item"><span>${escapeHtml(LEVEL_LABELS[item.level] || item.level)} · ${escapeHtml(item.date)} · ${item.correct}/10 benar</span><strong>${item.score}</strong></div>
   `).join("");
+}
+
+function renderReviews() {
+  const savedReviews = readStored(STORAGE.reviews, []);
+  const reviews = Array.isArray(savedReviews) ? savedReviews
+    .filter((review) => review && typeof review.username === "string" && typeof review.comment === "string"
+      && Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5)
+    .sort((first, second) => second.createdAt - first.createdAt) : [];
+  $("community-review-count").textContent = `${reviews.length} ulasan`;
+  if (!reviews.length) {
+    $("reviews-list").innerHTML = '<p class="empty-state">Belum ada ulasan. Jadilah yang pertama berbagi pengalaman.</p>';
+    return;
+  }
+  $("reviews-list").innerHTML = reviews.map((review) => `
+    <article class="user-review">
+      <div class="user-review-heading">
+        <div><strong class="user-review-name">${escapeHtml(review.username)}</strong><span class="user-review-date">${escapeHtml(review.date)}</span></div>
+        <span class="user-review-stars" aria-label="${review.rating} dari 5 bintang">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</span>
+      </div>
+      <p>${escapeHtml(review.comment)}</p>
+    </article>
+  `).join("");
+}
+
+function updateStarRating(rating) {
+  $("review-form").querySelectorAll(".star-rating label").forEach((label, index) => {
+    label.classList.toggle("selected", index < rating);
+  });
+}
+
+function handleReviewSubmit(event) {
+  event.preventDefault();
+  const message = $("review-message");
+  message.classList.remove("success");
+  message.textContent = "";
+  const email = currentUser();
+  if (!email) {
+    message.textContent = "Silakan masuk untuk mengirim ulasan.";
+    return;
+  }
+  const selectedRating = document.querySelector('input[name="review-rating"]:checked');
+  const rating = selectedRating ? Number(selectedRating.value) : 0;
+  const comment = $("review-comment").value.trim();
+  if (!Number.isInteger(rating) || rating < 1 || rating > 5 || !comment) {
+    message.textContent = "Pilih rating dan isi komentar sebelum mengirim.";
+    return;
+  }
+  const savedReviews = readStored(STORAGE.reviews, []);
+  if (!Array.isArray(savedReviews)) {
+    message.textContent = "Data ulasan tidak valid dan tidak dapat diperbarui.";
+    return;
+  }
+  const review = {
+    username: accountDisplayName(email),
+    rating,
+    comment,
+    date: new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date()),
+    createdAt: Date.now()
+  };
+  try {
+    writeStored(STORAGE.reviews, [review, ...savedReviews]);
+  } catch (error) {
+    console.error("Tidak dapat menyimpan ulasan:", error);
+    message.textContent = "Ulasan gagal disimpan. Periksa ruang penyimpanan browser.";
+    return;
+  }
+  $("review-form").reset();
+  updateStarRating(0);
+  message.textContent = "Terima kasih, ulasanmu berhasil dikirim.";
+  message.classList.add("success");
+  renderReviews();
 }
 
 function escapeHtml(value) {
@@ -309,6 +396,12 @@ function initialize() {
     });
   });
   $("start-button").addEventListener("click", beginQuiz);
+  $("open-reviews-button").addEventListener("click", showReviews);
+  $("reviews-home-button").addEventListener("click", showDashboard);
+  $("review-form").addEventListener("submit", handleReviewSubmit);
+  $("review-form").querySelectorAll('input[name="review-rating"]').forEach((input) => {
+    input.addEventListener("change", () => updateStarRating(Number(input.value)));
+  });
   $("next-button").addEventListener("click", () => { currentQuestion += 1; renderQuestion(); });
   $("previous-button").addEventListener("click", () => { currentQuestion = Math.max(0, currentQuestion - 1); renderQuestion(); });
   $("submit-button").addEventListener("click", () => {

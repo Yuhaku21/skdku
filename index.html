@@ -103,8 +103,45 @@
             </aside>
           </div>
           <div class="history-card">
-            <div class="section-heading compact"><div><span class="section-kicker">RIWAYAT</span><h2>Latihan terakhirmu</h2></div></div>
+            <div class="section-heading compact"><div><span class="section-kicker">RIWAYAT</span><h2>Latihan terakhirmu</h2></div><button class="button button-outline" id="open-reviews-button" type="button">Beri ulasan</button></div>
             <div id="history-list" class="history-list"><p class="empty-state">Belum ada sesi latihan. Setiap langkah kecil tetap berarti.</p></div>
+          </div>
+        </section>
+
+        <section class="reviews-view hidden" id="reviews-view">
+          <div class="reviews-hero">
+            <div>
+              <div class="eyebrow"><span class="eyebrow-dot"></span> CERITAKAN PENGALAMANMU</div>
+              <h1>Ulasan pengguna</h1>
+              <p class="muted">Bagikan penilaian dan masukanmu tentang latihan di Ruang SKD.</p>
+            </div>
+            <button class="button button-outline" id="reviews-home-button" type="button">← Kembali ke beranda</button>
+          </div>
+          <div class="reviews-layout">
+            <form class="review-form" id="review-form">
+              <div class="section-heading compact"><div><span class="section-kicker">ULASAN BARU</span><h2>Bagaimana pengalamanmu?</h2></div></div>
+              <fieldset class="rating-field">
+                <legend>Beri rating</legend>
+                <div class="star-rating">
+                  <label><input type="radio" name="review-rating" value="1" required /><span aria-hidden="true">★</span><span class="sr-only">1 bintang</span></label>
+                  <label><input type="radio" name="review-rating" value="2" /><span aria-hidden="true">★</span><span class="sr-only">2 bintang</span></label>
+                  <label><input type="radio" name="review-rating" value="3" /><span aria-hidden="true">★</span><span class="sr-only">3 bintang</span></label>
+                  <label><input type="radio" name="review-rating" value="4" /><span aria-hidden="true">★</span><span class="sr-only">4 bintang</span></label>
+                  <label><input type="radio" name="review-rating" value="5" /><span aria-hidden="true">★</span><span class="sr-only">5 bintang</span></label>
+                </div>
+              </fieldset>
+              <label class="review-label" for="review-comment">Komentar</label>
+              <textarea class="form-input review-textarea" id="review-comment" maxlength="1000" placeholder="Tuliskan pengalaman atau saranmu..." required></textarea>
+              <p class="form-message" id="review-message" aria-live="polite"></p>
+              <button class="button button-primary" type="submit">Kirim ulasan <span>→</span></button>
+            </form>
+            <section class="reviews-list-section" aria-labelledby="reviews-list-title">
+              <div class="section-heading compact">
+                <div><span class="section-kicker">DARI PENGGUNA</span><h2 id="reviews-list-title">Ulasan terbaru</h2></div>
+                <span class="pill" id="community-review-count">0 ulasan</span>
+              </div>
+              <div class="reviews-list" id="reviews-list"></div>
+            </section>
           </div>
         </section>
 
