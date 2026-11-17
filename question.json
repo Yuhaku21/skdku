@@ -1,1828 +1,1822 @@
-{
-  "mudah": [
+[
     {
-      "id": "m-01",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya dari deret 4, 7, 10, 13, ...",
-      "options": [
-        "15",
-        "16",
-        "17",
-        "18",
-        "19"
-      ],
-      "answer": 1,
-      "explanation": "Setiap angka bertambah 3. Jadi angka berikutnya adalah 13 + 3 = 16."
+        "id":  "m-01",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya dari deret 4, 7, 10, 13, ...",
+        "options":  [
+                        "15",
+                        "16",
+                        "17",
+                        "18",
+                        "19"
+                    ],
+        "answer":  1,
+        "explanation":  "Setiap angka bertambah 3. Jadi angka berikutnya adalah 13 + 3 = 16."
     },
     {
-      "id": "m-02",
-      "category": "ANALOGI VERBAL",
-      "question": "Kompas berhubungan dengan arah, sebagaimana termometer berhubungan dengan ...",
-      "options": [
-        "Kecepatan",
-        "Tekanan",
-        "Suhu",
-        "Jarak",
-        "Berat"
-      ],
-      "answer": 2,
-      "explanation": "Kompas digunakan untuk mengetahui arah. Termometer digunakan untuk mengukur suhu."
+        "id":  "m-02",
+        "category":  "ANALOGI VERBAL",
+        "question":  "Kompas berhubungan dengan arah, sebagaimana termometer berhubungan dengan ...",
+        "options":  [
+                        "Kecepatan",
+                        "Tekanan",
+                        "Suhu",
+                        "Jarak",
+                        "Berat"
+                    ],
+        "answer":  2,
+        "explanation":  "Kompas digunakan untuk mengetahui arah. Termometer digunakan untuk mengukur suhu."
     },
     {
-      "id": "m-03",
-      "category": "PENALARAN LOGIS",
-      "question": "Semua peserta yang lulus administrasi boleh mengikuti tes. Rina lulus administrasi. Kesimpulan yang tepat adalah ...",
-      "options": [
-        "Rina pasti lulus tes",
-        "Rina boleh mengikuti tes",
-        "Semua peserta adalah Rina",
-        "Rina tidak mengikuti tes",
-        "Peserta yang ikut tes pasti lulus"
-      ],
-      "answer": 1,
-      "explanation": "Aturan menyatakan peserta yang lulus administrasi boleh mengikuti tes. Karena Rina memenuhi syarat itu, ia boleh mengikuti tes."
+        "id":  "m-03",
+        "category":  "PENALARAN LOGIS",
+        "question":  "Semua peserta yang lulus administrasi boleh mengikuti tes. Rina lulus administrasi. Kesimpulan yang tepat adalah ...",
+        "options":  [
+                        "Rina pasti lulus tes",
+                        "Rina boleh mengikuti tes",
+                        "Semua peserta adalah Rina",
+                        "Rina tidak mengikuti tes",
+                        "Peserta yang ikut tes pasti lulus"
+                    ],
+        "answer":  1,
+        "explanation":  "Aturan menyatakan peserta yang lulus administrasi boleh mengikuti tes. Karena Rina memenuhi syarat itu, ia boleh mengikuti tes."
     },
     {
-      "id": "m-04",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika 5 buku berharga Rp40.000, berapa harga 8 buku dengan harga satuan yang sama?",
-      "options": [
-        "Rp56.000",
-        "Rp60.000",
-        "Rp64.000",
-        "Rp68.000",
-        "Rp72.000"
-      ],
-      "answer": 2,
-      "explanation": "Harga satu buku = Rp40.000 ÷ 5 = Rp8.000. Harga 8 buku = 8 × Rp8.000 = Rp64.000."
+        "id":  "m-04",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika 5 buku berharga Rp40.000, berapa harga 8 buku dengan harga satuan yang sama?",
+        "options":  [
+                        "Rp56.000",
+                        "Rp60.000",
+                        "Rp64.000",
+                        "Rp68.000",
+                        "Rp72.000"
+                    ],
+        "answer":  2,
+        "explanation":  "Harga satu buku = Rp40.000 ÷ 5 = Rp8.000. Harga 8 buku = 8 × Rp8.000 = Rp64.000."
     },
     {
-      "id": "m-05",
-      "category": "ANALOGI VERBAL",
-      "question": "Dokter berhubungan dengan pasien, sebagaimana guru berhubungan dengan ...",
-      "options": [
-        "Buku",
-        "Sekolah",
-        "Murid",
-        "Kelas",
-        "Pelajaran"
-      ],
-      "answer": 2,
-      "explanation": "Dokter memberikan layanan kepada pasien, sedangkan guru mengajar murid."
+        "id":  "m-05",
+        "category":  "ANALOGI VERBAL",
+        "question":  "Dokter berhubungan dengan pasien, sebagaimana guru berhubungan dengan ...",
+        "options":  [
+                        "Buku",
+                        "Sekolah",
+                        "Murid",
+                        "Kelas",
+                        "Pelajaran"
+                    ],
+        "answer":  2,
+        "explanation":  "Dokter memberikan layanan kepada pasien, sedangkan guru mengajar murid."
     },
     {
-      "id": "m-06",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah tas seharga Rp200.000 mendapat diskon 15%. Berapa harga setelah diskon?",
-      "options": [
-        "Rp160.000",
-        "Rp165.000",
-        "Rp170.000",
-        "Rp175.000",
-        "Rp185.000"
-      ],
-      "answer": 2,
-      "explanation": "Diskon = 15% × Rp200.000 = Rp30.000. Harga setelah diskon = Rp200.000 − Rp30.000 = Rp170.000."
+        "id":  "m-06",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah tas seharga Rp200.000 mendapat diskon 15%. Berapa harga setelah diskon?",
+        "options":  [
+                        "Rp160.000",
+                        "Rp165.000",
+                        "Rp170.000",
+                        "Rp175.000",
+                        "Rp185.000"
+                    ],
+        "answer":  2,
+        "explanation":  "Diskon = 15% × Rp200.000 = Rp30.000. Harga setelah diskon = Rp200.000 − Rp30.000 = Rp170.000."
     },
     {
-      "id": "m-07",
-      "category": "PENALARAN LOGIS",
-      "question": "Jika hari ini Selasa, hari apakah 10 hari lagi?",
-      "options": [
-        "Rabu",
-        "Kamis",
-        "Jumat",
-        "Sabtu",
-        "Minggu"
-      ],
-      "answer": 2,
-      "explanation": "Sepuluh hari setara dengan 7 hari + 3 hari. Tiga hari setelah Selasa adalah Jumat."
+        "id":  "m-07",
+        "category":  "PENALARAN LOGIS",
+        "question":  "Jika hari ini Selasa, hari apakah 10 hari lagi?",
+        "options":  [
+                        "Rabu",
+                        "Kamis",
+                        "Jumat",
+                        "Sabtu",
+                        "Minggu"
+                    ],
+        "answer":  2,
+        "explanation":  "Sepuluh hari setara dengan 7 hari + 3 hari. Tiga hari setelah Selasa adalah Jumat."
     },
     {
-      "id": "m-08",
-      "category": "PENALARAN NUMERIK",
-      "question": "Rata-rata dari 6, 8, 10, dan 12 adalah ...",
-      "options": [
-        "8",
-        "9",
-        "10",
-        "11",
-        "12"
-      ],
-      "answer": 1,
-      "explanation": "Jumlahnya 6 + 8 + 10 + 12 = 36. Rata-rata = 36 ÷ 4 = 9."
+        "id":  "m-08",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Rata-rata dari 6, 8, 10, dan 12 adalah ...",
+        "options":  [
+                        "8",
+                        "9",
+                        "10",
+                        "11",
+                        "12"
+                    ],
+        "answer":  1,
+        "explanation":  "Jumlahnya 6 + 8 + 10 + 12 = 36. Rata-rata = 36 ÷ 4 = 9."
     },
     {
-      "id": "m-09",
-      "category": "ANALOGI VERBAL",
-      "question": "Panas berlawanan makna dengan dingin, sebagaimana tinggi berlawanan makna dengan ...",
-      "options": [
-        "Jauh",
-        "Pendek",
-        "Rendah",
-        "Kecil",
-        "Luas"
-      ],
-      "answer": 2,
-      "explanation": "Panas dan dingin merupakan pasangan antonim. Antonim dari tinggi adalah rendah."
+        "id":  "m-09",
+        "category":  "ANALOGI VERBAL",
+        "question":  "Panas berlawanan makna dengan dingin, sebagaimana tinggi berlawanan makna dengan ...",
+        "options":  [
+                        "Jauh",
+                        "Pendek",
+                        "Rendah",
+                        "Kecil",
+                        "Luas"
+                    ],
+        "answer":  2,
+        "explanation":  "Panas dan dingin merupakan pasangan antonim. Antonim dari tinggi adalah rendah."
     },
     {
-      "id": "m-10",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah kendaraan menempuh 120 km dalam 3 jam. Berapa kecepatan rata-ratanya?",
-      "options": [
-        "30 km/jam",
-        "35 km/jam",
-        "40 km/jam",
-        "45 km/jam",
-        "60 km/jam"
-      ],
-      "answer": 2,
-      "explanation": "Kecepatan rata-rata = jarak ÷ waktu = 120 ÷ 3 = 40 km/jam."
+        "id":  "m-10",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah kendaraan menempuh 120 km dalam 3 jam. Berapa kecepatan rata-ratanya?",
+        "options":  [
+                        "30 km/jam",
+                        "35 km/jam",
+                        "40 km/jam",
+                        "45 km/jam",
+                        "60 km/jam"
+                    ],
+        "answer":  2,
+        "explanation":  "Kecepatan rata-rata = jarak ÷ waktu = 120 ÷ 3 = 40 km/jam."
     },
     {
-      "id": "m-11",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 6, 10, 14, 18, ...",
-      "options": [
-        "20",
-        "21",
-        "23",
-        "22",
-        "24"
-      ],
-      "answer": 3,
-      "explanation": "Pola bertambah 4. Jadi 18 + 4 = 22."
+        "id":  "m-11",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 6, 10, 14, 18, ...",
+        "options":  [
+                        "20",
+                        "21",
+                        "23",
+                        "22",
+                        "24"
+                    ],
+        "answer":  3,
+        "explanation":  "Pola bertambah 4. Jadi 18 + 4 = 22."
     },
     {
-      "id": "m-12",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 3, 9, 27, 81, ...",
-      "options": [
-        "162",
-        "243",
-        "189",
-        "216",
-        "324"
-      ],
-      "answer": 1,
-      "explanation": "Setiap suku dikali 3. Jadi 81 × 3 = 243."
+        "id":  "m-12",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 3, 9, 27, 81, ...",
+        "options":  [
+                        "162",
+                        "243",
+                        "189",
+                        "216",
+                        "324"
+                    ],
+        "answer":  1,
+        "explanation":  "Setiap suku dikali 3. Jadi 81 × 3 = 243."
     },
     {
-      "id": "m-13",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 50, 45, 40, 35, ...",
-      "options": [
-        "25",
-        "28",
-        "32",
-        "34",
-        "30"
-      ],
-      "answer": 4,
-      "explanation": "Setiap suku berkurang 5. Jadi 35 − 5 = 30."
+        "id":  "m-13",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 50, 45, 40, 35, ...",
+        "options":  [
+                        "25",
+                        "28",
+                        "32",
+                        "34",
+                        "30"
+                    ],
+        "answer":  4,
+        "explanation":  "Setiap suku berkurang 5. Jadi 35 − 5 = 30."
     },
     {
-      "id": "m-14",
-      "category": "PENALARAN NUMERIK",
-      "question": "Nilai dari 17 × 12 adalah ...",
-      "options": [
-        "194",
-        "198",
-        "204",
-        "206",
-        "214"
-      ],
-      "answer": 2,
-      "explanation": "17 × 12 = 17 × (10 + 2) = 170 + 34 = 204."
+        "id":  "m-14",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Nilai dari 17 × 12 adalah ...",
+        "options":  [
+                        "194",
+                        "198",
+                        "204",
+                        "206",
+                        "214"
+                    ],
+        "answer":  2,
+        "explanation":  "17 × 12 = 17 × (10 + 2) = 170 + 34 = 204."
     },
     {
-      "id": "m-15",
-      "category": "PENALARAN NUMERIK",
-      "question": "Hasil dari 936 ÷ 18 adalah ...",
-      "options": [
-        "52",
-        "48",
-        "50",
-        "54",
-        "56"
-      ],
-      "answer": 0,
-      "explanation": "18 × 52 = 936, sehingga 936 ÷ 18 = 52."
+        "id":  "m-15",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Hasil dari 936 ÷ 18 adalah ...",
+        "options":  [
+                        "52",
+                        "48",
+                        "50",
+                        "54",
+                        "56"
+                    ],
+        "answer":  0,
+        "explanation":  "18 × 52 = 936, sehingga 936 ÷ 18 = 52."
     },
     {
-      "id": "m-16",
-      "category": "PENALARAN NUMERIK",
-      "question": "Nilai dari 14² adalah ...",
-      "options": [
-        "184",
-        "186",
-        "194",
-        "196",
-        "204"
-      ],
-      "answer": 3,
-      "explanation": "14² = 14 × 14 = 196."
+        "id":  "m-16",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Nilai dari 14² adalah ...",
+        "options":  [
+                        "184",
+                        "186",
+                        "194",
+                        "196",
+                        "204"
+                    ],
+        "answer":  3,
+        "explanation":  "14² = 14 × 14 = 196."
     },
     {
-      "id": "m-17",
-      "category": "PENALARAN NUMERIK",
-      "question": "Nilai dari akar kuadrat 784 adalah ...",
-      "options": [
-        "26",
-        "28",
-        "27",
-        "29",
-        "32"
-      ],
-      "answer": 1,
-      "explanation": "Karena 28 × 28 = 784, maka √784 = 28."
+        "id":  "m-17",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Nilai dari akar kuadrat 784 adalah ...",
+        "options":  [
+                        "26",
+                        "28",
+                        "27",
+                        "29",
+                        "32"
+                    ],
+        "answer":  1,
+        "explanation":  "Karena 28 × 28 = 784, maka √784 = 28."
     },
     {
-      "id": "m-18",
-      "category": "PENALARAN NUMERIK",
-      "question": "30% dari 250 adalah ...",
-      "options": [
-        "65",
-        "70",
-        "80",
-        "85",
-        "75"
-      ],
-      "answer": 4,
-      "explanation": "30% × 250 = 0,3 × 250 = 75."
+        "id":  "m-18",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "30% dari 250 adalah ...",
+        "options":  [
+                        "65",
+                        "70",
+                        "80",
+                        "85",
+                        "75"
+                    ],
+        "answer":  4,
+        "explanation":  "30% × 250 = 0,3 × 250 = 75."
     },
     {
-      "id": "m-19",
-      "category": "PENALARAN NUMERIK",
-      "question": "Hasil dari ⅝ × 160 adalah ...",
-      "options": [
-        "80",
-        "90",
-        "100",
-        "110",
-        "120"
-      ],
-      "answer": 2,
-      "explanation": "160 ÷ 8 × 5 = 20 × 5 = 100."
+        "id":  "m-19",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Hasil dari ⅝ × 160 adalah ...",
+        "options":  [
+                        "80",
+                        "90",
+                        "100",
+                        "110",
+                        "120"
+                    ],
+        "answer":  2,
+        "explanation":  "160 ÷ 8 × 5 = 20 × 5 = 100."
     },
     {
-      "id": "m-20",
-      "category": "PENALARAN NUMERIK",
-      "question": "Rata-rata dari 12, 14, 16, dan 18 adalah ...",
-      "options": [
-        "15",
-        "14",
-        "14,5",
-        "15,5",
-        "16"
-      ],
-      "answer": 0,
-      "explanation": "Jumlah data 60. Rata-rata = 60 ÷ 4 = 15."
+        "id":  "m-20",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Rata-rata dari 12, 14, 16, dan 18 adalah ...",
+        "options":  [
+                        "15",
+                        "14",
+                        "14,5",
+                        "15,5",
+                        "16"
+                    ],
+        "answer":  0,
+        "explanation":  "Jumlah data 60. Rata-rata = 60 ÷ 4 = 15."
     },
     {
-      "id": "m-21",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika 7 pulpen berharga Rp35.000, harga 12 pulpen adalah ...",
-      "options": [
-        "Rp50.000",
-        "Rp55.000",
-        "Rp65.000",
-        "Rp60.000",
-        "Rp70.000"
-      ],
-      "answer": 3,
-      "explanation": "Harga satu pulpen Rp5.000. Jadi 12 × Rp5.000 = Rp60.000."
+        "id":  "m-21",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika 7 pulpen berharga Rp35.000, harga 12 pulpen adalah ...",
+        "options":  [
+                        "Rp50.000",
+                        "Rp55.000",
+                        "Rp65.000",
+                        "Rp60.000",
+                        "Rp70.000"
+                    ],
+        "answer":  3,
+        "explanation":  "Harga satu pulpen Rp5.000. Jadi 12 × Rp5.000 = Rp60.000."
     },
     {
-      "id": "m-22",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah sepeda menempuh 90 km dalam 3 jam. Kecepatan rata-ratanya adalah ...",
-      "options": [
-        "25 km/jam",
-        "30 km/jam",
-        "35 km/jam",
-        "40 km/jam",
-        "45 km/jam"
-      ],
-      "answer": 1,
-      "explanation": "Kecepatan = jarak ÷ waktu = 90 ÷ 3 = 30 km/jam."
+        "id":  "m-22",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah sepeda menempuh 90 km dalam 3 jam. Kecepatan rata-ratanya adalah ...",
+        "options":  [
+                        "25 km/jam",
+                        "30 km/jam",
+                        "35 km/jam",
+                        "40 km/jam",
+                        "45 km/jam"
+                    ],
+        "answer":  1,
+        "explanation":  "Kecepatan = jarak ÷ waktu = 90 ÷ 3 = 30 km/jam."
     },
     {
-      "id": "m-23",
-      "category": "PENALARAN NUMERIK",
-      "question": "Harga Rp150.000 mendapat potongan 20%. Harga setelah diskon adalah ...",
-      "options": [
-        "Rp110.000",
-        "Rp115.000",
-        "Rp125.000",
-        "Rp130.000",
-        "Rp120.000"
-      ],
-      "answer": 4,
-      "explanation": "Diskon 20% × Rp150.000 = Rp30.000. Harga akhir Rp120.000."
+        "id":  "m-23",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Harga Rp150.000 mendapat potongan 20%. Harga setelah diskon adalah ...",
+        "options":  [
+                        "Rp110.000",
+                        "Rp115.000",
+                        "Rp125.000",
+                        "Rp130.000",
+                        "Rp120.000"
+                    ],
+        "answer":  4,
+        "explanation":  "Diskon 20% × Rp150.000 = Rp30.000. Harga akhir Rp120.000."
     },
     {
-      "id": "m-24",
-      "category": "PENALARAN NUMERIK",
-      "question": "Perbandingan 4 : 5 memiliki jumlah bagian 72. Nilai bagian yang mewakili angka 5 adalah ...",
-      "options": [
-        "28",
-        "32",
-        "40",
-        "36",
-        "45"
-      ],
-      "answer": 2,
-      "explanation": "Total bagian 9, satu bagian 72 ÷ 9 = 8. Nilai 5 bagian = 40."
+        "id":  "m-24",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Perbandingan 4 : 5 memiliki jumlah bagian 72. Nilai bagian yang mewakili angka 5 adalah ...",
+        "options":  [
+                        "28",
+                        "32",
+                        "40",
+                        "36",
+                        "45"
+                    ],
+        "answer":  2,
+        "explanation":  "Total bagian 9, satu bagian 72 ÷ 9 = 8. Nilai 5 bagian = 40."
     },
     {
-      "id": "m-25",
-      "category": "PENALARAN NUMERIK",
-      "question": "Hasil dari ⅔ + ⅙ adalah ...",
-      "options": [
-        "⅚",
-        "½",
-        "⅔",
-        "¾",
-        "1"
-      ],
-      "answer": 0,
-      "explanation": "⅔ = 4/6. Jadi 4/6 + 1/6 = 5/6."
+        "id":  "m-25",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Hasil dari ⅔ + ⅙ adalah ...",
+        "options":  [
+                        "⅚",
+                        "½",
+                        "⅔",
+                        "¾",
+                        "1"
+                    ],
+        "answer":  0,
+        "explanation":  "⅔ = 4/6. Jadi 4/6 + 1/6 = 5/6."
     },
     {
-      "id": "m-26",
-      "category": "PENALARAN NUMERIK",
-      "question": "Hasil dari 2.400 − 875 adalah ...",
-      "options": [
-        "1.425",
-        "1.475",
-        "1.500",
-        "1.525",
-        "1.575"
-      ],
-      "answer": 3,
-      "explanation": "2.400 − 800 = 1.600, lalu dikurangi 75 menjadi 1.525."
+        "id":  "m-26",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Hasil dari 2.400 − 875 adalah ...",
+        "options":  [
+                        "1.425",
+                        "1.475",
+                        "1.500",
+                        "1.525",
+                        "1.575"
+                    ],
+        "answer":  3,
+        "explanation":  "2.400 − 800 = 1.600, lalu dikurangi 75 menjadi 1.525."
     },
     {
-      "id": "m-27",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 2, 5, 10, 17, 26, ...",
-      "options": [
-        "35",
-        "37",
-        "36",
-        "38",
-        "40"
-      ],
-      "answer": 1,
-      "explanation": "Selisihnya 3, 5, 7, 9, sehingga selisih berikutnya 11. Jadi 26 + 11 = 37."
+        "id":  "m-27",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 2, 5, 10, 17, 26, ...",
+        "options":  [
+                        "35",
+                        "37",
+                        "36",
+                        "38",
+                        "40"
+                    ],
+        "answer":  1,
+        "explanation":  "Selisihnya 3, 5, 7, 9, sehingga selisih berikutnya 11. Jadi 26 + 11 = 37."
     },
     {
-      "id": "m-28",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 1, 4, 7, 10, 13, ...",
-      "options": [
-        "14",
-        "15",
-        "17",
-        "18",
-        "16"
-      ],
-      "answer": 4,
-      "explanation": "Setiap suku bertambah 3. Jadi 13 + 3 = 16."
+        "id":  "m-28",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 1, 4, 7, 10, 13, ...",
+        "options":  [
+                        "14",
+                        "15",
+                        "17",
+                        "18",
+                        "16"
+                    ],
+        "answer":  4,
+        "explanation":  "Setiap suku bertambah 3. Jadi 13 + 3 = 16."
     },
     {
-      "id": "m-29",
-      "category": "PENALARAN NUMERIK",
-      "question": "Nilai dari 2⁶ adalah ...",
-      "options": [
-        "32",
-        "48",
-        "64",
-        "72",
-        "128"
-      ],
-      "answer": 2,
-      "explanation": "2⁶ = 2 × 2 × 2 × 2 × 2 × 2 = 64."
+        "id":  "m-29",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Nilai dari 2⁶ adalah ...",
+        "options":  [
+                        "32",
+                        "48",
+                        "64",
+                        "72",
+                        "128"
+                    ],
+        "answer":  2,
+        "explanation":  "2⁶ = 2 × 2 × 2 × 2 × 2 × 2 = 64."
     },
     {
-      "id": "m-30",
-      "category": "PENALARAN NUMERIK",
-      "question": "25% dari suatu bilangan adalah 45. Bilangan tersebut adalah ...",
-      "options": [
-        "180",
-        "160",
-        "170",
-        "190",
-        "200"
-      ],
-      "answer": 0,
-      "explanation": "Bilangan = 45 ÷ 0,25 = 180."
+        "id":  "m-30",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "25% dari suatu bilangan adalah 45. Bilangan tersebut adalah ...",
+        "options":  [
+                        "180",
+                        "160",
+                        "170",
+                        "190",
+                        "200"
+                    ],
+        "answer":  0,
+        "explanation":  "Bilangan = 45 ÷ 0,25 = 180."
     },
     {
-      "id": "m-31",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika 9 pekerja menyelesaikan tugas dalam 8 hari, berapa hari diperlukan 12 pekerja dengan kemampuan sama?",
-      "options": [
-        "5 hari",
-        "7 hari",
-        "9 hari",
-        "6 hari",
-        "10 hari"
-      ],
-      "answer": 3,
-      "explanation": "Total beban 9 × 8 = 72 orang-hari. Waktu = 72 ÷ 12 = 6 hari."
+        "id":  "m-31",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika 9 pekerja menyelesaikan tugas dalam 8 hari, berapa hari diperlukan 12 pekerja dengan kemampuan sama?",
+        "options":  [
+                        "5 hari",
+                        "7 hari",
+                        "9 hari",
+                        "6 hari",
+                        "10 hari"
+                    ],
+        "answer":  3,
+        "explanation":  "Total beban 9 × 8 = 72 orang-hari. Waktu = 72 ÷ 12 = 6 hari."
     },
     {
-      "id": "m-32",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah barang dibeli Rp80.000 dan dijual Rp92.000. Keuntungan dalam rupiah adalah ...",
-      "options": [
-        "Rp8.000",
-        "Rp12.000",
-        "Rp10.000",
-        "Rp14.000",
-        "Rp16.000"
-      ],
-      "answer": 1,
-      "explanation": "Keuntungan = harga jual − harga beli = Rp92.000 − Rp80.000 = Rp12.000."
+        "id":  "m-32",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah barang dibeli Rp80.000 dan dijual Rp92.000. Keuntungan dalam rupiah adalah ...",
+        "options":  [
+                        "Rp8.000",
+                        "Rp12.000",
+                        "Rp10.000",
+                        "Rp14.000",
+                        "Rp16.000"
+                    ],
+        "answer":  1,
+        "explanation":  "Keuntungan = harga jual − harga beli = Rp92.000 − Rp80.000 = Rp12.000."
     },
     {
-      "id": "m-33",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 64, 32, 16, 8, ...",
-      "options": [
-        "2",
-        "3",
-        "5",
-        "6",
-        "4"
-      ],
-      "answer": 4,
-      "explanation": "Setiap suku dibagi 2. Jadi 8 ÷ 2 = 4."
+        "id":  "m-33",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 64, 32, 16, 8, ...",
+        "options":  [
+                        "2",
+                        "3",
+                        "5",
+                        "6",
+                        "4"
+                    ],
+        "answer":  4,
+        "explanation":  "Setiap suku dibagi 2. Jadi 8 ÷ 2 = 4."
     },
     {
-      "id": "m-34",
-      "category": "PENALARAN NUMERIK",
-      "question": "Nilai dari 11 × 11 − 21 adalah ...",
-      "options": [
-        "98",
-        "99",
-        "100",
-        "101",
-        "110"
-      ],
-      "answer": 2,
-      "explanation": "11 × 11 = 121. Kemudian 121 − 21 = 100."
+        "id":  "m-34",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Nilai dari 11 × 11 − 21 adalah ...",
+        "options":  [
+                        "98",
+                        "99",
+                        "100",
+                        "101",
+                        "110"
+                    ],
+        "answer":  2,
+        "explanation":  "11 × 11 = 121. Kemudian 121 − 21 = 100."
     },
     {
-      "id": "m-35",
-      "category": "PENALARAN NUMERIK",
-      "question": "⅖ dari 350 adalah ...",
-      "options": [
-        "140",
-        "120",
-        "130",
-        "150",
-        "160"
-      ],
-      "answer": 0,
-      "explanation": "350 ÷ 5 × 2 = 70 × 2 = 140."
+        "id":  "m-35",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "⅖ dari 350 adalah ...",
+        "options":  [
+                        "140",
+                        "120",
+                        "130",
+                        "150",
+                        "160"
+                    ],
+        "answer":  0,
+        "explanation":  "350 ÷ 5 × 2 = 70 × 2 = 140."
     },
     {
-      "id": "m-36",
-      "category": "PENALARAN NUMERIK",
-      "question": "Hasil dari 2.400 − 875 adalah ...",
-      "options": [
-        "1.425",
-        "1.475",
-        "1.500",
-        "1.525",
-        "1.575"
-      ],
-      "answer": 3,
-      "explanation": "2.400 − 800 = 1.600, lalu dikurangi 75 menjadi 1.525."
+        "id":  "m-36",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Hasil dari 2.400 − 875 adalah ...",
+        "options":  [
+                        "1.425",
+                        "1.475",
+                        "1.500",
+                        "1.525",
+                        "1.575"
+                    ],
+        "answer":  3,
+        "explanation":  "2.400 − 800 = 1.600, lalu dikurangi 75 menjadi 1.525."
     },
     {
-      "id": "m-37",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika 4 kg beras seharga Rp56.000, harga 7 kg adalah ...",
-      "options": [
-        "Rp84.000",
-        "Rp98.000",
-        "Rp91.000",
-        "Rp105.000",
-        "Rp112.000"
-      ],
-      "answer": 1,
-      "explanation": "Harga per kg Rp14.000. Untuk 7 kg: 7 × Rp14.000 = Rp98.000."
+        "id":  "m-37",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika 4 kg beras seharga Rp56.000, harga 7 kg adalah ...",
+        "options":  [
+                        "Rp84.000",
+                        "Rp98.000",
+                        "Rp91.000",
+                        "Rp105.000",
+                        "Rp112.000"
+                    ],
+        "answer":  1,
+        "explanation":  "Harga per kg Rp14.000. Untuk 7 kg: 7 × Rp14.000 = Rp98.000."
     },
     {
-      "id": "m-38",
-      "category": "PENALARAN NUMERIK",
-      "question": "Hasil dari 0,75 × 240 adalah ...",
-      "options": [
-        "160",
-        "170",
-        "190",
-        "200",
-        "180"
-      ],
-      "answer": 4,
-      "explanation": "0,75 = ¾. Jadi ¾ × 240 = 180."
+        "id":  "m-38",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Hasil dari 0,75 × 240 adalah ...",
+        "options":  [
+                        "160",
+                        "170",
+                        "190",
+                        "200",
+                        "180"
+                    ],
+        "answer":  4,
+        "explanation":  "0,75 = ¾. Jadi ¾ × 240 = 180."
     },
     {
-      "id": "m-39",
-      "category": "PENALARAN NUMERIK",
-      "question": "Rata-rata 4 nilai adalah 76. Jumlah seluruh nilai tersebut adalah ...",
-      "options": [
-        "284",
-        "294",
-        "304",
-        "314",
-        "324"
-      ],
-      "answer": 2,
-      "explanation": "Jumlah nilai = rata-rata × banyak data = 76 × 4 = 304."
+        "id":  "m-39",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Rata-rata 4 nilai adalah 76. Jumlah seluruh nilai tersebut adalah ...",
+        "options":  [
+                        "284",
+                        "294",
+                        "304",
+                        "314",
+                        "324"
+                    ],
+        "answer":  2,
+        "explanation":  "Jumlah nilai = rata-rata × banyak data = 76 × 4 = 304."
     },
     {
-      "id": "m-40",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 7, 14, 21, 28, ...",
-      "options": [
-        "35",
-        "32",
-        "33",
-        "34",
-        "36"
-      ],
-      "answer": 0,
-      "explanation": "Setiap suku bertambah 7. Jadi 28 + 7 = 35."
+        "id":  "m-40",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 7, 14, 21, 28, ...",
+        "options":  [
+                        "35",
+                        "32",
+                        "33",
+                        "34",
+                        "36"
+                    ],
+        "answer":  0,
+        "explanation":  "Setiap suku bertambah 7. Jadi 28 + 7 = 35."
     },
     {
-      "id": "m-41",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah kendaraan melaju 45 km/jam selama 4 jam. Jarak yang ditempuh adalah ...",
-      "options": [
-        "160 km",
-        "170 km",
-        "190 km",
-        "180 km",
-        "200 km"
-      ],
-      "answer": 3,
-      "explanation": "Jarak = kecepatan × waktu = 45 × 4 = 180 km."
+        "id":  "m-41",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah kendaraan melaju 45 km/jam selama 4 jam. Jarak yang ditempuh adalah ...",
+        "options":  [
+                        "160 km",
+                        "170 km",
+                        "190 km",
+                        "180 km",
+                        "200 km"
+                    ],
+        "answer":  3,
+        "explanation":  "Jarak = kecepatan × waktu = 45 × 4 = 180 km."
     },
     {
-      "id": "m-42",
-      "category": "PENALARAN NUMERIK",
-      "question": "Hasil dari 5³ + 10 adalah ...",
-      "options": [
-        "115",
-        "135",
-        "125",
-        "130",
-        "145"
-      ],
-      "answer": 1,
-      "explanation": "5³ = 125. Jadi 125 + 10 = 135."
+        "id":  "m-42",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Hasil dari 5³ + 10 adalah ...",
+        "options":  [
+                        "115",
+                        "135",
+                        "125",
+                        "130",
+                        "145"
+                    ],
+        "answer":  1,
+        "explanation":  "5³ = 125. Jadi 125 + 10 = 135."
     },
     {
-      "id": "m-43",
-      "category": "PENALARAN NUMERIK",
-      "question": "Harga Rp400.000 naik 5%. Harga setelah kenaikan adalah ...",
-      "options": [
-        "Rp405.000",
-        "Rp410.000",
-        "Rp415.000",
-        "Rp425.000",
-        "Rp420.000"
-      ],
-      "answer": 4,
-      "explanation": "Kenaikan 5% × Rp400.000 = Rp20.000. Harga baru Rp420.000."
+        "id":  "m-43",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Harga Rp400.000 naik 5%. Harga setelah kenaikan adalah ...",
+        "options":  [
+                        "Rp405.000",
+                        "Rp410.000",
+                        "Rp415.000",
+                        "Rp425.000",
+                        "Rp420.000"
+                    ],
+        "answer":  4,
+        "explanation":  "Kenaikan 5% × Rp400.000 = Rp20.000. Harga baru Rp420.000."
     },
     {
-      "id": "m-44",
-      "category": "PENALARAN NUMERIK",
-      "question": "Perbandingan siswa laki-laki dan perempuan adalah 3 : 2. Jika jumlah siswa 40, jumlah siswa laki-laki adalah ...",
-      "options": [
-        "16",
-        "18",
-        "24",
-        "20",
-        "26"
-      ],
-      "answer": 2,
-      "explanation": "Total bagian 5, satu bagian 40 ÷ 5 = 8. Laki-laki = 3 × 8 = 24."
+        "id":  "m-44",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Perbandingan siswa laki-laki dan perempuan adalah 3 : 2. Jika jumlah siswa 40, jumlah siswa laki-laki adalah ...",
+        "options":  [
+                        "16",
+                        "18",
+                        "24",
+                        "20",
+                        "26"
+                    ],
+        "answer":  2,
+        "explanation":  "Total bagian 5, satu bagian 40 ÷ 5 = 8. Laki-laki = 3 × 8 = 24."
+    },
+    {
+        "id":  "n-01",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya dari deret 3, 7, 15, 31, 63, ...",
+        "options":  [
+                        "95",
+                        "111",
+                        "126",
+                        "127",
+                        "129"
+                    ],
+        "answer":  3,
+        "explanation":  "Setiap angka dikali 2 lalu ditambah 1: 3→7→15→31→63. Berikutnya 63 × 2 + 1 = 127."
+    },
+    {
+        "id":  "n-02",
+        "category":  "PENALARAN LOGIS",
+        "question":  "Semua analis teliti. Sebagian pegawai adalah analis. Kesimpulan yang pasti benar adalah ...",
+        "options":  [
+                        "Semua pegawai teliti",
+                        "Sebagian pegawai teliti",
+                        "Semua yang teliti adalah analis",
+                        "Sebagian analis tidak teliti",
+                        "Tidak ada pegawai yang teliti"
+                    ],
+        "answer":  1,
+        "explanation":  "Sebagian pegawai termasuk analis, dan semua analis teliti. Maka sebagian pegawai tersebut pasti teliti."
+    },
+    {
+        "id":  "n-03",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Perbandingan jumlah buku Andi dan Budi adalah 3 : 5. Jika jumlah buku mereka 64, berapa buku Budi?",
+        "options":  [
+                        "24",
+                        "32",
+                        "36",
+                        "40",
+                        "48"
+                    ],
+        "answer":  3,
+        "explanation":  "Total bagian = 3 + 5 = 8. Satu bagian = 64 ÷ 8 = 8. Buku Budi = 5 × 8 = 40."
+    },
+    {
+        "id":  "n-04",
+        "category":  "ANALOGI VERBAL",
+        "question":  "Benih berhubungan dengan tanaman, sebagaimana telur berhubungan dengan ...",
+        "options":  [
+                        "Sarang",
+                        "Unggas",
+                        "Cangkang",
+                        "Makanan",
+                        "Bulu"
+                    ],
+        "answer":  1,
+        "explanation":  "Benih dapat tumbuh menjadi tanaman, sedangkan telur dapat berkembang menjadi unggas."
+    },
+    {
+        "id":  "n-05",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah pekerjaan selesai dalam 12 hari oleh 8 orang. Dengan kemampuan sama, berapa hari diperlukan oleh 6 orang?",
+        "options":  [
+                        "14 hari",
+                        "15 hari",
+                        "16 hari",
+                        "18 hari",
+                        "20 hari"
+                    ],
+        "answer":  2,
+        "explanation":  "Total pekerjaan = 8 × 12 = 96 orang-hari. Jika dikerjakan 6 orang, waktu = 96 ÷ 6 = 16 hari."
+    },
+    {
+        "id":  "n-06",
+        "category":  "PENALARAN LOGIS",
+        "question":  "Jika laporan selesai, rapat dimulai. Rapat tidak dimulai. Kesimpulan yang tepat adalah ...",
+        "options":  [
+                        "Laporan selesai",
+                        "Laporan belum selesai",
+                        "Rapat sudah berakhir",
+                        "Laporan tidak perlu dibuat",
+                        "Tidak ada kesimpulan yang dapat ditarik"
+                    ],
+        "answer":  1,
+        "explanation":  "Bentuk logikanya: jika P maka Q. Karena Q tidak terjadi, P juga tidak terjadi (modus tollens). Jadi laporan belum selesai."
+    },
+    {
+        "id":  "n-07",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Nilai 5 peserta adalah 70, 75, 80, 85, dan x. Jika rata-ratanya 80, nilai x adalah ...",
+        "options":  [
+                        "85",
+                        "88",
+                        "90",
+                        "92",
+                        "95"
+                    ],
+        "answer":  2,
+        "explanation":  "Jumlah nilai yang diperlukan = 5 × 80 = 400. Jumlah empat nilai = 310, sehingga x = 400 − 310 = 90."
+    },
+    {
+        "id":  "n-08",
+        "category":  "ANALOGI VERBAL",
+        "question":  "Skeptis berhubungan dengan keraguan, sebagaimana optimistis berhubungan dengan ...",
+        "options":  [
+                        "Kepastian",
+                        "Harapan",
+                        "Ketakutan",
+                        "Kenyataan",
+                        "Kritik"
+                    ],
+        "answer":  1,
+        "explanation":  "Sikap skeptis cenderung meragukan, sedangkan sikap optimistis cenderung memiliki harapan baik."
+    },
+    {
+        "id":  "n-09",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah barang dibeli Rp240.000 dan dijual dengan keuntungan 25%. Berapa harga jualnya?",
+        "options":  [
+                        "Rp270.000",
+                        "Rp280.000",
+                        "Rp290.000",
+                        "Rp300.000",
+                        "Rp320.000"
+                    ],
+        "answer":  3,
+        "explanation":  "Keuntungan = 25% × Rp240.000 = Rp60.000. Harga jual = Rp240.000 + Rp60.000 = Rp300.000."
+    },
+    {
+        "id":  "n-10",
+        "category":  "PENALARAN LOGIS",
+        "question":  "Dita lebih tinggi dari Ema. Fani lebih pendek dari Ema. Gita lebih tinggi dari Dita. Siapa yang paling tinggi?",
+        "options":  [
+                        "Dita",
+                        "Ema",
+                        "Fani",
+                        "Gita",
+                        "Tidak dapat ditentukan"
+                    ],
+        "answer":  3,
+        "explanation":  "Urutannya adalah Gita \u003e Dita \u003e Ema \u003e Fani. Jadi, Gita paling tinggi."
+    },
+    {
+        "id":  "n-11",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 4, 9, 19, 39, 79, ...",
+        "options":  [
+                        "149",
+                        "157",
+                        "161",
+                        "159",
+                        "169"
+                    ],
+        "answer":  3,
+        "explanation":  "Setiap suku dikali 2 lalu ditambah 1. Jadi 79 × 2 + 1 = 159."
+    },
+    {
+        "id":  "n-12",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 2, 7, 16, 29, 46, ...",
+        "options":  [
+                        "61",
+                        "67",
+                        "63",
+                        "65",
+                        "69"
+                    ],
+        "answer":  1,
+        "explanation":  "Selisihnya 5, 9, 13, 17; bertambah 4. Selisih berikutnya 21, jadi 46 + 21 = 67."
+    },
+    {
+        "id":  "n-13",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 1, 3, 7, 15, 31, ...",
+        "options":  [
+                        "47",
+                        "61",
+                        "62",
+                        "65",
+                        "63"
+                    ],
+        "answer":  4,
+        "explanation":  "Setiap suku dikali 2 lalu ditambah 1. Jadi 31 × 2 + 1 = 63."
+    },
+    {
+        "id":  "n-14",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 2, 12, 36, 80, 150, ...",
+        "options":  [
+                        "216",
+                        "240",
+                        "252",
+                        "250",
+                        "270"
+                    ],
+        "answer":  2,
+        "explanation":  "Pola n²(n+1): 1²×2=2, 2²×3=12, ..., 6²×7=252."
+    },
+    {
+        "id":  "n-15",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 120, 60, 30, 15, ...",
+        "options":  [
+                        "7,5",
+                        "5",
+                        "6",
+                        "8",
+                        "10"
+                    ],
+        "answer":  0,
+        "explanation":  "Setiap suku dibagi 2. Jadi 15 ÷ 2 = 7,5."
+    },
+    {
+        "id":  "n-16",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Nilai dari 3⁴ × 2³ adalah ...",
+        "options":  [
+                        "324",
+                        "512",
+                        "624",
+                        "648",
+                        "729"
+                    ],
+        "answer":  3,
+        "explanation":  "3⁴ = 81 dan 2³ = 8. Hasilnya 81 × 8 = 648."
+    },
+    {
+        "id":  "n-17",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Nilai dari √2.025 adalah ...",
+        "options":  [
+                        "35",
+                        "45",
+                        "40",
+                        "42",
+                        "50"
+                    ],
+        "answer":  1,
+        "explanation":  "45 × 45 = 2.025, sehingga akar kuadratnya 45."
+    },
+    {
+        "id":  "n-18",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika ⅗ dari x adalah 84, nilai x adalah ...",
+        "options":  [
+                        "120",
+                        "130",
+                        "150",
+                        "160",
+                        "140"
+                    ],
+        "answer":  4,
+        "explanation":  "x = 84 × 5 ÷ 3 = 140."
+    },
+    {
+        "id":  "n-19",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Harga barang Rp360.000 setelah diskon 20%. Harga sebelum diskon adalah ...",
+        "options":  [
+                        "Rp400.000",
+                        "Rp420.000",
+                        "Rp450.000",
+                        "Rp440.000",
+                        "Rp480.000"
+                    ],
+        "answer":  2,
+        "explanation":  "Harga setelah diskon adalah 80% harga awal. Harga awal = 360.000 ÷ 0,8 = 450.000."
+    },
+    {
+        "id":  "n-20",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Perbandingan A : B = 5 : 8. Jika selisih keduanya 27, jumlah A dan B adalah ...",
+        "options":  [
+                        "117",
+                        "99",
+                        "108",
+                        "126",
+                        "135"
+                    ],
+        "answer":  0,
+        "explanation":  "Selisih 3 bagian = 27, satu bagian 9. Jumlah 13 bagian = 117."
+    },
+    {
+        "id":  "n-21",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Rata-rata 7 bilangan adalah 24. Jika enam bilangan berjumlah 150, bilangan ketujuh adalah ...",
+        "options":  [
+                        "16",
+                        "20",
+                        "22",
+                        "18",
+                        "24"
+                    ],
+        "answer":  3,
+        "explanation":  "Jumlah tujuh bilangan = 7 × 24 = 168. Bilangan ketujuh = 168 − 150 = 18."
+    },
+    {
+        "id":  "n-22",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah pekerjaan selesai oleh 15 orang dalam 24 hari. Jika 20 orang bekerja dengan laju sama, waktu yang dibutuhkan ...",
+        "options":  [
+                        "15 hari",
+                        "18 hari",
+                        "16 hari",
+                        "20 hari",
+                        "22 hari"
+                    ],
+        "answer":  1,
+        "explanation":  "Total pekerjaan 15 × 24 = 360 orang-hari. Waktu = 360 ÷ 20 = 18 hari."
+    },
+    {
+        "id":  "n-23",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Mobil menempuh 150 km dengan kecepatan 50 km/jam, lalu 150 km dengan kecepatan 75 km/jam. Kecepatan rata-rata seluruh perjalanan adalah ...",
+        "options":  [
+                        "55 km/jam",
+                        "62,5 km/jam",
+                        "65 km/jam",
+                        "70 km/jam",
+                        "60 km/jam"
+                    ],
+        "answer":  4,
+        "explanation":  "Waktu total = 3 + 2 = 5 jam. Jarak total 300 km, sehingga kecepatan rata-rata 300 ÷ 5 = 60 km/jam."
+    },
+    {
+        "id":  "n-24",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Modal Rp600.000 dijual dengan keuntungan 15%. Harga jual adalah ...",
+        "options":  [
+                        "Rp660.000",
+                        "Rp675.000",
+                        "Rp690.000",
+                        "Rp700.000",
+                        "Rp720.000"
+                    ],
+        "answer":  2,
+        "explanation":  "Keuntungan 15% × 600.000 = 90.000. Harga jual = 690.000."
+    },
+    {
+        "id":  "n-25",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Harga naik 25% dari Rp400.000, kemudian mendapat diskon 20%. Harga akhir adalah ...",
+        "options":  [
+                        "Rp400.000",
+                        "Rp380.000",
+                        "Rp390.000",
+                        "Rp410.000",
+                        "Rp420.000"
+                    ],
+        "answer":  0,
+        "explanation":  "Setelah naik menjadi Rp500.000. Diskon 20% = Rp100.000, sehingga harga akhir Rp400.000."
+    },
+    {
+        "id":  "n-26",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika 4x − 7 = 3x + 11, nilai x adalah ...",
+        "options":  [
+                        "14",
+                        "16",
+                        "20",
+                        "18",
+                        "22"
+                    ],
+        "answer":  3,
+        "explanation":  "Pindahkan suku: 4x − 3x = 11 + 7, sehingga x = 18."
+    },
+    {
+        "id":  "n-27",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika 2x + y = 17 dan x − y = 1, nilai x adalah ...",
+        "options":  [
+                        "4",
+                        "6",
+                        "5",
+                        "7",
+                        "8"
+                    ],
+        "answer":  1,
+        "explanation":  "Dari x − y = 1, y = x − 1. Substitusi: 2x + x − 1 = 17, sehingga x = 6."
+    },
+    {
+        "id":  "n-28",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah bilangan jika 40% darinya ditambahkan 36 menghasilkan 96. Bilangan itu adalah ...",
+        "options":  [
+                        "120",
+                        "135",
+                        "160",
+                        "180",
+                        "150"
+                    ],
+        "answer":  4,
+        "explanation":  "0,4x + 36 = 96, maka 0,4x = 60 dan x = 150."
+    },
+    {
+        "id":  "n-29",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Dua keran mengisi bak. Keran A selesai 10 jam dan keran B 15 jam. Jika dibuka bersama, bak terisi dalam ...",
+        "options":  [
+                        "5 jam",
+                        "7 jam",
+                        "6 jam",
+                        "8 jam",
+                        "12 jam"
+                    ],
+        "answer":  2,
+        "explanation":  "Laju gabungan = 1/10 + 1/15 = 1/6 bak per jam. Jadi diperlukan 6 jam."
+    },
+    {
+        "id":  "n-30",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah barang dijual Rp540.000 setelah mendapat keuntungan 20%. Harga belinya adalah ...",
+        "options":  [
+                        "Rp450.000",
+                        "Rp420.000",
+                        "Rp430.000",
+                        "Rp460.000",
+                        "Rp480.000"
+                    ],
+        "answer":  0,
+        "explanation":  "Harga jual 120% modal. Modal = 540.000 ÷ 1,2 = 450.000."
+    },
+    {
+        "id":  "n-31",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 5, 8, 14, 23, 35, ...",
+        "options":  [
+                        "44",
+                        "47",
+                        "49",
+                        "50",
+                        "52"
+                    ],
+        "answer":  3,
+        "explanation":  "Selisih 3, 6, 9, 12, sehingga berikutnya 15. Jadi 35 + 15 = 50."
+    },
+    {
+        "id":  "n-32",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Nilai dari (18² − 12²) ÷ 6 adalah ...",
+        "options":  [
+                        "24",
+                        "30",
+                        "28",
+                        "32",
+                        "36"
+                    ],
+        "answer":  1,
+        "explanation":  "18² − 12² = 324 − 144 = 180. Kemudian 180 ÷ 6 = 30."
+    },
+    {
+        "id":  "n-33",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika 35% dari suatu bilangan adalah 140, maka 65% dari bilangan itu adalah ...",
+        "options":  [
+                        "220",
+                        "240",
+                        "280",
+                        "300",
+                        "260"
+                    ],
+        "answer":  4,
+        "explanation":  "Bilangan = 140 ÷ 0,35 = 400. Maka 65% × 400 = 260."
+    },
+    {
+        "id":  "n-34",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Perbandingan uang Rani dan Sinta 7 : 9. Jika uang Sinta Rp45.000 lebih banyak, jumlah uang mereka adalah ...",
+        "options":  [
+                        "Rp300.000",
+                        "Rp330.000",
+                        "Rp360.000",
+                        "Rp390.000",
+                        "Rp420.000"
+                    ],
+        "answer":  2,
+        "explanation":  "Selisih 2 bagian = 45.000, satu bagian 22.500. Jumlah 16 bagian = Rp360.000."
+    },
+    {
+        "id":  "n-35",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah kendaraan melaju 72 km/jam selama 2 jam 30 menit. Jarak yang ditempuh adalah ...",
+        "options":  [
+                        "180 km",
+                        "160 km",
+                        "170 km",
+                        "190 km",
+                        "200 km"
+                    ],
+        "answer":  0,
+        "explanation":  "2 jam 30 menit = 2,5 jam. Jarak = 72 × 2,5 = 180 km."
+    },
+    {
+        "id":  "n-36",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Rata-rata 5 angka adalah 18. Jika ditambah satu angka 30, rata-rata baru adalah ...",
+        "options":  [
+                        "18",
+                        "19",
+                        "21",
+                        "20",
+                        "22"
+                    ],
+        "answer":  3,
+        "explanation":  "Jumlah awal 5 × 18 = 90. Jumlah baru 120, rata-rata 120 ÷ 6 = 20."
+    },
+    {
+        "id":  "n-37",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah toko memberi diskon 15% lalu 10% pada barang Rp200.000. Harga akhirnya adalah ...",
+        "options":  [
+                        "Rp150.000",
+                        "Rp153.000",
+                        "Rp155.000",
+                        "Rp160.000",
+                        "Rp165.000"
+                    ],
+        "answer":  1,
+        "explanation":  "Setelah diskon pertama Rp170.000. Diskon kedua 10% dari 170.000 = 17.000. Akhirnya Rp153.000."
+    },
+    {
+        "id":  "n-38",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika 3 mesin menghasilkan 540 unit dalam 6 jam, 5 mesin dalam 4 jam menghasilkan ...",
+        "options":  [
+                        "500 unit",
+                        "540 unit",
+                        "620 unit",
+                        "650 unit",
+                        "600 unit"
+                    ],
+        "answer":  4,
+        "explanation":  "Produksi per mesin per jam = 540 ÷ 18 = 30. Produksi = 5 × 4 × 30 = 600."
+    },
+    {
+        "id":  "n-39",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah bilangan dibagi 4 lalu ditambah 9 menghasilkan 24. Bilangan tersebut adalah ...",
+        "options":  [
+                        "48",
+                        "52",
+                        "60",
+                        "56",
+                        "64"
+                    ],
+        "answer":  2,
+        "explanation":  "x/4 + 9 = 24, sehingga x/4 = 15 dan x = 60."
+    },
+    {
+        "id":  "n-40",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika x : y = 2 : 5 dan x + y = 84, nilai y − x adalah ...",
+        "options":  [
+                        "36",
+                        "24",
+                        "30",
+                        "42",
+                        "48"
+                    ],
+        "answer":  0,
+        "explanation":  "Total bagian 7, satu bagian 12. x = 24 dan y = 60, sehingga selisihnya 36."
+    },
+    {
+        "id":  "n-41",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 2, 5, 14, 41, 122, ...",
+        "options":  [
+                        "243",
+                        "244",
+                        "360",
+                        "365",
+                        "366"
+                    ],
+        "answer":  3,
+        "explanation":  "Setiap suku dikali 3 lalu dikurangi 1. Jadi 122 × 3 − 1 = 365."
+    },
+    {
+        "id":  "n-42",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Nilai dari 2⁵ + 4³ − 3² adalah ...",
+        "options":  [
+                        "79",
+                        "87",
+                        "81",
+                        "85",
+                        "89"
+                    ],
+        "answer":  1,
+        "explanation":  "32 + 64 − 9 = 87."
+    },
+    {
+        "id":  "n-43",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Umur kakak 3 kali umur adik. Enam tahun lagi jumlah umur mereka 48 tahun. Umur adik sekarang adalah ...",
+        "options":  [
+                        "6 tahun",
+                        "8 tahun",
+                        "10 tahun",
+                        "12 tahun",
+                        "9 tahun"
+                    ],
+        "answer":  4,
+        "explanation":  "Misalkan umur adik x dan kakak 3x. (x+6)+(3x+6)=48, sehingga 4x=36 dan x=9."
+    },
+    {
+        "id":  "s-01",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya dari deret 2, 6, 15, 31, 56, ...",
+        "options":  [
+                        "82",
+                        "88",
+                        "90",
+                        "92",
+                        "96"
+                    ],
+        "answer":  3,
+        "explanation":  "Selisih berturut-turut adalah 4, 9, 16, 25 (kuadrat 2, 3, 4, 5). Selisih berikutnya 36, sehingga angka berikutnya 56 + 36 = 92."
+    },
+    {
+        "id":  "s-02",
+        "category":  "PENALARAN LOGIS",
+        "question":  "Semua peneliti membaca jurnal. Tidak ada pembaca jurnal yang mengabaikan data. Kesimpulan yang pasti benar adalah ...",
+        "options":  [
+                        "Semua yang membaca jurnal adalah peneliti",
+                        "Tidak ada peneliti yang mengabaikan data",
+                        "Sebagian peneliti mengabaikan data",
+                        "Semua yang tidak mengabaikan data adalah peneliti",
+                        "Tidak ada hubungan peneliti dan data"
+                    ],
+        "answer":  1,
+        "explanation":  "Setiap peneliti termasuk pembaca jurnal, dan tidak seorang pun pembaca jurnal mengabaikan data. Karena itu tidak ada peneliti yang mengabaikan data."
+    },
+    {
+        "id":  "s-03",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "A menyelesaikan pekerjaan dalam 6 jam dan B dalam 8 jam. Jika bekerja bersama dengan laju tetap, pekerjaan selesai dalam ...",
+        "options":  [
+                        "3 jam",
+                        "24/7 jam",
+                        "7/2 jam",
+                        "4 jam",
+                        "14/3 jam"
+                    ],
+        "answer":  1,
+        "explanation":  "Laju bersama = 1/6 + 1/8 = 7/24 pekerjaan per jam. Waktu yang diperlukan = 1 ÷ (7/24) = 24/7 jam."
+    },
+    {
+        "id":  "s-04",
+        "category":  "ANALOGI VERBAL",
+        "question":  "Aksioma berhubungan dengan pembuktian, sebagaimana hipotesis berhubungan dengan ...",
+        "options":  [
+                        "Pengamatan",
+                        "Pengujian",
+                        "Kesimpulan",
+                        "Definisi",
+                        "Pengukuran"
+                    ],
+        "answer":  1,
+        "explanation":  "Aksioma diterima sebagai dasar dalam pembuktian. Hipotesis merupakan dugaan yang perlu diuji."
+    },
+    {
+        "id":  "s-05",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Harga suatu barang naik 20%, lalu turun 20% dari harga setelah kenaikan. Perubahan terhadap harga awal adalah ...",
+        "options":  [
+                        "Tetap",
+                        "Turun 2%",
+                        "Turun 4%",
+                        "Naik 4%",
+                        "Turun 8%"
+                    ],
+        "answer":  2,
+        "explanation":  "Misalkan harga awal 100. Setelah naik menjadi 120, lalu turun 20% menjadi 96. Jadi harga akhir turun 4% dari harga awal."
+    },
+    {
+        "id":  "s-06",
+        "category":  "PENALARAN LOGIS",
+        "question":  "Jika sistem aktif, lampu indikator menyala. Jika lampu indikator menyala, petugas menerima notifikasi. Lampu indikator tidak menyala. Kesimpulan yang pasti benar adalah ...",
+        "options":  [
+                        "Sistem tidak aktif",
+                        "Petugas tidak menerima notifikasi",
+                        "Sistem aktif",
+                        "Petugas menerima notifikasi",
+                        "Tidak dapat dipastikan apakah sistem aktif"
+                    ],
+        "answer":  0,
+        "explanation":  "Jika sistem aktif maka lampu menyala. Karena lampu tidak menyala, sistem tidak aktif (modus tollens)."
+    },
+    {
+        "id":  "s-07",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Dalam kotak terdapat 4 bola merah dan 3 bola biru. Dua bola diambil berurutan tanpa pengembalian. Peluang keduanya merah adalah ...",
+        "options":  [
+                        "1/7",
+                        "2/7",
+                        "3/7",
+                        "4/7",
+                        "2/3"
+                    ],
+        "answer":  1,
+        "explanation":  "Peluang bola pertama merah = 4/7. Setelah satu merah terambil, peluang bola kedua merah = 3/6. Hasilnya 4/7 × 3/6 = 2/7."
+    },
+    {
+        "id":  "s-08",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Diketahui 2x + 3y = 19 dan x − y = 2. Nilai x + y adalah ...",
+        "options":  [
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9"
+                    ],
+        "answer":  3,
+        "explanation":  "Dari x − y = 2, diperoleh x = y + 2. Substitusikan: 2(y + 2) + 3y = 19, jadi 5y = 15 dan y = 3. Maka x = 5 dan x + y = 8."
+    },
+    {
+        "id":  "s-09",
+        "category":  "ANALOGI VERBAL",
+        "question":  "Kontradiksi berhubungan dengan pertentangan, sebagaimana konsensus berhubungan dengan ...",
+        "options":  [
+                        "Perdebatan",
+                        "Kesepakatan",
+                        "Perbedaan",
+                        "Penolakan",
+                        "Keputusan"
+                    ],
+        "answer":  1,
+        "explanation":  "Kontradiksi menunjukkan pertentangan, sedangkan konsensus menunjukkan kesepakatan bersama."
+    },
+    {
+        "id":  "s-10",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah kendaraan menempuh 180 km. Jika kecepatannya dinaikkan 15 km/jam, waktu perjalanan berkurang 2 jam. Kecepatan awal kendaraan adalah ...",
+        "options":  [
+                        "25 km/jam",
+                        "30 km/jam",
+                        "35 km/jam",
+                        "40 km/jam",
+                        "45 km/jam"
+                    ],
+        "answer":  1,
+        "explanation":  "Misalkan kecepatan awal v. Selisih waktu: 180/v − 180/(v+15) = 2. Ini menghasilkan v² + 15v − 1350 = 0, dengan akar positif v = 30 km/jam."
+    },
+    {
+        "id":  "s-11",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 1, 4, 13, 40, 121, ...",
+        "options":  [
+                        "243",
+                        "360",
+                        "362",
+                        "364",
+                        "366"
+                    ],
+        "answer":  3,
+        "explanation":  "Setiap suku dikali 3 lalu ditambah 1. Jadi 121 × 3 + 1 = 364."
+    },
+    {
+        "id":  "s-12",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 2, 9, 28, 65, 126, ...",
+        "options":  [
+                        "180",
+                        "217",
+                        "196",
+                        "210",
+                        "225"
+                    ],
+        "answer":  1,
+        "explanation":  "Pola n³ + 1: 1³+1, 2³+1, ..., 6³+1 = 217."
+    },
+    {
+        "id":  "s-13",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 6, 13, 27, 55, 111, ...",
+        "options":  [
+                        "215",
+                        "219",
+                        "221",
+                        "225",
+                        "223"
+                    ],
+        "answer":  4,
+        "explanation":  "Setiap suku dikali 2 lalu ditambah 1. Jadi 111 × 2 + 1 = 223."
+    },
+    {
+        "id":  "s-14",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 3, 10, 29, 66, 127, ...",
+        "options":  [
+                        "180",
+                        "196",
+                        "218",
+                        "216",
+                        "225"
+                    ],
+        "answer":  2,
+        "explanation":  "Pola n³ + 2: 1³+2=3, 2³+2=10, 3³+2=29, 4³+2=66, 5³+2=127. Berikutnya 6³+2=218."
+    },
+    {
+        "id":  "s-15",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 2, 6, 12, 20, 30, 42, ...",
+        "options":  [
+                        "56",
+                        "48",
+                        "50",
+                        "54",
+                        "60"
+                    ],
+        "answer":  0,
+        "explanation":  "Pola n(n+1): 1×2, 2×3, ..., 7×8 = 56."
+    },
+    {
+        "id":  "s-16",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Tentukan angka berikutnya: 1, 2, 6, 15, 31, 56, ...",
+        "options":  [
+                        "81",
+                        "86",
+                        "90",
+                        "92",
+                        "96"
+                    ],
+        "answer":  3,
+        "explanation":  "Selisihnya 1, 4, 9, 16, 25 yaitu kuadrat berurutan. Selisih berikutnya 36, sehingga 56 + 36 = 92."
+    },
+    {
+        "id":  "s-17",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Nilai dari (3⁵ − 3³) ÷ 18 adalah ...",
+        "options":  [
+                        "9",
+                        "12",
+                        "10",
+                        "14",
+                        "16"
+                    ],
+        "answer":  1,
+        "explanation":  "3⁵ = 243 dan 3³ = 27. (243 − 27) ÷ 18 = 216 ÷ 18 = 12."
+    },
+    {
+        "id":  "s-18",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika √(x + 144) = 18, nilai x adalah ...",
+        "options":  [
+                        "160",
+                        "168",
+                        "184",
+                        "192",
+                        "180"
+                    ],
+        "answer":  4,
+        "explanation":  "Kuadratkan kedua sisi: x + 144 = 324, sehingga x = 180."
+    },
+    {
+        "id":  "s-19",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Harga setelah diskon 20% dan 15% adalah Rp272.000. Harga awal barang adalah ...",
+        "options":  [
+                        "Rp340.000",
+                        "Rp360.000",
+                        "Rp400.000",
+                        "Rp380.000",
+                        "Rp420.000"
+                    ],
+        "answer":  2,
+        "explanation":  "Harga akhir = 80% × 85% = 68% harga awal. Harga awal = 272.000 ÷ 0,68 = 400.000."
+    },
+    {
+        "id":  "s-20",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Perbandingan A : B = 4 : 7. Setelah A bertambah 15 dan B berkurang 6, nilainya sama. Jumlah A dan B semula adalah ...",
+        "options":  [
+                        "77",
+                        "66",
+                        "70",
+                        "84",
+                        "88"
+                    ],
+        "answer":  0,
+        "explanation":  "Misalkan A=4k dan B=7k. 4k+15=7k−6, maka 3k=21 dan k=7. Jumlah = 11k = 77."
+    },
+    {
+        "id":  "s-21",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Rata-rata 8 bilangan adalah 72. Jika dua bilangan 80 dan 84 ditambahkan, rata-rata 10 bilangan menjadi ...",
+        "options":  [
+                        "72",
+                        "73",
+                        "75",
+                        "74",
+                        "76"
+                    ],
+        "answer":  3,
+        "explanation":  "Jumlah awal 8×72=576. Jumlah baru 576+80+84=740. Rata-rata baru 740÷10=74."
+    },
+    {
+        "id":  "s-22",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "A dapat menyelesaikan pekerjaan dalam 12 hari, B dalam 18 hari. Mereka bekerja bersama selama 4 hari. Bagian pekerjaan yang tersisa adalah ...",
+        "options":  [
+                        "1/3",
+                        "4/9",
+                        "5/12",
+                        "1/2",
+                        "5/9"
+                    ],
+        "answer":  1,
+        "explanation":  "Laju bersama = 1/12+1/18=5/36. Dalam 4 hari selesai 20/36=5/9, tersisa 4/9."
+    },
+    {
+        "id":  "s-23",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Dua kendaraan berjarak 420 km dan bergerak saling mendekat dengan kecepatan 64 km/jam dan 76 km/jam. Waktu hingga bertemu adalah ...",
+        "options":  [
+                        "2,5 jam",
+                        "3,5 jam",
+                        "4 jam",
+                        "4,5 jam",
+                        "3 jam"
+                    ],
+        "answer":  4,
+        "explanation":  "Kecepatan relatif 64+76=140 km/jam. Waktu = 420 ÷ 140 = 3 jam."
+    },
+    {
+        "id":  "s-24",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Kecepatan rata-rata perjalanan pergi 80 km/jam dan pulang 60 km/jam untuk jarak yang sama adalah ...",
+        "options":  [
+                        "65 km/jam",
+                        "66,67 km/jam",
+                        "68,57 km/jam",
+                        "70 km/jam",
+                        "72 km/jam"
+                    ],
+        "answer":  2,
+        "explanation":  "Untuk jarak sama, rata-rata harmonik = 2×80×60/(80+60) = 9600/140 ≈ 68,57 km/jam."
+    },
+    {
+        "id":  "s-25",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Modal Rp3.000.000 berbunga sederhana 8% per tahun. Jumlah modal setelah 15 bulan adalah ...",
+        "options":  [
+                        "Rp3.300.000",
+                        "Rp3.240.000",
+                        "Rp3.280.000",
+                        "Rp3.320.000",
+                        "Rp3.360.000"
+                    ],
+        "answer":  0,
+        "explanation":  "Bunga = 3.000.000 × 8% × 15/12 = 300.000. Jumlah akhir Rp3.300.000."
+    },
+    {
+        "id":  "s-26",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika 2x + 3y = 19 dan x − y = 2, nilai x + y adalah ...",
+        "options":  [
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9"
+                    ],
+        "answer":  3,
+        "explanation":  "Dari x−y=2, x=y+2. Substitusi: 2(y+2)+3y=19, sehingga 5y=15, y=3 dan x=5. Jadi x+y=8."
+    },
+    {
+        "id":  "s-27",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah barang dijual dengan rugi 12%. Jika harga jual Rp440.000, harga beli adalah ...",
+        "options":  [
+                        "Rp480.000",
+                        "Rp500.000",
+                        "Rp490.000",
+                        "Rp510.000",
+                        "Rp520.000"
+                    ],
+        "answer":  1,
+        "explanation":  "Harga jual 88% dari modal. Modal = 440.000 ÷ 0,88 = 500.000."
+    },
+    {
+        "id":  "s-28",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika 30% dari A = 45% dari B dan A + B = 250, nilai A adalah ...",
+        "options":  [
+                        "100",
+                        "125",
+                        "175",
+                        "200",
+                        "150"
+                    ],
+        "answer":  4,
+        "explanation":  "0,3A=0,45B, sehingga A:B=3:2. Total 5 bagian=250, A=3×50=150."
+    },
+    {
+        "id":  "s-29",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Pipa A mengisi bak dalam 8 jam, B dalam 12 jam, sedangkan kebocoran mengosongkan bak penuh dalam 24 jam. Jika semuanya dibuka, bak penuh dalam ...",
+        "options":  [
+                        "5 jam",
+                        "7 jam",
+                        "6 jam",
+                        "8 jam",
+                        "9 jam"
+                    ],
+        "answer":  2,
+        "explanation":  "Laju bersih = 1/8+1/12−1/24 = 1/6 bak per jam. Waktu 6 jam."
+    },
+    {
+        "id":  "s-30",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Rata-rata 12 data adalah 68. Jika satu data bernilai 90 diganti menjadi 66, rata-rata baru adalah ...",
+        "options":  [
+                        "66",
+                        "64",
+                        "65",
+                        "67",
+                        "68"
+                    ],
+        "answer":  0,
+        "explanation":  "Jumlah berkurang 24. Rata-rata berkurang 24/12=2, menjadi 66."
+    },
+    {
+        "id":  "s-31",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah bilangan dua digit memiliki jumlah digit 11. Jika digitnya dibalik, bilangan baru 27 lebih kecil dari bilangan semula. Bilangan semula adalah ...",
+        "options":  [
+                        "47",
+                        "65",
+                        "72",
+                        "74",
+                        "83"
+                    ],
+        "answer":  3,
+        "explanation":  "Misalkan puluhan a dan satuan b. a+b=11 dan 9(a−b)=27, sehingga a−b=3. Diperoleh a=7, b=4, yaitu 74."
+    },
+    {
+        "id":  "s-32",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika 5x − 2y = 16 dan 3x + 2y = 16, nilai x² + y² adalah ...",
+        "options":  [
+                        "12",
+                        "20",
+                        "14",
+                        "16",
+                        "18"
+                    ],
+        "answer":  1,
+        "explanation":  "Jumlahkan persamaan: 8x=32, x=4. Substitusi memberi y=2. Jadi x²+y²=16+4=20."
+    },
+    {
+        "id":  "s-33",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah kendaraan menempuh 240 km. Jika kecepatannya ditambah 20 km/jam, waktu tempuh berkurang 2 jam. Kecepatan awal adalah ...",
+        "options":  [
+                        "30 km/jam",
+                        "35 km/jam",
+                        "45 km/jam",
+                        "50 km/jam",
+                        "40 km/jam"
+                    ],
+        "answer":  4,
+        "explanation":  "240/v − 240/(v+20)=2. Penyelesaian menghasilkan v=40 km/jam."
+    },
+    {
+        "id":  "s-34",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Dalam kotak terdapat 6 bola merah, 5 biru, dan 4 hijau. Peluang mengambil bola bukan biru adalah ...",
+        "options":  [
+                        "1/3",
+                        "7/15",
+                        "2/3",
+                        "3/5",
+                        "4/5"
+                    ],
+        "answer":  2,
+        "explanation":  "Bola bukan biru = 6+4=10 dari total 15. Peluang = 10/15 = 2/3."
+    },
+    {
+        "id":  "s-35",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Dua dadu dilempar bersamaan. Peluang jumlah mata dadu 8 adalah ...",
+        "options":  [
+                        "5/36",
+                        "1/6",
+                        "1/9",
+                        "1/12",
+                        "7/36"
+                    ],
+        "answer":  0,
+        "explanation":  "Pasangan berjumlah 8: (2,6),(3,5),(4,4),(5,3),(6,2), ada 5 dari 36 kemungkinan."
+    },
+    {
+        "id":  "s-36",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika 4 pekerja menyelesaikan ⅓ pekerjaan dalam 5 hari, berapa hari total yang dibutuhkan 6 pekerja untuk menyelesaikan seluruh pekerjaan dengan laju sama?",
+        "options":  [
+                        "8 hari",
+                        "9 hari",
+                        "12 hari",
+                        "10 hari",
+                        "15 hari"
+                    ],
+        "answer":  3,
+        "explanation":  "4 pekerja × 5 hari menghasilkan 1/3 pekerjaan. Total beban 60 orang-hari. Dengan 6 pekerja perlu 60/6=10 hari."
+    },
+    {
+        "id":  "s-37",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah investasi naik 10% pada tahun pertama dan 10% pada tahun kedua. Jika modal awal Rp1.000.000, nilai akhirnya adalah ...",
+        "options":  [
+                        "Rp1.100.000",
+                        "Rp1.210.000",
+                        "Rp1.200.000",
+                        "Rp1.220.000",
+                        "Rp1.250.000"
+                    ],
+        "answer":  1,
+        "explanation":  "Pertumbuhan majemuk: 1.000.000 × 1,1 × 1,1 = Rp1.210.000."
+    },
+    {
+        "id":  "s-38",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Perbandingan jumlah peserta pria dan wanita 5 : 7. Setelah 12 peserta pria bergabung, perbandingan menjadi 7 : 7. Jumlah peserta semula adalah ...",
+        "options":  [
+                        "60",
+                        "66",
+                        "78",
+                        "84",
+                        "72"
+                    ],
+        "answer":  4,
+        "explanation":  "Misalkan pria=5k dan wanita=7k. (5k+12)/7k=1, maka 5k+12=7k, k=6. Jumlah semula 12k=72."
+    },
+    {
+        "id":  "s-39",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jika x + y = 13 dan xy = 40, nilai x² + y² adalah ...",
+        "options":  [
+                        "81",
+                        "85",
+                        "89",
+                        "91",
+                        "97"
+                    ],
+        "answer":  2,
+        "explanation":  "x²+y²=(x+y)²−2xy=13²−80=169−80=89."
+    },
+    {
+        "id":  "s-40",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah toko mencampur 10 kg kopi seharga Rp80.000/kg dengan 15 kg kopi seharga Rp100.000/kg. Harga rata-rata campuran per kg adalah ...",
+        "options":  [
+                        "Rp92.000",
+                        "Rp88.000",
+                        "Rp90.000",
+                        "Rp94.000",
+                        "Rp96.000"
+                    ],
+        "answer":  0,
+        "explanation":  "Total biaya = 800.000+1.500.000=2.300.000. Dibagi 25 kg = Rp92.000/kg."
+    },
+    {
+        "id":  "s-41",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah bilangan dua digit memiliki jumlah digit 11. Jika digitnya dibalik, bilangan baru 27 lebih kecil dari bilangan semula. Bilangan semula adalah ...",
+        "options":  [
+                        "47",
+                        "65",
+                        "72",
+                        "74",
+                        "83"
+                    ],
+        "answer":  3,
+        "explanation":  "Misalkan puluhan a dan satuan b. a+b=11 dan 9(a−b)=27, sehingga a−b=3. Diperoleh a=7, b=4, yaitu 74."
+    },
+    {
+        "id":  "s-42",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Sebuah angka jika dinaikkan 20% lalu hasilnya dikurangi 25% menjadi 180. Angka awal adalah ...",
+        "options":  [
+                        "180",
+                        "200",
+                        "190",
+                        "210",
+                        "225"
+                    ],
+        "answer":  1,
+        "explanation":  "Faktor perubahan 1,2 × 0,75 = 0,9. Jadi 0,9x=180, x=200."
+    },
+    {
+        "id":  "s-43",
+        "category":  "PENALARAN NUMERIK",
+        "question":  "Jumlah tiga bilangan berurutan adalah 96. Hasil kali bilangan terkecil dan terbesar adalah ...",
+        "options":  [
+                        "992",
+                        "1.008",
+                        "1.020",
+                        "1.056",
+                        "1.023"
+                    ],
+        "answer":  4,
+        "explanation":  "Bilangan berurutan 31, 32, 33. Hasil kali 31 × 33 = 1.023."
     }
-  ],
-  "menengah": [
-    {
-      "id": "n-01",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya dari deret 3, 7, 15, 31, 63, ...",
-      "options": [
-        "95",
-        "111",
-        "126",
-        "127",
-        "129"
-      ],
-      "answer": 3,
-      "explanation": "Setiap angka dikali 2 lalu ditambah 1: 3→7→15→31→63. Berikutnya 63 × 2 + 1 = 127."
-    },
-    {
-      "id": "n-02",
-      "category": "PENALARAN LOGIS",
-      "question": "Semua analis teliti. Sebagian pegawai adalah analis. Kesimpulan yang pasti benar adalah ...",
-      "options": [
-        "Semua pegawai teliti",
-        "Sebagian pegawai teliti",
-        "Semua yang teliti adalah analis",
-        "Sebagian analis tidak teliti",
-        "Tidak ada pegawai yang teliti"
-      ],
-      "answer": 1,
-      "explanation": "Sebagian pegawai termasuk analis, dan semua analis teliti. Maka sebagian pegawai tersebut pasti teliti."
-    },
-    {
-      "id": "n-03",
-      "category": "PENALARAN NUMERIK",
-      "question": "Perbandingan jumlah buku Andi dan Budi adalah 3 : 5. Jika jumlah buku mereka 64, berapa buku Budi?",
-      "options": [
-        "24",
-        "32",
-        "36",
-        "40",
-        "48"
-      ],
-      "answer": 3,
-      "explanation": "Total bagian = 3 + 5 = 8. Satu bagian = 64 ÷ 8 = 8. Buku Budi = 5 × 8 = 40."
-    },
-    {
-      "id": "n-04",
-      "category": "ANALOGI VERBAL",
-      "question": "Benih berhubungan dengan tanaman, sebagaimana telur berhubungan dengan ...",
-      "options": [
-        "Sarang",
-        "Unggas",
-        "Cangkang",
-        "Makanan",
-        "Bulu"
-      ],
-      "answer": 1,
-      "explanation": "Benih dapat tumbuh menjadi tanaman, sedangkan telur dapat berkembang menjadi unggas."
-    },
-    {
-      "id": "n-05",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah pekerjaan selesai dalam 12 hari oleh 8 orang. Dengan kemampuan sama, berapa hari diperlukan oleh 6 orang?",
-      "options": [
-        "14 hari",
-        "15 hari",
-        "16 hari",
-        "18 hari",
-        "20 hari"
-      ],
-      "answer": 2,
-      "explanation": "Total pekerjaan = 8 × 12 = 96 orang-hari. Jika dikerjakan 6 orang, waktu = 96 ÷ 6 = 16 hari."
-    },
-    {
-      "id": "n-06",
-      "category": "PENALARAN LOGIS",
-      "question": "Jika laporan selesai, rapat dimulai. Rapat tidak dimulai. Kesimpulan yang tepat adalah ...",
-      "options": [
-        "Laporan selesai",
-        "Laporan belum selesai",
-        "Rapat sudah berakhir",
-        "Laporan tidak perlu dibuat",
-        "Tidak ada kesimpulan yang dapat ditarik"
-      ],
-      "answer": 1,
-      "explanation": "Bentuk logikanya: jika P maka Q. Karena Q tidak terjadi, P juga tidak terjadi (modus tollens). Jadi laporan belum selesai."
-    },
-    {
-      "id": "n-07",
-      "category": "PENALARAN NUMERIK",
-      "question": "Nilai 5 peserta adalah 70, 75, 80, 85, dan x. Jika rata-ratanya 80, nilai x adalah ...",
-      "options": [
-        "85",
-        "88",
-        "90",
-        "92",
-        "95"
-      ],
-      "answer": 2,
-      "explanation": "Jumlah nilai yang diperlukan = 5 × 80 = 400. Jumlah empat nilai = 310, sehingga x = 400 − 310 = 90."
-    },
-    {
-      "id": "n-08",
-      "category": "ANALOGI VERBAL",
-      "question": "Skeptis berhubungan dengan keraguan, sebagaimana optimistis berhubungan dengan ...",
-      "options": [
-        "Kepastian",
-        "Harapan",
-        "Ketakutan",
-        "Kenyataan",
-        "Kritik"
-      ],
-      "answer": 1,
-      "explanation": "Sikap skeptis cenderung meragukan, sedangkan sikap optimistis cenderung memiliki harapan baik."
-    },
-    {
-      "id": "n-09",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah barang dibeli Rp240.000 dan dijual dengan keuntungan 25%. Berapa harga jualnya?",
-      "options": [
-        "Rp270.000",
-        "Rp280.000",
-        "Rp290.000",
-        "Rp300.000",
-        "Rp320.000"
-      ],
-      "answer": 3,
-      "explanation": "Keuntungan = 25% × Rp240.000 = Rp60.000. Harga jual = Rp240.000 + Rp60.000 = Rp300.000."
-    },
-    {
-      "id": "n-10",
-      "category": "PENALARAN LOGIS",
-      "question": "Dita lebih tinggi dari Ema. Fani lebih pendek dari Ema. Gita lebih tinggi dari Dita. Siapa yang paling tinggi?",
-      "options": [
-        "Dita",
-        "Ema",
-        "Fani",
-        "Gita",
-        "Tidak dapat ditentukan"
-      ],
-      "answer": 3,
-      "explanation": "Urutannya adalah Gita > Dita > Ema > Fani. Jadi, Gita paling tinggi."
-    },
-    {
-      "id": "n-11",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 4, 9, 19, 39, 79, ...",
-      "options": [
-        "149",
-        "157",
-        "161",
-        "159",
-        "169"
-      ],
-      "answer": 3,
-      "explanation": "Setiap suku dikali 2 lalu ditambah 1. Jadi 79 × 2 + 1 = 159."
-    },
-    {
-      "id": "n-12",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 2, 7, 16, 29, 46, ...",
-      "options": [
-        "61",
-        "67",
-        "63",
-        "65",
-        "69"
-      ],
-      "answer": 1,
-      "explanation": "Selisihnya 5, 9, 13, 17; bertambah 4. Selisih berikutnya 21, jadi 46 + 21 = 67."
-    },
-    {
-      "id": "n-13",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 1, 3, 7, 15, 31, ...",
-      "options": [
-        "47",
-        "61",
-        "62",
-        "65",
-        "63"
-      ],
-      "answer": 4,
-      "explanation": "Setiap suku dikali 2 lalu ditambah 1. Jadi 31 × 2 + 1 = 63."
-    },
-    {
-      "id": "n-14",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 2, 12, 36, 80, 150, ...",
-      "options": [
-        "216",
-        "240",
-        "252",
-        "250",
-        "270"
-      ],
-      "answer": 2,
-      "explanation": "Pola n²(n+1): 1²×2=2, 2²×3=12, ..., 6²×7=252."
-    },
-    {
-      "id": "n-15",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 120, 60, 30, 15, ...",
-      "options": [
-        "7,5",
-        "5",
-        "6",
-        "8",
-        "10"
-      ],
-      "answer": 0,
-      "explanation": "Setiap suku dibagi 2. Jadi 15 ÷ 2 = 7,5."
-    },
-    {
-      "id": "n-16",
-      "category": "PENALARAN NUMERIK",
-      "question": "Nilai dari 3⁴ × 2³ adalah ...",
-      "options": [
-        "324",
-        "512",
-        "624",
-        "648",
-        "729"
-      ],
-      "answer": 3,
-      "explanation": "3⁴ = 81 dan 2³ = 8. Hasilnya 81 × 8 = 648."
-    },
-    {
-      "id": "n-17",
-      "category": "PENALARAN NUMERIK",
-      "question": "Nilai dari √2.025 adalah ...",
-      "options": [
-        "35",
-        "45",
-        "40",
-        "42",
-        "50"
-      ],
-      "answer": 1,
-      "explanation": "45 × 45 = 2.025, sehingga akar kuadratnya 45."
-    },
-    {
-      "id": "n-18",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika ⅗ dari x adalah 84, nilai x adalah ...",
-      "options": [
-        "120",
-        "130",
-        "150",
-        "160",
-        "140"
-      ],
-      "answer": 4,
-      "explanation": "x = 84 × 5 ÷ 3 = 140."
-    },
-    {
-      "id": "n-19",
-      "category": "PENALARAN NUMERIK",
-      "question": "Harga barang Rp360.000 setelah diskon 20%. Harga sebelum diskon adalah ...",
-      "options": [
-        "Rp400.000",
-        "Rp420.000",
-        "Rp450.000",
-        "Rp440.000",
-        "Rp480.000"
-      ],
-      "answer": 2,
-      "explanation": "Harga setelah diskon adalah 80% harga awal. Harga awal = 360.000 ÷ 0,8 = 450.000."
-    },
-    {
-      "id": "n-20",
-      "category": "PENALARAN NUMERIK",
-      "question": "Perbandingan A : B = 5 : 8. Jika selisih keduanya 27, jumlah A dan B adalah ...",
-      "options": [
-        "117",
-        "99",
-        "108",
-        "126",
-        "135"
-      ],
-      "answer": 0,
-      "explanation": "Selisih 3 bagian = 27, satu bagian 9. Jumlah 13 bagian = 117."
-    },
-    {
-      "id": "n-21",
-      "category": "PENALARAN NUMERIK",
-      "question": "Rata-rata 7 bilangan adalah 24. Jika enam bilangan berjumlah 150, bilangan ketujuh adalah ...",
-      "options": [
-        "16",
-        "20",
-        "22",
-        "18",
-        "24"
-      ],
-      "answer": 3,
-      "explanation": "Jumlah tujuh bilangan = 7 × 24 = 168. Bilangan ketujuh = 168 − 150 = 18."
-    },
-    {
-      "id": "n-22",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah pekerjaan selesai oleh 15 orang dalam 24 hari. Jika 20 orang bekerja dengan laju sama, waktu yang dibutuhkan ...",
-      "options": [
-        "15 hari",
-        "18 hari",
-        "16 hari",
-        "20 hari",
-        "22 hari"
-      ],
-      "answer": 1,
-      "explanation": "Total pekerjaan 15 × 24 = 360 orang-hari. Waktu = 360 ÷ 20 = 18 hari."
-    },
-    {
-      "id": "n-23",
-      "category": "PENALARAN NUMERIK",
-      "question": "Mobil menempuh 150 km dengan kecepatan 50 km/jam, lalu 150 km dengan kecepatan 75 km/jam. Kecepatan rata-rata seluruh perjalanan adalah ...",
-      "options": [
-        "55 km/jam",
-        "62,5 km/jam",
-        "65 km/jam",
-        "70 km/jam",
-        "60 km/jam"
-      ],
-      "answer": 4,
-      "explanation": "Waktu total = 3 + 2 = 5 jam. Jarak total 300 km, sehingga kecepatan rata-rata 300 ÷ 5 = 60 km/jam."
-    },
-    {
-      "id": "n-24",
-      "category": "PENALARAN NUMERIK",
-      "question": "Modal Rp600.000 dijual dengan keuntungan 15%. Harga jual adalah ...",
-      "options": [
-        "Rp660.000",
-        "Rp675.000",
-        "Rp690.000",
-        "Rp700.000",
-        "Rp720.000"
-      ],
-      "answer": 2,
-      "explanation": "Keuntungan 15% × 600.000 = 90.000. Harga jual = 690.000."
-    },
-    {
-      "id": "n-25",
-      "category": "PENALARAN NUMERIK",
-      "question": "Harga naik 25% dari Rp400.000, kemudian mendapat diskon 20%. Harga akhir adalah ...",
-      "options": [
-        "Rp400.000",
-        "Rp380.000",
-        "Rp390.000",
-        "Rp410.000",
-        "Rp420.000"
-      ],
-      "answer": 0,
-      "explanation": "Setelah naik menjadi Rp500.000. Diskon 20% = Rp100.000, sehingga harga akhir Rp400.000."
-    },
-    {
-      "id": "n-26",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika 4x − 7 = 3x + 11, nilai x adalah ...",
-      "options": [
-        "14",
-        "16",
-        "20",
-        "18",
-        "22"
-      ],
-      "answer": 3,
-      "explanation": "Pindahkan suku: 4x − 3x = 11 + 7, sehingga x = 18."
-    },
-    {
-      "id": "n-27",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika 2x + y = 17 dan x − y = 1, nilai x adalah ...",
-      "options": [
-        "4",
-        "6",
-        "5",
-        "7",
-        "8"
-      ],
-      "answer": 1,
-      "explanation": "Dari x − y = 1, y = x − 1. Substitusi: 2x + x − 1 = 17, sehingga x = 6."
-    },
-    {
-      "id": "n-28",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah bilangan jika 40% darinya ditambahkan 36 menghasilkan 96. Bilangan itu adalah ...",
-      "options": [
-        "120",
-        "135",
-        "160",
-        "180",
-        "150"
-      ],
-      "answer": 4,
-      "explanation": "0,4x + 36 = 96, maka 0,4x = 60 dan x = 150."
-    },
-    {
-      "id": "n-29",
-      "category": "PENALARAN NUMERIK",
-      "question": "Dua keran mengisi bak. Keran A selesai 10 jam dan keran B 15 jam. Jika dibuka bersama, bak terisi dalam ...",
-      "options": [
-        "5 jam",
-        "7 jam",
-        "6 jam",
-        "8 jam",
-        "12 jam"
-      ],
-      "answer": 2,
-      "explanation": "Laju gabungan = 1/10 + 1/15 = 1/6 bak per jam. Jadi diperlukan 6 jam."
-    },
-    {
-      "id": "n-30",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah barang dijual Rp540.000 setelah mendapat keuntungan 20%. Harga belinya adalah ...",
-      "options": [
-        "Rp450.000",
-        "Rp420.000",
-        "Rp430.000",
-        "Rp460.000",
-        "Rp480.000"
-      ],
-      "answer": 0,
-      "explanation": "Harga jual 120% modal. Modal = 540.000 ÷ 1,2 = 450.000."
-    },
-    {
-      "id": "n-31",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 5, 8, 14, 23, 35, ...",
-      "options": [
-        "44",
-        "47",
-        "49",
-        "50",
-        "52"
-      ],
-      "answer": 3,
-      "explanation": "Selisih 3, 6, 9, 12, sehingga berikutnya 15. Jadi 35 + 15 = 50."
-    },
-    {
-      "id": "n-32",
-      "category": "PENALARAN NUMERIK",
-      "question": "Nilai dari (18² − 12²) ÷ 6 adalah ...",
-      "options": [
-        "24",
-        "30",
-        "28",
-        "32",
-        "36"
-      ],
-      "answer": 1,
-      "explanation": "18² − 12² = 324 − 144 = 180. Kemudian 180 ÷ 6 = 30."
-    },
-    {
-      "id": "n-33",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika 35% dari suatu bilangan adalah 140, maka 65% dari bilangan itu adalah ...",
-      "options": [
-        "220",
-        "240",
-        "280",
-        "300",
-        "260"
-      ],
-      "answer": 4,
-      "explanation": "Bilangan = 140 ÷ 0,35 = 400. Maka 65% × 400 = 260."
-    },
-    {
-      "id": "n-34",
-      "category": "PENALARAN NUMERIK",
-      "question": "Perbandingan uang Rani dan Sinta 7 : 9. Jika uang Sinta Rp45.000 lebih banyak, jumlah uang mereka adalah ...",
-      "options": [
-        "Rp300.000",
-        "Rp330.000",
-        "Rp360.000",
-        "Rp390.000",
-        "Rp420.000"
-      ],
-      "answer": 2,
-      "explanation": "Selisih 2 bagian = 45.000, satu bagian 22.500. Jumlah 16 bagian = Rp360.000."
-    },
-    {
-      "id": "n-35",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah kendaraan melaju 72 km/jam selama 2 jam 30 menit. Jarak yang ditempuh adalah ...",
-      "options": [
-        "180 km",
-        "160 km",
-        "170 km",
-        "190 km",
-        "200 km"
-      ],
-      "answer": 0,
-      "explanation": "2 jam 30 menit = 2,5 jam. Jarak = 72 × 2,5 = 180 km."
-    },
-    {
-      "id": "n-36",
-      "category": "PENALARAN NUMERIK",
-      "question": "Rata-rata 5 angka adalah 18. Jika ditambah satu angka 30, rata-rata baru adalah ...",
-      "options": [
-        "18",
-        "19",
-        "21",
-        "20",
-        "22"
-      ],
-      "answer": 3,
-      "explanation": "Jumlah awal 5 × 18 = 90. Jumlah baru 120, rata-rata 120 ÷ 6 = 20."
-    },
-    {
-      "id": "n-37",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah toko memberi diskon 15% lalu 10% pada barang Rp200.000. Harga akhirnya adalah ...",
-      "options": [
-        "Rp150.000",
-        "Rp153.000",
-        "Rp155.000",
-        "Rp160.000",
-        "Rp165.000"
-      ],
-      "answer": 1,
-      "explanation": "Setelah diskon pertama Rp170.000. Diskon kedua 10% dari 170.000 = 17.000. Akhirnya Rp153.000."
-    },
-    {
-      "id": "n-38",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika 3 mesin menghasilkan 540 unit dalam 6 jam, 5 mesin dalam 4 jam menghasilkan ...",
-      "options": [
-        "500 unit",
-        "540 unit",
-        "620 unit",
-        "650 unit",
-        "600 unit"
-      ],
-      "answer": 4,
-      "explanation": "Produksi per mesin per jam = 540 ÷ 18 = 30. Produksi = 5 × 4 × 30 = 600."
-    },
-    {
-      "id": "n-39",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah bilangan dibagi 4 lalu ditambah 9 menghasilkan 24. Bilangan tersebut adalah ...",
-      "options": [
-        "48",
-        "52",
-        "60",
-        "56",
-        "64"
-      ],
-      "answer": 2,
-      "explanation": "x/4 + 9 = 24, sehingga x/4 = 15 dan x = 60."
-    },
-    {
-      "id": "n-40",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika x : y = 2 : 5 dan x + y = 84, nilai y − x adalah ...",
-      "options": [
-        "36",
-        "24",
-        "30",
-        "42",
-        "48"
-      ],
-      "answer": 0,
-      "explanation": "Total bagian 7, satu bagian 12. x = 24 dan y = 60, sehingga selisihnya 36."
-    },
-    {
-      "id": "n-41",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 2, 5, 14, 41, 122, ...",
-      "options": [
-        "243",
-        "244",
-        "360",
-        "365",
-        "366"
-      ],
-      "answer": 3,
-      "explanation": "Setiap suku dikali 3 lalu dikurangi 1. Jadi 122 × 3 − 1 = 365."
-    },
-    {
-      "id": "n-42",
-      "category": "PENALARAN NUMERIK",
-      "question": "Nilai dari 2⁵ + 4³ − 3² adalah ...",
-      "options": [
-        "79",
-        "87",
-        "81",
-        "85",
-        "89"
-      ],
-      "answer": 1,
-      "explanation": "32 + 64 − 9 = 87."
-    },
-    {
-      "id": "n-43",
-      "category": "PENALARAN NUMERIK",
-      "question": "Umur kakak 3 kali umur adik. Enam tahun lagi jumlah umur mereka 48 tahun. Umur adik sekarang adalah ...",
-      "options": [
-        "6 tahun",
-        "8 tahun",
-        "10 tahun",
-        "12 tahun",
-        "9 tahun"
-      ],
-      "answer": 4,
-      "explanation": "Misalkan umur adik x dan kakak 3x. (x+6)+(3x+6)=48, sehingga 4x=36 dan x=9."
-    }
-  ],
-  "sulit": [
-    {
-      "id": "s-01",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya dari deret 2, 6, 15, 31, 56, ...",
-      "options": [
-        "82",
-        "88",
-        "90",
-        "92",
-        "96"
-      ],
-      "answer": 3,
-      "explanation": "Selisih berturut-turut adalah 4, 9, 16, 25 (kuadrat 2, 3, 4, 5). Selisih berikutnya 36, sehingga angka berikutnya 56 + 36 = 92."
-    },
-    {
-      "id": "s-02",
-      "category": "PENALARAN LOGIS",
-      "question": "Semua peneliti membaca jurnal. Tidak ada pembaca jurnal yang mengabaikan data. Kesimpulan yang pasti benar adalah ...",
-      "options": [
-        "Semua yang membaca jurnal adalah peneliti",
-        "Tidak ada peneliti yang mengabaikan data",
-        "Sebagian peneliti mengabaikan data",
-        "Semua yang tidak mengabaikan data adalah peneliti",
-        "Tidak ada hubungan peneliti dan data"
-      ],
-      "answer": 1,
-      "explanation": "Setiap peneliti termasuk pembaca jurnal, dan tidak seorang pun pembaca jurnal mengabaikan data. Karena itu tidak ada peneliti yang mengabaikan data."
-    },
-    {
-      "id": "s-03",
-      "category": "PENALARAN NUMERIK",
-      "question": "A menyelesaikan pekerjaan dalam 6 jam dan B dalam 8 jam. Jika bekerja bersama dengan laju tetap, pekerjaan selesai dalam ...",
-      "options": [
-        "3 jam",
-        "24/7 jam",
-        "7/2 jam",
-        "4 jam",
-        "14/3 jam"
-      ],
-      "answer": 1,
-      "explanation": "Laju bersama = 1/6 + 1/8 = 7/24 pekerjaan per jam. Waktu yang diperlukan = 1 ÷ (7/24) = 24/7 jam."
-    },
-    {
-      "id": "s-04",
-      "category": "ANALOGI VERBAL",
-      "question": "Aksioma berhubungan dengan pembuktian, sebagaimana hipotesis berhubungan dengan ...",
-      "options": [
-        "Pengamatan",
-        "Pengujian",
-        "Kesimpulan",
-        "Definisi",
-        "Pengukuran"
-      ],
-      "answer": 1,
-      "explanation": "Aksioma diterima sebagai dasar dalam pembuktian. Hipotesis merupakan dugaan yang perlu diuji."
-    },
-    {
-      "id": "s-05",
-      "category": "PENALARAN NUMERIK",
-      "question": "Harga suatu barang naik 20%, lalu turun 20% dari harga setelah kenaikan. Perubahan terhadap harga awal adalah ...",
-      "options": [
-        "Tetap",
-        "Turun 2%",
-        "Turun 4%",
-        "Naik 4%",
-        "Turun 8%"
-      ],
-      "answer": 2,
-      "explanation": "Misalkan harga awal 100. Setelah naik menjadi 120, lalu turun 20% menjadi 96. Jadi harga akhir turun 4% dari harga awal."
-    },
-    {
-      "id": "s-06",
-      "category": "PENALARAN LOGIS",
-      "question": "Jika sistem aktif, lampu indikator menyala. Jika lampu indikator menyala, petugas menerima notifikasi. Lampu indikator tidak menyala. Kesimpulan yang pasti benar adalah ...",
-      "options": [
-        "Sistem tidak aktif",
-        "Petugas tidak menerima notifikasi",
-        "Sistem aktif",
-        "Petugas menerima notifikasi",
-        "Tidak dapat dipastikan apakah sistem aktif"
-      ],
-      "answer": 0,
-      "explanation": "Jika sistem aktif maka lampu menyala. Karena lampu tidak menyala, sistem tidak aktif (modus tollens)."
-    },
-    {
-      "id": "s-07",
-      "category": "PENALARAN NUMERIK",
-      "question": "Dalam kotak terdapat 4 bola merah dan 3 bola biru. Dua bola diambil berurutan tanpa pengembalian. Peluang keduanya merah adalah ...",
-      "options": [
-        "1/7",
-        "2/7",
-        "3/7",
-        "4/7",
-        "2/3"
-      ],
-      "answer": 1,
-      "explanation": "Peluang bola pertama merah = 4/7. Setelah satu merah terambil, peluang bola kedua merah = 3/6. Hasilnya 4/7 × 3/6 = 2/7."
-    },
-    {
-      "id": "s-08",
-      "category": "PENALARAN NUMERIK",
-      "question": "Diketahui 2x + 3y = 19 dan x − y = 2. Nilai x + y adalah ...",
-      "options": [
-        "5",
-        "6",
-        "7",
-        "8",
-        "9"
-      ],
-      "answer": 3,
-      "explanation": "Dari x − y = 2, diperoleh x = y + 2. Substitusikan: 2(y + 2) + 3y = 19, jadi 5y = 15 dan y = 3. Maka x = 5 dan x + y = 8."
-    },
-    {
-      "id": "s-09",
-      "category": "ANALOGI VERBAL",
-      "question": "Kontradiksi berhubungan dengan pertentangan, sebagaimana konsensus berhubungan dengan ...",
-      "options": [
-        "Perdebatan",
-        "Kesepakatan",
-        "Perbedaan",
-        "Penolakan",
-        "Keputusan"
-      ],
-      "answer": 1,
-      "explanation": "Kontradiksi menunjukkan pertentangan, sedangkan konsensus menunjukkan kesepakatan bersama."
-    },
-    {
-      "id": "s-10",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah kendaraan menempuh 180 km. Jika kecepatannya dinaikkan 15 km/jam, waktu perjalanan berkurang 2 jam. Kecepatan awal kendaraan adalah ...",
-      "options": [
-        "25 km/jam",
-        "30 km/jam",
-        "35 km/jam",
-        "40 km/jam",
-        "45 km/jam"
-      ],
-      "answer": 1,
-      "explanation": "Misalkan kecepatan awal v. Selisih waktu: 180/v − 180/(v+15) = 2. Ini menghasilkan v² + 15v − 1350 = 0, dengan akar positif v = 30 km/jam."
-    },
-    {
-      "id": "s-11",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 1, 4, 13, 40, 121, ...",
-      "options": [
-        "243",
-        "360",
-        "362",
-        "364",
-        "366"
-      ],
-      "answer": 3,
-      "explanation": "Setiap suku dikali 3 lalu ditambah 1. Jadi 121 × 3 + 1 = 364."
-    },
-    {
-      "id": "s-12",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 2, 9, 28, 65, 126, ...",
-      "options": [
-        "180",
-        "217",
-        "196",
-        "210",
-        "225"
-      ],
-      "answer": 1,
-      "explanation": "Pola n³ + 1: 1³+1, 2³+1, ..., 6³+1 = 217."
-    },
-    {
-      "id": "s-13",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 6, 13, 27, 55, 111, ...",
-      "options": [
-        "215",
-        "219",
-        "221",
-        "225",
-        "223"
-      ],
-      "answer": 4,
-      "explanation": "Setiap suku dikali 2 lalu ditambah 1. Jadi 111 × 2 + 1 = 223."
-    },
-    {
-      "id": "s-14",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 3, 10, 29, 66, 127, ...",
-      "options": [
-        "180",
-        "196",
-        "218",
-        "216",
-        "225"
-      ],
-      "answer": 2,
-      "explanation": "Pola n³ + 2: 1³+2=3, 2³+2=10, 3³+2=29, 4³+2=66, 5³+2=127. Berikutnya 6³+2=218."
-    },
-    {
-      "id": "s-15",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 2, 6, 12, 20, 30, 42, ...",
-      "options": [
-        "56",
-        "48",
-        "50",
-        "54",
-        "60"
-      ],
-      "answer": 0,
-      "explanation": "Pola n(n+1): 1×2, 2×3, ..., 7×8 = 56."
-    },
-    {
-      "id": "s-16",
-      "category": "PENALARAN NUMERIK",
-      "question": "Tentukan angka berikutnya: 1, 2, 6, 15, 31, 56, ...",
-      "options": [
-        "81",
-        "86",
-        "90",
-        "92",
-        "96"
-      ],
-      "answer": 3,
-      "explanation": "Selisihnya 1, 4, 9, 16, 25 yaitu kuadrat berurutan. Selisih berikutnya 36, sehingga 56 + 36 = 92."
-    },
-    {
-      "id": "s-17",
-      "category": "PENALARAN NUMERIK",
-      "question": "Nilai dari (3⁵ − 3³) ÷ 18 adalah ...",
-      "options": [
-        "9",
-        "12",
-        "10",
-        "14",
-        "16"
-      ],
-      "answer": 1,
-      "explanation": "3⁵ = 243 dan 3³ = 27. (243 − 27) ÷ 18 = 216 ÷ 18 = 12."
-    },
-    {
-      "id": "s-18",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika √(x + 144) = 18, nilai x adalah ...",
-      "options": [
-        "160",
-        "168",
-        "184",
-        "192",
-        "180"
-      ],
-      "answer": 4,
-      "explanation": "Kuadratkan kedua sisi: x + 144 = 324, sehingga x = 180."
-    },
-    {
-      "id": "s-19",
-      "category": "PENALARAN NUMERIK",
-      "question": "Harga setelah diskon 20% dan 15% adalah Rp272.000. Harga awal barang adalah ...",
-      "options": [
-        "Rp340.000",
-        "Rp360.000",
-        "Rp400.000",
-        "Rp380.000",
-        "Rp420.000"
-      ],
-      "answer": 2,
-      "explanation": "Harga akhir = 80% × 85% = 68% harga awal. Harga awal = 272.000 ÷ 0,68 = 400.000."
-    },
-    {
-      "id": "s-20",
-      "category": "PENALARAN NUMERIK",
-      "question": "Perbandingan A : B = 4 : 7. Setelah A bertambah 15 dan B berkurang 6, nilainya sama. Jumlah A dan B semula adalah ...",
-      "options": [
-        "77",
-        "66",
-        "70",
-        "84",
-        "88"
-      ],
-      "answer": 0,
-      "explanation": "Misalkan A=4k dan B=7k. 4k+15=7k−6, maka 3k=21 dan k=7. Jumlah = 11k = 77."
-    },
-    {
-      "id": "s-21",
-      "category": "PENALARAN NUMERIK",
-      "question": "Rata-rata 8 bilangan adalah 72. Jika dua bilangan 80 dan 84 ditambahkan, rata-rata 10 bilangan menjadi ...",
-      "options": [
-        "72",
-        "73",
-        "75",
-        "74",
-        "76"
-      ],
-      "answer": 3,
-      "explanation": "Jumlah awal 8×72=576. Jumlah baru 576+80+84=740. Rata-rata baru 740÷10=74."
-    },
-    {
-      "id": "s-22",
-      "category": "PENALARAN NUMERIK",
-      "question": "A dapat menyelesaikan pekerjaan dalam 12 hari, B dalam 18 hari. Mereka bekerja bersama selama 4 hari. Bagian pekerjaan yang tersisa adalah ...",
-      "options": [
-        "1/3",
-        "4/9",
-        "5/12",
-        "1/2",
-        "5/9"
-      ],
-      "answer": 1,
-      "explanation": "Laju bersama = 1/12+1/18=5/36. Dalam 4 hari selesai 20/36=5/9, tersisa 4/9."
-    },
-    {
-      "id": "s-23",
-      "category": "PENALARAN NUMERIK",
-      "question": "Dua kendaraan berjarak 420 km dan bergerak saling mendekat dengan kecepatan 64 km/jam dan 76 km/jam. Waktu hingga bertemu adalah ...",
-      "options": [
-        "2,5 jam",
-        "3,5 jam",
-        "4 jam",
-        "4,5 jam",
-        "3 jam"
-      ],
-      "answer": 4,
-      "explanation": "Kecepatan relatif 64+76=140 km/jam. Waktu = 420 ÷ 140 = 3 jam."
-    },
-    {
-      "id": "s-24",
-      "category": "PENALARAN NUMERIK",
-      "question": "Kecepatan rata-rata perjalanan pergi 80 km/jam dan pulang 60 km/jam untuk jarak yang sama adalah ...",
-      "options": [
-        "65 km/jam",
-        "66,67 km/jam",
-        "68,57 km/jam",
-        "70 km/jam",
-        "72 km/jam"
-      ],
-      "answer": 2,
-      "explanation": "Untuk jarak sama, rata-rata harmonik = 2×80×60/(80+60) = 9600/140 ≈ 68,57 km/jam."
-    },
-    {
-      "id": "s-25",
-      "category": "PENALARAN NUMERIK",
-      "question": "Modal Rp3.000.000 berbunga sederhana 8% per tahun. Jumlah modal setelah 15 bulan adalah ...",
-      "options": [
-        "Rp3.300.000",
-        "Rp3.240.000",
-        "Rp3.280.000",
-        "Rp3.320.000",
-        "Rp3.360.000"
-      ],
-      "answer": 0,
-      "explanation": "Bunga = 3.000.000 × 8% × 15/12 = 300.000. Jumlah akhir Rp3.300.000."
-    },
-    {
-      "id": "s-26",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika 2x + 3y = 19 dan x − y = 2, nilai x + y adalah ...",
-      "options": [
-        "5",
-        "6",
-        "7",
-        "8",
-        "9"
-      ],
-      "answer": 3,
-      "explanation": "Dari x−y=2, x=y+2. Substitusi: 2(y+2)+3y=19, sehingga 5y=15, y=3 dan x=5. Jadi x+y=8."
-    },
-    {
-      "id": "s-27",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah barang dijual dengan rugi 12%. Jika harga jual Rp440.000, harga beli adalah ...",
-      "options": [
-        "Rp480.000",
-        "Rp500.000",
-        "Rp490.000",
-        "Rp510.000",
-        "Rp520.000"
-      ],
-      "answer": 1,
-      "explanation": "Harga jual 88% dari modal. Modal = 440.000 ÷ 0,88 = 500.000."
-    },
-    {
-      "id": "s-28",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika 30% dari A = 45% dari B dan A + B = 250, nilai A adalah ...",
-      "options": [
-        "100",
-        "125",
-        "175",
-        "200",
-        "150"
-      ],
-      "answer": 4,
-      "explanation": "0,3A=0,45B, sehingga A:B=3:2. Total 5 bagian=250, A=3×50=150."
-    },
-    {
-      "id": "s-29",
-      "category": "PENALARAN NUMERIK",
-      "question": "Pipa A mengisi bak dalam 8 jam, B dalam 12 jam, sedangkan kebocoran mengosongkan bak penuh dalam 24 jam. Jika semuanya dibuka, bak penuh dalam ...",
-      "options": [
-        "5 jam",
-        "7 jam",
-        "6 jam",
-        "8 jam",
-        "9 jam"
-      ],
-      "answer": 2,
-      "explanation": "Laju bersih = 1/8+1/12−1/24 = 1/6 bak per jam. Waktu 6 jam."
-    },
-    {
-      "id": "s-30",
-      "category": "PENALARAN NUMERIK",
-      "question": "Rata-rata 12 data adalah 68. Jika satu data bernilai 90 diganti menjadi 66, rata-rata baru adalah ...",
-      "options": [
-        "66",
-        "64",
-        "65",
-        "67",
-        "68"
-      ],
-      "answer": 0,
-      "explanation": "Jumlah berkurang 24. Rata-rata berkurang 24/12=2, menjadi 66."
-    },
-    {
-      "id": "s-31",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah bilangan dua digit memiliki jumlah digit 11. Jika digitnya dibalik, bilangan baru 27 lebih kecil dari bilangan semula. Bilangan semula adalah ...",
-      "options": [
-        "47",
-        "65",
-        "72",
-        "74",
-        "83"
-      ],
-      "answer": 3,
-      "explanation": "Misalkan puluhan a dan satuan b. a+b=11 dan 9(a−b)=27, sehingga a−b=3. Diperoleh a=7, b=4, yaitu 74."
-    },
-    {
-      "id": "s-32",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika 5x − 2y = 16 dan 3x + 2y = 16, nilai x² + y² adalah ...",
-      "options": [
-        "12",
-        "20",
-        "14",
-        "16",
-        "18"
-      ],
-      "answer": 1,
-      "explanation": "Jumlahkan persamaan: 8x=32, x=4. Substitusi memberi y=2. Jadi x²+y²=16+4=20."
-    },
-    {
-      "id": "s-33",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah kendaraan menempuh 240 km. Jika kecepatannya ditambah 20 km/jam, waktu tempuh berkurang 2 jam. Kecepatan awal adalah ...",
-      "options": [
-        "30 km/jam",
-        "35 km/jam",
-        "45 km/jam",
-        "50 km/jam",
-        "40 km/jam"
-      ],
-      "answer": 4,
-      "explanation": "240/v − 240/(v+20)=2. Penyelesaian menghasilkan v=40 km/jam."
-    },
-    {
-      "id": "s-34",
-      "category": "PENALARAN NUMERIK",
-      "question": "Dalam kotak terdapat 6 bola merah, 5 biru, dan 4 hijau. Peluang mengambil bola bukan biru adalah ...",
-      "options": [
-        "1/3",
-        "7/15",
-        "2/3",
-        "3/5",
-        "4/5"
-      ],
-      "answer": 2,
-      "explanation": "Bola bukan biru = 6+4=10 dari total 15. Peluang = 10/15 = 2/3."
-    },
-    {
-      "id": "s-35",
-      "category": "PENALARAN NUMERIK",
-      "question": "Dua dadu dilempar bersamaan. Peluang jumlah mata dadu 8 adalah ...",
-      "options": [
-        "5/36",
-        "1/6",
-        "1/9",
-        "1/12",
-        "7/36"
-      ],
-      "answer": 0,
-      "explanation": "Pasangan berjumlah 8: (2,6),(3,5),(4,4),(5,3),(6,2), ada 5 dari 36 kemungkinan."
-    },
-    {
-      "id": "s-36",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika 4 pekerja menyelesaikan ⅓ pekerjaan dalam 5 hari, berapa hari total yang dibutuhkan 6 pekerja untuk menyelesaikan seluruh pekerjaan dengan laju sama?",
-      "options": [
-        "8 hari",
-        "9 hari",
-        "12 hari",
-        "10 hari",
-        "15 hari"
-      ],
-      "answer": 3,
-      "explanation": "4 pekerja × 5 hari menghasilkan 1/3 pekerjaan. Total beban 60 orang-hari. Dengan 6 pekerja perlu 60/6=10 hari."
-    },
-    {
-      "id": "s-37",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah investasi naik 10% pada tahun pertama dan 10% pada tahun kedua. Jika modal awal Rp1.000.000, nilai akhirnya adalah ...",
-      "options": [
-        "Rp1.100.000",
-        "Rp1.210.000",
-        "Rp1.200.000",
-        "Rp1.220.000",
-        "Rp1.250.000"
-      ],
-      "answer": 1,
-      "explanation": "Pertumbuhan majemuk: 1.000.000 × 1,1 × 1,1 = Rp1.210.000."
-    },
-    {
-      "id": "s-38",
-      "category": "PENALARAN NUMERIK",
-      "question": "Perbandingan jumlah peserta pria dan wanita 5 : 7. Setelah 12 peserta pria bergabung, perbandingan menjadi 7 : 7. Jumlah peserta semula adalah ...",
-      "options": [
-        "60",
-        "66",
-        "78",
-        "84",
-        "72"
-      ],
-      "answer": 4,
-      "explanation": "Misalkan pria=5k dan wanita=7k. (5k+12)/7k=1, maka 5k+12=7k, k=6. Jumlah semula 12k=72."
-    },
-    {
-      "id": "s-39",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jika x + y = 13 dan xy = 40, nilai x² + y² adalah ...",
-      "options": [
-        "81",
-        "85",
-        "89",
-        "91",
-        "97"
-      ],
-      "answer": 2,
-      "explanation": "x²+y²=(x+y)²−2xy=13²−80=169−80=89."
-    },
-    {
-      "id": "s-40",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah toko mencampur 10 kg kopi seharga Rp80.000/kg dengan 15 kg kopi seharga Rp100.000/kg. Harga rata-rata campuran per kg adalah ...",
-      "options": [
-        "Rp92.000",
-        "Rp88.000",
-        "Rp90.000",
-        "Rp94.000",
-        "Rp96.000"
-      ],
-      "answer": 0,
-      "explanation": "Total biaya = 800.000+1.500.000=2.300.000. Dibagi 25 kg = Rp92.000/kg."
-    },
-    {
-      "id": "s-41",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah bilangan dua digit memiliki jumlah digit 11. Jika digitnya dibalik, bilangan baru 27 lebih kecil dari bilangan semula. Bilangan semula adalah ...",
-      "options": [
-        "47",
-        "65",
-        "72",
-        "74",
-        "83"
-      ],
-      "answer": 3,
-      "explanation": "Misalkan puluhan a dan satuan b. a+b=11 dan 9(a−b)=27, sehingga a−b=3. Diperoleh a=7, b=4, yaitu 74."
-    },
-    {
-      "id": "s-42",
-      "category": "PENALARAN NUMERIK",
-      "question": "Sebuah angka jika dinaikkan 20% lalu hasilnya dikurangi 25% menjadi 180. Angka awal adalah ...",
-      "options": [
-        "180",
-        "200",
-        "190",
-        "210",
-        "225"
-      ],
-      "answer": 1,
-      "explanation": "Faktor perubahan 1,2 × 0,75 = 0,9. Jadi 0,9x=180, x=200."
-    },
-    {
-      "id": "s-43",
-      "category": "PENALARAN NUMERIK",
-      "question": "Jumlah tiga bilangan berurutan adalah 96. Hasil kali bilangan terkecil dan terbesar adalah ...",
-      "options": [
-        "992",
-        "1.008",
-        "1.020",
-        "1.056",
-        "1.023"
-      ],
-      "answer": 4,
-      "explanation": "Bilangan berurutan 31, 32, 33. Hasil kali 31 × 33 = 1.023."
-    }
-  ]
-}
+]

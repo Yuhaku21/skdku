@@ -1,0 +1,142 @@
+[
+  {
+    "id": "tkp-01",
+    "category": "PELAYANAN PUBLIK",
+    "question": "Seorang warga datang dengan nada tinggi karena permohonan layanannya belum selesai. Antrean sedang ramai. Apa yang sebaiknya Anda lakukan?",
+    "options": [
+      "Meminta warga menurunkan suara sebelum Anda bersedia mendengarkan",
+      "Mendengarkan keluhannya dengan tenang, memeriksa status permohonan, lalu menjelaskan langkah dan perkiraan waktunya",
+      "Meminta warga kembali besok agar suasana lebih tenang",
+      "Mendahulukan permohonannya tanpa memeriksa prosedur",
+      "Menyalahkan petugas sebelumnya agar warga mengetahui penyebab keterlambatan"
+    ],
+    "answer": 1,
+    "explanation": "Dengarkan keluhan dengan empati, periksa fakta, dan sampaikan informasi serta tindak lanjut secara jelas tanpa mengabaikan prosedur."
+  },
+  {
+    "id": "tkp-02",
+    "category": "INTEGRITAS",
+    "question": "Seorang rekan meminta Anda mengubah tanggal pada dokumen agar laporan tampak selesai tepat waktu. Tindakan Anda adalah ...",
+    "options": [
+      "Mengubah tanggal karena hasil pekerjaannya memang sudah hampir selesai",
+      "Menolak dengan sopan, menjelaskan bahwa data harus akurat, dan menyarankan pelaporan kondisi sebenarnya",
+      "Membiarkan rekan mengubah dokumen dengan akunnya sendiri",
+      "Menyetujui perubahan jika atasan tidak memeriksa dokumen",
+      "Menghapus dokumen agar tidak ada yang mengetahui keterlambatan"
+    ],
+    "answer": 1,
+    "explanation": "Integritas menuntut pencatatan yang jujur. Sampaikan penolakan secara profesional dan bantu mencari solusi yang transparan."
+  },
+  {
+    "id": "tkp-03",
+    "category": "KERJA SAMA",
+    "question": "Tim Anda mendapat tugas mendadak dengan tenggat singkat. Salah satu anggota belum memahami bagian tugasnya. Apa yang Anda lakukan?",
+    "options": [
+      "Mengambil alih seluruh tugas agar pekerjaan cepat selesai",
+      "Membiarkan anggota tersebut mencari tahu sendiri supaya belajar mandiri",
+      "Membagi pekerjaan berdasarkan kemampuan, menjelaskan bagian yang belum dipahami, dan menyepakati titik pemeriksaan kemajuan",
+      "Melaporkan anggota tersebut kepada atasan sebelum mencoba membantu",
+      "Mengerjakan bagian yang paling mudah saja dan menunggu instruksi berikutnya"
+    ],
+    "answer": 2,
+    "explanation": "Pembagian tugas yang jelas, bantuan yang sesuai, dan koordinasi berkala membantu tim menyelesaikan pekerjaan tanpa meninggalkan anggota."
+  },
+  {
+    "id": "tkp-04",
+    "category": "PROFESIONALISME",
+    "question": "Anda menyadari telah mengirim data yang keliru kepada unit lain dan data tersebut berpotensi dipakai untuk mengambil keputusan. Apa langkah terbaik?",
+    "options": [
+      "Menunggu sampai ada yang menyadari kesalahan itu",
+      "Segera memberi tahu penerima dan atasan, mengirim koreksi yang benar, serta menjelaskan dampaknya",
+      "Menghapus pesan yang sudah terkirim tanpa memberi penjelasan",
+      "Meminta rekan mengirim data baru seolah-olah kesalahan bukan berasal dari Anda",
+      "Menyimpan koreksi untuk laporan berikutnya agar tidak menambah pekerjaan"
+    ],
+    "answer": 1,
+    "explanation": "Kesalahan yang dapat memengaruhi keputusan harus segera dikoreksi secara terbuka agar dampaknya dapat dicegah."
+  },
+  {
+    "id": "tkp-05",
+    "category": "SOSIAL BUDAYA",
+    "question": "Dalam rapat, seorang anggota baru menyampaikan pendapat dengan gaya komunikasi yang berbeda dari kebiasaan tim. Respons Anda adalah ...",
+    "options": [
+      "Memotong pembicaraan agar rapat tetap mengikuti kebiasaan lama",
+      "Mendengarkan isi pendapatnya, meminta klarifikasi bila diperlukan, dan menilai usul berdasarkan manfaatnya",
+      "Mengabaikan pendapat tersebut karena disampaikan dengan cara yang tidak biasa",
+      "Meminta anggota lain menjelaskan ulang pendapat itu tanpa melibatkan orang yang menyampaikannya",
+      "Menyarankan anggota baru untuk tidak menyampaikan pendapat pada rapat berikutnya"
+    ],
+    "answer": 1,
+    "explanation": "Sikap inklusif menghargai perbedaan cara berkomunikasi dan menilai gagasan secara objektif."
+  },
+  {
+    "id": "tkp-06",
+    "category": "ADAPTASI",
+    "question": "Instansi mulai menggunakan aplikasi baru untuk mencatat layanan. Anda belum terbiasa, sementara pekerjaan tetap berjalan. Apa yang Anda lakukan?",
+    "options": [
+      "Tetap menggunakan cara lama tanpa memberi tahu siapa pun",
+      "Mempelajari panduan, mencoba aplikasi, dan meminta bantuan pada bagian yang belum dipahami sambil mengikuti prosedur transisi",
+      "Menyerahkan semua penggunaan aplikasi kepada rekan yang lebih muda",
+      "Menunda seluruh layanan sampai Anda benar-benar mahir",
+      "Mencatat data pada akun rekan agar proses terasa lebih mudah"
+    ],
+    "answer": 1,
+    "explanation": "Kemauan belajar dan meminta dukungan secara tepat membantu adaptasi tanpa mengabaikan kelangsungan layanan dan keamanan akun."
+  },
+  {
+    "id": "tkp-07",
+    "category": "ORIENTASI PELAYANAN",
+    "question": "Seorang warga lanjut usia kesulitan memahami formulir layanan yang harus diisi sendiri. Tindakan Anda adalah ...",
+    "options": [
+      "Mengisi dan menandatangani formulir atas namanya agar cepat",
+      "Menjelaskan bagian formulir dengan bahasa sederhana dan membantu sesuai kewenangan tanpa mengambil alih keputusan atau tanda tangannya",
+      "Meminta warga membawa anggota keluarga untuk mengisi formulir",
+      "Menyuruh warga membaca ulang petunjuk yang tersedia",
+      "Melewati formulir tersebut agar warga tidak kesulitan"
+    ],
+    "answer": 1,
+    "explanation": "Bantuan yang ramah dan mudah dipahami meningkatkan akses layanan, sambil tetap menjaga persetujuan dan tanggung jawab warga."
+  },
+  {
+    "id": "tkp-08",
+    "category": "PENGENDALIAN DIRI",
+    "question": "Saat melayani, Anda menerima kritik yang disampaikan dengan nada tidak menyenangkan. Apa respons paling tepat?",
+    "options": [
+      "Membalas dengan nada yang sama agar warga memahami perasaannya",
+      "Mengakhiri percakapan tanpa memberi informasi apa pun",
+      "Menjaga nada bicara, memahami inti kritik, lalu menanggapi masalahnya sesuai fakta dan aturan",
+      "Meminta warga menyampaikan kritik hanya kepada atasan",
+      "Mengabaikan seluruh keluhan karena cara penyampaiannya tidak sopan"
+    ],
+    "answer": 2,
+    "explanation": "Pengendalian diri membuat percakapan tetap profesional dan membantu menyelesaikan inti masalah secara objektif."
+  },
+  {
+    "id": "tkp-09",
+    "category": "KEAMANAN INFORMASI",
+    "question": "Anda menerima pesan dari alamat yang tidak dikenal yang meminta kata sandi akun dinas untuk pembaruan sistem. Apa yang Anda lakukan?",
+    "options": [
+      "Mengirim kata sandi karena pesan menggunakan logo instansi",
+      "Membalas dengan kata sandi sementara lalu menggantinya nanti",
+      "Tidak membagikan kata sandi, memeriksa informasi melalui kanal resmi, dan melaporkan pesan mencurigakan",
+      "Meneruskan pesan itu kepada semua rekan agar mereka memutuskan",
+      "Mengeklik semua tautan untuk memastikan permintaan tersebut benar"
+    ],
+    "answer": 2,
+    "explanation": "Kata sandi harus dirahasiakan. Verifikasi melalui kanal resmi dan laporkan indikasi penipuan atau phishing."
+  },
+  {
+    "id": "tkp-10",
+    "category": "TANGGUNG JAWAB",
+    "question": "Anda melihat fasilitas kantor yang digunakan masyarakat rusak dan dapat membahayakan pengunjung. Apa tindakan Anda?",
+    "options": [
+      "Menunggu sampai ada pengunjung yang mengadukan kerusakan",
+      "Memasang tanda peringatan sementara, melaporkan kerusakan melalui jalur yang berlaku, dan memantau tindak lanjutnya",
+      "Memperbaikinya sendiri meskipun tidak memiliki keahlian atau kewenangan",
+      "Menutup area tersebut tanpa memberi tahu petugas lain",
+      "Mengunggah foto kerusakan ke media sosial terlebih dahulu"
+    ],
+    "answer": 1,
+    "explanation": "Utamakan keselamatan dengan peringatan sementara, pelaporan resmi, dan tindak lanjut tanpa melakukan perbaikan di luar kompetensi."
+  }
+]

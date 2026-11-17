@@ -7,10 +7,10 @@ const STORAGE = {
 const QUESTIONS_PER_SESSION = 10;
 const SESSION_SECONDS = 12 * 60;
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
-const LEVEL_LABELS = { mudah: "Mudah", menengah: "Menengah", sulit: "Sulit" };
+const TEST_BANKS = { TIU: "question.json", TKP: "tkp.json", TWK: "twk.json" };
 const screens = ["landing-view", "auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view"];
 
-let selectedLevel = "mudah";
+let selectedTest = "TIU";
 let sessionQuestions = [];
 let answers = [];
 let currentQuestion = 0;
@@ -178,7 +178,7 @@ function renderHistory() {
     return;
   }
   list.innerHTML = history.map((item) => `
-    <div class="history-item"><span>${escapeHtml(LEVEL_LABELS[item.level] || item.level)} · ${escapeHtml(item.date)} · ${item.correct}/10 benar</span><strong>${item.score}</strong></div>
+    <div class="history-item"><span>${escapeHtml(item.test || "TIU")} · ${escapeHtml(item.date)} · ${item.correct}/10 benar</span><strong>${item.score}</strong></div>
   `).join("");
 }
 
@@ -354,12 +354,11 @@ function escapeHtml(value) {
 }
 
 async function loadLocalQuestions() {
-  const response = await fetch("./question.json");
+  const response = await fetch(`./${TEST_BANKS[selectedTest]}`);
   if (!response.ok) throw new Error(`Bank soal tidak dapat dimuat (${response.status}).`);
-  const bank = await response.json();
-  const questions = bank[selectedLevel];
+  const questions = await response.json();
   if (!Array.isArray(questions) || questions.length < QUESTIONS_PER_SESSION) {
-    throw new Error(`Bank soal level ${selectedLevel} tidak berisi ${QUESTIONS_PER_SESSION} soal.`);
+    throw new Error(`Bank soal ${selectedTest} tidak berisi ${QUESTIONS_PER_SESSION} soal.`);
   }
   const shuffledIds = (ids) => {
     const shuffled = [...ids];
@@ -372,7 +371,7 @@ async function loadLocalQuestions() {
   const questionById = new Map(questions.map((question) => [question.id, question]));
   const savedRotation = readStored(STORAGE.questionRotation, {});
   const rotation = savedRotation && typeof savedRotation === "object" && !Array.isArray(savedRotation) ? savedRotation : {};
-  const savedIds = rotation && Array.isArray(rotation[selectedLevel]) ? rotation[selectedLevel] : [];
+  const savedIds = rotation && Array.isArray(rotation[selectedTest]) ? rotation[selectedTest] : [];
   let remainingIds = [...new Set(savedIds.filter((id) => questionById.has(id)))];
   const remainingSet = new Set(remainingIds);
   const newIds = questions.map((question) => question.id).filter((id) => !remainingSet.has(id));
@@ -389,7 +388,7 @@ async function loadLocalQuestions() {
     selectedIds.push(...refillIds.slice(0, needed));
     remainingIds = refillIds.slice(needed);
   }
-  rotation[selectedLevel] = remainingIds;
+  rotation[selectedTest] = remainingIds;
   writeStored(STORAGE.questionRotation, rotation);
   return selectedIds.map((id) => questionById.get(id));
 }
@@ -417,7 +416,7 @@ async function beginQuiz() {
 
 function renderQuestion() {
   const question = sessionQuestions[currentQuestion];
-  $("quiz-level").textContent = selectedLevel.toUpperCase();
+  $("quiz-test").textContent = selectedTest;
   $("quiz-counter").textContent = `SOAL ${String(currentQuestion + 1).padStart(2, "0")} / ${QUESTIONS_PER_SESSION}`;
   $("question-category").textContent = question.category.toUpperCase();
   $("question-text").textContent = question.question;
@@ -474,7 +473,7 @@ function finishQuiz(expired = false) {
   const score = correct * 10;
   $("score-value").textContent = String(score);
   $("correct-value").textContent = `${correct} / ${QUESTIONS_PER_SESSION}`;
-  $("result-level").textContent = LEVEL_LABELS[selectedLevel];
+  $("result-test").textContent = selectedTest;
   $("result-source").textContent = "Bank soal lokal";
   $("result-heading").textContent = correct >= 8 ? "Luar biasa, pertahankan!" : correct >= 5 ? "Latihan yang hebat!" : "Terus berlatih, kamu pasti bisa!";
   $("result-subtitle").textContent = expired ? "Waktu habis. Pelajari pembahasan dan coba lagi untuk meningkatkan skor." : "Setiap latihan membawamu selangkah lebih siap.";
@@ -497,7 +496,7 @@ function finishQuiz(expired = false) {
   const history = readStored(STORAGE.history, []);
   history.unshift({
     email: currentUser(),
-    level: selectedLevel,
+    test: selectedTest,
     correct,
     score,
     date: new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date())
@@ -564,10 +563,12 @@ function initialize() {
   $("nav-start-test-button").addEventListener("click", showLogin);
   $("back-to-landing-button").addEventListener("click", showLanding);
   $("auth-form").addEventListener("submit", handleAuth);
-  $("level-options").querySelectorAll("[data-level]").forEach((button) => {
+  $("level-options").querySelectorAll("[data-test]").forEach((button) => {
     button.addEventListener("click", () => {
-      selectedLevel = button.dataset.level;
-      $("level-options").querySelectorAll("[data-level]").forEach((item) => item.classList.toggle("selected", item === button));
+      selectedTest = button.dataset.test;
+      $("level-options").querySelectorAll("[data-test]").forEach((item) => item.classList.toggle("selected", item === button));
+      $("bank-title").textContent = `Bank soal ${selectedTest}`;
+      $("bank-description").textContent = `Soal dipilih acak dari bank soal ${selectedTest}, lengkap dengan kunci jawaban dan pembahasan.`;
     });
   });
   $("start-button").addEventListener("click", beginQuiz);

@@ -1,0 +1,142 @@
+[
+  {
+    "id": "twk-01",
+    "category": "PANCASILA",
+    "question": "Rumusan Pancasila sebagai dasar negara tercantum dalam Pembukaan UUD Negara Republik Indonesia Tahun 1945, tepatnya pada ...",
+    "options": [
+      "Alinea pertama",
+      "Alinea kedua",
+      "Alinea ketiga",
+      "Alinea keempat",
+      "Batang tubuh Pasal 1"
+    ],
+    "answer": 3,
+    "explanation": "Rumusan Pancasila tercantum pada alinea keempat Pembukaan UUD Negara Republik Indonesia Tahun 1945."
+  },
+  {
+    "id": "twk-02",
+    "category": "UUD 1945",
+    "question": "Menurut UUD Negara Republik Indonesia Tahun 1945, kedaulatan berada di tangan rakyat dan dilaksanakan menurut ...",
+    "options": [
+      "Keputusan presiden",
+      "Undang-Undang Dasar",
+      "Keputusan partai politik",
+      "Kebiasaan lembaga negara",
+      "Peraturan pemerintah"
+    ],
+    "answer": 1,
+    "explanation": "Pasal 1 ayat (2) UUD 1945 menyatakan bahwa kedaulatan berada di tangan rakyat dan dilaksanakan menurut Undang-Undang Dasar."
+  },
+  {
+    "id": "twk-03",
+    "category": "BENTUK NEGARA",
+    "question": "Bentuk Negara Kesatuan Republik Indonesia ditegaskan dalam UUD 1945 dan tidak dapat diubah. Ketentuan tersebut terdapat pada ...",
+    "options": [
+      "Pasal 1 ayat (1)",
+      "Pasal 1 ayat (2)",
+      "Pasal 18 ayat (1)",
+      "Pasal 27 ayat (1)",
+      "Pasal 37 ayat (5)"
+    ],
+    "answer": 4,
+    "explanation": "Pasal 37 ayat (5) UUD 1945 menetapkan bahwa bentuk Negara Kesatuan Republik Indonesia tidak dapat dilakukan perubahan."
+  },
+  {
+    "id": "twk-04",
+    "category": "BHINNEKA TUNGGAL IKA",
+    "question": "Makna semboyan Bhinneka Tunggal Ika dalam kehidupan berbangsa adalah ...",
+    "options": [
+      "Perbedaan harus dihilangkan agar tercipta persatuan",
+      "Setiap kelompok menjalankan kehidupan tanpa berhubungan dengan kelompok lain",
+      "Walaupun beragam, bangsa Indonesia tetap satu dan saling menghormati",
+      "Kebudayaan daerah harus diganti dengan satu kebudayaan",
+      "Persatuan hanya dapat dicapai jika semua warga memiliki pendapat yang sama"
+    ],
+    "answer": 2,
+    "explanation": "Bhinneka Tunggal Ika mengandung makna berbeda-beda tetapi tetap satu, dengan menghormati keragaman dalam persatuan."
+  },
+  {
+    "id": "twk-05",
+    "category": "LEMBAGA NEGARA",
+    "question": "Menurut UUD 1945, lembaga negara yang berwenang mengubah dan menetapkan Undang-Undang Dasar adalah ...",
+    "options": [
+      "Dewan Perwakilan Rakyat",
+      "Presiden",
+      "Mahkamah Konstitusi",
+      "Majelis Permusyawaratan Rakyat",
+      "Dewan Perwakilan Daerah"
+    ],
+    "answer": 3,
+    "explanation": "Pasal 3 ayat (1) UUD 1945 memberikan kewenangan mengubah dan menetapkan UUD kepada Majelis Permusyawaratan Rakyat."
+  },
+  {
+    "id": "twk-06",
+    "category": "HAK DAN KEWAJIBAN",
+    "question": "Sikap yang paling sesuai dengan prinsip persamaan warga negara di hadapan hukum adalah ...",
+    "options": [
+      "Memberi perlakuan khusus kepada orang yang memiliki jabatan",
+      "Menerapkan aturan secara adil tanpa membedakan latar belakang seseorang",
+      "Mendahulukan kerabat dalam proses pelayanan hukum",
+      "Membebaskan pelanggaran jika dilakukan oleh tokoh masyarakat",
+      "Menentukan hukuman berdasarkan popularitas pihak yang terlibat"
+    ],
+    "answer": 1,
+    "explanation": "Persamaan di hadapan hukum berarti setiap warga negara mendapat perlakuan hukum yang adil tanpa diskriminasi."
+  },
+  {
+    "id": "twk-07",
+    "category": "NASIONALISME",
+    "question": "Contoh sikap cinta tanah air yang dapat dilakukan dalam kehidupan sehari-hari adalah ...",
+    "options": [
+      "Menganggap budaya sendiri lebih baik dan merendahkan budaya lain",
+      "Mengutamakan produk dalam negeri yang bermutu serta menjaga fasilitas umum",
+      "Menolak mempelajari bahasa dan budaya daerah lain",
+      "Menyebarkan informasi yang belum terbukti tentang bangsa sendiri",
+      "Menghindari kegiatan bersama warga yang berbeda latar belakang"
+    ],
+    "answer": 1,
+    "explanation": "Cinta tanah air dapat diwujudkan melalui tindakan positif, seperti mendukung karya dalam negeri dan menjaga kepentingan bersama."
+  },
+  {
+    "id": "twk-08",
+    "category": "SEJARAH KEMERDEKAAN",
+    "question": "Naskah Proklamasi Kemerdekaan Indonesia dibacakan oleh Soekarno pada tanggal ...",
+    "options": [
+      "1 Juni 1945",
+      "22 Juni 1945",
+      "17 Agustus 1945",
+      "18 Agustus 1945",
+      "10 November 1945"
+    ],
+    "answer": 2,
+    "explanation": "Proklamasi Kemerdekaan Indonesia dibacakan oleh Soekarno pada 17 Agustus 1945 di Jakarta."
+  },
+  {
+    "id": "twk-09",
+    "category": "PANCASILA",
+    "question": "Musyawarah untuk mencapai mufakat dalam pengambilan keputusan mencerminkan Pancasila, terutama sila ...",
+    "options": [
+      "Pertama",
+      "Kedua",
+      "Ketiga",
+      "Keempat",
+      "Kelima"
+    ],
+    "answer": 3,
+    "explanation": "Sila keempat menekankan kerakyatan yang dipimpin oleh hikmat kebijaksanaan dalam permusyawaratan/perwakilan."
+  },
+  {
+    "id": "twk-10",
+    "category": "BELA NEGARA",
+    "question": "Di lingkungan sekolah atau tempat kerja, contoh bela negara yang sesuai dengan peran warga sipil adalah ...",
+    "options": [
+      "Menyebarkan kabar yang belum terverifikasi demi membela kelompok sendiri",
+      "Mematuhi aturan, bekerja dengan bertanggung jawab, dan menjaga persatuan",
+      "Memaksakan pendapat agar semua orang menunjukkan loyalitas",
+      "Menghindari kewajiban sosial karena pertahanan hanya urusan militer",
+      "Membatasi pergaulan hanya dengan orang yang sepemikiran"
+    ],
+    "answer": 1,
+    "explanation": "Bela negara merupakan tanggung jawab seluruh warga sesuai peran masing-masing, termasuk taat aturan, bekerja bertanggung jawab, dan menjaga persatuan."
+  }
+]
