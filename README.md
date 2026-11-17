@@ -1,6 +1,6 @@
 # Ruang SKD — Tryout SKD
 
-Aplikasi latihan tryout TIU berbasis HTML, CSS, dan JavaScript tanpa proses build.
+Aplikasi latihan tryout TIU, TKP, dan TWK berbasis HTML, CSS, dan JavaScript tanpa proses build.
 
 ## Menjalankan aplikasi
 
@@ -20,8 +20,8 @@ Untuk memakai login, pembuatan akun, leaderboard, dan ulasan lokal, server juga 
 - Landing page publik menampilkan hero dengan tombol login, informasi aplikasi, lima skor akumulasi global (TIU, TKP, TWK, dan total), dan ulasan terbaru dari pengguna. Skor tiap sesi dijumlahkan berdasarkan jenis tes dan disimpan di Upstash.
 - Dashboard pengguna menampilkan progres akumulasi TIU, TKP, dan TWK terhadap target masing-masing 80, 156, dan 65. Skor tiap sesi tryout (maksimal 100) ditambahkan ke akumulasi jenis tes terkait.
 - Akumulasi baru disimpan terpisah dari format skor leaderboard lama karena data lama tidak mencatat jenis tesnya dan tidak dapat dibagi secara akurat.
-- Bank soal TIU di `question.json`, TKP di `tkp.json`, dan TWK di `twk.json` diputar acak untuk setiap sesi; 10 soal dari kategori yang dipilih tidak diulang sampai seluruh bank soal itu terpakai.
-- Waktu tryout 12 menit, navigasi soal, penanda jawaban, skor, dan pembahasan untuk jawaban salah atau yang belum dijawab.
+- Pengguna memilih tingkat mudah (10 soal, 12 menit), menengah (30 soal, 32 menit), atau sulit (50 soal, 52 menit) setelah memilih jenis tes. Bank soal TIU, TKP, dan TWK diputar acak tanpa pengulangan sampai seluruh bank kategori itu terpakai.
+- Tryout menyediakan navigasi soal, penanda jawaban, skor persentase, dan pembahasan untuk jawaban salah atau yang belum dijawab.
 - Halaman ulasan dengan rating 1–5 bintang dan komentar yang dibagikan ke semua pengguna melalui API server, lalu diperbarui otomatis setiap 15 detik. Nama pengulas diambil dari sesi login server. Saat dijalankan lokal, data ulasan disimpan di `data/reviews.json`; saat di Vercel, API menggunakan Upstash Redis.
 - Semua soal disimpan dalam file JSON lokal sesuai kategori. Tryout tidak membutuhkan API key atau koneksi ke layanan AI.
 - Riwayat tryout tetap tersimpan lokal di browser, tidak disinkronkan antarperangkat.

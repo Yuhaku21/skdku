@@ -150,7 +150,7 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .welcome-row p { margin-bottom: 0; }
 .welcome-icon { width: 58px; height: 58px; border-radius: 19px; display: grid; place-items: center; color: #776bf0; background: #e8e6ff; font-size: 24px; }
 .dashboard-grid { display: grid; grid-template-columns: 1.55fr .85fr; gap: 20px; align-items: stretch; }
-.level-card, .tip-card, .bank-card, .history-card { background: white; border: 1px solid #ebedf2; border-radius: 17px; }
+.level-card, .bank-card, .history-card { background: white; border: 1px solid #ebedf2; border-radius: 17px; }
 .level-card { padding: 25px; }
 .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
 .section-heading h2 { font: 800 18px "Manrope", sans-serif; letter-spacing: -.5px; margin: 8px 0 0; }
@@ -168,14 +168,16 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .level-copy small { color: #9aa2b0; font-size: 10px; }
 .level-check { opacity: 0; width: 18px; height: 18px; display: grid; place-items: center; border-radius: 50%; background: var(--violet); color: white; font-size: 10px; }
 .selected .level-check { opacity: 1; }
+.difficulty-section { margin-top: 24px; }
+.difficulty-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; margin-top: 14px; }
+.difficulty-option { display: grid; gap: 6px; padding: 12px 10px; text-align: left; border: 1px solid #eceef3; border-radius: 10px; background: white; color: var(--ink); cursor: pointer; transition: .15s; }
+.difficulty-option:hover { border-color: #c6c1fc; }
+.difficulty-option.selected { border-color: #8f86eb; background: #f8f7ff; box-shadow: 0 0 0 2px #6254d90d; }
+.difficulty-option strong { font-size: 11px; }
+.difficulty-option span { color: #929baa; font-size: 9px; }
 .start-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 20px; }
 .source-note { color: #98a0ae; font-size: 10px; }
 .side-column { display: grid; gap: 14px; grid-template-rows: 1fr auto; }
-.tip-card { position: relative; overflow: hidden; padding: 23px; background: #333168; color: white; border-color: #333168; }
-.tip-card .section-kicker { display: block; margin-top: 24px; color: #b7b2ff; }
-.tip-spark { position: absolute; top: 17px; right: 21px; color: #ada6ff; font-size: 21px; }
-.tip-card h3 { font: 700 16px/1.4 "Manrope", sans-serif; max-width: 220px; margin: 9px 0; }
-.tip-card p { color: #c5c4db; font-size: 11px; line-height: 1.7; margin: 0; max-width: 255px; }
 .bank-card { display: flex; align-items: flex-start; gap: 11px; padding: 15px; }
 .bank-card-icon { flex: 0 0 31px; width: 31px; height: 31px; display: grid; place-items: center; background: #f0efff; border-radius: 9px; color: var(--violet); }
 .bank-card strong { display: block; font-size: 10px; margin: 2px 0 5px; }
@@ -187,12 +189,17 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .history-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0 0; border-top: 1px solid #f0f1f5; font-size: 11px; }
 .history-item span { color: var(--muted); }
 .history-item strong { color: var(--violet); font: 700 14px "Manrope", sans-serif; }
-.score-progress-card { margin-top: 20px; padding: 22px 25px; border: 1px solid #ebedf2; border-radius: 17px; background: white; }
-.score-progress-note { margin: 10px 0 17px; font-size: 11px; }
-.score-progress-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.score-progress-card { min-height: 0; padding: 22px 20px; border: 1px solid #ebedf2; border-radius: 17px; background: white; }
+.score-progress-note { margin: 10px 0 15px; font-size: 10px; }
+.score-progress-list { display: grid; gap: 9px; }
 .score-progress-item { display: grid; gap: 8px; padding: 13px; border: 1px solid #f0f1f5; border-radius: 11px; }
-.score-progress-heading { display: flex; justify-content: space-between; gap: 8px; color: #374256; font-size: 11px; }
-.score-progress-heading span { color: var(--violet); font-weight: 700; }
+.score-progress-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #374256; font-size: 11px; }
+.score-progress-status { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; }
+.score-progress-status i { display: grid; width: 18px; height: 18px; place-items: center; border-radius: 50%; font-size: 12px; font-style: normal; }
+.score-progress-status.target-reached { color: #248a5a; }
+.score-progress-status.target-reached i { background: #e6f6ed; }
+.score-progress-status.target-pending { color: #c65d5d; }
+.score-progress-status.target-pending i { background: #fff0ef; }
 .score-progress-track { height: 7px; overflow: hidden; border-radius: 10px; background: #eeedf5; }
 .score-progress-track span { display: block; height: 100%; border-radius: inherit; background: var(--violet); transition: width .2s; }
 .score-progress-item small { color: #929baa; font-size: 9px; }
@@ -319,8 +326,7 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .dashboard-grid { grid-template-columns: 1fr; }
   .reviews-view { padding: 38px 0 48px; }
   .reviews-layout { grid-template-columns: 1fr; }
-  .side-column { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-  .tip-card { min-height: 190px; }
+  .side-column { grid-template-columns: 1fr; grid-template-rows: auto; }
   .quiz-layout { grid-template-columns: 1fr; }
   .question-nav-panel { order: -1; }
   .question-grid { grid-template-columns: repeat(10, 1fr); }
@@ -377,10 +383,8 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .start-row { align-items: flex-end; }
   .source-note { max-width: 120px; line-height: 1.5; }
   .side-column { grid-template-columns: 1fr; }
-  .tip-card { min-height: 180px; }
   .history-card { padding: 18px 16px; }
   .score-progress-card { padding: 18px 16px; }
-  .score-progress-list { grid-template-columns: 1fr; }
   .reviews-hero { align-items: flex-start; flex-direction: column; }
   .reviews-hero h1 { font-size: 25px; }
   .review-form, .reviews-list-section { padding: 18px 16px; }

@@ -138,5 +138,565 @@
     ],
     "answer": 1,
     "explanation": "Utamakan keselamatan dengan peringatan sementara, pelaporan resmi, dan tindak lanjut tanpa melakukan perbaikan di luar kompetensi."
+  },
+  {
+    "id": "tkp-11",
+    "category": "PELAYANAN PUBLIK",
+    "question": "Seorang warga lanjut usia kesulitan mengisi formulir layanan daring. Apa yang Anda lakukan?",
+    "options": [
+      "Memintanya kembali bersama anggota keluarga",
+      "Mendampingi pengisian dengan sabar tanpa mengambil atau menyalahgunakan data pribadinya",
+      "Mengisi formulir dengan data perkiraan agar antrean cepat bergerak",
+      "Meminta warga lain menyelesaikannya tanpa pengawasan",
+      "Menyuruhnya membaca petunjuk sekali lagi"
+    ],
+    "answer": 1,
+    "explanation": "Bantuan yang sabar dan menjaga kerahasiaan data membuat layanan tetap inklusif serta akurat."
+  },
+  {
+    "id": "tkp-12",
+    "category": "INTEGRITAS",
+    "question": "Anda menemukan kelebihan pembayaran perjalanan dinas pada laporan yang sudah disetujui. Apa langkah Anda?",
+    "options": [
+      "Membiarkannya karena laporan sudah disetujui",
+      "Mengembalikan selisih secara pribadi tanpa dokumentasi",
+      "Melaporkan temuan melalui prosedur resmi dan membantu memperbaiki pencatatannya",
+      "Menghapus bagian laporan yang bermasalah",
+      "Menunggu pemeriksaan berikutnya"
+    ],
+    "answer": 2,
+    "explanation": "Temuan keuangan harus disampaikan secara transparan melalui prosedur yang dapat ditelusuri."
+  },
+  {
+    "id": "tkp-13",
+    "category": "KERJA SAMA",
+    "question": "Rekan satu tim berulang kali terlambat menyelesaikan bagiannya sehingga pekerjaan tim terhambat. Apa yang Anda lakukan?",
+    "options": [
+      "Mengambil alih tugasnya setiap kali tanpa membicarakannya",
+      "Membicarakan kendalanya secara profesional, menyepakati pembagian dan tenggat, lalu memantau kemajuan",
+      "Mengumumkan keterlambatannya di grup besar",
+      "Menyelesaikan hanya bagian Anda dan membiarkan hasil tim terlambat",
+      "Langsung meminta rekan tersebut dipindahkan"
+    ],
+    "answer": 1,
+    "explanation": "Komunikasi langsung dan kesepakatan yang terukur membantu mengatasi hambatan tanpa mempermalukan rekan."
+  },
+  {
+    "id": "tkp-14",
+    "category": "PROFESIONALISME",
+    "question": "Anda mendapat tugas baru yang belum pernah dikerjakan, sementara tenggatnya dekat. Apa yang Anda lakukan?",
+    "options": [
+      "Menolak karena tidak sesuai kebiasaan kerja",
+      "Mempelajari kebutuhan tugas, meminta arahan pada bagian yang belum jelas, dan menyusun prioritas kerja",
+      "Menunggu sampai ada rekan yang menawarkan bantuan",
+      "Mengerjakan secara terburu-buru tanpa memeriksa hasil",
+      "Meminta tenggat diundur sebelum memahami beban tugas"
+    ],
+    "answer": 1,
+    "explanation": "Sikap adaptif, klarifikasi, dan pengaturan prioritas menjaga tugas baru tetap selesai dengan mutu yang baik."
+  },
+  {
+    "id": "tkp-15",
+    "category": "SOSIAL BUDAYA",
+    "question": "Dalam kegiatan bersama, kebutuhan peserta penyandang disabilitas belum diperhatikan. Apa tindakan Anda?",
+    "options": [
+      "Menganggap mereka dapat meminta bantuan jika membutuhkannya",
+      "Menanyakan kebutuhan akses secara sopan dan mengupayakan penyesuaian yang wajar",
+      "Meminta peserta tersebut tidak mengikuti kegiatan",
+      "Menentukan bantuan tanpa bertanya kepada yang bersangkutan",
+      "Menunda kegiatan sampai semua fasilitas ideal tersedia"
+    ],
+    "answer": 1,
+    "explanation": "Tanyakan kebutuhan langsung dan upayakan akses yang layak dengan menghormati pilihan peserta."
+  },
+  {
+    "id": "tkp-16",
+    "category": "TEKNOLOGI INFORMASI",
+    "question": "Anda menerima pesan yang meminta kata sandi akun kantor melalui tautan yang tidak dikenal. Apa tindakan Anda?",
+    "options": [
+      "Membuka tautan karena pesannya memakai logo instansi",
+      "Tidak membuka tautan, memeriksa melalui kanal resmi, dan melaporkan pesan mencurigakan",
+      "Meneruskan pesan kepada semua rekan untuk meminta pendapat",
+      "Membalas dengan kata sandi lama agar dapat memeriksa keasliannya",
+      "Menghapus pesan tanpa memberi tahu siapa pun"
+    ],
+    "answer": 1,
+    "explanation": "Jangan memasukkan kredensial pada tautan yang belum diverifikasi; laporkan dugaan phishing melalui kanal resmi."
+  },
+  {
+    "id": "tkp-17",
+    "category": "ORIENTASI HASIL",
+    "question": "Anda menyadari pekerjaan yang hampir selesai berisiko terlambat karena satu data belum diterima. Apa yang Anda lakukan?",
+    "options": [
+      "Menunggu tanpa mengabari pihak lain",
+      "Menghubungi pemilik data, menyampaikan dampak dan tenggat, lalu menyiapkan langkah alternatif yang sah",
+      "Mengisi data dengan angka perkiraan",
+      "Mengubah tenggat pada dokumen agar terlihat tepat waktu",
+      "Menyalahkan pihak lain dalam laporan"
+    ],
+    "answer": 1,
+    "explanation": "Koordinasi dini dan rencana alternatif membantu menjaga hasil tanpa mengorbankan akurasi."
+  },
+  {
+    "id": "tkp-18",
+    "category": "PELAYANAN PUBLIK",
+    "question": "Seorang pemohon tidak memahami alasan berkasnya dikembalikan. Bagaimana Anda menjelaskan?",
+    "options": [
+      "Mengatakan bahwa pemohon seharusnya sudah membaca pengumuman",
+      "Menjelaskan kekurangan berkas dengan bahasa sederhana dan menunjukkan cara melengkapinya",
+      "Meminta pemohon bertanya kepada petugas lain",
+      "Menerima berkas yang belum lengkap agar pemohon tidak kecewa",
+      "Menyebutkan aturan tanpa menjelaskan langkah berikutnya"
+    ],
+    "answer": 1,
+    "explanation": "Penjelasan yang jelas dan berorientasi solusi membantu pemohon memenuhi persyaratan dengan benar."
+  },
+  {
+    "id": "tkp-19",
+    "category": "INTEGRITAS",
+    "question": "Seorang kenalan meminta Anda memberi informasi tentang berkas milik orang lain. Apa sikap Anda?",
+    "options": [
+      "Memberi informasi karena sudah mengenalnya",
+      "Menolak dengan sopan dan menjelaskan bahwa informasi hanya diberikan kepada pihak yang berhak",
+      "Memberi informasi sebagian agar tetap membantu",
+      "Meminta imbalan sebelum memberikan informasi",
+      "Mengirim tangkapan layar tanpa nama pemilik"
+    ],
+    "answer": 1,
+    "explanation": "Kerahasiaan data harus dijaga; akses informasi hanya diberikan sesuai kewenangan dan prosedur."
+  },
+  {
+    "id": "tkp-20",
+    "category": "KERJA SAMA",
+    "question": "Tim lintas unit memiliki perbedaan pendapat tentang urutan pekerjaan. Apa yang Anda lakukan?",
+    "options": [
+      "Mempertahankan usul unit sendiri tanpa mendengar alasan lain",
+      "Mengajak pihak terkait membandingkan urgensi, ketergantungan, dan dampak sebelum menyepakati urutan",
+      "Menyerahkan semua keputusan kepada unit yang paling senior",
+      "Menunda pekerjaan sampai semua pihak sepakat sendiri",
+      "Mengerjakan bagian yang paling mudah tanpa koordinasi"
+    ],
+    "answer": 1,
+    "explanation": "Keputusan berbasis kebutuhan dan dampak serta melibatkan pihak terkait memperkuat kolaborasi."
+  },
+  {
+    "id": "tkp-21",
+    "category": "PROFESIONALISME",
+    "question": "Atasan meminta laporan segera, tetapi Anda menemukan perbedaan angka pada sumber data. Apa yang Anda lakukan?",
+    "options": [
+      "Memilih angka yang terlihat paling masuk akal",
+      "Memeriksa sumber, memberi tahu atasan tentang perbedaan, dan menyampaikan bagian yang sudah terverifikasi",
+      "Mengirim laporan tanpa angka agar cepat",
+      "Mengubah data sumber supaya sesuai laporan sebelumnya",
+      "Menunggu sampai atasan menanyakan perbedaan itu"
+    ],
+    "answer": 1,
+    "explanation": "Verifikasi dan komunikasi terbuka mencegah keputusan dibuat berdasarkan data yang keliru."
+  },
+  {
+    "id": "tkp-22",
+    "category": "SOSIAL BUDAYA",
+    "question": "Anda mendengar candaan yang merendahkan suku tertentu di ruang kerja. Apa respons Anda?",
+    "options": [
+      "Ikut tertawa agar suasana tidak canggung",
+      "Menyampaikan dengan tenang bahwa candaan itu tidak pantas dan mengajak menjaga sikap saling menghormati",
+      "Membalas dengan candaan tentang kelompok lain",
+      "Merekam lalu menyebarkannya di media sosial",
+      "Membiarkannya karena bukan ditujukan kepada Anda"
+    ],
+    "answer": 1,
+    "explanation": "Teguran yang tenang dan menghormati semua pihak membantu menjaga lingkungan kerja yang inklusif."
+  },
+  {
+    "id": "tkp-23",
+    "category": "KOMUNIKASI",
+    "question": "Instruksi yang Anda terima memiliki dua penafsiran yang berbeda. Apa tindakan Anda?",
+    "options": [
+      "Memilih penafsiran yang paling mudah tanpa bertanya",
+      "Mengonfirmasi tujuan dan hasil yang diharapkan sebelum mulai mengerjakan",
+      "Meminta rekan menebak maksud instruksi",
+      "Menunda pekerjaan sampai instruksi dikirim ulang",
+      "Mengerjakan kedua versi sekaligus"
+    ],
+    "answer": 1,
+    "explanation": "Klarifikasi sejak awal mengurangi kesalahan dan pekerjaan ulang."
+  },
+  {
+    "id": "tkp-24",
+    "category": "PELAYANAN PUBLIK",
+    "question": "Antrean layanan meningkat karena sistem sedang lambat. Apa yang Anda lakukan?",
+    "options": [
+      "Tetap menerima berkas tanpa memberi tahu warga tentang keterlambatan",
+      "Memberi informasi yang jujur, mengatur antrean, dan menjelaskan pilihan tindak lanjut yang tersedia",
+      "Menutup loket tanpa penjelasan",
+      "Meminta warga menghubungi petugas teknologi sendiri",
+      "Mendahulukan warga yang paling keras mengeluh"
+    ],
+    "answer": 1,
+    "explanation": "Informasi yang transparan dan pengelolaan antrean yang adil menjaga mutu layanan saat terjadi kendala."
+  },
+  {
+    "id": "tkp-25",
+    "category": "INTEGRITAS",
+    "question": "Penyedia barang menawarkan hadiah setelah Anda membantu proses administrasi pengadaan. Apa tindakan Anda?",
+    "options": [
+      "Menerima karena proses sudah selesai",
+      "Menolak dengan sopan dan melaporkan tawaran sesuai ketentuan yang berlaku",
+      "Menerima lalu membagikannya kepada rekan",
+      "Meminta hadiah diganti uang untuk kegiatan tim",
+      "Menyimpan hadiah tanpa memberi tahu siapa pun"
+    ],
+    "answer": 1,
+    "explanation": "Penolakan dan pelaporan menjaga independensi serta mencegah konflik kepentingan."
+  },
+  {
+    "id": "tkp-26",
+    "category": "KERJA SAMA",
+    "question": "Rekan baru tampak kesulitan memahami alur kerja tim. Apa yang Anda lakukan?",
+    "options": [
+      "Membiarkannya agar belajar sendiri",
+      "Menjelaskan alur dan sumber panduan, lalu membuka kesempatan untuk bertanya",
+      "Mengambil seluruh tugasnya sampai ia mahir",
+      "Membandingkannya dengan pegawai lama",
+      "Meminta anggota lain menghindari kerja dengannya"
+    ],
+    "answer": 1,
+    "explanation": "Orientasi dan dukungan yang proporsional membantu anggota baru beradaptasi tanpa mengurangi kemandiriannya."
+  },
+  {
+    "id": "tkp-27",
+    "category": "PROFESIONALISME",
+    "question": "Anda menerima beberapa tugas dengan tenggat berdekatan. Bagaimana menentukan prioritas?",
+    "options": [
+      "Mengerjakan tugas yang paling disukai terlebih dahulu",
+      "Membandingkan urgensi, dampak, dan kebutuhan waktu, lalu mengonfirmasi prioritas jika ada konflik",
+      "Mengerjakan semuanya bergantian tanpa jadwal",
+      "Memilih tugas dari atasan yang paling sering mengingatkan",
+      "Menunda tugas yang belum ditanyakan kembali"
+    ],
+    "answer": 1,
+    "explanation": "Prioritas yang mempertimbangkan urgensi dan dampak serta dikomunikasikan secara jelas membantu memenuhi tenggat."
+  },
+  {
+    "id": "tkp-28",
+    "category": "TEKNOLOGI INFORMASI",
+    "question": "Anda hendak mengirim dokumen berisi data pribadi melalui email. Apa langkah yang tepat?",
+    "options": [
+      "Mengirimkannya ke seluruh grup agar mudah ditemukan",
+      "Memastikan penerima berwenang, memakai kanal yang disetujui, dan membatasi data sesuai kebutuhan",
+      "Mengunggahnya ke tautan publik sementara",
+      "Menghapus nama saja tanpa memeriksa data lainnya",
+      "Meminta penerima meneruskan dokumen ke alamat pribadi"
+    ],
+    "answer": 1,
+    "explanation": "Data pribadi hanya boleh dibagikan kepada penerima berwenang melalui kanal yang aman dan seperlunya."
+  },
+  {
+    "id": "tkp-29",
+    "category": "ORIENTASI HASIL",
+    "question": "Hasil pekerjaan Anda dikritik karena belum sesuai kebutuhan. Apa respons Anda?",
+    "options": [
+      "Membela hasil kerja tanpa mendengarkan alasan",
+      "Meminta contoh bagian yang perlu diperbaiki, menyepakati tindak lanjut, dan memperbaikinya",
+      "Mengabaikan kritik karena pekerjaan sudah diserahkan",
+      "Meminta orang lain mengerjakan ulang seluruhnya",
+      "Menyalahkan pemberi tugas karena instruksi kurang rinci"
+    ],
+    "answer": 1,
+    "explanation": "Umpan balik yang spesifik dapat digunakan untuk memperbaiki hasil dan menyamakan pemahaman."
+  },
+  {
+    "id": "tkp-30",
+    "category": "PELAYANAN PUBLIK",
+    "question": "Warga meminta pengecualian prosedur karena mengaku sangat membutuhkan layanan. Apa yang Anda lakukan?",
+    "options": [
+      "Memberi pengecualian agar warga merasa terbantu",
+      "Menjelaskan prosedur dan memeriksa apakah tersedia jalur prioritas resmi yang sesuai kondisinya",
+      "Menolak tanpa mendengar kebutuhannya",
+      "Meminta warga mencari petugas yang lebih mudah memberi izin",
+      "Menyarankan warga memberikan uang tambahan"
+    ],
+    "answer": 1,
+    "explanation": "Empati harus disertai kepatuhan prosedur; gunakan fasilitas prioritas hanya jika memang diatur."
+  },
+  {
+    "id": "tkp-31",
+    "category": "INTEGRITAS",
+    "question": "Anda menyadari menggunakan fasilitas kantor untuk urusan pribadi secara berlebihan. Apa yang sebaiknya dilakukan?",
+    "options": [
+      "Melanjutkannya karena tidak ada yang menegur",
+      "Menghentikan penggunaan yang tidak semestinya dan mengikuti aturan pemanfaatan fasilitas",
+      "Menghapus catatan penggunaan",
+      "Meminta rekan memakai fasilitas atas namanya",
+      "Menganggapnya wajar selama pekerjaan selesai"
+    ],
+    "answer": 1,
+    "explanation": "Fasilitas kantor digunakan sesuai tujuan dan aturan, bukan untuk kepentingan pribadi yang tidak semestinya."
+  },
+  {
+    "id": "tkp-32",
+    "category": "KERJA SAMA",
+    "question": "Dalam rapat, dua rekan berdebat sehingga pembahasan menjauh dari tujuan. Apa peran Anda?",
+    "options": [
+      "Mendukung rekan yang lebih dekat dengan Anda",
+      "Mengembalikan pembahasan pada tujuan, merangkum poin yang disepakati, dan mengusulkan langkah berikutnya",
+      "Meninggalkan rapat tanpa memberi tahu",
+      "Membiarkan perdebatan berlangsung sampai salah satu menyerah",
+      "Mengalihkan semua keputusan kepada pimpinan"
+    ],
+    "answer": 1,
+    "explanation": "Fasilitasi yang netral membantu tim fokus pada tujuan dan menyepakati tindak lanjut."
+  },
+  {
+    "id": "tkp-33",
+    "category": "PROFESIONALISME",
+    "question": "Anda mengetahui kemampuan kerja tertentu masih perlu ditingkatkan. Apa yang Anda lakukan?",
+    "options": [
+      "Menghindari semua tugas yang berkaitan dengan kemampuan tersebut",
+      "Mencari sumber belajar, berlatih, dan meminta umpan balik pada hasil pekerjaan",
+      "Menyembunyikan kesulitan dari atasan",
+      "Menunggu instansi mengadakan pelatihan wajib",
+      "Meminta rekan selalu mengambil alih pekerjaan itu"
+    ],
+    "answer": 1,
+    "explanation": "Pembelajaran mandiri dan umpan balik terarah membantu meningkatkan kompetensi secara berkelanjutan."
+  },
+  {
+    "id": "tkp-34",
+    "category": "SOSIAL BUDAYA",
+    "question": "Pengguna layanan memiliki keterbatasan bahasa Indonesia. Bagaimana Anda membantunya?",
+    "options": [
+      "Memintanya membawa penerjemah tanpa memberi informasi lain",
+      "Berbicara perlahan dengan kalimat sederhana dan menggunakan bantuan penerjemahan yang tersedia",
+      "Berbicara lebih keras dengan kalimat yang sama",
+      "Meminta orang lain menerka maksudnya",
+      "Mengabaikan pertanyaan sampai ia memahami sendiri"
+    ],
+    "answer": 1,
+    "explanation": "Komunikasi sederhana dan bantuan yang tersedia membantu layanan dipahami tanpa merendahkan pengguna."
+  },
+  {
+    "id": "tkp-35",
+    "category": "KOMUNIKASI",
+    "question": "Anda berbeda pendapat dengan atasan mengenai metode kerja. Apa yang Anda lakukan?",
+    "options": [
+      "Menyampaikan keberatan dengan data dan alternatif secara sopan melalui jalur komunikasi yang tepat",
+      "Menolak menjalankan tugas tanpa penjelasan",
+      "Menceritakan perbedaan itu kepada semua rekan",
+      "Tetap menjalankan metode lama secara diam-diam",
+      "Mengirim kritik dengan nada menyalahkan"
+    ],
+    "answer": 0,
+    "explanation": "Sampaikan pertimbangan secara profesional dan tawarkan alternatif, kemudian ikuti keputusan yang sah."
+  },
+  {
+    "id": "tkp-36",
+    "category": "PELAYANAN PUBLIK",
+    "question": "Seorang warga menyampaikan keluhan yang sama beberapa kali karena belum menerima kepastian. Apa yang Anda lakukan?",
+    "options": [
+      "Mengatakan bahwa keluhan sudah pernah disampaikan",
+      "Memeriksa status penanganan, memberi pembaruan yang pasti, dan mencatat tindak lanjut berikutnya",
+      "Meminta warga berhenti menghubungi kantor",
+      "Menjanjikan penyelesaian hari itu tanpa mengecek",
+      "Mengalihkan warga ke bagian lain tanpa penjelasan"
+    ],
+    "answer": 1,
+    "explanation": "Pembaruan status yang akurat dan rencana tindak lanjut membangun kepercayaan pengguna layanan."
+  },
+  {
+    "id": "tkp-37",
+    "category": "INTEGRITAS",
+    "question": "Rekan meminta Anda menandatangani daftar hadir untuknya karena ia terlambat. Apa tindakan Anda?",
+    "options": [
+      "Menolak dan menyarankan rekan mencatat kehadiran sesuai kondisi sebenarnya",
+      "Menandatangani karena hanya membantu teman",
+      "Meminta imbalan sebelum membantu",
+      "Membiarkan rekan lain yang menandatangani",
+      "Mengubah jam pada daftar hadir"
+    ],
+    "answer": 0,
+    "explanation": "Pencatatan kehadiran harus sesuai fakta; hubungan pribadi tidak membenarkan pemalsuan."
+  },
+  {
+    "id": "tkp-38",
+    "category": "KERJA SAMA",
+    "question": "Anda menyelesaikan bagian pekerjaan lebih awal sementara tim masih mengejar tenggat. Apa yang Anda lakukan?",
+    "options": [
+      "Berhenti bekerja karena bagian Anda sudah selesai",
+      "Menanyakan prioritas tim dan menawarkan bantuan pada bagian yang dapat Anda dukung",
+      "Mengambil alih pekerjaan rekan tanpa berdiskusi",
+      "Mengkritik rekan yang belum selesai",
+      "Membuat tugas baru untuk diri sendiri tanpa koordinasi"
+    ],
+    "answer": 1,
+    "explanation": "Bantuan yang dikoordinasikan dapat mempercepat hasil tim tanpa mengganggu pembagian tanggung jawab."
+  },
+  {
+    "id": "tkp-39",
+    "category": "PROFESIONALISME",
+    "question": "Anda menemukan kesalahan kecil dalam dokumen yang akan segera dikirim. Apa tindakan Anda?",
+    "options": [
+      "Membiarkannya karena kesalahan terlihat sepele",
+      "Memperbaiki setelah memverifikasi sumber dan memastikan versi yang benar dikirim",
+      "Mengirim dokumen lalu menunggu tanggapan",
+      "Menghapus seluruh bagian terkait",
+      "Meminta penerima memperbaikinya sendiri"
+    ],
+    "answer": 1,
+    "explanation": "Pemeriksaan akhir dan koreksi berbasis sumber menjaga ketepatan dokumen sebelum digunakan."
+  },
+  {
+    "id": "tkp-40",
+    "category": "TEKNOLOGI INFORMASI",
+    "question": "Anda perlu bekerja di tempat umum dan mengakses dokumen kantor. Apa langkah yang tepat?",
+    "options": [
+      "Menggunakan Wi-Fi terbuka dan membiarkan layar tanpa pengawasan",
+      "Mengikuti kebijakan keamanan, memakai koneksi yang disetujui, dan mengunci perangkat saat ditinggalkan",
+      "Meminjam akun rekan agar akses lebih cepat",
+      "Mengunduh semua dokumen ke perangkat umum",
+      "Membagikan kata sandi kepada orang di sekitar"
+    ],
+    "answer": 1,
+    "explanation": "Patuhi kebijakan keamanan dan lindungi perangkat serta dokumen, terutama saat bekerja di ruang publik."
+  },
+  {
+    "id": "tkp-41",
+    "category": "ORIENTASI HASIL",
+    "question": "Target pekerjaan berubah setelah sebagian pekerjaan selesai. Apa respons Anda?",
+    "options": [
+      "Tetap menyelesaikan target lama tanpa bertanya",
+      "Mengonfirmasi perubahan, menilai dampaknya, dan menyesuaikan rencana serta prioritas",
+      "Menghentikan semua pekerjaan sampai ada instruksi tertulis baru",
+      "Mengabaikan perubahan karena pekerjaan sudah dimulai",
+      "Menyalahkan pemberi tugas atas pekerjaan yang terlanjur dilakukan"
+    ],
+    "answer": 1,
+    "explanation": "Konfirmasi dan penyesuaian rencana menjaga pekerjaan tetap selaras dengan kebutuhan terbaru."
+  },
+  {
+    "id": "tkp-42",
+    "category": "PELAYANAN PUBLIK",
+    "question": "Pemohon datang menjelang jam layanan berakhir dan masih ada beberapa orang mengantre. Apa yang Anda lakukan?",
+    "options": [
+      "Melayani hanya pemohon yang dikenal",
+      "Mengikuti aturan antrean dan jam layanan serta menjelaskan pilihan yang tersedia bagi semua pemohon",
+      "Menolak semua orang tanpa melihat nomor antrean",
+      "Menerima berkas tanpa memberi tanda terima",
+      "Meminta pemohon kembali tanpa memberi informasi jam layanan"
+    ],
+    "answer": 1,
+    "explanation": "Terapkan aturan secara adil dan sampaikan informasi tindak lanjut dengan jelas."
+  },
+  {
+    "id": "tkp-43",
+    "category": "INTEGRITAS",
+    "question": "Anda diminta mengubah tanggal surat agar tampak diterbitkan sebelum tenggat. Apa yang Anda lakukan?",
+    "options": [
+      "Mengubah tanggal sesuai permintaan agar proses tidak terhambat",
+      "Menolak perubahan yang tidak sesuai fakta dan melaporkan kondisi sebenarnya melalui jalur yang tepat",
+      "Mengubah tanggal hanya pada salinan",
+      "Meminta rekan lain mengubahnya",
+      "Menghapus metadata dokumen"
+    ],
+    "answer": 1,
+    "explanation": "Tanggal dokumen harus mencerminkan fakta; sampaikan keterlambatan secara transparan dan cari solusi yang sah."
+  },
+  {
+    "id": "tkp-44",
+    "category": "KERJA SAMA",
+    "question": "Tim harus mengambil keputusan saat salah satu anggota kunci tidak dapat hadir. Apa yang Anda lakukan?",
+    "options": [
+      "Membatalkan semua pekerjaan tanpa memeriksa urgensi",
+      "Menilai kewenangan dan urgensi, mencatat keputusan sementara bila diperbolehkan, lalu mengabari anggota tersebut",
+      "Mengambil keputusan di luar kewenangan agar cepat",
+      "Menyembunyikan keputusan dari anggota yang absen",
+      "Menyerahkan keputusan kepada orang yang tidak terkait"
+    ],
+    "answer": 1,
+    "explanation": "Jaga kewenangan dan dokumentasi; keputusan sementara harus dikomunikasikan kepada pihak terkait."
+  },
+  {
+    "id": "tkp-45",
+    "category": "PROFESIONALISME",
+    "question": "Anda merasa kelelahan sehingga berisiko membuat kesalahan pada tugas penting. Apa yang dilakukan?",
+    "options": [
+      "Menyembunyikan kondisi dan tetap mengirim hasil tanpa pemeriksaan",
+      "Mengatur jeda singkat, memeriksa kembali pekerjaan, dan mengomunikasikan risiko bila perlu",
+      "Meninggalkan tempat kerja tanpa memberi tahu",
+      "Meminta rekan menanggung seluruh tugas",
+      "Mengurangi pemeriksaan agar pekerjaan cepat selesai"
+    ],
+    "answer": 1,
+    "explanation": "Kelola kondisi kerja secara bertanggung jawab dan pastikan mutu tugas penting tetap terjaga."
+  },
+  {
+    "id": "tkp-46",
+    "category": "SOSIAL BUDAYA",
+    "question": "Dalam diskusi, pendapat pegawai junior terus terpotong oleh peserta lain. Apa tindakan Anda?",
+    "options": [
+      "Membiarkan karena peserta senior lebih berpengalaman",
+      "Memberi ruang kepada pegawai tersebut untuk menyelesaikan pendapatnya dan menjaga diskusi tetap saling menghormati",
+      "Menghentikan rapat tanpa penjelasan",
+      "Menyampaikan pendapatnya atas nama sendiri",
+      "Meminta pegawai junior tidak berbicara lagi"
+    ],
+    "answer": 1,
+    "explanation": "Partisipasi yang setara membuat diskusi lebih inklusif dan membantu tim mempertimbangkan berbagai masukan."
+  },
+  {
+    "id": "tkp-47",
+    "category": "KOMUNIKASI",
+    "question": "Warga marah karena menerima informasi berbeda dari dua petugas. Apa yang Anda lakukan?",
+    "options": [
+      "Menyalahkan petugas yang tidak hadir",
+      "Meminta maaf atas kebingungan, memeriksa ketentuan yang benar, lalu menyampaikan informasi yang konsisten",
+      "Mengulang informasi yang paling mudah diterapkan",
+      "Meminta warga memilih informasi yang dipercaya",
+      "Mengakhiri percakapan agar tidak terjadi perdebatan"
+    ],
+    "answer": 1,
+    "explanation": "Akui kebingungan, verifikasi ketentuan, dan berikan penjelasan yang konsisten tanpa saling menyalahkan."
+  },
+  {
+    "id": "tkp-48",
+    "category": "ORIENTASI HASIL",
+    "question": "Proses rutin di unit Anda sering menimbulkan pekerjaan ulang. Apa langkah yang tepat?",
+    "options": [
+      "Menerima keadaan karena sudah menjadi kebiasaan",
+      "Mengidentifikasi penyebab bersama tim dan mengusulkan perbaikan yang dapat diuji serta dievaluasi",
+      "Mengubah proses sendiri tanpa memberi tahu pihak terkait",
+      "Menyalahkan petugas yang mengerjakan sebelumnya",
+      "Menambah pemeriksaan tanpa melihat sumber masalah"
+    ],
+    "answer": 1,
+    "explanation": "Perbaikan berkelanjutan dimulai dengan memahami akar masalah dan menguji solusi secara terukur."
+  },
+  {
+    "id": "tkp-49",
+    "category": "PELAYANAN PUBLIK",
+    "question": "Seorang warga tidak puas karena permintaannya tidak dapat dipenuhi oleh kewenangan unit Anda. Apa yang Anda lakukan?",
+    "options": [
+      "Mengatakan bahwa itu bukan urusan unit Anda",
+      "Menjelaskan batas kewenangan dengan sopan dan mengarahkan ke kanal atau instansi yang tepat",
+      "Menjanjikan hasil yang berada di luar kewenangan",
+      "Meminta warga mencari sendiri informasi tersebut",
+      "Mengabaikan warga setelah menjelaskan penolakan"
+    ],
+    "answer": 1,
+    "explanation": "Jelaskan batas kewenangan secara transparan dan bantu warga menemukan jalur yang sesuai."
+  },
+  {
+    "id": "tkp-50",
+    "category": "TANGGUNG JAWAB",
+    "question": "Anda menerima tugas yang melibatkan data dari beberapa unit dan tenggat yang jelas. Bagaimana memastikan tugas selesai?",
+    "options": [
+      "Mengumpulkan data pada hari terakhir agar tidak merepotkan pihak lain",
+      "Menyusun jadwal, meminta data dengan tenggat yang wajar, memeriksa kelengkapan, dan memberi pembaruan kemajuan",
+      "Mengisi data yang belum diterima dengan perkiraan",
+      "Menunggu semua pihak menghubungi Anda",
+      "Membagi data tanpa memeriksa ketepatannya"
+    ],
+    "answer": 1,
+    "explanation": "Perencanaan, koordinasi dini, pemeriksaan, dan pembaruan kemajuan mendukung penyelesaian yang akurat dan tepat waktu."
   }
 ]

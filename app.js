@@ -4,18 +4,22 @@ const STORAGE = {
   history: "ruangskd.history",
   questionRotation: "ruangskd.questionRotation"
 };
-const QUESTIONS_PER_SESSION = 10;
-const SESSION_SECONDS = 12 * 60;
+const DIFFICULTIES = {
+  mudah: { questionCount: 10, durationSeconds: 12 * 60 },
+  menengah: { questionCount: 30, durationSeconds: 32 * 60 },
+  sulit: { questionCount: 50, durationSeconds: 52 * 60 }
+};
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 const TEST_BANKS = { TIU: "question.json", TKP: "tkp.json", TWK: "twk.json" };
 const TEST_TARGETS = { TIU: 80, TKP: 156, TWK: 65 };
 const screens = ["landing-view", "auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view"];
 
 let selectedTest = "TIU";
+let selectedDifficulty = null;
 let sessionQuestions = [];
 let answers = [];
 let currentQuestion = 0;
-let remainingSeconds = SESSION_SECONDS;
+let remainingSeconds = DIFFICULTIES.mudah.durationSeconds;
 let timerId = null;
 let reviewRefreshId = null;
 let reviewRequestPromise = null;
@@ -181,7 +185,7 @@ function renderHistory() {
     return;
   }
   list.innerHTML = history.map((item) => `
-    <div class="history-item"><span>${escapeHtml(item.test || "TIU")} · ${escapeHtml(item.date)} · ${item.correct}/10 benar</span><strong>${item.score}</strong></div>
+    <div class="history-item"><span>${escapeHtml(item.test || "TIU")} · ${escapeHtml(item.date)} · ${item.correct}/${item.questionCount || 10} benar</span><strong>${item.score}</strong></div>
   `).join("");
 }
 
@@ -204,9 +208,9 @@ async function renderScoreProgress() {
       const reached = score >= target;
       return `
         <div class="score-progress-item">
-          <div class="score-progress-heading"><strong>${test}</strong><span>${score} / ${target}</span></div>
+          <div class="score-progress-heading"><strong>${test}</strong><span class="score-progress-status ${reached ? "target-reached" : "target-pending"}"><i aria-hidden="true">${reached ? "✓" : "×"}</i>${progress}%</span></div>
           <div class="score-progress-track" role="progressbar" aria-label="Progres ${test}" aria-valuemin="0" aria-valuemax="${target}" aria-valuenow="${Math.min(score, target)}"><span style="width: ${progress}%"></span></div>
-          <small class="${reached ? "target-reached" : ""}">${reached ? "Target tercapai" : `Kurang ${target - score} poin dari target`}</small>
+          <small class="${reached ? "target-reached" : ""}">${reached ? `Target tercapai · ${score}/${target}` : `Belum tercapai · ${score}/${target}`}</small>
         </div>
       `;
     }).join("");
@@ -391,12 +395,12 @@ function escapeHtml(value) {
   })[character]);
 }
 
-async function loadLocalQuestions() {
+async function loadLocalQuestions(questionCount) {
   const response = await fetch(`./${TEST_BANKS[selectedTest]}`);
   if (!response.ok) throw new Error(`Bank soal tidak dapat dimuat (${response.status}).`);
   const questions = await response.json();
-  if (!Array.isArray(questions) || questions.length < QUESTIONS_PER_SESSION) {
-    throw new Error(`Bank soal ${selectedTest} tidak berisi ${QUESTIONS_PER_SESSION} soal.`);
+  if (!Array.isArray(questions) || questions.length < questionCount) {
+    throw new Error(`Bank soal ${selectedTest} hanya memiliki ${Array.isArray(questions) ? questions.length : 0} dari ${questionCount} soal yang dibutuhkan.`);
   }
   const shuffledIds = (ids) => {
     const shuffled = [...ids];
@@ -418,11 +422,11 @@ async function loadLocalQuestions() {
   } else {
     remainingIds = shuffledIds(questions.map((question) => question.id));
   }
-  const selectedIds = remainingIds.splice(0, QUESTIONS_PER_SESSION);
-  if (selectedIds.length < QUESTIONS_PER_SESSION) {
+  const selectedIds = remainingIds.splice(0, questionCount);
+  if (selectedIds.length < questionCount) {
     const selectedSet = new Set(selectedIds);
     const refillIds = shuffledIds(questions.map((question) => question.id).filter((id) => !selectedSet.has(id)));
-    const needed = QUESTIONS_PER_SESSION - selectedIds.length;
+    const needed = questionCount - selectedIds.length;
     selectedIds.push(...refillIds.slice(0, needed));
     remainingIds = refillIds.slice(needed);
   }
@@ -432,13 +436,20 @@ async function loadLocalQuestions() {
 }
 
 async function beginQuiz() {
+  if (!selectedDifficulty) {
+    showToast("Pilih tingkat kesulitan sebelum memulai tryout.");
+    return;
+  }
+  const difficulty = DIFFICULTIES[selectedDifficulty];
   $("start-button").disabled = true;
   $("start-button").textContent = "Menyiapkan soal...";
+  $("level-options").querySelectorAll("[data-test]").forEach((button) => { button.disabled = true; });
+  $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((button) => { button.disabled = true; });
   try {
-    sessionQuestions = await loadLocalQuestions();
-    answers = Array(QUESTIONS_PER_SESSION).fill(null);
+    sessionQuestions = await loadLocalQuestions(difficulty.questionCount);
+    answers = Array(sessionQuestions.length).fill(null);
     currentQuestion = 0;
-    remainingSeconds = SESSION_SECONDS;
+    remainingSeconds = difficulty.durationSeconds;
     sessionFinished = false;
     renderQuestion();
     showScreen("quiz-view");
@@ -447,7 +458,9 @@ async function beginQuiz() {
     showToast(error.message || "Soal gagal dimuat.");
     console.error(error);
   } finally {
-    $("start-button").disabled = false;
+    $("level-options").querySelectorAll("[data-test]").forEach((button) => { button.disabled = false; });
+    $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((button) => { button.disabled = false; });
+    $("start-button").disabled = !selectedDifficulty;
     $("start-button").innerHTML = 'Mulai tryout <span>→</span>';
   }
 }
@@ -455,10 +468,10 @@ async function beginQuiz() {
 function renderQuestion() {
   const question = sessionQuestions[currentQuestion];
   $("quiz-test").textContent = selectedTest;
-  $("quiz-counter").textContent = `SOAL ${String(currentQuestion + 1).padStart(2, "0")} / ${QUESTIONS_PER_SESSION}`;
+  $("quiz-counter").textContent = `SOAL ${String(currentQuestion + 1).padStart(2, "0")} / ${sessionQuestions.length}`;
   $("question-category").textContent = question.category.toUpperCase();
   $("question-text").textContent = question.question;
-  $("progress-fill").style.width = `${((currentQuestion + 1) / QUESTIONS_PER_SESSION) * 100}%`;
+  $("progress-fill").style.width = `${((currentQuestion + 1) / sessionQuestions.length) * 100}%`;
   $("answer-list").innerHTML = question.options.map((option, index) => `
     <button class="answer-option ${answers[currentQuestion] === index ? "selected" : ""}" type="button" data-answer="${index}">
       <span class="answer-letter">${LETTERS[index] || index + 1}</span><span>${escapeHtml(option)}</span>
@@ -472,9 +485,9 @@ function renderQuestion() {
   });
   $("previous-button").disabled = currentQuestion === 0;
   $("previous-button").style.opacity = currentQuestion === 0 ? ".45" : "1";
-  $("next-button").classList.toggle("hidden", currentQuestion === QUESTIONS_PER_SESSION - 1);
-  $("submit-button").classList.toggle("hidden", currentQuestion !== QUESTIONS_PER_SESSION - 1);
-  $("answered-count").textContent = `${answers.filter((answer) => answer !== null).length}/${QUESTIONS_PER_SESSION} terjawab`;
+  $("next-button").classList.toggle("hidden", currentQuestion === sessionQuestions.length - 1);
+  $("submit-button").classList.toggle("hidden", currentQuestion !== sessionQuestions.length - 1);
+  $("answered-count").textContent = `${answers.filter((answer) => answer !== null).length}/${sessionQuestions.length} terjawab`;
   $("question-grid").innerHTML = sessionQuestions.map((_, index) => `
     <button type="button" class="question-number ${answers[index] !== null ? "answered" : ""} ${index === currentQuestion ? "current" : ""}" data-question="${index}" aria-label="Soal ${index + 1}${answers[index] !== null ? ", terjawab" : ", belum dijawab"}">${String(index + 1).padStart(2, "0")}</button>
   `).join("");
@@ -508,12 +521,12 @@ function finishQuiz(expired = false) {
   sessionFinished = true;
   clearInterval(timerId);
   const correct = answers.reduce((total, answer, index) => total + (answer === sessionQuestions[index].answer ? 1 : 0), 0);
-  const score = correct * 10;
+  const score = Math.round((correct / sessionQuestions.length) * 100);
   $("score-value").textContent = String(score);
-  $("correct-value").textContent = `${correct} / ${QUESTIONS_PER_SESSION}`;
+  $("correct-value").textContent = `${correct} / ${sessionQuestions.length}`;
   $("result-test").textContent = selectedTest;
   $("result-source").textContent = "Bank soal lokal";
-  $("result-heading").textContent = correct >= 8 ? "Luar biasa, pertahankan!" : correct >= 5 ? "Latihan yang hebat!" : "Terus berlatih, kamu pasti bisa!";
+  $("result-heading").textContent = score >= 80 ? "Luar biasa, pertahankan!" : score >= 50 ? "Latihan yang hebat!" : "Terus berlatih, kamu pasti bisa!";
   $("result-subtitle").textContent = expired ? "Waktu habis. Pelajari pembahasan dan coba lagi untuk meningkatkan skor." : "Setiap latihan membawamu selangkah lebih siap.";
   const review = $("review-list");
   const incorrect = sessionQuestions.filter((question, index) => answers[index] !== question.answer).length;
@@ -537,6 +550,7 @@ function finishQuiz(expired = false) {
     test: selectedTest,
     correct,
     score,
+    questionCount: sessionQuestions.length,
     date: new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date())
   });
   writeStored(STORAGE.history, history.slice(0, 30));
@@ -604,9 +618,33 @@ function initialize() {
   $("level-options").querySelectorAll("[data-test]").forEach((button) => {
     button.addEventListener("click", () => {
       selectedTest = button.dataset.test;
+      selectedDifficulty = null;
       $("level-options").querySelectorAll("[data-test]").forEach((item) => item.classList.toggle("selected", item === button));
+      $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((item) => {
+        item.classList.remove("selected");
+        item.setAttribute("aria-pressed", "false");
+      });
+      $("start-button").disabled = true;
+      $("session-limit-pill").textContent = "Pilih tingkat kesulitan";
+      $("source-note").textContent = "Pilih tingkat kesulitan untuk melanjutkan.";
       $("bank-title").textContent = `Bank soal ${selectedTest}`;
       $("bank-description").textContent = `Soal dipilih acak dari bank soal ${selectedTest}, lengkap dengan kunci jawaban dan pembahasan.`;
+    });
+  });
+  $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((button) => {
+    button.addEventListener("click", () => {
+      selectedDifficulty = button.dataset.difficulty;
+      const { questionCount, durationSeconds } = DIFFICULTIES[selectedDifficulty];
+      const minutes = Math.floor(durationSeconds / 60);
+      $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((item) => {
+        const selected = item === button;
+        item.classList.toggle("selected", selected);
+        item.setAttribute("aria-pressed", String(selected));
+      });
+      $("session-limit-pill").textContent = `${questionCount} soal · ${minutes} menit`;
+      $("source-note").textContent = `Bank soal ${selectedTest} · ${questionCount} soal acak`;
+      $("bank-description").textContent = `${questionCount} soal dipilih acak dari bank soal ${selectedTest}, lengkap dengan kunci jawaban dan pembahasan.`;
+      $("start-button").disabled = false;
     });
   });
   $("start-button").addEventListener("click", beginQuiz);

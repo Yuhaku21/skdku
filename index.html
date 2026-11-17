@@ -42,8 +42,8 @@
               <p class="muted">Bangun kesiapan SKD dengan latihan TIU, TKP, dan TWK yang terarah serta evaluasi setiap sesi.</p>
               <button class="button button-primary landing-cta" id="start-test-button" type="button">Mulai tes sekarang <span>→</span></button>
               <div class="landing-hero-stats">
-                <div><strong>10</strong><span>soal per sesi</span></div>
-                <div><strong>12 menit</strong><span>waktu latihan</span></div>
+                <div><strong>10–50</strong><span>soal per sesi</span></div>
+                <div><strong>12–52 menit</strong><span>waktu latihan</span></div>
                 <div><strong>3 jenis</strong><span>materi tes SKD</span></div>
               </div>
             </div>
@@ -68,7 +68,7 @@
             </div>
             <div class="about-cards">
               <article class="about-card"><span class="about-card-icon">01</span><h3>Pilih materi tes</h3><p>Berlatih soal TIU, TKP, atau TWK sesuai fokus belajarmu.</p></article>
-              <article class="about-card"><span class="about-card-icon">02</span><h3>Fokus dalam 12 menit</h3><p>Biasakan mengatur waktu dan menyelesaikan 10 soal dalam satu sesi.</p></article>
+              <article class="about-card"><span class="about-card-icon">02</span><h3>Pilih tingkat kesulitan</h3><p>Atur latihan dari 10 hingga 50 soal dengan waktu sesuai tingkat yang kamu pilih.</p></article>
               <article class="about-card"><span class="about-card-icon">03</span><h3>Evaluasi setiap sesi</h3><p>Lihat skor dan pembahasan untuk mengetahui hal yang perlu ditingkatkan.</p></article>
             </div>
           </section>
@@ -97,8 +97,8 @@
             <h1>Selangkah lebih dekat menuju <span>impianmu.</span></h1>
             <p>Latihan TIU, TKP, dan TWK dengan suasana tryout yang fokus, terukur, dan bisa kamu ulang kapan saja.</p>
             <div class="auth-stats">
-              <div><strong>10</strong><span>soal per sesi</span></div>
-              <div><strong>12:00</strong><span>menit per sesi</span></div>
+              <div><strong>10–50</strong><span>soal per sesi</span></div>
+              <div><strong>12–52</strong><span>menit per sesi</span></div>
               <div><strong>3</strong><span>jenis tes SKD</span></div>
             </div>
             <div class="decor-orbit orbit-one"></div>
@@ -133,7 +133,7 @@
             <div class="level-card">
               <div class="section-heading">
                 <div><span class="section-kicker">01 / PILIH JENIS TES</span><h2>Pilih materi latihan</h2></div>
-                <span class="pill">10 soal · 12 menit</span>
+                <span class="pill" id="session-limit-pill">Pilih tingkat kesulitan</span>
               </div>
               <div class="level-options" id="level-options">
                 <button class="level-option selected" type="button" data-test="TIU">
@@ -146,29 +146,37 @@
                   <span class="level-icon hard">03</span><span class="level-copy"><strong>TWK</strong><small>Tes Wawasan Kebangsaan</small></span><span class="level-check">✓</span>
                 </button>
               </div>
+              <div class="difficulty-section">
+                <div class="section-heading compact"><div><span class="section-kicker">02 / PILIH TINGKAT SOAL</span><h2>Tingkat kesulitan</h2></div></div>
+                <div class="difficulty-options" id="difficulty-options">
+                  <button class="difficulty-option" type="button" data-difficulty="mudah" aria-pressed="false">
+                    <strong>Mudah</strong><span>10 soal · 12 menit</span>
+                  </button>
+                  <button class="difficulty-option" type="button" data-difficulty="menengah" aria-pressed="false">
+                    <strong>Menengah</strong><span>30 soal · 32 menit</span>
+                  </button>
+                  <button class="difficulty-option" type="button" data-difficulty="sulit" aria-pressed="false">
+                    <strong>Sulit</strong><span>50 soal · 52 menit</span>
+                  </button>
+                </div>
+              </div>
               <div class="start-row">
-                <span class="source-note" id="source-note">Soal tersedia dari bank soal lokal.</span>
-                <button class="button button-primary" id="start-button" type="button">Mulai tryout <span>→</span></button>
+                <span class="source-note" id="source-note">Pilih tingkat kesulitan untuk melanjutkan.</span>
+                <button class="button button-primary" id="start-button" type="button" disabled>Mulai tryout <span>→</span></button>
               </div>
             </div>
             <aside class="side-column">
-              <div class="tip-card">
-                <span class="tip-spark">✦</span>
-                <span class="section-kicker">TIPS TRYOUT</span>
-                <h3>Atur waktumu dengan cermat.</h3>
-                <p>Lewati soal yang terasa sulit dan tandai nomor yang belum terjawab. Kamu bisa kembali sebelum waktu habis.</p>
-              </div>
+              <section class="score-progress-card" aria-labelledby="score-progress-title">
+                <div class="section-heading compact"><div><span class="section-kicker">TARGET SKD</span><h2 id="score-progress-title">Progres belajarmu</h2></div></div>
+                <p class="muted score-progress-note">Pantau capaian nilai ambang tiap tes.</p>
+                <div id="score-progress-list" class="score-progress-list"><p class="empty-state">Memuat progres skor...</p></div>
+              </section>
               <div class="bank-card">
                 <div class="bank-card-icon">▤</div>
                 <div><strong id="bank-title">Bank soal TIU</strong><p id="bank-description">Soal dipilih acak dari bank soal TIU, lengkap dengan kunci jawaban dan pembahasan.</p></div>
               </div>
             </aside>
           </div>
-          <section class="score-progress-card" aria-labelledby="score-progress-title">
-            <div class="section-heading compact"><div><span class="section-kicker">TARGET SKD</span><h2 id="score-progress-title">Progres nilai tiap tes</h2></div><span class="pill">TIU 80 · TKP 156 · TWK 65</span></div>
-            <p class="muted score-progress-note">Skor setiap sesi dijumlahkan sesuai jenis tes. Lihat bagian yang belum mencapai nilai ambang.</p>
-            <div id="score-progress-list" class="score-progress-list"><p class="empty-state">Memuat progres skor...</p></div>
-          </section>
           <div class="history-card">
             <div class="section-heading compact"><div><span class="section-kicker">RIWAYAT</span><h2>Latihan terakhirmu</h2></div><button class="button button-outline" id="open-reviews-button" type="button">Beri ulasan</button></div>
             <div id="history-list" class="history-list"><p class="empty-state">Belum ada sesi latihan. Setiap langkah kecil tetap berarti.</p></div>
