@@ -8,7 +8,7 @@ const QUESTIONS_PER_SESSION = 10;
 const SESSION_SECONDS = 12 * 60;
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 const LEVEL_LABELS = { mudah: "Mudah", menengah: "Menengah", sulit: "Sulit" };
-const screens = ["auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view"];
+const screens = ["landing-view", "auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view"];
 
 let selectedLevel = "mudah";
 let sessionQuestions = [];
@@ -18,6 +18,7 @@ let remainingSeconds = SESSION_SECONDS;
 let timerId = null;
 let reviewRefreshId = null;
 let reviewRequestPromise = null;
+let leaderboardRequestPromise = null;
 let sessionFinished = false;
 let accountExpiryTimer = null;
 
@@ -34,10 +35,11 @@ const readStored = (key, fallback) => {
 const writeStored = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
 function showScreen(screenId) {
-  if (screenId !== "reviews-view" && reviewRefreshId !== null) {
+  if (screenId !== "reviews-view" && screenId !== "landing-view" && reviewRefreshId !== null) {
     clearInterval(reviewRefreshId);
     reviewRefreshId = null;
   }
+  $("landing-nav").classList.toggle("hidden", screenId !== "landing-view" || Boolean(currentUser()));
   screens.forEach((id) => $(id).classList.toggle("hidden", id !== screenId));
 }
 
@@ -112,8 +114,7 @@ async function handleAuth(event) {
 
 function showDashboard() {
   if (!currentUser()) {
-    syncHeader();
-    showScreen("auth-view");
+    showLanding();
     return;
   }
   $("welcome-title").textContent = `Siap latihan hari ini, ${currentUserName().split(" ")[0]}?`;
@@ -122,9 +123,31 @@ function showDashboard() {
   showScreen("dashboard-view");
 }
 
+function showLanding() {
+  if (currentUser()) {
+    showDashboard();
+    return;
+  }
+  syncHeader();
+  showScreen("landing-view");
+  renderReviews();
+  renderLeaderboard();
+  clearInterval(reviewRefreshId);
+  reviewRefreshId = setInterval(() => {
+    renderReviews();
+    renderLeaderboard();
+  }, 15000);
+}
+
+function showLogin() {
+  syncHeader();
+  showScreen("auth-view");
+  $("auth-email").focus();
+}
+
 function showReviews() {
   if (!currentUser()) {
-    showScreen("auth-view");
+    showLogin();
     return;
   }
   showScreen("reviews-view");
@@ -164,28 +187,92 @@ async function fetchAndRenderReviews() {
         && typeof review.createdAt === "string" && Number.isFinite(Date.parse(review.createdAt)))
       .sort((first, second) => Date.parse(second.createdAt) - Date.parse(first.createdAt));
     $("community-review-count").textContent = `${reviews.length} ulasan`;
+    $("landing-review-count").textContent = `${reviews.length} ulasan`;
     if (!reviews.length) {
       $("reviews-list").innerHTML = '<p class="empty-state">Belum ada ulasan. Jadilah yang pertama berbagi pengalaman.</p>';
+      $("landing-reviews-list").innerHTML = '<p class="community-empty">Belum ada ulasan pengguna.</p>';
       return;
     }
-    $("reviews-list").innerHTML = reviews.map((review) => {
+    const renderReview = (review) => {
       const date = new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date(review.createdAt));
-      return `
-        <article class="user-review">
-          <div class="user-review-heading">
-            <div><strong class="user-review-name">${escapeHtml(review.username)}</strong><span class="user-review-date">${escapeHtml(date)}</span></div>
-            <span class="user-review-stars" aria-label="${review.rating} dari 5 bintang">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</span>
-          </div>
-          <p>${escapeHtml(review.comment)}</p>
-        </article>
-      `;
-    }).join("");
+      return `<article class="user-review">
+        <div class="user-review-heading">
+          <div><strong class="user-review-name">${escapeHtml(review.username)}</strong><span class="user-review-date">${escapeHtml(date)}</span></div>
+          <span class="user-review-stars" aria-label="${review.rating} dari 5 bintang">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</span>
+        </div>
+        <p>${escapeHtml(review.comment)}</p>
+      </article>`;
+    };
+    $("reviews-list").innerHTML = reviews.map(renderReview).join("");
+    $("landing-reviews-list").innerHTML = reviews.slice(0, 5).map(renderReview).join("");
   } catch (error) {
     console.error("Tidak dapat memuat ulasan:", error);
     $("community-review-count").textContent = "Tidak tersedia";
+    $("landing-review-count").textContent = "Tidak tersedia";
     $("reviews-list").innerHTML = '<p class="empty-state">Ulasan tidak dapat dimuat. Pastikan API sudah ter-deploy, lalu muat ulang halaman.</p>';
+    $("landing-reviews-list").innerHTML = '<p class="community-empty">Ulasan belum dapat dimuat. Silakan coba beberapa saat lagi.</p>';
   } finally {
     reviewRequestPromise = null;
+  }
+}
+
+function renderLeaderboard() {
+  if (leaderboardRequestPromise) return leaderboardRequestPromise;
+  leaderboardRequestPromise = fetchAndRenderLeaderboard();
+  return leaderboardRequestPromise;
+}
+
+async function fetchAndRenderLeaderboard() {
+  const list = $("landing-leaderboard-list");
+  const message = $("leaderboard-message");
+  try {
+    const response = await fetch("/api/leaderboard", { cache: "no-store" });
+    const result = await readApiJson(response);
+    if (!response.ok) throw new Error(result.error || `Leaderboard gagal dimuat (${response.status}).`);
+    if (!result || !Array.isArray(result.users)
+      || result.users.some((user) => !user || typeof user.username !== "string"
+        || !Number.isInteger(user.score) || user.score < 0 || user.score > 100)) {
+      throw new Error("Data leaderboard dari server tidak valid.");
+    }
+    message.textContent = "";
+    if (!result.users.length) {
+      list.innerHTML = '<li class="community-empty">Belum ada skor. Selesaikan tryout untuk mengisi peringkat.</li>';
+      return;
+    }
+    list.innerHTML = result.users.slice(0, 5).map((user, index) => `
+      <li class="leaderboard-item">
+        <span class="leaderboard-rank">${String(index + 1).padStart(2, "0")}</span>
+        <span class="leaderboard-player"><strong>${escapeHtml(user.username)}</strong><small>Skor terbaik</small></span>
+        <strong class="leaderboard-score">${user.score}<small>/ 100</small></strong>
+      </li>
+    `).join("");
+  } catch (error) {
+    console.error("Tidak dapat memuat leaderboard:", error);
+    message.textContent = error.message || "Leaderboard tidak dapat dimuat.";
+    list.innerHTML = '<li class="community-empty">Peringkat belum tersedia.</li>';
+  } finally {
+    leaderboardRequestPromise = null;
+  }
+}
+
+async function saveLeaderboardScore(score) {
+  const message = $("leaderboard-submit-message");
+  message.textContent = "";
+  try {
+    const response = await fetch("/api/leaderboard", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ score })
+    });
+    const result = await readApiJson(response);
+    if (!response.ok) throw new Error(result.error || `Skor gagal disimpan (${response.status}).`);
+    message.textContent = "Skor terbaikmu sudah diperbarui di leaderboard.";
+    message.classList.add("success");
+    renderLeaderboard();
+  } catch (error) {
+    console.error("Tidak dapat menyimpan skor leaderboard:", error);
+    message.classList.remove("success");
+    message.textContent = error.message || "Skor belum dapat disimpan ke leaderboard.";
   }
 }
 
@@ -404,6 +491,8 @@ function finishQuiz(expired = false) {
   });
   writeStored(STORAGE.history, history.slice(0, 30));
   showScreen("result-view");
+  $("leaderboard-submit-message").classList.remove("success");
+  if (currentUser()) saveLeaderboardScore(score);
 }
 
 function showToast(message) {
@@ -425,10 +514,12 @@ async function restoreUserSession() {
       localStorage.removeItem(STORAGE.currentUser);
       localStorage.removeItem(STORAGE.currentName);
       syncHeader();
-      $("auth-message").textContent = hadPreviousSession
-        ? "Sesi atau masa berlaku akun telah berakhir. Silakan login kembali."
-        : "";
-      showScreen("auth-view");
+      if (hadPreviousSession) {
+        $("auth-message").textContent = "Sesi atau masa berlaku akun telah berakhir. Silakan login kembali.";
+        showLogin();
+      } else {
+        showLanding();
+      }
       return;
     }
     localStorage.setItem(STORAGE.currentUser, result.user.email);
@@ -442,13 +533,16 @@ async function restoreUserSession() {
     localStorage.removeItem(STORAGE.currentUser);
     localStorage.removeItem(STORAGE.currentName);
     syncHeader();
-    showScreen("auth-view");
+    showLogin();
     $("auth-message").textContent = error.message || "Sesi tidak dapat dipulihkan.";
   }
 }
 
 function initialize() {
   syncHeader();
+  $("start-test-button").addEventListener("click", showLogin);
+  $("nav-start-test-button").addEventListener("click", showLogin);
+  $("back-to-landing-button").addEventListener("click", showLanding);
   $("auth-form").addEventListener("submit", handleAuth);
   $("level-options").querySelectorAll("[data-level]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -493,15 +587,15 @@ function initialize() {
       localStorage.removeItem(STORAGE.currentUser);
       localStorage.removeItem(STORAGE.currentName);
       syncHeader();
-      showScreen("auth-view");
+      showLanding();
     }
   });
   document.querySelectorAll("[data-home]").forEach((element) => element.addEventListener("click", (event) => {
     event.preventDefault();
     if (currentUser()) showDashboard();
-    else showScreen("auth-view");
+    else showLanding();
   }));
-  showScreen("auth-view");
+  showScreen("landing-view");
   restoreUserSession();
 }
 

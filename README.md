@@ -12,11 +12,12 @@ npm start
 
 Buka `http://localhost:3030` di browser. Hentikan server dengan `Ctrl+C`. Bank soal dimuat melalui `fetch`, jadi jangan buka `index.html` langsung sebagai file.
 
-Untuk memakai login, pembuatan akun, dan ulasan lokal, server juga memerlukan `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `ADMIN_USERNAME`, dan `ADMIN_PASSWORD` di environment proses.
+Untuk memakai login, pembuatan akun, leaderboard, dan ulasan lokal, server juga memerlukan `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `ADMIN_USERNAME`, dan `ADMIN_PASSWORD` di environment proses.
 
 ## Fitur
 
 - Login pengguna dan admin memakai sesi aman dari API server. Akun pengguna hanya dapat dibuat oleh admin dengan masa berlaku 1 hari, 7 hari, atau selamanya; akun kedaluwarsa tidak dapat login dan sesi aktif dihentikan saat masa berlaku habis. Admin dapat melihat username, email, dan masa berlaku akun di tabel pengelolaan. Password pengguna disimpan sebagai hash PBKDF2.
+- Landing page publik menampilkan hero dengan tombol login, informasi aplikasi, lima skor terbaik global, dan ulasan terbaru dari pengguna. Skor leaderboard diambil dari skor terbaik setiap pengguna dan disimpan di Upstash.
 - Bank soal TIU di `question.json` diputar acak untuk setiap sesi: 10 soal dari level yang dipilih tidak diulang sampai seluruh bank soal level itu terpakai.
 - Waktu tryout 12 menit, navigasi soal, penanda jawaban, skor, dan pembahasan untuk jawaban salah atau yang belum dijawab.
 - Halaman ulasan dengan rating 1–5 bintang dan komentar yang dibagikan ke semua pengguna melalui API server, lalu diperbarui otomatis setiap 15 detik. Nama pengulas diambil dari sesi login server. Saat dijalankan lokal, data ulasan disimpan di `data/reviews.json`; saat di Vercel, API menggunakan Upstash Redis.
@@ -25,7 +26,7 @@ Untuk memakai login, pembuatan akun, dan ulasan lokal, server juga memerlukan `U
 
 ## Deploy ke Vercel
 
-Vercel menjalankan `api/reviews.js` dan `api/auth.js` sebagai API. Upstash menyimpan ulasan, akun pengguna, dan sesi login:
+Vercel menjalankan `api/reviews.js`, `api/auth.js`, dan `api/leaderboard.js` sebagai API. Upstash menyimpan ulasan, akun pengguna, sesi login, dan skor leaderboard:
 
 1. Buat database Redis di [Upstash](https://console.upstash.com/redis).
 2. Di Vercel, buka **Project Settings → Environment Variables** dan tambahkan:

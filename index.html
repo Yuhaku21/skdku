@@ -17,6 +17,12 @@
           <span class="brand-mark">R</span>
           <span>ruang<span class="brand-accent">skd</span></span>
         </a>
+        <nav class="landing-nav" id="landing-nav" aria-label="Navigasi landing page">
+          <a href="#about-section">Tentang</a>
+          <a href="#leaderboard-section">Peringkat</a>
+          <a href="#landing-reviews-section">Ulasan</a>
+          <button class="button button-outline" id="nav-start-test-button" type="button">Masuk</button>
+        </nav>
         <div class="topbar-right">
           <span class="session-label" id="session-label"></span>
           <button class="button button-quiet hidden" id="logout-button" type="button">Keluar</button>
@@ -24,7 +30,65 @@
       </header>
 
       <main>
-        <section class="auth-view" id="auth-view">
+        <section class="landing-view" id="landing-view">
+          <section class="landing-hero">
+            <div class="landing-hero-copy">
+              <div class="eyebrow"><span class="eyebrow-dot"></span> RUANG LATIHAN TIU</div>
+              <h1>Latihan cerdas. <span>Strategi terasah.</span></h1>
+              <p class="landing-jargon">Selangkah lebih dekat menuju impianmu.</p>
+              <p class="muted">Bangun kesiapan SKD dengan latihan TIU yang terarah, pilihan level yang beragam, dan evaluasi setiap sesi.</p>
+              <button class="button button-primary landing-cta" id="start-test-button" type="button">Mulai tes sekarang <span>→</span></button>
+              <div class="landing-hero-stats">
+                <div><strong>10</strong><span>soal per sesi</span></div>
+                <div><strong>12 menit</strong><span>waktu latihan</span></div>
+                <div><strong>3 level</strong><span>tingkat kesulitan</span></div>
+              </div>
+            </div>
+            <div class="landing-hero-art" aria-hidden="true">
+              <div class="hero-orbit hero-orbit-one"></div>
+              <div class="hero-orbit hero-orbit-two"></div>
+              <div class="hero-practice-card">
+                <span class="section-kicker">PROGRES LATIHAN</span>
+                <strong>Siap hadapi tantangan?</strong>
+                <div class="hero-progress"><span></span></div>
+                <div class="hero-progress-meta"><span>Fokus, konsisten, berkembang</span><span>✦</span></div>
+              </div>
+              <div class="hero-level-chip">Mudah <span>·</span> Menengah <span>·</span> Sulit</div>
+            </div>
+          </section>
+
+          <section class="landing-about" id="about-section">
+            <div class="landing-section-intro">
+              <span class="section-kicker">TENTANG RUANG SKD</span>
+              <h2>Latihan singkat, persiapan lebih terarah.</h2>
+              <p class="muted">Ruang SKD membantumu mengasah kemampuan TIU melalui sesi latihan yang ringkas dan mudah diulang.</p>
+            </div>
+            <div class="about-cards">
+              <article class="about-card"><span class="about-card-icon">01</span><h3>Berlatih sesuai level</h3><p>Pilih level mudah, menengah, atau sulit sesuai target belajarmu.</p></article>
+              <article class="about-card"><span class="about-card-icon">02</span><h3>Fokus dalam 12 menit</h3><p>Biasakan mengatur waktu dan menyelesaikan 10 soal dalam satu sesi.</p></article>
+              <article class="about-card"><span class="about-card-icon">03</span><h3>Evaluasi setiap sesi</h3><p>Lihat skor dan pembahasan untuk mengetahui hal yang perlu ditingkatkan.</p></article>
+            </div>
+          </section>
+
+          <section class="landing-community-card" id="leaderboard-section" aria-labelledby="leaderboard-title">
+            <div class="landing-section-heading">
+              <div><span class="section-kicker">APRESIASI LATIHAN</span><h2 id="leaderboard-title">Top 5 leaderboard</h2><p class="muted">Peringkat berdasarkan skor terbaik pengguna.</p></div>
+              <span class="leaderboard-badge">SKOR TERBAIK</span>
+            </div>
+            <p class="form-message" id="leaderboard-message" aria-live="polite"></p>
+            <ol class="leaderboard-list" id="landing-leaderboard-list"><li class="community-empty">Memuat peringkat...</li></ol>
+          </section>
+
+          <section class="landing-community-card landing-reviews-card" id="landing-reviews-section" aria-labelledby="landing-reviews-title">
+            <div class="landing-section-heading">
+              <div><span class="section-kicker">CERITA KOMUNITAS</span><h2 id="landing-reviews-title">Ulasan pengguna</h2><p class="muted">Pengalaman nyata dari pengguna Ruang SKD.</p></div>
+              <span class="pill" id="landing-review-count">Memuat ulasan...</span>
+            </div>
+            <div class="landing-reviews-list" id="landing-reviews-list"><p class="community-empty">Memuat ulasan...</p></div>
+          </section>
+        </section>
+
+        <section class="auth-view hidden" id="auth-view">
           <div class="auth-aside">
             <div class="eyebrow"><span class="eyebrow-dot"></span> PERSIAPAN SKD DIMULAI DI SINI</div>
             <h1>Selangkah lebih dekat menuju <span>impianmu.</span></h1>
@@ -38,6 +102,7 @@
             <div class="decor-orbit orbit-two"></div>
           </div>
           <div class="auth-panel">
+            <button class="button button-quiet auth-back-button" id="back-to-landing-button" type="button">← Kembali ke beranda</button>
             <h2 id="auth-title">Masuk ke akun</h2>
             <p class="muted" id="auth-description">Masuk dengan akun yang dibuat oleh admin.</p>
             <form id="auth-form">
@@ -172,6 +237,7 @@
             <div class="eyebrow"><span class="eyebrow-dot"></span> SESI SELESAI</div>
             <h1 id="result-heading">Latihan yang hebat!</h1>
             <p class="muted" id="result-subtitle">Setiap latihan membawamu selangkah lebih siap.</p>
+            <p class="form-message" id="leaderboard-submit-message" aria-live="polite"></p>
             <div class="score-card">
               <div class="score-main"><span>SKOR TRYOUT</span><strong id="score-value">0</strong><small>/ 100</small></div>
               <div class="score-divider"></div>

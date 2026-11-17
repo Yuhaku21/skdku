@@ -3,6 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { getSession } = require("./lib/session");
 const authHandler = require("./api/auth");
+const leaderboardHandler = require("./api/leaderboard");
 
 const HOST = process.env.HOST || "0.0.0.0";
 const PORT = Number(process.env.PORT) || 3030;
@@ -135,6 +136,13 @@ async function handleAuthApi(request, response) {
   await authHandler(request, response);
 }
 
+async function handleLeaderboardApi(request, response) {
+  if (request.method === "POST" && /^application\/json(?:\s*;|$)/i.test(request.headers["content-type"] || "")) {
+    request.body = await readJsonBody(request);
+  }
+  await leaderboardHandler(request, response);
+}
+
 const server = http.createServer((request, response) => {
   let pathname;
   try {
@@ -169,6 +177,18 @@ const server = http.createServer((request, response) => {
       }
       console.error("API autentikasi gagal:", error);
       sendJson(response, 500, { error: "Autentikasi tidak dapat diproses saat ini." });
+    });
+    return;
+  }
+
+  if (pathname === "/api/leaderboard") {
+    handleLeaderboardApi(request, response).catch((error) => {
+      if (error.statusCode && error.statusCode < 600) {
+        sendJson(response, error.statusCode, { error: error.message });
+        return;
+      }
+      console.error("API leaderboard gagal:", error);
+      sendJson(response, 500, { error: "Leaderboard tidak dapat diproses saat ini." });
     });
     return;
   }

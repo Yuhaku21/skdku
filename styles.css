@@ -37,6 +37,62 @@ button { cursor: pointer; }
 .button-outline { border: 1px solid var(--line); background: white; color: #586477; }
 .button-outline:hover { background: #f9f9ff; border-color: #cbc8fa; color: var(--violet); }
 main { flex: 1; }
+.landing-nav { display: flex; align-items: center; gap: 23px; }
+.landing-nav a { color: #687286; font-size: 11px; font-weight: 700; text-decoration: none; }
+.landing-nav a:hover { color: var(--violet); }
+.landing-nav .button { padding: 10px 15px; }
+.landing-view { padding: 34px 0 60px; }
+.landing-hero { position: relative; overflow: hidden; display: grid; grid-template-columns: 1.08fr .92fr; gap: 30px; align-items: center; min-height: 430px; padding: 48px; border: 1px solid #e8e7fb; border-radius: 27px; background: linear-gradient(118deg, #f0efff 0%, #fbfbff 52%, #e8e6ff 100%); }
+.landing-hero-copy { position: relative; z-index: 1; }
+.landing-hero h1 { max-width: 550px; margin: 21px 0 11px; font: 800 43px/1.14 "Manrope", sans-serif; letter-spacing: -2px; }
+.landing-hero h1 span { color: var(--violet); }
+.landing-jargon { margin: 0 0 11px; color: #4a4680; font: 700 16px "Manrope", sans-serif; }
+.landing-hero-copy > .muted { max-width: 450px; margin-bottom: 23px; }
+.landing-cta { min-height: 49px; padding: 0 21px; }
+.landing-hero-stats { display: flex; flex-wrap: wrap; gap: 27px; margin-top: 30px; }
+.landing-hero-stats div { display: grid; gap: 4px; }
+.landing-hero-stats strong { font: 800 17px "Manrope", sans-serif; }
+.landing-hero-stats span { color: #8589a0; font-size: 9px; }
+.landing-hero-art { position: relative; min-height: 285px; display: grid; place-items: center; }
+.hero-orbit { position: absolute; border: 1px solid #d5d2ff; border-radius: 50%; }
+.hero-orbit-one { width: 290px; height: 290px; }
+.hero-orbit-two { width: 370px; height: 370px; }
+.hero-practice-card { position: relative; z-index: 1; width: min(100%, 300px); padding: 24px; border: 1px solid #ffffff44; border-radius: 19px; background: #333168; color: white; box-shadow: 0 18px 50px #33316826; }
+.hero-practice-card .section-kicker { color: #b7b2ff; }
+.hero-practice-card > strong { display: block; margin: 19px 0 24px; font: 700 18px/1.4 "Manrope", sans-serif; }
+.hero-progress { height: 7px; overflow: hidden; border-radius: 10px; background: #ffffff26; }
+.hero-progress span { display: block; width: 72%; height: 100%; border-radius: inherit; background: #aaa2ff; }
+.hero-progress-meta { display: flex; justify-content: space-between; gap: 8px; margin-top: 10px; color: #c9c6ed; font-size: 9px; }
+.hero-level-chip { position: absolute; right: 0; bottom: 8px; padding: 10px 13px; border: 1px solid #e8e6ff; border-radius: 30px; background: white; color: #6a629f; font-size: 9px; font-weight: 700; box-shadow: 0 8px 20px #39346f12; }
+.hero-level-chip span { padding: 0 4px; color: #a39cf2; }
+.landing-about { padding: 60px 4px 17px; }
+.landing-section-intro { max-width: 620px; margin: 0 auto 24px; text-align: center; }
+.landing-section-intro h2, .landing-section-heading h2 { margin: 9px 0 7px; font: 800 24px "Manrope", sans-serif; letter-spacing: -.8px; }
+.landing-section-intro > .muted, .landing-section-heading .muted { margin: 0; }
+.about-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.about-card { padding: 21px; border: 1px solid #ebedf2; border-radius: 15px; background: white; }
+.about-card-icon { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 10px; background: var(--violet-pale); color: var(--violet); font-size: 10px; font-weight: 800; }
+.about-card h3 { margin: 16px 0 7px; font: 700 13px "Manrope", sans-serif; }
+.about-card p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.7; }
+.landing-community-card { margin-top: 25px; padding: 24px 27px; border: 1px solid #ebedf2; border-radius: 18px; background: white; }
+.landing-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.landing-section-heading h2 { font-size: 20px; }
+.leaderboard-badge { padding: 8px 11px; border-radius: 30px; background: #f1f0ff; color: var(--violet); font-size: 9px; font-weight: 700; white-space: nowrap; }
+.leaderboard-list { display: grid; gap: 8px; margin: 19px 0 0; padding: 0; list-style: none; }
+.leaderboard-item { display: flex; align-items: center; gap: 13px; padding: 12px; border: 1px solid #f0f1f5; border-radius: 11px; }
+.leaderboard-rank { display: grid; flex: 0 0 34px; width: 34px; height: 34px; place-items: center; border-radius: 10px; background: #f3f2ff; color: var(--violet); font: 800 12px "Manrope", sans-serif; }
+.leaderboard-item:nth-child(1) .leaderboard-rank { background: #fff3d9; color: #c18a19; }
+.leaderboard-item:nth-child(2) .leaderboard-rank { background: #f0f1f5; color: #788294; }
+.leaderboard-item:nth-child(3) .leaderboard-rank { background: #faeee5; color: #aa7554; }
+.leaderboard-player { display: grid; flex: 1; gap: 3px; min-width: 0; }
+.leaderboard-player strong { overflow: hidden; color: #374256; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.leaderboard-player small { color: #9aa2b0; font-size: 9px; }
+.leaderboard-score { color: var(--violet); font: 800 18px "Manrope", sans-serif; }
+.leaderboard-score small { padding-left: 3px; color: #a4abba; font: 500 9px "DM Sans", sans-serif; }
+.community-empty { margin: 0; padding: 21px 12px; color: #9aa2b0; font-size: 11px; text-align: center; }
+.landing-reviews-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 11px; margin-top: 17px; }
+.landing-reviews-list .user-review { min-width: 0; }
+.auth-back-button { margin-bottom: 18px; padding-left: 0; }
 .auth-view { display: grid; grid-template-columns: 1.1fr .9fr; gap: 80px; align-items: center; min-height: 640px; padding: 58px 28px 70px; }
 .auth-aside { position: relative; overflow: hidden; min-height: 440px; display: flex; flex-direction: column; justify-content: center; padding: 42px; border-radius: 25px; background: #ecebff; }
 .eyebrow, .section-kicker { color: var(--violet); font-size: 10px; letter-spacing: 1.5px; font-weight: 700; }
@@ -237,6 +293,11 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .toast { position: fixed; z-index: 20; left: 50%; bottom: 24px; transform: translateX(-50%); padding: 12px 17px; border-radius: 9px; background: #263248; color: white; font-size: 11px; box-shadow: 0 7px 24px #17203333; }
 @media (max-width: 800px) {
   .app-shell { width: min(100% - 34px, 620px); }
+  .landing-hero { grid-template-columns: 1fr; gap: 8px; padding: 37px 32px 28px; }
+  .landing-hero-art { min-height: 250px; }
+  .landing-about { padding-top: 45px; }
+  .about-cards { grid-template-columns: 1fr; }
+  .landing-community-card { padding: 21px; }
   .auth-view { grid-template-columns: 1fr; gap: 34px; min-height: 0; padding: 36px 0 45px; }
   .auth-aside { min-height: 300px; padding: 30px; }
   .auth-aside h1 { font-size: 31px; margin-top: 18px; }
@@ -260,6 +321,29 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .topbar { height: 66px; }
   .brand { font-size: 18px; }
   .brand-mark { width: 31px; height: 31px; }
+  .landing-nav { gap: 6px; }
+  .landing-nav a { display: none; }
+  .landing-nav .button { padding: 9px 11px; font-size: 10px; }
+  .landing-view { padding: 21px 0 42px; }
+  .landing-hero { gap: 0; padding: 28px 20px 21px; border-radius: 20px; }
+  .landing-hero h1 { margin-top: 17px; font-size: 31px; letter-spacing: -1.3px; }
+  .landing-jargon { font-size: 13px; }
+  .landing-hero-stats { gap: 17px; margin-top: 23px; }
+  .landing-hero-stats strong { font-size: 14px; }
+  .landing-hero-art { min-height: 225px; }
+  .hero-orbit-one { width: 220px; height: 220px; }
+  .hero-orbit-two { width: 290px; height: 290px; }
+  .hero-practice-card { width: min(100%, 260px); padding: 19px; }
+  .hero-level-chip { right: -4px; bottom: 0; font-size: 8px; }
+  .landing-about { padding: 38px 0 6px; }
+  .landing-section-intro h2 { font-size: 20px; }
+  .landing-community-card { margin-top: 17px; padding: 18px 14px; }
+  .landing-section-heading { align-items: flex-start; gap: 8px; }
+  .landing-section-heading h2 { font-size: 17px; }
+  .landing-section-heading .muted { font-size: 10px; }
+  .leaderboard-badge { padding: 7px 8px; font-size: 7px; }
+  .landing-reviews-list { grid-template-columns: 1fr; }
+  .auth-back-button { margin-bottom: 12px; }
   .session-label { display: none; }
   .button-quiet { font-size: 10px; }
   .welcome-row h1 { font-size: 25px; }
