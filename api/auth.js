@@ -32,6 +32,20 @@ function hashPassword(password, salt) {
   });
 }
 
+function getAccountValidity(account) {
+  if (["1-day", "7-days", "forever"].includes(account.validity)) return account.validity;
+  return account.expiresAt === null || account.expiresAt === undefined ? "forever" : "7-days";
+}
+
+async function getAuthenticatedUser(request) {
+  const session = await getSession(request);
+  if (!session || session.role !== "user" || session.validity || !session.email) return session;
+  const stored = await redisCommand(["HGET", USERS_KEY, session.email]);
+  if (!stored) return session;
+  const account = JSON.parse(stored);
+  return { ...session, validity: getAccountValidity(account) };
+}
+
 function readPayload(request, response) {
   if (!/^application\/json(?:\s*;|$)/i.test(request.headers["content-type"] || "")) {
     sendJson(response, 400, { error: "Gunakan Content-Type application/json." });
@@ -89,7 +103,13 @@ async function loginUser(request, response, payload) {
     sendJson(response, 403, { error: "Masa berlaku akun sudah habis. Hubungi admin." });
     return;
   }
-  const user = { role: "user", email, name: account.name, expiresAt };
+  const user = {
+    role: "user",
+    email,
+    name: account.name,
+    validity: getAccountValidity(account),
+    expiresAt
+  };
   await createSession(request, response, user);
   sendJson(response, 200, { user });
 }
@@ -148,7 +168,7 @@ async function listUsers(request, response) {
     users.push({
       name: account.name,
       email,
-      validity: account.validity || "forever",
+      validity: getAccountValidity(account),
       expiresAt
     });
   }
@@ -159,7 +179,7 @@ async function listUsers(request, response) {
 module.exports = async function authHandler(request, response) {
   try {
     if (request.method === "GET") {
-      sendJson(response, 200, { user: await getSession(request) });
+      sendJson(response, 200, { user: await getAuthenticatedUser(request) });
       return;
     }
     if (request.method !== "POST") {

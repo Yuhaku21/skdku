@@ -2,6 +2,7 @@ const { getSession } = require("../lib/session");
 const { redisCommand } = require("../lib/redis");
 const { sendJson } = require("../lib/http");
 
+const USERS_KEY = "ruangskd:users";
 const LEADERBOARD_KEY = "ruangskd:leaderboard:v2";
 const LEADERBOARD_NAMES_KEY = "ruangskd:leaderboard:names";
 const LEADERBOARD_SCORES_KEY = "ruangskd:leaderboard:scores:v2";
@@ -12,19 +13,42 @@ const SAVE_ACCUMULATED_SCORE_SCRIPT = [
   "for _, test in ipairs({'TIU', 'TKP', 'TWK'}) do",
   "  total = total + tonumber(redis.call('HGET', KEYS[2], ARGV[1] .. ':' .. test) or '0')",
   "end",
-  "redis.call('ZADD', KEYS[1], total, ARGV[1])",
+  "if ARGV[5] == '1' then",
+  "  redis.call('ZADD', KEYS[1], total, ARGV[1])",
+  "end",
   "redis.call('HSET', KEYS[3], ARGV[1], ARGV[4])",
   "return total"
 ].join("\n");
 
 async function getLeaderboard() {
-  const entries = await redisCommand(["ZREVRANGE", LEADERBOARD_KEY, 0, 4, "WITHSCORES"]);
+  const entries = await redisCommand(["ZREVRANGE", LEADERBOARD_KEY, 0, -1, "WITHSCORES"]);
   if (!Array.isArray(entries) || entries.length % 2 !== 0) {
     throw new Error("Format data leaderboard tidak valid.");
   }
   if (!entries.length) return [];
 
-  const emails = entries.filter((_, index) => index % 2 === 0);
+  const accounts = await redisCommand(["HGETALL", USERS_KEY]);
+  if (!Array.isArray(accounts) || accounts.length % 2 !== 0) {
+    throw new Error("Format data akun leaderboard tidak valid.");
+  }
+  const lifetimeEmails = new Set();
+  for (let index = 0; index < accounts.length; index += 2) {
+    const account = JSON.parse(accounts[index + 1]);
+    if (!account || typeof account !== "object" || Array.isArray(account)) {
+      throw new Error("Data akun leaderboard tidak valid.");
+    }
+    if (account.validity === "forever"
+      || (!account.validity && (account.expiresAt === null || account.expiresAt === undefined))) {
+      lifetimeEmails.add(accounts[index]);
+    }
+  }
+  const eligibleEntries = [];
+  for (let index = 0; index < entries.length; index += 2) {
+    if (lifetimeEmails.has(entries[index])) eligibleEntries.push(entries[index], entries[index + 1]);
+  }
+  const emails = eligibleEntries.filter((_, index) => index % 2 === 0).slice(0, 5);
+  const topEntries = eligibleEntries.slice(0, emails.length * 2);
+  if (!emails.length) return [];
   const scoreFields = emails.flatMap((email) => [`${email}:TIU`, `${email}:TKP`, `${email}:TWK`]);
   const [names, scores] = await Promise.all([
     redisCommand(["HMGET", LEADERBOARD_NAMES_KEY, ...emails]),
@@ -37,7 +61,7 @@ async function getLeaderboard() {
     throw new Error("Data skor leaderboard tidak lengkap.");
   }
   return emails.map((email, index) => {
-    const score = Number(entries[index * 2 + 1]);
+    const score = Number(topEntries[index * 2 + 1]);
     const sectionScores = scores.slice(index * 3, index * 3 + 3).map((value) => Number(value || 0));
     if (typeof names[index] !== "string" || !Number.isSafeInteger(score) || score < 0
       || sectionScores.some((value) => !Number.isSafeInteger(value) || value < 0)
@@ -69,6 +93,15 @@ async function getUserProgress(email) {
   return { ...progress, total: Object.values(progress).reduce((total, score) => total + score, 0) };
 }
 
+async function getSessionValidity(session) {
+  if (session.validity) return session.validity;
+  const stored = await redisCommand(["HGET", USERS_KEY, session.email]);
+  if (!stored) return null;
+  const account = JSON.parse(stored);
+  if (["1-day", "7-days", "forever"].includes(account.validity)) return account.validity;
+  return account.expiresAt === null || account.expiresAt === undefined ? "forever" : "7-days";
+}
+
 module.exports = async function leaderboardHandler(request, response) {
   if (request.method !== "GET" && request.method !== "POST") {
     response.setHeader("Allow", "GET, POST");
@@ -94,6 +127,7 @@ module.exports = async function leaderboardHandler(request, response) {
       sendJson(response, 401, { error: "Masuk sebagai pengguna untuk menyimpan skor." });
       return;
     }
+    const validity = await getSessionValidity(session);
 
     const payload = request.body;
     if (!payload || typeof payload !== "object" || Array.isArray(payload)
@@ -114,9 +148,10 @@ module.exports = async function leaderboardHandler(request, response) {
       session.email,
       payload.test,
       payload.score,
-      session.name
+      session.name,
+      validity === "forever" ? 1 : 0
     ]);
-    sendJson(response, 200, { success: true });
+    sendJson(response, 200, { success: true, leaderboardEligible: validity === "forever" });
   } catch (error) {
     if (error.statusCode === 503) {
       sendJson(response, 503, { error: error.message });

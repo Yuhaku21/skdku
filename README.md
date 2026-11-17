@@ -21,6 +21,7 @@ Untuk memakai login, pembuatan akun, leaderboard, dan ulasan lokal, server juga 
 - Dashboard pengguna menampilkan progres akumulasi TIU, TKP, dan TWK terhadap target masing-masing 80, 156, dan 65. Skor tiap sesi tryout (maksimal 100) ditambahkan ke akumulasi jenis tes terkait.
 - Akumulasi baru disimpan terpisah dari format skor leaderboard lama karena data lama tidak mencatat jenis tesnya dan tidak dapat dibagi secara akurat.
 - Pengguna memilih tingkat mudah (10 soal, 12 menit), menengah (30 soal, 32 menit), atau sulit (50 soal, 52 menit) setelah memilih jenis tes. Bank soal TIU, TKP, dan TWK diputar acak tanpa pengulangan sampai seluruh bank kategori itu terpakai.
+- Batas sesi mengikuti masa berlaku akun: akun 1 hari mendapat 10 soal/12 menit, akun 7 hari mendapat 15 soal/16 menit, dan akun selamanya dapat memilih tingkat kesulitan. Hanya akun selamanya yang masuk leaderboard.
 - Tryout menyediakan navigasi soal, penanda jawaban, skor persentase, dan pembahasan untuk jawaban salah atau yang belum dijawab.
 - Halaman ulasan dengan rating 1–5 bintang dan komentar yang dibagikan ke semua pengguna melalui API server, lalu diperbarui otomatis setiap 15 detik. Nama pengulas diambil dari sesi login server. Saat dijalankan lokal, data ulasan disimpan di `data/reviews.json`; saat di Vercel, API menggunakan Upstash Redis.
 - Semua soal disimpan dalam file JSON lokal sesuai kategori. Tryout tidak membutuhkan API key atau koneksi ke layanan AI.

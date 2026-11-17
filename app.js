@@ -1,6 +1,7 @@
 const STORAGE = {
   currentUser: "ruangskd.currentUser",
   currentName: "ruangskd.currentName",
+  currentValidity: "ruangskd.currentValidity",
   history: "ruangskd.history",
   questionRotation: "ruangskd.questionRotation"
 };
@@ -12,6 +13,10 @@ const DIFFICULTIES = {
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 const TEST_BANKS = { TIU: "question.json", TKP: "tkp.json", TWK: "twk.json" };
 const TEST_TARGETS = { TIU: 80, TKP: 156, TWK: 65 };
+const FIXED_ACCESS_LIMITS = {
+  "1-day": { questionCount: 10, durationSeconds: 12 * 60 },
+  "7-days": { questionCount: 15, durationSeconds: 16 * 60 }
+};
 const screens = ["landing-view", "auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view"];
 
 let selectedTest = "TIU";
@@ -71,6 +76,55 @@ function currentUserName() {
   return name || (currentUser() ? currentUser().split("@")[0] : "");
 }
 
+function currentValidity() {
+  return localStorage.getItem(STORAGE.currentValidity);
+}
+
+function getCurrentSessionConfig() {
+  if (currentValidity() === "forever") {
+    return selectedDifficulty ? DIFFICULTIES[selectedDifficulty] : null;
+  }
+  return FIXED_ACCESS_LIMITS[currentValidity()] || null;
+}
+
+function updateSessionOptions() {
+  const config = getCurrentSessionConfig();
+  if (!config) {
+    $("session-limit-pill").textContent = currentValidity() === "forever"
+      ? "Pilih tingkat kesulitan"
+      : "Akses tidak tersedia";
+    $("source-note").textContent = currentValidity() === "forever"
+      ? "Pilih tingkat kesulitan untuk melanjutkan."
+      : "Masa akses akun tidak dikenali. Silakan masuk kembali.";
+    $("start-button").disabled = true;
+    return;
+  }
+  const minutes = Math.floor(config.durationSeconds / 60);
+  $("session-limit-pill").textContent = `${config.questionCount} soal · ${minutes} menit`;
+  $("source-note").textContent = currentValidity() === "forever"
+    ? `Akses selamanya · ${config.questionCount} soal acak`
+    : `Paket ${currentValidity() === "1-day" ? "1 hari" : "7 hari"} · ${config.questionCount} soal acak`;
+  $("bank-title").textContent = `Bank soal ${selectedTest}`;
+  $("bank-description").textContent = `${config.questionCount} soal dipilih acak dari bank soal ${selectedTest}, lengkap dengan kunci jawaban dan pembahasan.`;
+  $("start-button").disabled = false;
+}
+
+function configureAccountAccess() {
+  const lifetimeAccess = currentValidity() === "forever";
+  $("difficulty-section").classList.toggle("hidden", !lifetimeAccess);
+  $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((button) => {
+    button.disabled = !lifetimeAccess;
+  });
+  if (!lifetimeAccess) {
+    selectedDifficulty = null;
+    $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((button) => {
+      button.classList.remove("selected");
+      button.setAttribute("aria-pressed", "false");
+    });
+  }
+  updateSessionOptions();
+}
+
 function syncHeader() {
   const email = currentUser();
   $("session-label").textContent = email ? `Hai, ${currentUserName()}` : "";
@@ -97,6 +151,7 @@ function scheduleAccountExpiry(expiresAt) {
     sessionFinished = true;
     localStorage.removeItem(STORAGE.currentUser);
     localStorage.removeItem(STORAGE.currentName);
+    localStorage.removeItem(STORAGE.currentValidity);
     syncHeader();
     showScreen("auth-view");
     $("auth-message").textContent = "Masa berlaku akun telah habis. Hubungi admin.";
@@ -123,6 +178,7 @@ async function handleAuth(event) {
     }
     localStorage.setItem(STORAGE.currentUser, result.user.email);
     localStorage.setItem(STORAGE.currentName, result.user.name);
+    localStorage.setItem(STORAGE.currentValidity, result.user.validity);
     scheduleAccountExpiry(result.user.expiresAt);
     syncHeader();
     showDashboard();
@@ -138,6 +194,7 @@ function showDashboard() {
   }
   $("welcome-title").textContent = `Siap latihan hari ini, ${currentUserName().split(" ")[0]}?`;
   syncHeader();
+  configureAccountAccess();
   renderHistory();
   renderScoreProgress();
   showScreen("dashboard-view");
@@ -320,7 +377,12 @@ async function saveLeaderboardScore(test, score) {
     });
     const result = await readApiJson(response);
     if (!response.ok) throw new Error(result.error || `Skor gagal disimpan (${response.status}).`);
-    message.textContent = `Skor ${test} berhasil ditambahkan ke akumulasi progres dan leaderboard.`;
+    if (typeof result.leaderboardEligible !== "boolean") {
+      throw new Error("Status akses leaderboard dari server tidak valid.");
+    }
+    message.textContent = result.leaderboardEligible
+      ? `Skor ${test} berhasil ditambahkan ke akumulasi progres dan leaderboard.`
+      : `Progres ${test} tersimpan. Leaderboard hanya tersedia untuk akun selamanya.`;
     message.classList.add("success");
     renderLeaderboard();
     renderScoreProgress();
@@ -436,11 +498,13 @@ async function loadLocalQuestions(questionCount) {
 }
 
 async function beginQuiz() {
-  if (!selectedDifficulty) {
-    showToast("Pilih tingkat kesulitan sebelum memulai tryout.");
+  const difficulty = getCurrentSessionConfig();
+  if (!difficulty) {
+    showToast(currentValidity() === "forever"
+      ? "Pilih tingkat kesulitan sebelum memulai tryout."
+      : "Akses akun tidak tersedia. Silakan masuk kembali.");
     return;
   }
-  const difficulty = DIFFICULTIES[selectedDifficulty];
   $("start-button").disabled = true;
   $("start-button").textContent = "Menyiapkan soal...";
   $("level-options").querySelectorAll("[data-test]").forEach((button) => { button.disabled = true; });
@@ -460,7 +524,7 @@ async function beginQuiz() {
   } finally {
     $("level-options").querySelectorAll("[data-test]").forEach((button) => { button.disabled = false; });
     $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((button) => { button.disabled = false; });
-    $("start-button").disabled = !selectedDifficulty;
+    $("start-button").disabled = !getCurrentSessionConfig();
     $("start-button").innerHTML = 'Mulai tryout <span>→</span>';
   }
 }
@@ -577,6 +641,7 @@ async function restoreUserSession() {
       clearAccountExpiryTimer();
       localStorage.removeItem(STORAGE.currentUser);
       localStorage.removeItem(STORAGE.currentName);
+      localStorage.removeItem(STORAGE.currentValidity);
       syncHeader();
       if (hadPreviousSession) {
         $("auth-message").textContent = "Sesi atau masa berlaku akun telah berakhir. Silakan login kembali.";
@@ -588,6 +653,7 @@ async function restoreUserSession() {
     }
     localStorage.setItem(STORAGE.currentUser, result.user.email);
     localStorage.setItem(STORAGE.currentName, result.user.name);
+    localStorage.setItem(STORAGE.currentValidity, result.user.validity);
     scheduleAccountExpiry(result.user.expiresAt);
     syncHeader();
     showDashboard();
@@ -596,6 +662,7 @@ async function restoreUserSession() {
     clearAccountExpiryTimer();
     localStorage.removeItem(STORAGE.currentUser);
     localStorage.removeItem(STORAGE.currentName);
+    localStorage.removeItem(STORAGE.currentValidity);
     syncHeader();
     showLogin();
     $("auth-message").textContent = error.message || "Sesi tidak dapat dipulihkan.";
@@ -618,33 +685,26 @@ function initialize() {
   $("level-options").querySelectorAll("[data-test]").forEach((button) => {
     button.addEventListener("click", () => {
       selectedTest = button.dataset.test;
-      selectedDifficulty = null;
       $("level-options").querySelectorAll("[data-test]").forEach((item) => item.classList.toggle("selected", item === button));
-      $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((item) => {
-        item.classList.remove("selected");
-        item.setAttribute("aria-pressed", "false");
-      });
-      $("start-button").disabled = true;
-      $("session-limit-pill").textContent = "Pilih tingkat kesulitan";
-      $("source-note").textContent = "Pilih tingkat kesulitan untuk melanjutkan.";
-      $("bank-title").textContent = `Bank soal ${selectedTest}`;
-      $("bank-description").textContent = `Soal dipilih acak dari bank soal ${selectedTest}, lengkap dengan kunci jawaban dan pembahasan.`;
+      if (currentValidity() === "forever") {
+        selectedDifficulty = null;
+        $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((item) => {
+          item.classList.remove("selected");
+          item.setAttribute("aria-pressed", "false");
+        });
+      }
+      updateSessionOptions();
     });
   });
   $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((button) => {
     button.addEventListener("click", () => {
       selectedDifficulty = button.dataset.difficulty;
-      const { questionCount, durationSeconds } = DIFFICULTIES[selectedDifficulty];
-      const minutes = Math.floor(durationSeconds / 60);
       $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((item) => {
         const selected = item === button;
         item.classList.toggle("selected", selected);
         item.setAttribute("aria-pressed", String(selected));
       });
-      $("session-limit-pill").textContent = `${questionCount} soal · ${minutes} menit`;
-      $("source-note").textContent = `Bank soal ${selectedTest} · ${questionCount} soal acak`;
-      $("bank-description").textContent = `${questionCount} soal dipilih acak dari bank soal ${selectedTest}, lengkap dengan kunci jawaban dan pembahasan.`;
-      $("start-button").disabled = false;
+      updateSessionOptions();
     });
   });
   $("start-button").addEventListener("click", beginQuiz);
@@ -683,6 +743,7 @@ function initialize() {
       clearAccountExpiryTimer();
       localStorage.removeItem(STORAGE.currentUser);
       localStorage.removeItem(STORAGE.currentName);
+      localStorage.removeItem(STORAGE.currentValidity);
       syncHeader();
       showLanding();
     }
