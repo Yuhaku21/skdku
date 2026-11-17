@@ -73,7 +73,20 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .tiny-note a:hover { text-decoration: underline; }
 .admin-panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 .admin-panel-head h2 { margin-top: 8px; }
-.admin-panel > .muted { margin: 12px 0 22px; }
+.admin-panel { max-width: 470px; }
+.admin-create-card { padding: 21px; border: 1px solid #ebedf2; border-radius: 17px; background: white; }
+.admin-create-card > .muted { margin: 0 0 18px; }
+.admin-users-card { margin: 0 28px 48px; padding: 23px 25px; border: 1px solid #ebedf2; border-radius: 17px; background: white; }
+.admin-users-heading { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 15px; }
+.admin-users-heading h2 { margin: 8px 0 0; font: 800 18px "Manrope", sans-serif; letter-spacing: -.5px; }
+.admin-table-wrap { overflow-x: auto; }
+.admin-users-table { width: 100%; min-width: 540px; border-collapse: collapse; text-align: left; }
+.admin-users-table th, .admin-users-table td { padding: 13px 12px; border-bottom: 1px solid #f0f1f5; font-size: 11px; }
+.admin-users-table th { color: #8c95a4; font-size: 9px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
+.admin-users-table td { color: #4c586c; overflow-wrap: anywhere; }
+.admin-users-table tbody tr:last-child td { border-bottom: 0; }
+.admin-users-table .admin-users-empty { padding: 23px 12px; color: #9aa2b0; text-align: center; }
+.admin-users-table .admin-user-expired { color: var(--red); font-weight: 700; }
 .dashboard-view { padding: 58px 18px 70px; }
 .welcome-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 34px; }
 .welcome-row h1 { margin: 14px 0 8px; font-size: 31px; letter-spacing: -1.2px; }
@@ -229,6 +242,7 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .auth-aside h1 { font-size: 31px; margin-top: 18px; }
   .auth-stats { margin-top: 21px; gap: 24px; }
   .auth-panel { max-width: none; }
+  .admin-users-card { margin: 0 0 38px; }
   .dashboard-view { padding: 39px 0 48px; }
   .dashboard-grid { grid-template-columns: 1fr; }
   .reviews-view { padding: 38px 0 48px; }
@@ -250,6 +264,9 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .button-quiet { font-size: 10px; }
   .welcome-row h1 { font-size: 25px; }
   .welcome-icon { width: 45px; height: 45px; }
+  .admin-create-card, .admin-users-card { padding: 18px 15px; }
+  .admin-users-heading { align-items: flex-start; }
+  .admin-users-heading h2 { font-size: 16px; }
   .level-card { padding: 19px 16px; }
   .section-heading { align-items: flex-start; }
   .section-heading h2 { font-size: 16px; }

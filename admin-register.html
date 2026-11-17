@@ -51,18 +51,46 @@
                 <div><span class="section-kicker">KELOLA AKUN</span><h2>Buat akun pengguna</h2></div>
                 <button class="button button-quiet" id="admin-logout-button" type="button">Keluar</button>
               </div>
-              <p class="muted" id="admin-welcome">Buat akun dan berikan kredensialnya kepada pengguna dengan aman.</p>
-              <form id="create-user-form">
-                <label for="new-user-name">Nama pengguna</label>
-                <input id="new-user-name" class="form-input" autocomplete="name" maxlength="80" required />
-                <label for="new-user-email">Email pengguna</label>
-                <input id="new-user-email" class="form-input" type="email" autocomplete="email" required />
-                <label for="new-user-password">Password awal</label>
-                <input id="new-user-password" class="form-input" type="password" autocomplete="new-password" minlength="10" maxlength="128" required />
-                <p class="form-message" id="create-user-message" aria-live="polite"></p>
-                <button class="button button-primary button-wide" type="submit">Buat akun <span>→</span></button>
-              </form>
+              <div class="admin-create-card">
+                <p class="muted" id="admin-welcome">Buat akun dan berikan kredensialnya kepada pengguna dengan aman.</p>
+                <form id="create-user-form">
+                  <label for="new-user-name">Nama pengguna</label>
+                  <input id="new-user-name" class="form-input" autocomplete="name" maxlength="80" required />
+                  <label for="new-user-email">Email pengguna</label>
+                  <input id="new-user-email" class="form-input" type="email" autocomplete="email" required />
+                  <label for="new-user-password">Password awal</label>
+                  <input id="new-user-password" class="form-input" type="password" autocomplete="new-password" minlength="10" maxlength="128" required />
+                  <label for="new-user-validity">Masa berlaku akun</label>
+                  <select id="new-user-validity" class="form-input" required>
+                    <option value="1-day">1 hari</option>
+                    <option value="7-days">7 hari</option>
+                    <option value="forever">Selamanya</option>
+                  </select>
+                  <p class="form-message" id="create-user-message" aria-live="polite"></p>
+                  <button class="button button-primary button-wide" type="submit">Buat akun <span>→</span></button>
+                </form>
+              </div>
             </section>
+          </div>
+        </section>
+        <section id="admin-users-section" class="admin-users-card hidden" aria-labelledby="admin-users-heading">
+          <div class="admin-users-heading">
+            <div>
+              <span class="section-kicker">DATA PENGGUNA</span>
+              <h2 id="admin-users-heading">Akun yang terdaftar</h2>
+            </div>
+            <button id="refresh-users-button" class="button button-outline" type="button">Muat ulang</button>
+          </div>
+          <p id="admin-users-message" class="form-message" aria-live="polite"></p>
+          <div class="admin-table-wrap">
+            <table class="admin-users-table">
+              <thead>
+                <tr><th>Username</th><th>Email</th><th>Masa berlaku akun</th></tr>
+              </thead>
+              <tbody id="admin-users-table-body">
+                <tr><td colspan="3" class="admin-users-empty">Memuat data akun...</td></tr>
+              </tbody>
+            </table>
           </div>
         </section>
       </main>

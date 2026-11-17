@@ -19,6 +19,7 @@ let timerId = null;
 let reviewRefreshId = null;
 let reviewRequestPromise = null;
 let sessionFinished = false;
+let accountExpiryTimer = null;
 
 const $ = (id) => document.getElementById(id);
 const readStored = (key, fallback) => {
@@ -55,6 +56,32 @@ function syncHeader() {
   $("logout-button").classList.toggle("hidden", !email);
 }
 
+function clearAccountExpiryTimer() {
+  if (accountExpiryTimer !== null) clearTimeout(accountExpiryTimer);
+  accountExpiryTimer = null;
+}
+
+function scheduleAccountExpiry(expiresAt) {
+  clearAccountExpiryTimer();
+  if (!Number.isSafeInteger(expiresAt)) return;
+  const remaining = expiresAt - Date.now();
+  accountExpiryTimer = setTimeout(() => {
+    if (Date.now() < expiresAt) {
+      scheduleAccountExpiry(expiresAt);
+      return;
+    }
+    clearAccountExpiryTimer();
+    clearInterval(timerId);
+    timerId = null;
+    sessionFinished = true;
+    localStorage.removeItem(STORAGE.currentUser);
+    localStorage.removeItem(STORAGE.currentName);
+    syncHeader();
+    showScreen("auth-view");
+    $("auth-message").textContent = "Masa berlaku akun telah habis. Hubungi admin.";
+  }, Math.max(0, Math.min(remaining, 2147483647)));
+}
+
 async function handleAuth(event) {
   event.preventDefault();
   const email = $("auth-email").value.trim().toLowerCase();
@@ -75,6 +102,7 @@ async function handleAuth(event) {
     }
     localStorage.setItem(STORAGE.currentUser, result.user.email);
     localStorage.setItem(STORAGE.currentName, result.user.name);
+    scheduleAccountExpiry(result.user.expiresAt);
     syncHeader();
     showDashboard();
   } catch (error) {
@@ -387,23 +415,30 @@ function showToast(message) {
 }
 
 async function restoreUserSession() {
+  const hadPreviousSession = Boolean(currentUser());
   try {
     const response = await fetch("/api/auth", { cache: "no-store" });
     const result = await readApiJson(response);
     if (!response.ok) throw new Error(result.error || `Sesi tidak dapat dipulihkan (${response.status}).`);
     if (!result.user || result.user.role !== "user") {
+      clearAccountExpiryTimer();
       localStorage.removeItem(STORAGE.currentUser);
       localStorage.removeItem(STORAGE.currentName);
       syncHeader();
+      $("auth-message").textContent = hadPreviousSession
+        ? "Sesi atau masa berlaku akun telah berakhir. Silakan login kembali."
+        : "";
       showScreen("auth-view");
       return;
     }
     localStorage.setItem(STORAGE.currentUser, result.user.email);
     localStorage.setItem(STORAGE.currentName, result.user.name);
+    scheduleAccountExpiry(result.user.expiresAt);
     syncHeader();
     showDashboard();
   } catch (error) {
     console.error("Tidak dapat memulihkan sesi:", error);
+    clearAccountExpiryTimer();
     localStorage.removeItem(STORAGE.currentUser);
     localStorage.removeItem(STORAGE.currentName);
     syncHeader();
@@ -454,6 +489,7 @@ function initialize() {
     } catch (error) {
       console.error("Tidak dapat mengakhiri sesi:", error);
     } finally {
+      clearAccountExpiryTimer();
       localStorage.removeItem(STORAGE.currentUser);
       localStorage.removeItem(STORAGE.currentName);
       syncHeader();

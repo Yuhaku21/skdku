@@ -7,6 +7,11 @@ const USERS_KEY = "ruangskd:users";
 const PASSWORD_ITERATIONS = 120000;
 const MAX_BODY_BYTES = 8192;
 const MIN_PASSWORD_LENGTH = 10;
+const ACCOUNT_VALIDITY_MS = {
+  "1-day": 24 * 60 * 60 * 1000,
+  "7-days": 7 * 24 * 60 * 60 * 1000,
+  forever: null
+};
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -74,11 +79,17 @@ async function loginUser(request, response, payload) {
   const stored = await redisCommand(["HGET", USERS_KEY, email]);
   const account = stored ? JSON.parse(stored) : null;
   if (!account || typeof account.name !== "string" || typeof account.salt !== "string"
-    || typeof account.passwordHash !== "string" || !safeEqual(await hashPassword(password, account.salt), account.passwordHash)) {
+    || typeof account.passwordHash !== "string"
+    || !safeEqual(await hashPassword(password, account.salt), account.passwordHash)) {
     sendJson(response, 401, { error: "Email atau password tidak sesuai." });
     return;
   }
-  const user = { role: "user", email, name: account.name };
+  const expiresAt = account.expiresAt === undefined ? null : account.expiresAt;
+  if (expiresAt !== null && (!Number.isSafeInteger(expiresAt) || expiresAt <= Date.now())) {
+    sendJson(response, 403, { error: "Masa berlaku akun sudah habis. Hubungi admin." });
+    return;
+  }
+  const user = { role: "user", email, name: account.name, expiresAt };
   await createSession(request, response, user);
   sendJson(response, 200, { user });
 }
@@ -92,21 +103,57 @@ async function createUser(request, response, payload) {
   const name = typeof payload.name === "string" ? payload.name.trim() : "";
   const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
   const password = typeof payload.password === "string" ? payload.password : "";
+  const validity = payload.validity;
   if (!name || name.length > 80 || !isValidEmail(email)
-    || password.length < MIN_PASSWORD_LENGTH || password.length > 128) {
-    sendJson(response, 400, { error: "Nama, email valid, dan password minimal 10 karakter wajib diisi." });
+    || password.length < MIN_PASSWORD_LENGTH || password.length > 128
+    || !Object.prototype.hasOwnProperty.call(ACCOUNT_VALIDITY_MS, validity)) {
+    sendJson(response, 400, { error: "Nama, email valid, password minimal 10 karakter, dan masa berlaku akun wajib diisi." });
     return;
   }
 
+  const expiresAt = ACCOUNT_VALIDITY_MS[validity] === null ? null : Date.now() + ACCOUNT_VALIDITY_MS[validity];
   const salt = crypto.randomBytes(16).toString("hex");
   const passwordHash = await hashPassword(password, salt);
-  const account = JSON.stringify({ name, salt, passwordHash });
+  const account = JSON.stringify({ name, salt, passwordHash, validity, expiresAt });
   const created = await redisCommand(["HSETNX", USERS_KEY, email, account]);
   if (created !== 1) {
     sendJson(response, 409, { error: "Email tersebut sudah memiliki akun." });
     return;
   }
-  sendJson(response, 201, { user: { email, name } });
+  sendJson(response, 201, { user: { email, name, validity, expiresAt } });
+}
+
+async function listUsers(request, response) {
+  const session = await getSession(request);
+  if (!session || session.role !== "admin") {
+    sendJson(response, 401, { error: "Hanya admin yang dapat melihat daftar akun." });
+    return;
+  }
+
+  const entries = await redisCommand(["HGETALL", USERS_KEY]);
+  if (!Array.isArray(entries) || entries.length % 2 !== 0) {
+    throw new Error("Format daftar akun di database tidak valid.");
+  }
+  const users = [];
+  for (let index = 0; index < entries.length; index += 2) {
+    const email = entries[index];
+    const account = JSON.parse(entries[index + 1]);
+    if (typeof email !== "string" || !account || typeof account.name !== "string") {
+      throw new Error("Data akun di database tidak valid.");
+    }
+    const expiresAt = account.expiresAt === undefined ? null : account.expiresAt;
+    if (expiresAt !== null && !Number.isSafeInteger(expiresAt)) {
+      throw new Error("Masa berlaku akun di database tidak valid.");
+    }
+    users.push({
+      name: account.name,
+      email,
+      validity: account.validity || "forever",
+      expiresAt
+    });
+  }
+  users.sort((first, second) => first.name.localeCompare(second.name, "id"));
+  sendJson(response, 200, { users });
 }
 
 module.exports = async function authHandler(request, response) {
@@ -125,6 +172,7 @@ module.exports = async function authHandler(request, response) {
     if (payload.action === "admin-login") return await loginAdmin(request, response, payload);
     if (payload.action === "user-login") return await loginUser(request, response, payload);
     if (payload.action === "create-user") return await createUser(request, response, payload);
+    if (payload.action === "list-users") return await listUsers(request, response);
     if (payload.action === "logout") {
       await destroySession(request, response);
       sendJson(response, 200, { success: true });
@@ -134,7 +182,9 @@ module.exports = async function authHandler(request, response) {
   } catch (error) {
     console.error("API autentikasi gagal:", error);
     sendJson(response, error.statusCode || 502, {
-      error: error.statusCode === 503 ? error.message : "Autentikasi tidak dapat diproses saat ini."
+      error: error.statusCode === 403 || error.statusCode === 503
+        ? error.message
+        : "Autentikasi tidak dapat diproses saat ini."
     });
   }
 };
