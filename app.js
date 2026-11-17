@@ -1,10 +1,11 @@
 const STORAGE = {
   users: "ruangskd.users",
   currentUser: "ruangskd.currentUser",
-  history: "ruangskd.history"
+  history: "ruangskd.history",
+  questionRotation: "ruangskd.questionRotation"
 };
 const QUESTIONS_PER_SESSION = 10;
-const SESSION_SECONDS = 5 * 60;
+const SESSION_SECONDS = 12 * 60;
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 const LEVEL_LABELS = { mudah: "Mudah", menengah: "Menengah", sulit: "Sulit" };
 const screens = ["auth-view", "dashboard-view", "quiz-view", "result-view"];
@@ -143,12 +144,37 @@ async function loadLocalQuestions() {
   if (!Array.isArray(questions) || questions.length < QUESTIONS_PER_SESSION) {
     throw new Error(`Bank soal level ${selectedLevel} tidak berisi ${QUESTIONS_PER_SESSION} soal.`);
   }
-  const shuffledQuestions = [...questions];
-  for (let index = shuffledQuestions.length - 1; index > 0; index -= 1) {
-    const randomIndex = Math.floor(Math.random() * (index + 1));
-    [shuffledQuestions[index], shuffledQuestions[randomIndex]] = [shuffledQuestions[randomIndex], shuffledQuestions[index]];
+  const shuffledIds = (ids) => {
+    const shuffled = [...ids];
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+    }
+    return shuffled;
+  };
+  const questionById = new Map(questions.map((question) => [question.id, question]));
+  const savedRotation = readStored(STORAGE.questionRotation, {});
+  const rotation = savedRotation && typeof savedRotation === "object" && !Array.isArray(savedRotation) ? savedRotation : {};
+  const savedIds = rotation && Array.isArray(rotation[selectedLevel]) ? rotation[selectedLevel] : [];
+  let remainingIds = [...new Set(savedIds.filter((id) => questionById.has(id)))];
+  const remainingSet = new Set(remainingIds);
+  const newIds = questions.map((question) => question.id).filter((id) => !remainingSet.has(id));
+  if (remainingIds.length) {
+    remainingIds.push(...shuffledIds(newIds));
+  } else {
+    remainingIds = shuffledIds(questions.map((question) => question.id));
   }
-  return shuffledQuestions.slice(0, QUESTIONS_PER_SESSION);
+  const selectedIds = remainingIds.splice(0, QUESTIONS_PER_SESSION);
+  if (selectedIds.length < QUESTIONS_PER_SESSION) {
+    const selectedSet = new Set(selectedIds);
+    const refillIds = shuffledIds(questions.map((question) => question.id).filter((id) => !selectedSet.has(id)));
+    const needed = QUESTIONS_PER_SESSION - selectedIds.length;
+    selectedIds.push(...refillIds.slice(0, needed));
+    remainingIds = refillIds.slice(needed);
+  }
+  rotation[selectedLevel] = remainingIds;
+  writeStored(STORAGE.questionRotation, rotation);
+  return selectedIds.map((id) => questionById.get(id));
 }
 
 async function beginQuiz() {

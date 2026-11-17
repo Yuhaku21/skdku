@@ -15,7 +15,7 @@ Buka `http://localhost:3030` di browser. Hentikan server dengan `Ctrl+C`. Bank s
 ## Fitur
 
 - Daftar dan masuk dengan akun yang disimpan di `localStorage`. Kata sandi disimpan sebagai hash PBKDF2; ini tetap aplikasi demo tanpa server autentikasi dan tidak cocok untuk akun penting.
-- Bank soal TIU di `question.json` diacak untuk setiap sesi: sistem mengambil 10 soal secara acak dari level yang dipilih.
-- Waktu tryout lima menit, navigasi soal, penanda jawaban, skor, dan pembahasan untuk jawaban salah atau yang belum dijawab.
+- Bank soal TIU di `question.json` diputar acak untuk setiap sesi: 10 soal dari level yang dipilih tidak diulang sampai seluruh bank soal level itu terpakai.
+- Waktu tryout 12 menit, navigasi soal, penanda jawaban, skor, dan pembahasan untuk jawaban salah atau yang belum dijawab.
 - Semua soal disimpan di `question.json`. Tryout sepenuhnya menggunakan bank soal lokal dan tidak membutuhkan API key atau koneksi ke layanan AI.
 - Akun demo dan riwayat tryout tersimpan lokal di browser, tidak disinkronkan antarperangkat.
