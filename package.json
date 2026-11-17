@@ -1,0 +1,9 @@
+{
+  "name": "ruang-skd-tryout-tiu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website latihan tryout TIU SKD",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

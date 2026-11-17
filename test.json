@@ -1,0 +1,248 @@
+{
+  "mudah": [
+    {
+      "id": "m-01",
+      "category": "PENALARAN NUMERIK",
+      "question": "Tentukan angka berikutnya dari deret 4, 7, 10, 13, ...",
+      "options": ["15", "16", "17", "18", "19"],
+      "answer": 1,
+      "explanation": "Setiap angka bertambah 3. Jadi angka berikutnya adalah 13 + 3 = 16."
+    },
+    {
+      "id": "m-02",
+      "category": "ANALOGI VERBAL",
+      "question": "Kompas berhubungan dengan arah, sebagaimana termometer berhubungan dengan ...",
+      "options": ["Kecepatan", "Tekanan", "Suhu", "Jarak", "Berat"],
+      "answer": 2,
+      "explanation": "Kompas digunakan untuk mengetahui arah. Termometer digunakan untuk mengukur suhu."
+    },
+    {
+      "id": "m-03",
+      "category": "PENALARAN LOGIS",
+      "question": "Semua peserta yang lulus administrasi boleh mengikuti tes. Rina lulus administrasi. Kesimpulan yang tepat adalah ...",
+      "options": ["Rina pasti lulus tes", "Rina boleh mengikuti tes", "Semua peserta adalah Rina", "Rina tidak mengikuti tes", "Peserta yang ikut tes pasti lulus"],
+      "answer": 1,
+      "explanation": "Aturan menyatakan peserta yang lulus administrasi boleh mengikuti tes. Karena Rina memenuhi syarat itu, ia boleh mengikuti tes."
+    },
+    {
+      "id": "m-04",
+      "category": "PENALARAN NUMERIK",
+      "question": "Jika 5 buku berharga Rp40.000, berapa harga 8 buku dengan harga satuan yang sama?",
+      "options": ["Rp56.000", "Rp60.000", "Rp64.000", "Rp68.000", "Rp72.000"],
+      "answer": 2,
+      "explanation": "Harga satu buku = Rp40.000 ÷ 5 = Rp8.000. Harga 8 buku = 8 × Rp8.000 = Rp64.000."
+    },
+    {
+      "id": "m-05",
+      "category": "ANALOGI VERBAL",
+      "question": "Dokter berhubungan dengan pasien, sebagaimana guru berhubungan dengan ...",
+      "options": ["Buku", "Sekolah", "Murid", "Kelas", "Pelajaran"],
+      "answer": 2,
+      "explanation": "Dokter memberikan layanan kepada pasien, sedangkan guru mengajar murid."
+    },
+    {
+      "id": "m-06",
+      "category": "PENALARAN NUMERIK",
+      "question": "Sebuah tas seharga Rp200.000 mendapat diskon 15%. Berapa harga setelah diskon?",
+      "options": ["Rp160.000", "Rp165.000", "Rp170.000", "Rp175.000", "Rp185.000"],
+      "answer": 2,
+      "explanation": "Diskon = 15% × Rp200.000 = Rp30.000. Harga setelah diskon = Rp200.000 − Rp30.000 = Rp170.000."
+    },
+    {
+      "id": "m-07",
+      "category": "PENALARAN LOGIS",
+      "question": "Jika hari ini Selasa, hari apakah 10 hari lagi?",
+      "options": ["Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"],
+      "answer": 2,
+      "explanation": "Sepuluh hari setara dengan 7 hari + 3 hari. Tiga hari setelah Selasa adalah Jumat."
+    },
+    {
+      "id": "m-08",
+      "category": "PENALARAN NUMERIK",
+      "question": "Rata-rata dari 6, 8, 10, dan 12 adalah ...",
+      "options": ["8", "9", "10", "11", "12"],
+      "answer": 1,
+      "explanation": "Jumlahnya 6 + 8 + 10 + 12 = 36. Rata-rata = 36 ÷ 4 = 9."
+    },
+    {
+      "id": "m-09",
+      "category": "ANALOGI VERBAL",
+      "question": "Panas berlawanan makna dengan dingin, sebagaimana tinggi berlawanan makna dengan ...",
+      "options": ["Jauh", "Pendek", "Rendah", "Kecil", "Luas"],
+      "answer": 2,
+      "explanation": "Panas dan dingin merupakan pasangan antonim. Antonim dari tinggi adalah rendah."
+    },
+    {
+      "id": "m-10",
+      "category": "PENALARAN NUMERIK",
+      "question": "Sebuah kendaraan menempuh 120 km dalam 3 jam. Berapa kecepatan rata-ratanya?",
+      "options": ["30 km/jam", "35 km/jam", "40 km/jam", "45 km/jam", "60 km/jam"],
+      "answer": 2,
+      "explanation": "Kecepatan rata-rata = jarak ÷ waktu = 120 ÷ 3 = 40 km/jam."
+    }
+  ],
+  "menengah": [
+    {
+      "id": "n-01",
+      "category": "PENALARAN NUMERIK",
+      "question": "Tentukan angka berikutnya dari deret 3, 7, 15, 31, 63, ...",
+      "options": ["95", "111", "126", "127", "129"],
+      "answer": 3,
+      "explanation": "Setiap angka dikali 2 lalu ditambah 1: 3→7→15→31→63. Berikutnya 63 × 2 + 1 = 127."
+    },
+    {
+      "id": "n-02",
+      "category": "PENALARAN LOGIS",
+      "question": "Semua analis teliti. Sebagian pegawai adalah analis. Kesimpulan yang pasti benar adalah ...",
+      "options": ["Semua pegawai teliti", "Sebagian pegawai teliti", "Semua yang teliti adalah analis", "Sebagian analis tidak teliti", "Tidak ada pegawai yang teliti"],
+      "answer": 1,
+      "explanation": "Sebagian pegawai termasuk analis, dan semua analis teliti. Maka sebagian pegawai tersebut pasti teliti."
+    },
+    {
+      "id": "n-03",
+      "category": "PENALARAN NUMERIK",
+      "question": "Perbandingan jumlah buku Andi dan Budi adalah 3 : 5. Jika jumlah buku mereka 64, berapa buku Budi?",
+      "options": ["24", "32", "36", "40", "48"],
+      "answer": 3,
+      "explanation": "Total bagian = 3 + 5 = 8. Satu bagian = 64 ÷ 8 = 8. Buku Budi = 5 × 8 = 40."
+    },
+    {
+      "id": "n-04",
+      "category": "ANALOGI VERBAL",
+      "question": "Benih berhubungan dengan tanaman, sebagaimana telur berhubungan dengan ...",
+      "options": ["Sarang", "Unggas", "Cangkang", "Makanan", "Bulu"],
+      "answer": 1,
+      "explanation": "Benih dapat tumbuh menjadi tanaman, sedangkan telur dapat berkembang menjadi unggas."
+    },
+    {
+      "id": "n-05",
+      "category": "PENALARAN NUMERIK",
+      "question": "Sebuah pekerjaan selesai dalam 12 hari oleh 8 orang. Dengan kemampuan sama, berapa hari diperlukan oleh 6 orang?",
+      "options": ["14 hari", "15 hari", "16 hari", "18 hari", "20 hari"],
+      "answer": 2,
+      "explanation": "Total pekerjaan = 8 × 12 = 96 orang-hari. Jika dikerjakan 6 orang, waktu = 96 ÷ 6 = 16 hari."
+    },
+    {
+      "id": "n-06",
+      "category": "PENALARAN LOGIS",
+      "question": "Jika laporan selesai, rapat dimulai. Rapat tidak dimulai. Kesimpulan yang tepat adalah ...",
+      "options": ["Laporan selesai", "Laporan belum selesai", "Rapat sudah berakhir", "Laporan tidak perlu dibuat", "Tidak ada kesimpulan yang dapat ditarik"],
+      "answer": 1,
+      "explanation": "Bentuk logikanya: jika P maka Q. Karena Q tidak terjadi, P juga tidak terjadi (modus tollens). Jadi laporan belum selesai."
+    },
+    {
+      "id": "n-07",
+      "category": "PENALARAN NUMERIK",
+      "question": "Nilai 5 peserta adalah 70, 75, 80, 85, dan x. Jika rata-ratanya 80, nilai x adalah ...",
+      "options": ["85", "88", "90", "92", "95"],
+      "answer": 2,
+      "explanation": "Jumlah nilai yang diperlukan = 5 × 80 = 400. Jumlah empat nilai = 310, sehingga x = 400 − 310 = 90."
+    },
+    {
+      "id": "n-08",
+      "category": "ANALOGI VERBAL",
+      "question": "Skeptis berhubungan dengan keraguan, sebagaimana optimistis berhubungan dengan ...",
+      "options": ["Kepastian", "Harapan", "Ketakutan", "Kenyataan", "Kritik"],
+      "answer": 1,
+      "explanation": "Sikap skeptis cenderung meragukan, sedangkan sikap optimistis cenderung memiliki harapan baik."
+    },
+    {
+      "id": "n-09",
+      "category": "PENALARAN NUMERIK",
+      "question": "Sebuah barang dibeli Rp240.000 dan dijual dengan keuntungan 25%. Berapa harga jualnya?",
+      "options": ["Rp270.000", "Rp280.000", "Rp290.000", "Rp300.000", "Rp320.000"],
+      "answer": 3,
+      "explanation": "Keuntungan = 25% × Rp240.000 = Rp60.000. Harga jual = Rp240.000 + Rp60.000 = Rp300.000."
+    },
+    {
+      "id": "n-10",
+      "category": "PENALARAN LOGIS",
+      "question": "Dita lebih tinggi dari Ema. Fani lebih pendek dari Ema. Gita lebih tinggi dari Dita. Siapa yang paling tinggi?",
+      "options": ["Dita", "Ema", "Fani", "Gita", "Tidak dapat ditentukan"],
+      "answer": 3,
+      "explanation": "Urutannya adalah Gita > Dita > Ema > Fani. Jadi, Gita paling tinggi."
+    }
+  ],
+  "sulit": [
+    {
+      "id": "s-01",
+      "category": "PENALARAN NUMERIK",
+      "question": "Tentukan angka berikutnya dari deret 2, 6, 15, 31, 56, ...",
+      "options": ["82", "88", "90", "92", "96"],
+      "answer": 3,
+      "explanation": "Selisih berturut-turut adalah 4, 9, 16, 25 (kuadrat 2, 3, 4, 5). Selisih berikutnya 36, sehingga angka berikutnya 56 + 36 = 92."
+    },
+    {
+      "id": "s-02",
+      "category": "PENALARAN LOGIS",
+      "question": "Semua peneliti membaca jurnal. Tidak ada pembaca jurnal yang mengabaikan data. Kesimpulan yang pasti benar adalah ...",
+      "options": ["Semua yang membaca jurnal adalah peneliti", "Tidak ada peneliti yang mengabaikan data", "Sebagian peneliti mengabaikan data", "Semua yang tidak mengabaikan data adalah peneliti", "Tidak ada hubungan peneliti dan data"],
+      "answer": 1,
+      "explanation": "Setiap peneliti termasuk pembaca jurnal, dan tidak seorang pun pembaca jurnal mengabaikan data. Karena itu tidak ada peneliti yang mengabaikan data."
+    },
+    {
+      "id": "s-03",
+      "category": "PENALARAN NUMERIK",
+      "question": "A menyelesaikan pekerjaan dalam 6 jam dan B dalam 8 jam. Jika bekerja bersama dengan laju tetap, pekerjaan selesai dalam ...",
+      "options": ["3 jam", "24/7 jam", "7/2 jam", "4 jam", "14/3 jam"],
+      "answer": 1,
+      "explanation": "Laju bersama = 1/6 + 1/8 = 7/24 pekerjaan per jam. Waktu yang diperlukan = 1 ÷ (7/24) = 24/7 jam."
+    },
+    {
+      "id": "s-04",
+      "category": "ANALOGI VERBAL",
+      "question": "Aksioma berhubungan dengan pembuktian, sebagaimana hipotesis berhubungan dengan ...",
+      "options": ["Pengamatan", "Pengujian", "Kesimpulan", "Definisi", "Pengukuran"],
+      "answer": 1,
+      "explanation": "Aksioma diterima sebagai dasar dalam pembuktian. Hipotesis merupakan dugaan yang perlu diuji."
+    },
+    {
+      "id": "s-05",
+      "category": "PENALARAN NUMERIK",
+      "question": "Harga suatu barang naik 20%, lalu turun 20% dari harga setelah kenaikan. Perubahan terhadap harga awal adalah ...",
+      "options": ["Tetap", "Turun 2%", "Turun 4%", "Naik 4%", "Turun 8%"],
+      "answer": 2,
+      "explanation": "Misalkan harga awal 100. Setelah naik menjadi 120, lalu turun 20% menjadi 96. Jadi harga akhir turun 4% dari harga awal."
+    },
+    {
+      "id": "s-06",
+      "category": "PENALARAN LOGIS",
+      "question": "Jika sistem aktif, lampu indikator menyala. Jika lampu indikator menyala, petugas menerima notifikasi. Lampu indikator tidak menyala. Kesimpulan yang pasti benar adalah ...",
+      "options": ["Sistem tidak aktif", "Petugas tidak menerima notifikasi", "Sistem aktif", "Petugas menerima notifikasi", "Tidak dapat dipastikan apakah sistem aktif"],
+      "answer": 0,
+      "explanation": "Jika sistem aktif maka lampu menyala. Karena lampu tidak menyala, sistem tidak aktif (modus tollens)."
+    },
+    {
+      "id": "s-07",
+      "category": "PENALARAN NUMERIK",
+      "question": "Dalam kotak terdapat 4 bola merah dan 3 bola biru. Dua bola diambil berurutan tanpa pengembalian. Peluang keduanya merah adalah ...",
+      "options": ["1/7", "2/7", "3/7", "4/7", "2/3"],
+      "answer": 1,
+      "explanation": "Peluang bola pertama merah = 4/7. Setelah satu merah terambil, peluang bola kedua merah = 3/6. Hasilnya 4/7 × 3/6 = 2/7."
+    },
+    {
+      "id": "s-08",
+      "category": "PENALARAN NUMERIK",
+      "question": "Diketahui 2x + 3y = 19 dan x − y = 2. Nilai x + y adalah ...",
+      "options": ["5", "6", "7", "8", "9"],
+      "answer": 3,
+      "explanation": "Dari x − y = 2, diperoleh x = y + 2. Substitusikan: 2(y + 2) + 3y = 19, jadi 5y = 15 dan y = 3. Maka x = 5 dan x + y = 8."
+    },
+    {
+      "id": "s-09",
+      "category": "ANALOGI VERBAL",
+      "question": "Kontradiksi berhubungan dengan pertentangan, sebagaimana konsensus berhubungan dengan ...",
+      "options": ["Perdebatan", "Kesepakatan", "Perbedaan", "Penolakan", "Keputusan"],
+      "answer": 1,
+      "explanation": "Kontradiksi menunjukkan pertentangan, sedangkan konsensus menunjukkan kesepakatan bersama."
+    },
+    {
+      "id": "s-10",
+      "category": "PENALARAN NUMERIK",
+      "question": "Sebuah kendaraan menempuh 180 km. Jika kecepatannya dinaikkan 15 km/jam, waktu perjalanan berkurang 2 jam. Kecepatan awal kendaraan adalah ...",
+      "options": ["25 km/jam", "30 km/jam", "35 km/jam", "40 km/jam", "45 km/jam"],
+      "answer": 1,
+      "explanation": "Misalkan kecepatan awal v. Selisih waktu: 180/v − 180/(v+15) = 2. Ini menghasilkan v² + 15v − 1350 = 0, dengan akar positif v = 30 km/jam."
+    }
+  ]
+}

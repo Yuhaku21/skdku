@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f7fb" />
+    <title>Ruang SKD — Tryout TIU</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Ruang SKD beranda" data-home>
+          <span class="brand-mark">R</span>
+          <span>ruang<span class="brand-accent">skd</span></span>
+        </a>
+        <div class="topbar-right">
+          <span class="session-label" id="session-label"></span>
+          <button class="button button-quiet hidden" id="logout-button" type="button">Keluar</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="auth-view" id="auth-view">
+          <div class="auth-aside">
+            <div class="eyebrow"><span class="eyebrow-dot"></span> PERSIAPAN SKD DIMULAI DI SINI</div>
+            <h1>Selangkah lebih dekat menuju <span>impianmu.</span></h1>
+            <p>Latihan TIU dengan suasana tryout yang fokus, terukur, dan bisa kamu ulang kapan saja.</p>
+            <div class="auth-stats">
+              <div><strong>10</strong><span>soal per sesi</span></div>
+              <div><strong>05:00</strong><span>menit per sesi</span></div>
+              <div><strong>3</strong><span>tingkat kesulitan</span></div>
+            </div>
+            <div class="decor-orbit orbit-one"></div>
+            <div class="decor-orbit orbit-two"></div>
+          </div>
+          <div class="auth-panel">
+            <div class="auth-tabs" role="tablist">
+              <button class="auth-tab active" id="login-tab" type="button" role="tab" aria-selected="true">Masuk</button>
+              <button class="auth-tab" id="register-tab" type="button" role="tab" aria-selected="false">Daftar</button>
+            </div>
+            <h2 id="auth-title">Selamat datang kembali</h2>
+            <p class="muted" id="auth-description">Masuk untuk melanjutkan persiapanmu.</p>
+            <form id="auth-form">
+              <label for="auth-name" class="hidden" id="name-label">Nama</label>
+              <input id="auth-name" class="form-input hidden" autocomplete="name" placeholder="Nama lengkap" />
+              <label for="auth-email">Email</label>
+              <input id="auth-email" class="form-input" type="email" autocomplete="username" placeholder="nama@email.com" required />
+              <label for="auth-password">Kata sandi</label>
+              <input id="auth-password" class="form-input" type="password" autocomplete="current-password" placeholder="Minimal 6 karakter" minlength="6" required />
+              <p class="form-message" id="auth-message" aria-live="polite"></p>
+              <button class="button button-primary button-wide" id="auth-submit" type="submit">Masuk ke akun <span>→</span></button>
+            </form>
+            <p class="tiny-note">Akun disimpan di browser ini untuk kebutuhan latihan. Jangan gunakan kata sandi utama.</p>
+          </div>
+        </section>
+
+        <section class="dashboard-view hidden" id="dashboard-view">
+          <div class="welcome-row">
+            <div>
+              <div class="eyebrow"><span class="eyebrow-dot"></span> RUANG LATIHANMU</div>
+              <h1 id="welcome-title">Siap latihan hari ini?</h1>
+              <p class="muted">Pilih tingkat kesulitan, lalu mulai sesi tryout TIU-mu.</p>
+            </div>
+            <div class="welcome-icon" aria-hidden="true">✦</div>
+          </div>
+          <div class="dashboard-grid">
+            <div class="level-card">
+              <div class="section-heading">
+                <div><span class="section-kicker">01 / PILIH LEVEL</span><h2>Tentukan tantanganmu</h2></div>
+                <span class="pill">10 soal · 5 menit</span>
+              </div>
+              <div class="level-options" id="level-options">
+                <button class="level-option selected" type="button" data-level="mudah">
+                  <span class="level-icon easy">○</span><span class="level-copy"><strong>Mudah</strong><small>Bangun fondasi dan ritme</small></span><span class="level-check">✓</span>
+                </button>
+                <button class="level-option" type="button" data-level="menengah">
+                  <span class="level-icon medium">◈</span><span class="level-copy"><strong>Menengah</strong><small>Asah ketelitian dan strategi</small></span><span class="level-check">✓</span>
+                </button>
+                <button class="level-option" type="button" data-level="sulit">
+                  <span class="level-icon hard">✳</span><span class="level-copy"><strong>Sulit</strong><small>Tantang kemampuan terbaikmu</small></span><span class="level-check">✓</span>
+                </button>
+              </div>
+              <div class="start-row">
+                <span class="source-note" id="source-note">Soal tersedia dari bank soal lokal.</span>
+                <button class="button button-primary" id="start-button" type="button">Mulai tryout <span>→</span></button>
+              </div>
+            </div>
+            <aside class="side-column">
+              <div class="tip-card">
+                <span class="tip-spark">✦</span>
+                <span class="section-kicker">TIPS TRYOUT</span>
+                <h3>Atur waktumu dengan cermat.</h3>
+                <p>Lewati soal yang terasa sulit dan tandai nomor yang belum terjawab. Kamu bisa kembali sebelum waktu habis.</p>
+              </div>
+              <div class="bank-card">
+                <div class="bank-card-icon">▤</div>
+                <div><strong>Bank soal TIU</strong><p>10 soal untuk setiap level, lengkap dengan kunci jawaban dan pembahasan.</p></div>
+              </div>
+            </aside>
+          </div>
+          <div class="history-card">
+            <div class="section-heading compact"><div><span class="section-kicker">RIWAYAT</span><h2>Latihan terakhirmu</h2></div></div>
+            <div id="history-list" class="history-list"><p class="empty-state">Belum ada sesi latihan. Setiap langkah kecil tetap berarti.</p></div>
+          </div>
+        </section>
+
+        <section class="quiz-view hidden" id="quiz-view">
+          <div class="quiz-top">
+            <button type="button" class="back-button" id="quit-button">← <span>Keluar dari sesi</span></button>
+            <div class="quiz-meta"><span class="quiz-level" id="quiz-level">MUDAH</span><span class="quiz-counter" id="quiz-counter">SOAL 01 / 10</span></div>
+            <div class="timer" id="timer" aria-live="polite"><span class="timer-dot"></span><span id="timer-text">05:00</span></div>
+          </div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+          <div class="quiz-layout">
+            <div class="question-panel">
+              <div class="question-category" id="question-category">PENALARAN NUMERIK</div>
+              <h1 id="question-text"></h1>
+              <div class="answer-list" id="answer-list"></div>
+              <div class="question-controls">
+                <button class="button button-outline" id="previous-button" type="button">← Sebelumnya</button>
+                <button class="button button-primary" id="next-button" type="button">Berikutnya →</button>
+                <button class="button button-submit hidden" id="submit-button" type="button">Selesaikan tryout <span>✓</span></button>
+              </div>
+            </div>
+            <aside class="question-nav-panel">
+              <div class="nav-title"><strong>Navigasi soal</strong><span id="answered-count">0/10 terjawab</span></div>
+              <div class="question-grid" id="question-grid"></div>
+              <div class="nav-legend"><span><i class="legend-dot answered"></i>Terjawab</span><span><i class="legend-dot current"></i>Saat ini</span><span><i class="legend-dot"></i>Belum</span></div>
+              <div class="nav-reminder">Pastikan semua nomor terjawab sebelum waktu berakhir.</div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="result-view hidden" id="result-view">
+          <div class="result-hero">
+            <div class="result-spark">✦</div>
+            <div class="eyebrow"><span class="eyebrow-dot"></span> SESI SELESAI</div>
+            <h1 id="result-heading">Latihan yang hebat!</h1>
+            <p class="muted" id="result-subtitle">Setiap latihan membawamu selangkah lebih siap.</p>
+            <div class="score-card">
+              <div class="score-main"><span>SKOR TRYOUT</span><strong id="score-value">0</strong><small>/ 100</small></div>
+              <div class="score-divider"></div>
+              <div class="score-stat"><span>Jawaban benar</span><strong id="correct-value">0 / 10</strong></div>
+              <div class="score-stat"><span>Tingkat kesulitan</span><strong id="result-level">Mudah</strong></div>
+              <div class="score-stat"><span>Sumber soal</span><strong id="result-source">Bank soal lokal</strong></div>
+            </div>
+            <button class="button button-primary" id="home-button" type="button">Kembali ke beranda <span>→</span></button>
+          </div>
+          <div class="review-section">
+            <div class="section-heading compact"><div><span class="section-kicker">PEMBAHASAN</span><h2>Evaluasi jawabanmu</h2></div><span class="pill" id="review-count">0 perlu ditinjau</span></div>
+            <div id="review-list" class="review-list"></div>
+          </div>
+        </section>
+      </main>
+      <footer class="footer"><span>© 2026 Ruang SKD</span><span>Belajar konsisten, selangkah demi selangkah.</span></footer>
+    </div>
+
+    <div class="toast hidden" id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
