@@ -8,6 +8,7 @@ const QUESTIONS_PER_SESSION = 10;
 const SESSION_SECONDS = 12 * 60;
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 const TEST_BANKS = { TIU: "question.json", TKP: "tkp.json", TWK: "twk.json" };
+const TEST_TARGETS = { TIU: 80, TKP: 156, TWK: 65 };
 const screens = ["landing-view", "auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view"];
 
 let selectedTest = "TIU";
@@ -19,6 +20,7 @@ let timerId = null;
 let reviewRefreshId = null;
 let reviewRequestPromise = null;
 let leaderboardRequestPromise = null;
+let scoreProgressRequestId = 0;
 let sessionFinished = false;
 let accountExpiryTimer = null;
 
@@ -133,6 +135,7 @@ function showDashboard() {
   $("welcome-title").textContent = `Siap latihan hari ini, ${currentUserName().split(" ")[0]}?`;
   syncHeader();
   renderHistory();
+  renderScoreProgress();
   showScreen("dashboard-view");
 }
 
@@ -180,6 +183,38 @@ function renderHistory() {
   list.innerHTML = history.map((item) => `
     <div class="history-item"><span>${escapeHtml(item.test || "TIU")} · ${escapeHtml(item.date)} · ${item.correct}/10 benar</span><strong>${item.score}</strong></div>
   `).join("");
+}
+
+async function renderScoreProgress() {
+  const list = $("score-progress-list");
+  const requestId = ++scoreProgressRequestId;
+  list.innerHTML = '<p class="empty-state">Memuat progres skor...</p>';
+  try {
+    const response = await fetch("/api/leaderboard", { cache: "no-store" });
+    const result = await readApiJson(response);
+    if (!response.ok) throw new Error(result.error || `Progres skor gagal dimuat (${response.status}).`);
+    if (!result.progress || Object.entries(TEST_TARGETS).some(([test]) =>
+      !Number.isSafeInteger(result.progress[test]) || result.progress[test] < 0)) {
+      throw new Error("Data progres skor dari server tidak valid.");
+    }
+    if (requestId !== scoreProgressRequestId) return;
+    list.innerHTML = Object.entries(TEST_TARGETS).map(([test, target]) => {
+      const score = result.progress[test];
+      const progress = Math.min(100, Math.round((score / target) * 100));
+      const reached = score >= target;
+      return `
+        <div class="score-progress-item">
+          <div class="score-progress-heading"><strong>${test}</strong><span>${score} / ${target}</span></div>
+          <div class="score-progress-track" role="progressbar" aria-label="Progres ${test}" aria-valuemin="0" aria-valuemax="${target}" aria-valuenow="${Math.min(score, target)}"><span style="width: ${progress}%"></span></div>
+          <small class="${reached ? "target-reached" : ""}">${reached ? "Target tercapai" : `Kurang ${target - score} poin dari target`}</small>
+        </div>
+      `;
+    }).join("");
+  } catch (error) {
+    console.error("Tidak dapat memuat progres skor:", error);
+    if (requestId !== scoreProgressRequestId) return;
+    list.innerHTML = `<p class="empty-state">${escapeHtml(error.message || "Progres skor tidak dapat dimuat.")}</p>`;
+  }
 }
 
 function renderReviews() {
@@ -244,7 +279,9 @@ async function fetchAndRenderLeaderboard() {
     if (!response.ok) throw new Error(result.error || `Leaderboard gagal dimuat (${response.status}).`);
     if (!result || !Array.isArray(result.users)
       || result.users.some((user) => !user || typeof user.username !== "string"
-        || !Number.isInteger(user.score) || user.score < 0 || user.score > 100)) {
+        || !Number.isSafeInteger(user.score) || user.score < 0
+        || !user.scores || Object.keys(TEST_TARGETS).some((test) =>
+          !Number.isSafeInteger(user.scores[test]) || user.scores[test] < 0))) {
       throw new Error("Data leaderboard dari server tidak valid.");
     }
     message.textContent = "";
@@ -255,8 +292,8 @@ async function fetchAndRenderLeaderboard() {
     list.innerHTML = result.users.slice(0, 5).map((user, index) => `
       <li class="leaderboard-item">
         <span class="leaderboard-rank">${String(index + 1).padStart(2, "0")}</span>
-        <span class="leaderboard-player"><strong>${escapeHtml(user.username)}</strong><small>Skor terbaik</small></span>
-        <strong class="leaderboard-score">${user.score}<small>/ 100</small></strong>
+        <span class="leaderboard-player"><strong>${escapeHtml(user.username)}</strong><small>TIU ${user.scores.TIU} · TKP ${user.scores.TKP} · TWK ${user.scores.TWK}</small></span>
+        <strong class="leaderboard-score">${user.score}<small>total</small></strong>
       </li>
     `).join("");
   } catch (error) {
@@ -268,20 +305,21 @@ async function fetchAndRenderLeaderboard() {
   }
 }
 
-async function saveLeaderboardScore(score) {
+async function saveLeaderboardScore(test, score) {
   const message = $("leaderboard-submit-message");
   message.textContent = "";
   try {
     const response = await fetch("/api/leaderboard", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ score })
+      body: JSON.stringify({ test, score })
     });
     const result = await readApiJson(response);
     if (!response.ok) throw new Error(result.error || `Skor gagal disimpan (${response.status}).`);
-    message.textContent = "Skor terbaikmu sudah diperbarui di leaderboard.";
+    message.textContent = `Skor ${test} berhasil ditambahkan ke akumulasi progres dan leaderboard.`;
     message.classList.add("success");
     renderLeaderboard();
+    renderScoreProgress();
   } catch (error) {
     console.error("Tidak dapat menyimpan skor leaderboard:", error);
     message.classList.remove("success");
@@ -504,7 +542,7 @@ function finishQuiz(expired = false) {
   writeStored(STORAGE.history, history.slice(0, 30));
   showScreen("result-view");
   $("leaderboard-submit-message").classList.remove("success");
-  if (currentUser()) saveLeaderboardScore(score);
+  if (currentUser()) saveLeaderboardScore(selectedTest, score);
 }
 
 function showToast(message) {

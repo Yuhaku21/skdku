@@ -17,7 +17,9 @@ Untuk memakai login, pembuatan akun, leaderboard, dan ulasan lokal, server juga 
 ## Fitur
 
 - Login pengguna dan admin memakai sesi aman dari API server. Akun pengguna hanya dapat dibuat oleh admin dengan masa berlaku 1 hari, 7 hari, atau selamanya; akun kedaluwarsa tidak dapat login dan sesi aktif dihentikan saat masa berlaku habis. Admin dapat melihat username, email, dan masa berlaku akun di tabel pengelolaan. Password pengguna disimpan sebagai hash PBKDF2.
-- Landing page publik menampilkan hero dengan tombol login, informasi aplikasi, lima skor terbaik global, dan ulasan terbaru dari pengguna. Skor leaderboard diambil dari skor terbaik setiap pengguna dan disimpan di Upstash.
+- Landing page publik menampilkan hero dengan tombol login, informasi aplikasi, lima skor akumulasi global (TIU, TKP, TWK, dan total), dan ulasan terbaru dari pengguna. Skor tiap sesi dijumlahkan berdasarkan jenis tes dan disimpan di Upstash.
+- Dashboard pengguna menampilkan progres akumulasi TIU, TKP, dan TWK terhadap target masing-masing 80, 156, dan 65. Skor tiap sesi tryout (maksimal 100) ditambahkan ke akumulasi jenis tes terkait.
+- Akumulasi baru disimpan terpisah dari format skor leaderboard lama karena data lama tidak mencatat jenis tesnya dan tidak dapat dibagi secara akurat.
 - Bank soal TIU di `question.json`, TKP di `tkp.json`, dan TWK di `twk.json` diputar acak untuk setiap sesi; 10 soal dari kategori yang dipilih tidak diulang sampai seluruh bank soal itu terpakai.
 - Waktu tryout 12 menit, navigasi soal, penanda jawaban, skor, dan pembahasan untuk jawaban salah atau yang belum dijawab.
 - Halaman ulasan dengan rating 1–5 bintang dan komentar yang dibagikan ke semua pengguna melalui API server, lalu diperbarui otomatis setiap 15 detik. Nama pengulas diambil dari sesi login server. Saat dijalankan lokal, data ulasan disimpan di `data/reviews.json`; saat di Vercel, API menggunakan Upstash Redis.

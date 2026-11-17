@@ -75,8 +75,8 @@
 
           <section class="landing-community-card" id="leaderboard-section" aria-labelledby="leaderboard-title">
             <div class="landing-section-heading">
-              <div><span class="section-kicker">APRESIASI LATIHAN</span><h2 id="leaderboard-title">Top 5 leaderboard</h2><p class="muted">Peringkat berdasarkan skor terbaik pengguna.</p></div>
-              <span class="leaderboard-badge">SKOR TERBAIK</span>
+              <div><span class="section-kicker">APRESIASI LATIHAN</span><h2 id="leaderboard-title">Top 5 leaderboard</h2><p class="muted">Peringkat berdasarkan total akumulasi TIU, TKP, dan TWK.</p></div>
+              <span class="leaderboard-badge">SKOR AKUMULASI</span>
             </div>
             <p class="form-message" id="leaderboard-message" aria-live="polite"></p>
             <ol class="leaderboard-list" id="landing-leaderboard-list"><li class="community-empty">Memuat peringkat...</li></ol>
@@ -164,6 +164,11 @@
               </div>
             </aside>
           </div>
+          <section class="score-progress-card" aria-labelledby="score-progress-title">
+            <div class="section-heading compact"><div><span class="section-kicker">TARGET SKD</span><h2 id="score-progress-title">Progres nilai tiap tes</h2></div><span class="pill">TIU 80 · TKP 156 · TWK 65</span></div>
+            <p class="muted score-progress-note">Skor setiap sesi dijumlahkan sesuai jenis tes. Lihat bagian yang belum mencapai nilai ambang.</p>
+            <div id="score-progress-list" class="score-progress-list"><p class="empty-state">Memuat progres skor...</p></div>
+          </section>
           <div class="history-card">
             <div class="section-heading compact"><div><span class="section-kicker">RIWAYAT</span><h2>Latihan terakhirmu</h2></div><button class="button button-outline" id="open-reviews-button" type="button">Beri ulasan</button></div>
             <div id="history-list" class="history-list"><p class="empty-state">Belum ada sesi latihan. Setiap langkah kecil tetap berarti.</p></div>
