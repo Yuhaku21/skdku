@@ -38,23 +38,17 @@
             <div class="decor-orbit orbit-two"></div>
           </div>
           <div class="auth-panel">
-            <div class="auth-tabs" role="tablist">
-              <button class="auth-tab active" id="login-tab" type="button" role="tab" aria-selected="true">Masuk</button>
-              <button class="auth-tab" id="register-tab" type="button" role="tab" aria-selected="false">Daftar</button>
-            </div>
-            <h2 id="auth-title">Selamat datang kembali</h2>
-            <p class="muted" id="auth-description">Masuk untuk melanjutkan persiapanmu.</p>
+            <h2 id="auth-title">Masuk ke akun</h2>
+            <p class="muted" id="auth-description">Masuk dengan akun yang dibuat oleh admin.</p>
             <form id="auth-form">
-              <label for="auth-name" class="hidden" id="name-label">Nama</label>
-              <input id="auth-name" class="form-input hidden" autocomplete="name" placeholder="Nama lengkap" />
               <label for="auth-email">Email</label>
               <input id="auth-email" class="form-input" type="email" autocomplete="username" placeholder="nama@email.com" required />
               <label for="auth-password">Kata sandi</label>
-              <input id="auth-password" class="form-input" type="password" autocomplete="current-password" placeholder="Minimal 6 karakter" minlength="6" required />
+              <input id="auth-password" class="form-input" type="password" autocomplete="current-password" placeholder="Minimal 10 karakter" minlength="10" required />
               <p class="form-message" id="auth-message" aria-live="polite"></p>
               <button class="button button-primary button-wide" id="auth-submit" type="submit">Masuk ke akun <span>→</span></button>
             </form>
-            <p class="tiny-note">Akun disimpan di browser ini untuk kebutuhan latihan. Jangan gunakan kata sandi utama.</p>
+            <p class="tiny-note">Belum punya akun? Hubungi admin. <a href="/admin-register">Login admin</a></p>
           </div>
         </section>
 

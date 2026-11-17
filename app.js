@@ -1,6 +1,6 @@
 const STORAGE = {
-  users: "ruangskd.users",
   currentUser: "ruangskd.currentUser",
+  currentName: "ruangskd.currentName",
   history: "ruangskd.history",
   questionRotation: "ruangskd.questionRotation"
 };
@@ -18,7 +18,6 @@ let remainingSeconds = SESSION_SECONDS;
 let timerId = null;
 let reviewRefreshId = null;
 let reviewRequestPromise = null;
-let isRegisterMode = false;
 let sessionFinished = false;
 
 const $ = (id) => document.getElementById(id);
@@ -45,74 +44,41 @@ function currentUser() {
   return localStorage.getItem(STORAGE.currentUser);
 }
 
-function accountDisplayName(email) {
-  const users = readStored(STORAGE.users, {});
-  const user = users && users[email];
-  return user && typeof user.name === "string" && user.name.trim() ? user.name.trim() : email.split("@")[0];
+function currentUserName() {
+  const name = localStorage.getItem(STORAGE.currentName);
+  return name || (currentUser() ? currentUser().split("@")[0] : "");
 }
 
 function syncHeader() {
   const email = currentUser();
-  $("session-label").textContent = email ? `Hai, ${email.split("@")[0]}` : "";
+  $("session-label").textContent = email ? `Hai, ${currentUserName()}` : "";
   $("logout-button").classList.toggle("hidden", !email);
-}
-
-function setAuthMode(register) {
-  isRegisterMode = register;
-  $("login-tab").classList.toggle("active", !register);
-  $("register-tab").classList.toggle("active", register);
-  $("login-tab").setAttribute("aria-selected", String(!register));
-  $("register-tab").setAttribute("aria-selected", String(register));
-  $("auth-title").textContent = register ? "Buat akun latihanmu" : "Selamat datang kembali";
-  $("auth-description").textContent = register ? "Daftar dan mulai perjalanan persiapanmu." : "Masuk untuk melanjutkan persiapanmu.";
-  $("auth-name").classList.toggle("hidden", !register);
-  $("name-label").classList.toggle("hidden", !register);
-  $("auth-name").required = register;
-  $("auth-submit").innerHTML = register ? "Buat akun <span>→</span>" : "Masuk ke akun <span>→</span>";
-  $("auth-message").textContent = "";
-}
-
-async function passwordHash(password, salt) {
-  if (!crypto.subtle) throw new Error("Browser perlu dijalankan melalui localhost untuk membuat akun dengan aman.");
-  const encoder = new TextEncoder();
-  const key = await crypto.subtle.importKey("raw", encoder.encode(password), "PBKDF2", false, ["deriveBits"]);
-  const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: encoder.encode(salt), iterations: 120000, hash: "SHA-256" }, key, 256);
-  return Array.from(new Uint8Array(bits), (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
 async function handleAuth(event) {
   event.preventDefault();
   const email = $("auth-email").value.trim().toLowerCase();
   const password = $("auth-password").value;
-  const users = readStored(STORAGE.users, {});
   const message = $("auth-message");
   message.classList.remove("success");
   message.textContent = "";
 
   try {
-    if (isRegisterMode) {
-      const name = $("auth-name").value.trim();
-      if (!name) throw new Error("Masukkan nama lengkapmu.");
-      if (password.length < 6) throw new Error("Kata sandi harus memiliki minimal 6 karakter.");
-      if (users[email]) throw new Error("Email ini sudah terdaftar. Silakan masuk.");
-      const salt = crypto.randomUUID();
-      users[email] = { name, salt, passwordHash: await passwordHash(password, salt) };
-      writeStored(STORAGE.users, users);
-      message.textContent = "Akun berhasil dibuat. Silakan masuk.";
-      message.classList.add("success");
-      setAuthMode(false);
-      $("auth-email").value = email;
-      return;
+    const response = await fetch("/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "user-login", email, password })
+    });
+    const result = await readApiJson(response);
+    if (!response.ok || !result.user || result.user.role !== "user") {
+      throw new Error(result.error || "Email atau password tidak sesuai.");
     }
-    const user = users[email];
-    if (!user || await passwordHash(password, user.salt) !== user.passwordHash) {
-      throw new Error("Email atau kata sandi tidak sesuai.");
-    }
-    localStorage.setItem(STORAGE.currentUser, email);
+    localStorage.setItem(STORAGE.currentUser, result.user.email);
+    localStorage.setItem(STORAGE.currentName, result.user.name);
     syncHeader();
     showDashboard();
   } catch (error) {
-    message.textContent = error.message || "Terjadi kesalahan saat memproses akun.";
+    message.textContent = error.message || "Login tidak dapat diproses saat ini.";
   }
 }
 
@@ -122,9 +88,7 @@ function showDashboard() {
     showScreen("auth-view");
     return;
   }
-  const users = readStored(STORAGE.users, {});
-  const user = users[currentUser()];
-  $("welcome-title").textContent = user ? `Siap latihan hari ini, ${user.name.split(" ")[0]}?` : "Siap latihan hari ini?";
+  $("welcome-title").textContent = `Siap latihan hari ini, ${currentUserName().split(" ")[0]}?`;
   syncHeader();
   renderHistory();
   showScreen("dashboard-view");
@@ -191,7 +155,7 @@ async function fetchAndRenderReviews() {
   } catch (error) {
     console.error("Tidak dapat memuat ulasan:", error);
     $("community-review-count").textContent = "Tidak tersedia";
-    $("reviews-list").innerHTML = '<p class="empty-state">Ulasan tidak dapat dimuat. Pastikan server terbaru berjalan dengan npm start, lalu muat ulang halaman.</p>';
+    $("reviews-list").innerHTML = '<p class="empty-state">Ulasan tidak dapat dimuat. Pastikan API sudah ter-deploy, lalu muat ulang halaman.</p>';
   } finally {
     reviewRequestPromise = null;
   }
@@ -200,7 +164,7 @@ async function fetchAndRenderReviews() {
 async function readApiJson(response) {
   const contentType = response.headers.get("content-type") || "";
   if (!contentType.toLowerCase().includes("json")) {
-    throw new Error("Server ulasan tidak mengembalikan JSON. Jalankan server terbaru dengan npm start.");
+    throw new Error("Server API tidak mengembalikan JSON. Pastikan fungsi API sudah ter-deploy.");
   }
   return response.json();
 }
@@ -237,7 +201,7 @@ async function handleReviewSubmit(event) {
     const response = await fetch("/api/reviews", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: accountDisplayName(email), rating, comment })
+      body: JSON.stringify({ rating, comment })
     });
     const result = await readApiJson(response);
     if (!response.ok) throw new Error(result.error || `Ulasan gagal dikirim (${response.status}).`);
@@ -422,11 +386,35 @@ function showToast(message) {
   showToast.timeout = setTimeout(() => toast.classList.add("hidden"), 4000);
 }
 
+async function restoreUserSession() {
+  try {
+    const response = await fetch("/api/auth", { cache: "no-store" });
+    const result = await readApiJson(response);
+    if (!response.ok) throw new Error(result.error || `Sesi tidak dapat dipulihkan (${response.status}).`);
+    if (!result.user || result.user.role !== "user") {
+      localStorage.removeItem(STORAGE.currentUser);
+      localStorage.removeItem(STORAGE.currentName);
+      syncHeader();
+      showScreen("auth-view");
+      return;
+    }
+    localStorage.setItem(STORAGE.currentUser, result.user.email);
+    localStorage.setItem(STORAGE.currentName, result.user.name);
+    syncHeader();
+    showDashboard();
+  } catch (error) {
+    console.error("Tidak dapat memulihkan sesi:", error);
+    localStorage.removeItem(STORAGE.currentUser);
+    localStorage.removeItem(STORAGE.currentName);
+    syncHeader();
+    showScreen("auth-view");
+    $("auth-message").textContent = error.message || "Sesi tidak dapat dipulihkan.";
+  }
+}
+
 function initialize() {
   syncHeader();
   $("auth-form").addEventListener("submit", handleAuth);
-  $("login-tab").addEventListener("click", () => setAuthMode(false));
-  $("register-tab").addEventListener("click", () => setAuthMode(true));
   $("level-options").querySelectorAll("[data-level]").forEach((button) => {
     button.addEventListener("click", () => {
       selectedLevel = button.dataset.level;
@@ -454,19 +442,31 @@ function initialize() {
     }
   });
   $("home-button").addEventListener("click", showDashboard);
-  $("logout-button").addEventListener("click", () => {
-    localStorage.removeItem(STORAGE.currentUser);
-    syncHeader();
-    showScreen("auth-view");
-    setAuthMode(false);
+  $("logout-button").addEventListener("click", async () => {
+    try {
+      const response = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "logout" })
+      });
+      const result = await readApiJson(response);
+      if (!response.ok) throw new Error(result.error || "Logout tidak dapat diproses.");
+    } catch (error) {
+      console.error("Tidak dapat mengakhiri sesi:", error);
+    } finally {
+      localStorage.removeItem(STORAGE.currentUser);
+      localStorage.removeItem(STORAGE.currentName);
+      syncHeader();
+      showScreen("auth-view");
+    }
   });
   document.querySelectorAll("[data-home]").forEach((element) => element.addEventListener("click", (event) => {
     event.preventDefault();
     if (currentUser()) showDashboard();
     else showScreen("auth-view");
   }));
-  if (currentUser()) showDashboard();
-  else showScreen("auth-view");
+  showScreen("auth-view");
+  restoreUserSession();
 }
 
 initialize();

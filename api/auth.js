@@ -1,0 +1,140 @@
+const crypto = require("node:crypto");
+const { createSession, destroySession, getSession } = require("../lib/session");
+const { redisCommand } = require("../lib/redis");
+const { sendJson } = require("../lib/http");
+
+const USERS_KEY = "ruangskd:users";
+const PASSWORD_ITERATIONS = 120000;
+const MAX_BODY_BYTES = 8192;
+const MIN_PASSWORD_LENGTH = 10;
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function safeEqual(first, second) {
+  const firstHash = crypto.createHash("sha256").update(first).digest();
+  const secondHash = crypto.createHash("sha256").update(second).digest();
+  return crypto.timingSafeEqual(firstHash, secondHash);
+}
+
+function hashPassword(password, salt) {
+  return new Promise((resolve, reject) => {
+    crypto.pbkdf2(password, salt, PASSWORD_ITERATIONS, 32, "sha256", (error, hash) => {
+      if (error) reject(error);
+      else resolve(hash.toString("hex"));
+    });
+  });
+}
+
+function readPayload(request, response) {
+  if (!/^application\/json(?:\s*;|$)/i.test(request.headers["content-type"] || "")) {
+    sendJson(response, 400, { error: "Gunakan Content-Type application/json." });
+    return null;
+  }
+  let payload;
+  try {
+    payload = request.body;
+  } catch {
+    sendJson(response, 400, { error: "Format JSON tidak valid." });
+    return null;
+  }
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)
+    || Buffer.byteLength(JSON.stringify(payload), "utf8") > MAX_BODY_BYTES) {
+    sendJson(response, 400, { error: "Data permintaan tidak valid atau terlalu besar." });
+    return null;
+  }
+  return payload;
+}
+
+async function loginAdmin(request, response, payload) {
+  const username = process.env.ADMIN_USERNAME;
+  const password = process.env.ADMIN_PASSWORD;
+  if (!username || !password || password.length < 12) {
+    sendJson(response, 503, { error: "Konfigurasi admin belum lengkap atau password belum cukup kuat." });
+    return;
+  }
+  if (typeof payload.username !== "string" || typeof payload.password !== "string"
+    || !safeEqual(payload.username, username) || !safeEqual(payload.password, password)) {
+    sendJson(response, 401, { error: "Username atau password admin tidak sesuai." });
+    return;
+  }
+  const user = { role: "admin", username };
+  await createSession(request, response, user);
+  sendJson(response, 200, { user });
+}
+
+async function loginUser(request, response, payload) {
+  const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
+  const password = typeof payload.password === "string" ? payload.password : "";
+  if (!isValidEmail(email) || !password) {
+    sendJson(response, 400, { error: "Masukkan email dan password yang valid." });
+    return;
+  }
+  const stored = await redisCommand(["HGET", USERS_KEY, email]);
+  const account = stored ? JSON.parse(stored) : null;
+  if (!account || typeof account.name !== "string" || typeof account.salt !== "string"
+    || typeof account.passwordHash !== "string" || !safeEqual(await hashPassword(password, account.salt), account.passwordHash)) {
+    sendJson(response, 401, { error: "Email atau password tidak sesuai." });
+    return;
+  }
+  const user = { role: "user", email, name: account.name };
+  await createSession(request, response, user);
+  sendJson(response, 200, { user });
+}
+
+async function createUser(request, response, payload) {
+  const session = await getSession(request);
+  if (!session || session.role !== "admin") {
+    sendJson(response, 401, { error: "Hanya admin yang dapat membuat akun." });
+    return;
+  }
+  const name = typeof payload.name === "string" ? payload.name.trim() : "";
+  const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
+  const password = typeof payload.password === "string" ? payload.password : "";
+  if (!name || name.length > 80 || !isValidEmail(email)
+    || password.length < MIN_PASSWORD_LENGTH || password.length > 128) {
+    sendJson(response, 400, { error: "Nama, email valid, dan password minimal 10 karakter wajib diisi." });
+    return;
+  }
+
+  const salt = crypto.randomBytes(16).toString("hex");
+  const passwordHash = await hashPassword(password, salt);
+  const account = JSON.stringify({ name, salt, passwordHash });
+  const created = await redisCommand(["HSETNX", USERS_KEY, email, account]);
+  if (created !== 1) {
+    sendJson(response, 409, { error: "Email tersebut sudah memiliki akun." });
+    return;
+  }
+  sendJson(response, 201, { user: { email, name } });
+}
+
+module.exports = async function authHandler(request, response) {
+  try {
+    if (request.method === "GET") {
+      sendJson(response, 200, { user: await getSession(request) });
+      return;
+    }
+    if (request.method !== "POST") {
+      response.setHeader("Allow", "GET, POST");
+      sendJson(response, 405, { error: "Metode tidak diizinkan." });
+      return;
+    }
+    const payload = readPayload(request, response);
+    if (!payload) return;
+    if (payload.action === "admin-login") return await loginAdmin(request, response, payload);
+    if (payload.action === "user-login") return await loginUser(request, response, payload);
+    if (payload.action === "create-user") return await createUser(request, response, payload);
+    if (payload.action === "logout") {
+      await destroySession(request, response);
+      sendJson(response, 200, { success: true });
+      return;
+    }
+    sendJson(response, 400, { error: "Aksi autentikasi tidak dikenal." });
+  } catch (error) {
+    console.error("API autentikasi gagal:", error);
+    sendJson(response, error.statusCode || 502, {
+      error: error.statusCode === 503 ? error.message : "Autentikasi tidak dapat diproses saat ini."
+    });
+  }
+};

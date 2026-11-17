@@ -12,21 +12,26 @@ npm start
 
 Buka `http://localhost:3030` di browser. Hentikan server dengan `Ctrl+C`. Bank soal dimuat melalui `fetch`, jadi jangan buka `index.html` langsung sebagai file.
 
+Untuk memakai login, pembuatan akun, dan ulasan lokal, server juga memerlukan `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `ADMIN_USERNAME`, dan `ADMIN_PASSWORD` di environment proses.
+
 ## Fitur
 
-- Daftar dan masuk dengan akun yang disimpan di `localStorage`. Kata sandi disimpan sebagai hash PBKDF2; ini tetap aplikasi demo tanpa server autentikasi dan tidak cocok untuk akun penting.
+- Login pengguna dan admin memakai sesi aman dari API server. Akun pengguna hanya dapat dibuat oleh admin; password pengguna disimpan sebagai hash PBKDF2.
 - Bank soal TIU di `question.json` diputar acak untuk setiap sesi: 10 soal dari level yang dipilih tidak diulang sampai seluruh bank soal level itu terpakai.
 - Waktu tryout 12 menit, navigasi soal, penanda jawaban, skor, dan pembahasan untuk jawaban salah atau yang belum dijawab.
-- Halaman ulasan dengan rating 1–5 bintang dan komentar yang dibagikan ke semua pengguna melalui API server, lalu diperbarui otomatis setiap 15 detik. Nama diambil dari akun demo di browser dan belum diverifikasi server. Saat dijalankan lokal, data disimpan di `data/reviews.json`; saat di Vercel, API menggunakan Upstash Redis.
+- Halaman ulasan dengan rating 1–5 bintang dan komentar yang dibagikan ke semua pengguna melalui API server, lalu diperbarui otomatis setiap 15 detik. Nama pengulas diambil dari sesi login server. Saat dijalankan lokal, data ulasan disimpan di `data/reviews.json`; saat di Vercel, API menggunakan Upstash Redis.
 - Semua soal disimpan di `question.json`. Tryout sepenuhnya menggunakan bank soal lokal dan tidak membutuhkan API key atau koneksi ke layanan AI.
-- Akun demo dan riwayat tryout tersimpan lokal di browser, tidak disinkronkan antarperangkat.
+- Riwayat tryout tetap tersimpan lokal di browser, tidak disinkronkan antarperangkat.
 
 ## Deploy ke Vercel
 
-Vercel menjalankan `api/reviews.js` sebagai endpoint `/api/reviews`. Agar ulasan tersimpan permanen dan dibagikan antar-pengguna:
+Vercel menjalankan `api/reviews.js` dan `api/auth.js` sebagai API. Upstash menyimpan ulasan, akun pengguna, dan sesi login:
 
 1. Buat database Redis di [Upstash](https://console.upstash.com/redis).
-2. Di Vercel, buka **Project Settings → Environment Variables** dan tambahkan `UPSTASH_REDIS_REST_URL` serta `UPSTASH_REDIS_REST_TOKEN` dari database Upstash. Jangan commit nilai token ke repositori.
+2. Di Vercel, buka **Project Settings → Environment Variables** dan tambahkan:
+   - `UPSTASH_REDIS_REST_URL` dan `UPSTASH_REDIS_REST_TOKEN` dari database Upstash.
+   - `ADMIN_USERNAME` dan `ADMIN_PASSWORD` untuk akun admin pertama. Gunakan password unik minimal 12 karakter; jangan commit nilainya atau menambahkan awalan `NEXT_PUBLIC_`.
 3. Pilih environment yang digunakan (Production/Preview), lalu redeploy proyek.
+4. Buka `/admin-register` untuk login admin dan membuat akun pengguna. Pendaftaran publik dinonaktifkan.
 
-Tanpa kedua environment variable tersebut, API Vercel mengembalikan error konfigurasi JSON dan tidak menyimpan ulasan.
+Jangan gunakan kembali password admin yang pernah dibagikan di chat; buat password baru dan simpan hanya sebagai environment variable. Akun lama yang sebelumnya tersimpan di browser tidak otomatis dipindahkan; admin perlu membuat ulang akun tersebut. Tanpa environment variable Upstash, login, pembuatan akun, dan ulasan tidak dapat memakai database bersama.

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f7fb" />
+    <title>Admin — Ruang SKD</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Ruang SKD beranda">
+          <span class="brand-mark">R</span>
+          <span>ruang<span class="brand-accent">skd</span></span>
+        </a>
+        <a class="button button-quiet" href="/">Kembali ke beranda</a>
+      </header>
+      <main>
+        <section class="auth-view admin-auth-view">
+          <div class="auth-aside">
+            <div class="eyebrow"><span class="eyebrow-dot"></span> AREA ADMIN</div>
+            <h1>Kelola akses <span>Ruang SKD.</span></h1>
+            <p>Admin dapat membuat akun pengguna. Pendaftaran akun oleh publik tidak tersedia.</p>
+            <div class="auth-stats">
+              <div><strong>AMAN</strong><span>akses admin</span></div>
+              <div><strong>10+</strong><span>karakter password</span></div>
+            </div>
+            <div class="decor-orbit orbit-one"></div>
+            <div class="decor-orbit orbit-two"></div>
+          </div>
+          <div class="auth-panel admin-panel">
+            <section id="admin-login-panel">
+              <span class="section-kicker">LOGIN ADMIN</span>
+              <h2>Masuk sebagai admin</h2>
+              <p class="muted">Gunakan kredensial admin yang dikonfigurasi di Vercel.</p>
+              <form id="admin-login-form">
+                <label for="admin-username">Username admin</label>
+                <input id="admin-username" class="form-input" autocomplete="username" required />
+                <label for="admin-password">Password admin</label>
+                <input id="admin-password" class="form-input" type="password" autocomplete="current-password" required />
+                <p class="form-message" id="admin-login-message" aria-live="polite"></p>
+                <button class="button button-primary button-wide" type="submit">Login admin <span>→</span></button>
+              </form>
+            </section>
+            <section id="admin-dashboard" class="hidden">
+              <div class="admin-panel-head">
+                <div><span class="section-kicker">KELOLA AKUN</span><h2>Buat akun pengguna</h2></div>
+                <button class="button button-quiet" id="admin-logout-button" type="button">Keluar</button>
+              </div>
+              <p class="muted" id="admin-welcome">Buat akun dan berikan kredensialnya kepada pengguna dengan aman.</p>
+              <form id="create-user-form">
+                <label for="new-user-name">Nama pengguna</label>
+                <input id="new-user-name" class="form-input" autocomplete="name" maxlength="80" required />
+                <label for="new-user-email">Email pengguna</label>
+                <input id="new-user-email" class="form-input" type="email" autocomplete="email" required />
+                <label for="new-user-password">Password awal</label>
+                <input id="new-user-password" class="form-input" type="password" autocomplete="new-password" minlength="10" maxlength="128" required />
+                <p class="form-message" id="create-user-message" aria-live="polite"></p>
+                <button class="button button-primary button-wide" type="submit">Buat akun <span>→</span></button>
+              </form>
+            </section>
+          </div>
+        </section>
+      </main>
+      <footer class="footer"><span>© 2026 Ruang SKD</span><span>Halaman pengelolaan admin.</span></footer>
+    </div>
+    <script src="admin-register.js"></script>
+  </body>
+</html>

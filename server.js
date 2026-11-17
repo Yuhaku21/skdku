@@ -1,6 +1,8 @@
 const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
+const { getSession } = require("./lib/session");
+const authHandler = require("./api/auth");
 
 const HOST = process.env.HOST || "0.0.0.0";
 const PORT = Number(process.env.PORT) || 3030;
@@ -105,11 +107,16 @@ async function handleReviewsApi(request, response) {
     sendJson(response, 415, { error: "Gunakan Content-Type application/json." });
     return;
   }
+  const session = await getSession(request);
+  if (!session) {
+    sendJson(response, 401, { error: "Masuk terlebih dahulu untuk mengirim ulasan." });
+    return;
+  }
 
   const payload = await readJsonBody(request);
-  const username = payload && typeof payload.username === "string" ? payload.username.trim() : "";
   const comment = payload && typeof payload.comment === "string" ? payload.comment.trim() : "";
   const rating = payload && payload.rating;
+  const username = session.name || session.username;
   if (!username || username.length > 80 || !comment || comment.length > 1000
     || !Number.isInteger(rating) || rating < 1 || rating > 5) {
     const error = new Error("Nama, komentar (maksimal 1000 karakter), dan rating 1–5 wajib diisi.");
@@ -119,6 +126,13 @@ async function handleReviewsApi(request, response) {
   const review = { username, rating, comment, createdAt: new Date().toISOString() };
   await appendReview(review);
   sendJson(response, 201, review);
+}
+
+async function handleAuthApi(request, response) {
+  if (request.method === "POST" && /^application\/json(?:\s*;|$)/i.test(request.headers["content-type"] || "")) {
+    request.body = await readJsonBody(request);
+  }
+  await authHandler(request, response);
 }
 
 const server = http.createServer((request, response) => {
@@ -133,7 +147,7 @@ const server = http.createServer((request, response) => {
 
   if (pathname === "/api/reviews") {
     handleReviewsApi(request, response).catch((error) => {
-      if (error.statusCode && error.statusCode < 500) {
+      if (error.statusCode && error.statusCode < 600) {
         sendJson(response, error.statusCode, { error: error.message });
         return;
       }
@@ -147,13 +161,25 @@ const server = http.createServer((request, response) => {
     return;
   }
 
+  if (pathname === "/api/auth") {
+    handleAuthApi(request, response).catch((error) => {
+      if (error.statusCode && error.statusCode < 600) {
+        sendJson(response, error.statusCode, { error: error.message });
+        return;
+      }
+      console.error("API autentikasi gagal:", error);
+      sendJson(response, 500, { error: "Autentikasi tidak dapat diproses saat ini." });
+    });
+    return;
+  }
+
   if (request.method !== "GET" && request.method !== "HEAD") {
     response.writeHead(405, { Allow: "GET, HEAD" });
     response.end("Method not allowed");
     return;
   }
 
-  const relativePath = pathname === "/" ? "index.html" : pathname.slice(1);
+  const relativePath = pathname === "/" ? "index.html" : pathname === "/admin-register" ? "admin-register.html" : pathname.slice(1);
   const filePath = path.resolve(ROOT, relativePath);
   if (filePath !== ROOT && !filePath.startsWith(`${ROOT}${path.sep}`)) {
     response.writeHead(403);

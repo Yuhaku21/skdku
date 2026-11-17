@@ -1,3 +1,7 @@
+const { getSession } = require("../lib/session");
+const { redisCommand } = require("../lib/redis");
+const { sendJson } = require("../lib/http");
+
 const REVIEW_LIST_KEY = "ruangskd:reviews";
 const MAX_REVIEW_BODY_BYTES = 8192;
 const MAX_STORED_REVIEWS = 1000;
@@ -7,37 +11,7 @@ const APPEND_REVIEW_SCRIPT = [
   "return 1"
 ].join("\n");
 
-function sendJson(response, statusCode, value) {
-  response.setHeader("Content-Type", "application/json; charset=utf-8");
-  response.setHeader("Cache-Control", "no-store");
-  response.setHeader("X-Content-Type-Options", "nosniff");
-  response.status(statusCode).json(value);
-}
-
-async function redisCommand(command) {
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token) {
-    const error = new Error("Database ulasan belum dikonfigurasi.");
-    error.statusCode = 503;
-    throw error;
-  }
-
-  const response = await fetch(url.replace(/\/+$/, ""), {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(command)
-  });
-  const result = await response.json();
-  if (!response.ok || result.error) throw new Error("Database ulasan menolak permintaan.");
-  return result.result;
-}
-
-function validateReview(review) {
-  const username = review && typeof review.username === "string" ? review.username.trim() : "";
+function validateReview(review, username) {
   const comment = review && typeof review.comment === "string" ? review.comment.trim() : "";
   const rating = review && review.rating;
   if (!username || username.length > 80 || !comment || comment.length > 1000
@@ -67,6 +41,12 @@ module.exports = async function reviewsHandler(request, response) {
       return;
     }
 
+    const session = await getSession(request);
+    if (!session) {
+      sendJson(response, 401, { error: "Masuk terlebih dahulu untuk mengirim ulasan." });
+      return;
+    }
+
     let payload;
     try {
       payload = request.body;
@@ -80,7 +60,7 @@ module.exports = async function reviewsHandler(request, response) {
       return;
     }
 
-    const review = validateReview(payload);
+    const review = validateReview(payload, session.name || session.username);
     if (!review) {
       sendJson(response, 400, { error: "Nama, komentar (maksimal 1000 karakter), dan rating 1–5 wajib diisi." });
       return;
