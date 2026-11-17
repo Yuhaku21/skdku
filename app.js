@@ -2,8 +2,7 @@ const STORAGE = {
   users: "ruangskd.users",
   currentUser: "ruangskd.currentUser",
   history: "ruangskd.history",
-  questionRotation: "ruangskd.questionRotation",
-  reviews: "ruangskd.reviews"
+  questionRotation: "ruangskd.questionRotation"
 };
 const QUESTIONS_PER_SESSION = 10;
 const SESSION_SECONDS = 12 * 60;
@@ -17,6 +16,8 @@ let answers = [];
 let currentQuestion = 0;
 let remainingSeconds = SESSION_SECONDS;
 let timerId = null;
+let reviewRefreshId = null;
+let reviewRequestPromise = null;
 let isRegisterMode = false;
 let sessionFinished = false;
 
@@ -33,6 +34,10 @@ const readStored = (key, fallback) => {
 const writeStored = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 
 function showScreen(screenId) {
+  if (screenId !== "reviews-view" && reviewRefreshId !== null) {
+    clearInterval(reviewRefreshId);
+    reviewRefreshId = null;
+  }
   screens.forEach((id) => $(id).classList.toggle("hidden", id !== screenId));
 }
 
@@ -130,8 +135,11 @@ function showReviews() {
     showScreen("auth-view");
     return;
   }
-  renderReviews();
   showScreen("reviews-view");
+  $("reviews-list").innerHTML = '<p class="empty-state">Memuat ulasan...</p>';
+  renderReviews();
+  clearInterval(reviewRefreshId);
+  reviewRefreshId = setInterval(renderReviews, 15000);
 }
 
 function renderHistory() {
@@ -147,25 +155,51 @@ function renderHistory() {
 }
 
 function renderReviews() {
-  const savedReviews = readStored(STORAGE.reviews, []);
-  const reviews = Array.isArray(savedReviews) ? savedReviews
-    .filter((review) => review && typeof review.username === "string" && typeof review.comment === "string"
-      && Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5)
-    .sort((first, second) => second.createdAt - first.createdAt) : [];
-  $("community-review-count").textContent = `${reviews.length} ulasan`;
-  if (!reviews.length) {
-    $("reviews-list").innerHTML = '<p class="empty-state">Belum ada ulasan. Jadilah yang pertama berbagi pengalaman.</p>';
-    return;
+  if (reviewRequestPromise) return reviewRequestPromise;
+  reviewRequestPromise = fetchAndRenderReviews();
+  return reviewRequestPromise;
+}
+
+async function fetchAndRenderReviews() {
+  try {
+    const response = await fetch("/api/reviews", { cache: "no-store" });
+    if (!response.ok) throw new Error(`Ulasan gagal dimuat (${response.status}).`);
+    const savedReviews = await response.json();
+    if (!Array.isArray(savedReviews)) throw new Error("Data ulasan dari server tidak valid.");
+    const reviews = savedReviews
+      .filter((review) => review && typeof review.username === "string" && typeof review.comment === "string"
+        && Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5
+        && typeof review.createdAt === "string" && Number.isFinite(Date.parse(review.createdAt)))
+      .sort((first, second) => Date.parse(second.createdAt) - Date.parse(first.createdAt));
+    $("community-review-count").textContent = `${reviews.length} ulasan`;
+    if (!reviews.length) {
+      $("reviews-list").innerHTML = '<p class="empty-state">Belum ada ulasan. Jadilah yang pertama berbagi pengalaman.</p>';
+      return;
+    }
+    $("reviews-list").innerHTML = reviews.map((review) => {
+      const date = new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date(review.createdAt));
+      return `
+        <article class="user-review">
+          <div class="user-review-heading">
+            <div><strong class="user-review-name">${escapeHtml(review.username)}</strong><span class="user-review-date">${escapeHtml(date)}</span></div>
+            <span class="user-review-stars" aria-label="${review.rating} dari 5 bintang">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</span>
+          </div>
+          <p>${escapeHtml(review.comment)}</p>
+        </article>
+      `;
+    }).join("");
+  } catch (error) {
+    console.error("Tidak dapat memuat ulasan:", error);
+    $("community-review-count").textContent = "Tidak tersedia";
+    $("reviews-list").innerHTML = '<p class="empty-state">Ulasan tidak dapat dimuat. Coba buka kembali halaman ini.</p>';
+  } finally {
+    reviewRequestPromise = null;
   }
-  $("reviews-list").innerHTML = reviews.map((review) => `
-    <article class="user-review">
-      <div class="user-review-heading">
-        <div><strong class="user-review-name">${escapeHtml(review.username)}</strong><span class="user-review-date">${escapeHtml(review.date)}</span></div>
-        <span class="user-review-stars" aria-label="${review.rating} dari 5 bintang">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</span>
-      </div>
-      <p>${escapeHtml(review.comment)}</p>
-    </article>
-  `).join("");
+}
+
+async function refreshReviewsAfterSubmit() {
+  if (reviewRequestPromise) await reviewRequestPromise;
+  return renderReviews();
 }
 
 function updateStarRating(rating) {
@@ -174,7 +208,7 @@ function updateStarRating(rating) {
   });
 }
 
-function handleReviewSubmit(event) {
+async function handleReviewSubmit(event) {
   event.preventDefault();
   const message = $("review-message");
   message.classList.remove("success");
@@ -191,30 +225,26 @@ function handleReviewSubmit(event) {
     message.textContent = "Pilih rating dan isi komentar sebelum mengirim.";
     return;
   }
-  const savedReviews = readStored(STORAGE.reviews, []);
-  if (!Array.isArray(savedReviews)) {
-    message.textContent = "Data ulasan tidak valid dan tidak dapat diperbarui.";
-    return;
-  }
-  const review = {
-    username: accountDisplayName(email),
-    rating,
-    comment,
-    date: new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date()),
-    createdAt: Date.now()
-  };
   try {
-    writeStored(STORAGE.reviews, [review, ...savedReviews]);
+    const response = await fetch("/api/reviews", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: accountDisplayName(email), rating, comment })
+    });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || `Ulasan gagal dikirim (${response.status}).`);
   } catch (error) {
-    console.error("Tidak dapat menyimpan ulasan:", error);
-    message.textContent = "Ulasan gagal disimpan. Periksa ruang penyimpanan browser.";
+    console.error("Tidak dapat mengirim ulasan:", error);
+    message.textContent = error instanceof TypeError
+      ? "Server ulasan tidak dapat dijangkau. Coba lagi nanti."
+      : error.message || "Ulasan gagal dikirim. Coba lagi nanti.";
     return;
   }
   $("review-form").reset();
   updateStarRating(0);
   message.textContent = "Terima kasih, ulasanmu berhasil dikirim.";
   message.classList.add("success");
-  renderReviews();
+  await refreshReviewsAfterSubmit();
 }
 
 function escapeHtml(value) {

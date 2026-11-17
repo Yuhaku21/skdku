@@ -3,3 +3,5 @@
 !.env.example
 .vercel
 node_modules
+data/reviews.json
+data/reviews.json.*.tmp

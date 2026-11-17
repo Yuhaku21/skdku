@@ -2,9 +2,12 @@ const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
 
-const HOST = "127.0.0.1";
-const PORT = 3030;
+const HOST = process.env.HOST || "0.0.0.0";
+const PORT = Number(process.env.PORT) || 3030;
 const ROOT = __dirname;
+const REVIEWS_FILE = path.resolve(process.env.REVIEWS_FILE || path.join(ROOT, "data", "reviews.json"));
+const MAX_REVIEW_BODY_BYTES = 8192;
+const MAX_STORED_REVIEWS = 1000;
 const MIME_TYPES = {
   ".css": "text/css; charset=utf-8",
   ".html": "text/html; charset=utf-8",
@@ -16,6 +19,108 @@ const MIME_TYPES = {
   ".ico": "image/x-icon"
 };
 
+let reviewWriteQueue = Promise.resolve();
+
+function sendJson(response, statusCode, value) {
+  const body = JSON.stringify(value);
+  response.writeHead(statusCode, {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store",
+    "X-Content-Type-Options": "nosniff"
+  });
+  response.end(body);
+}
+
+async function readReviews() {
+  try {
+    const contents = await fs.promises.readFile(REVIEWS_FILE, "utf8");
+    const reviews = JSON.parse(contents);
+    if (!Array.isArray(reviews)) throw new Error("Stored reviews must be an array.");
+    return reviews;
+  } catch (error) {
+    if (error.code === "ENOENT") return [];
+    throw error;
+  }
+}
+
+async function saveReviews(reviews) {
+  await fs.promises.mkdir(path.dirname(REVIEWS_FILE), { recursive: true });
+  const temporaryFile = `${REVIEWS_FILE}.${process.pid}.${Date.now()}.tmp`;
+  await fs.promises.writeFile(temporaryFile, JSON.stringify(reviews, null, 2), "utf8");
+  await fs.promises.rename(temporaryFile, REVIEWS_FILE);
+}
+
+async function appendReview(review) {
+  const operation = reviewWriteQueue.then(async () => {
+    const reviews = await readReviews();
+    await saveReviews([review, ...reviews].slice(0, MAX_STORED_REVIEWS));
+  });
+  reviewWriteQueue = operation.then(() => undefined, () => undefined);
+  await operation;
+}
+
+async function readJsonBody(request) {
+  const chunks = [];
+  let byteLength = 0;
+  let tooLarge = false;
+  for await (const chunk of request) {
+    byteLength += chunk.length;
+    if (byteLength > MAX_REVIEW_BODY_BYTES) {
+      tooLarge = true;
+    } else if (!tooLarge) {
+      chunks.push(chunk);
+    }
+  }
+  if (tooLarge) {
+    const error = new Error("Ukuran data ulasan terlalu besar.");
+    error.statusCode = 413;
+    throw error;
+  }
+  try {
+    return JSON.parse(Buffer.concat(chunks).toString("utf8"));
+  } catch {
+    const error = new Error("Format JSON tidak valid.");
+    error.statusCode = 400;
+    throw error;
+  }
+}
+
+async function handleReviewsApi(request, response) {
+  if (request.method === "GET") {
+    await reviewWriteQueue;
+    sendJson(response, 200, await readReviews());
+    return;
+  }
+  if (request.method !== "POST") {
+    response.writeHead(405, {
+      "Allow": "GET, POST",
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-store",
+      "X-Content-Type-Options": "nosniff"
+    });
+    response.end(JSON.stringify({ error: "Metode tidak diizinkan." }));
+    return;
+  }
+  if (!/^application\/json(?:\s*;|$)/i.test(request.headers["content-type"] || "")) {
+    sendJson(response, 415, { error: "Gunakan Content-Type application/json." });
+    return;
+  }
+
+  const payload = await readJsonBody(request);
+  const username = payload && typeof payload.username === "string" ? payload.username.trim() : "";
+  const comment = payload && typeof payload.comment === "string" ? payload.comment.trim() : "";
+  const rating = payload && payload.rating;
+  if (!username || username.length > 80 || !comment || comment.length > 1000
+    || !Number.isInteger(rating) || rating < 1 || rating > 5) {
+    const error = new Error("Nama, komentar (maksimal 1000 karakter), dan rating 1–5 wajib diisi.");
+    error.statusCode = 400;
+    throw error;
+  }
+  const review = { username, rating, comment, createdAt: new Date().toISOString() };
+  await appendReview(review);
+  sendJson(response, 201, review);
+}
+
 const server = http.createServer((request, response) => {
   let pathname;
   try {
@@ -23,6 +128,22 @@ const server = http.createServer((request, response) => {
   } catch {
     response.writeHead(400);
     response.end("Bad request");
+    return;
+  }
+
+  if (pathname === "/api/reviews") {
+    handleReviewsApi(request, response).catch((error) => {
+      if (error.statusCode && error.statusCode < 500) {
+        sendJson(response, error.statusCode, { error: error.message });
+        return;
+      }
+      console.error("API ulasan gagal:", error);
+      if (response.headersSent) {
+        response.destroy();
+        return;
+      }
+      sendJson(response, 500, { error: "Ulasan tidak dapat diproses saat ini." });
+    });
     return;
   }
 
@@ -78,7 +199,7 @@ server.on("error", (error) => {
     return;
   }
 
-  const request = http.get({ host: HOST, port: PORT, path: "/" }, (response) => {
+  const request = http.get({ host: "127.0.0.1", port: PORT, path: "/" }, (response) => {
     let body = "";
     response.setEncoding("utf8");
     response.on("data", (chunk) => { body += chunk; });
