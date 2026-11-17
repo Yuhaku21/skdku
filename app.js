@@ -17,6 +17,40 @@ const FIXED_ACCESS_LIMITS = {
   "1-day": { questionCount: 10, durationSeconds: 12 * 60 },
   "7-days": { questionCount: 15, durationSeconds: 16 * 60 }
 };
+const PACKAGES = {
+  starter: {
+    name: "Starter",
+    price: 10000,
+    benefits: [
+      { included: true, text: "Akses selama 1 hari" },
+      { included: true, text: "10 soal per sesi" },
+      { included: false, text: "Pilih tingkat kesulitan" },
+      { included: false, text: "Masuk leaderboard tertinggi" },
+      { included: true, text: "E-book gratis" }
+    ]
+  },
+  tempur: {
+    name: "Tempur",
+    price: 30000,
+    benefits: [
+      { included: true, text: "Akses selama 7 hari" },
+      { included: true, text: "15 soal per sesi" },
+      { included: false, text: "Pilih tingkat kesulitan" },
+      { included: false, text: "Masuk leaderboard tertinggi" },
+      { included: true, text: "E-book gratis" }
+    ]
+  },
+  victory: {
+    name: "Victory",
+    price: 50000,
+    benefits: [
+      { included: true, text: "Akses selamanya" },
+      { included: true, text: "Pilih jumlah soal dan tingkat kesulitan" },
+      { included: true, text: "Masuk leaderboard tertinggi" },
+      { included: true, text: "E-book gratis" }
+    ]
+  }
+};
 const screens = ["landing-view", "auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view"];
 
 let selectedTest = "TIU";
@@ -54,6 +88,34 @@ function setMobileMenuOpen(isOpen) {
 
 function closeMobileMenu() {
   setMobileMenuOpen(false);
+}
+
+function showPackageDetails(packageKey) {
+  const selectedPackage = PACKAGES[packageKey];
+  if (!selectedPackage) return;
+
+  const formatPrice = (price) => new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0
+  }).format(price);
+  const benefitsList = $("package-summary-benefits");
+  benefitsList.replaceChildren();
+  selectedPackage.benefits.forEach((benefit) => {
+    const item = document.createElement("li");
+    const mark = document.createElement("span");
+    mark.className = benefit.included ? "benefit-check" : "benefit-unavailable";
+    mark.setAttribute("aria-hidden", "true");
+    mark.textContent = benefit.included ? "✓" : "×";
+    item.append(mark, document.createTextNode(benefit.text));
+    benefitsList.append(item);
+  });
+
+  $("package-summary-name").textContent = `Paket ${selectedPackage.name}`;
+  $("package-summary-price").textContent = formatPrice(selectedPackage.price);
+  $("package-summary-total").textContent = formatPrice(selectedPackage.price);
+  $("package-whatsapp-button").href = `https://wa.me/6283192124659?text=${encodeURIComponent(`hai saya ingin memesan harga paketan ${selectedPackage.name}`)}`;
+  $("package-dialog").showModal();
 }
 
 function showScreen(screenId) {
@@ -675,6 +737,13 @@ function initialize() {
     setMobileMenuOpen($("mobile-menu-toggle").getAttribute("aria-expanded") !== "true");
   });
   $("landing-nav").querySelectorAll("a, button").forEach((item) => item.addEventListener("click", closeMobileMenu));
+  document.querySelectorAll("[data-package]").forEach((button) => {
+    button.addEventListener("click", () => showPackageDetails(button.dataset.package));
+  });
+  $("package-dialog-close").addEventListener("click", () => $("package-dialog").close());
+  $("package-dialog").addEventListener("click", (event) => {
+    if (event.target === $("package-dialog")) $("package-dialog").close();
+  });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") closeMobileMenu();
   });

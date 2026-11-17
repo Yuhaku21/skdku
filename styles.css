@@ -75,6 +75,35 @@ main { flex: 1; }
 .about-card-icon { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 10px; background: var(--violet-pale); color: var(--violet); font-size: 10px; font-weight: 800; }
 .about-card h3 { margin: 16px 0 7px; font: 700 13px "Manrope", sans-serif; }
 .about-card p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.7; }
+.landing-pricing { padding: 48px 0 8px; }
+.pricing-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; align-items: stretch; }
+.pricing-card { display: flex; flex-direction: column; padding: 23px; border: 1px solid #ebedf2; border-radius: 17px; background: white; }
+.pricing-card-featured { border-color: #bcb6fb; box-shadow: 0 12px 30px #6254d911; }
+.pricing-label { color: var(--violet); font-size: 9px; font-weight: 700; letter-spacing: 1px; }
+.pricing-card h3 { margin: 12px 0 6px; font: 800 21px "Manrope", sans-serif; }
+.pricing-description { min-height: 38px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
+.pricing-price { margin: 18px 0; color: var(--ink); font: 800 25px "Manrope", sans-serif; letter-spacing: -.8px; }
+.pricing-benefits { display: grid; gap: 11px; margin: 0; padding: 17px 0 19px; border-top: 1px solid #f0f1f5; list-style: none; }
+.pricing-benefits li { display: flex; align-items: flex-start; gap: 9px; color: #596477; font-size: 10px; line-height: 1.5; }
+.benefit-check, .benefit-unavailable { flex: 0 0 17px; display: grid; width: 17px; height: 17px; place-items: center; border-radius: 50%; font-size: 10px; font-weight: 800; }
+.benefit-check { background: #e8f7ef; color: #2b9b67; }
+.benefit-unavailable { background: #f1f2f5; color: #9aa2b0; }
+.pricing-button { width: 100%; margin-top: auto; }
+.package-dialog { width: min(460px, calc(100% - 28px)); max-width: none; padding: 0; border: 1px solid #e8ebf1; border-radius: 19px; background: white; color: var(--ink); box-shadow: 0 24px 80px #17203333; }
+.package-dialog::backdrop { background: #17203380; backdrop-filter: blur(3px); }
+.package-dialog-content { position: relative; padding: 29px; }
+.package-dialog-close { position: absolute; top: 17px; right: 17px; width: 34px; height: 34px; border: 0; border-radius: 10px; background: #f4f5f8; color: #687286; font-size: 23px; line-height: 1; }
+.package-dialog-close:hover { background: #eceef5; }
+.package-dialog-content h2 { margin: 10px 38px 6px 0; font: 800 22px "Manrope", sans-serif; }
+.package-dialog-content > .muted { margin: 0 0 19px; font-size: 11px; }
+.package-summary { padding: 16px; border: 1px solid #ebedf2; border-radius: 13px; background: #fcfcfe; }
+.package-summary-heading, .package-summary-total { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
+.package-summary-heading { font: 800 14px "Manrope", sans-serif; }
+.package-summary-heading strong:last-child { color: var(--violet); }
+.package-summary-benefits { gap: 9px; margin-top: 14px; padding: 13px 0; }
+.package-summary-total { padding-top: 13px; border-top: 1px solid #e8ebf1; color: #687286; font-size: 11px; }
+.package-summary-total strong { color: var(--ink); font: 800 18px "Manrope", sans-serif; }
+.package-whatsapp-button { display: flex; align-items: center; justify-content: center; margin-top: 17px; text-align: center; text-decoration: none; }
 .landing-community-card { margin-top: 25px; padding: 24px 27px; border: 1px solid #ebedf2; border-radius: 18px; background: white; }
 .landing-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .landing-section-heading h2 { font-size: 20px; }
@@ -315,6 +344,8 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .landing-hero-art { min-height: 250px; }
   .landing-about { padding-top: 45px; }
   .about-cards { grid-template-columns: 1fr; }
+  .pricing-cards { grid-template-columns: 1fr; }
+  .pricing-description { min-height: 0; }
   .landing-community-card { padding: 21px; }
   .auth-view { grid-template-columns: 1fr; gap: 34px; min-height: 0; padding: 36px 0 45px; }
   .auth-aside { min-height: 300px; padding: 30px; }
@@ -362,6 +393,9 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .hero-level-chip { right: -4px; bottom: 0; font-size: 8px; }
   .landing-about { padding: 38px 0 6px; }
   .landing-section-intro h2 { font-size: 20px; }
+  .landing-pricing { padding-top: 35px; }
+  .pricing-card { padding: 20px; }
+  .package-dialog-content { padding: 24px 19px; }
   .landing-community-card { margin-top: 17px; padding: 18px 14px; }
   .landing-section-heading { align-items: flex-start; gap: 8px; }
   .landing-section-heading h2 { font-size: 17px; }

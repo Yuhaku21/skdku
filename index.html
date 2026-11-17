@@ -22,6 +22,7 @@
         </button>
         <nav class="landing-nav" id="landing-nav" aria-label="Navigasi landing page">
           <a href="#about-section">Tentang</a>
+          <a href="#pricing-section">Paket</a>
           <a href="#leaderboard-section">Peringkat</a>
           <a href="#landing-reviews-section">Ulasan</a>
           <button class="button button-outline" id="nav-start-test-button" type="button">Masuk</button>
@@ -70,6 +71,57 @@
               <article class="about-card"><span class="about-card-icon">01</span><h3>Pilih materi tes</h3><p>Berlatih soal TIU, TKP, atau TWK sesuai fokus belajarmu.</p></article>
               <article class="about-card"><span class="about-card-icon">02</span><h3>Pilih tingkat kesulitan</h3><p>Atur latihan dari 10 hingga 50 soal dengan waktu sesuai tingkat yang kamu pilih.</p></article>
               <article class="about-card"><span class="about-card-icon">03</span><h3>Evaluasi setiap sesi</h3><p>Lihat skor dan pembahasan untuk mengetahui hal yang perlu ditingkatkan.</p></article>
+            </div>
+          </section>
+
+          <section class="landing-pricing" id="pricing-section" aria-labelledby="pricing-title">
+            <div class="landing-section-intro">
+              <span class="section-kicker">PILIH AKSES LATIHAN</span>
+              <h2 id="pricing-title">Paket yang pas untuk targetmu.</h2>
+              <p class="muted">Semua paket sudah termasuk e-book gratis. Pilih paket untuk melihat rincian harga dan benefit.</p>
+            </div>
+            <div class="pricing-cards">
+              <article class="pricing-card">
+                <span class="pricing-label">MULAI LATIHAN</span>
+                <h3>Starter</h3>
+                <p class="pricing-description">Akses singkat untuk mulai membangun kebiasaan latihan.</p>
+                <p class="pricing-price">Rp10.000</p>
+                <ul class="pricing-benefits">
+                  <li><span class="benefit-check" aria-hidden="true">✓</span>Akses selama 1 hari</li>
+                  <li><span class="benefit-check" aria-hidden="true">✓</span>10 soal per sesi</li>
+                  <li><span class="benefit-unavailable" aria-hidden="true">×</span>Pilih tingkat kesulitan</li>
+                  <li><span class="benefit-unavailable" aria-hidden="true">×</span>Masuk leaderboard tertinggi</li>
+                  <li><span class="benefit-check" aria-hidden="true">✓</span>E-book gratis</li>
+                </ul>
+                <button class="button button-outline pricing-button" type="button" data-package="starter">Pilih Starter</button>
+              </article>
+              <article class="pricing-card pricing-card-featured">
+                <span class="pricing-label">LATIHAN LEBIH LAMA</span>
+                <h3>Tempur</h3>
+                <p class="pricing-description">Waktu lebih panjang untuk menguatkan persiapanmu.</p>
+                <p class="pricing-price">Rp30.000</p>
+                <ul class="pricing-benefits">
+                  <li><span class="benefit-check" aria-hidden="true">✓</span>Akses selama 7 hari</li>
+                  <li><span class="benefit-check" aria-hidden="true">✓</span>15 soal per sesi</li>
+                  <li><span class="benefit-unavailable" aria-hidden="true">×</span>Pilih tingkat kesulitan</li>
+                  <li><span class="benefit-unavailable" aria-hidden="true">×</span>Masuk leaderboard tertinggi</li>
+                  <li><span class="benefit-check" aria-hidden="true">✓</span>E-book gratis</li>
+                </ul>
+                <button class="button button-primary pricing-button" type="button" data-package="tempur">Pilih Tempur <span>→</span></button>
+              </article>
+              <article class="pricing-card">
+                <span class="pricing-label">AKSES TANPA BATAS</span>
+                <h3>Victory</h3>
+                <p class="pricing-description">Akses selamanya dengan benefit latihan lengkap.</p>
+                <p class="pricing-price">Rp50.000</p>
+                <ul class="pricing-benefits">
+                  <li><span class="benefit-check" aria-hidden="true">✓</span>Akses selamanya</li>
+                  <li><span class="benefit-check" aria-hidden="true">✓</span>Pilih jumlah soal dan tingkat kesulitan</li>
+                  <li><span class="benefit-check" aria-hidden="true">✓</span>Masuk leaderboard tertinggi</li>
+                  <li><span class="benefit-check" aria-hidden="true">✓</span>E-book gratis</li>
+                </ul>
+                <button class="button button-outline pricing-button" type="button" data-package="victory">Pilih Victory</button>
+              </article>
             </div>
           </section>
 
@@ -271,6 +323,21 @@
       </main>
       <footer class="footer"><span>© 2026 Ruang SKD</span><span>Belajar konsisten, selangkah demi selangkah.</span></footer>
     </div>
+
+    <dialog class="package-dialog" id="package-dialog" aria-labelledby="package-dialog-title" aria-describedby="package-dialog-description">
+      <div class="package-dialog-content">
+        <button class="package-dialog-close" id="package-dialog-close" type="button" aria-label="Tutup rincian paket">×</button>
+        <span class="section-kicker">RINCIAN PESANAN</span>
+        <h2 id="package-dialog-title">Paket pilihanmu</h2>
+        <p class="muted" id="package-dialog-description">Periksa benefit dan total harga sebelum melanjutkan pembayaran.</p>
+        <div class="package-summary">
+          <div class="package-summary-heading"><strong id="package-summary-name"></strong><strong id="package-summary-price"></strong></div>
+          <ul class="pricing-benefits package-summary-benefits" id="package-summary-benefits"></ul>
+          <div class="package-summary-total"><span>Total harga</span><strong id="package-summary-total"></strong></div>
+        </div>
+        <a class="button button-primary button-wide package-whatsapp-button" id="package-whatsapp-button" href="#" target="_blank" rel="noopener noreferrer">Lanjutkan pembayaran via WhatsApp <span>→</span></a>
+      </div>
+    </dialog>
 
     <div class="toast hidden" id="toast" role="status"></div>
     <script src="app.js"></script>
