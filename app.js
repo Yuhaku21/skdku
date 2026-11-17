@@ -163,8 +163,8 @@ function renderReviews() {
 async function fetchAndRenderReviews() {
   try {
     const response = await fetch("/api/reviews", { cache: "no-store" });
-    if (!response.ok) throw new Error(`Ulasan gagal dimuat (${response.status}).`);
-    const savedReviews = await response.json();
+    const savedReviews = await readApiJson(response);
+    if (!response.ok) throw new Error(savedReviews.error || `Ulasan gagal dimuat (${response.status}).`);
     if (!Array.isArray(savedReviews)) throw new Error("Data ulasan dari server tidak valid.");
     const reviews = savedReviews
       .filter((review) => review && typeof review.username === "string" && typeof review.comment === "string"
@@ -191,10 +191,18 @@ async function fetchAndRenderReviews() {
   } catch (error) {
     console.error("Tidak dapat memuat ulasan:", error);
     $("community-review-count").textContent = "Tidak tersedia";
-    $("reviews-list").innerHTML = '<p class="empty-state">Ulasan tidak dapat dimuat. Coba buka kembali halaman ini.</p>';
+    $("reviews-list").innerHTML = '<p class="empty-state">Ulasan tidak dapat dimuat. Pastikan server terbaru berjalan dengan npm start, lalu muat ulang halaman.</p>';
   } finally {
     reviewRequestPromise = null;
   }
+}
+
+async function readApiJson(response) {
+  const contentType = response.headers.get("content-type") || "";
+  if (!contentType.toLowerCase().includes("json")) {
+    throw new Error("Server ulasan tidak mengembalikan JSON. Jalankan server terbaru dengan npm start.");
+  }
+  return response.json();
 }
 
 async function refreshReviewsAfterSubmit() {
@@ -231,7 +239,7 @@ async function handleReviewSubmit(event) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: accountDisplayName(email), rating, comment })
     });
-    const result = await response.json();
+    const result = await readApiJson(response);
     if (!response.ok) throw new Error(result.error || `Ulasan gagal dikirim (${response.status}).`);
   } catch (error) {
     console.error("Tidak dapat mengirim ulasan:", error);
