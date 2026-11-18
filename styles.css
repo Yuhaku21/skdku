@@ -207,11 +207,19 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .difficulty-option span { color: #929baa; font-size: 9px; }
 .start-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 20px; }
 .source-note { color: #98a0ae; font-size: 10px; }
-.side-column { display: grid; gap: 14px; grid-template-rows: 1fr auto; }
+.side-column { display: grid; gap: 14px; grid-template-rows: 1fr auto auto; }
 .bank-card { display: flex; align-items: flex-start; gap: 11px; padding: 15px; }
 .bank-card-icon { flex: 0 0 31px; width: 31px; height: 31px; display: grid; place-items: center; background: #f0efff; border-radius: 9px; color: var(--violet); }
 .bank-card strong { display: block; font-size: 10px; margin: 2px 0 5px; }
 .bank-card p { color: #9aa2b0; font-size: 9px; line-height: 1.55; margin: 0; }
+.ebook-card { display: flex; align-items: flex-start; gap: 12px; padding: 17px; border: 1px solid #e8e6ff; border-radius: 17px; background: linear-gradient(135deg, #f8f7ff, #fff); }
+.ebook-card-icon { flex: 0 0 34px; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: #e8e6ff; color: var(--violet); font-size: 16px; }
+.ebook-card-content { min-width: 0; }
+.ebook-card .section-kicker { color: var(--violet); font-size: 8px; }
+.ebook-card h2 { margin: 6px 0; font: 800 14px "Manrope", sans-serif; letter-spacing: -.3px; }
+.ebook-card p { margin: 0 0 12px; color: var(--muted); font-size: 10px; line-height: 1.55; }
+.ebook-cta { display: inline-flex; align-items: center; padding: 9px 11px; font-size: 10px; text-decoration: none; }
+.ebook-cta span { padding-left: 6px; font-size: 14px; }
 .history-card { margin-top: 20px; padding: 22px 25px; }
 .compact h2 { margin-top: 7px; }
 .empty-state { color: #a0a7b3; font-size: 11px; margin: 19px 0 0; }
