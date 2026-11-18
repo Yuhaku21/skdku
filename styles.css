@@ -302,7 +302,10 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .difficulty-option span { color: #929baa; font-size: 9px; }
 .victory-tiu-section { margin-top: 20px; padding: 23px 25px; border: 1px solid #e8e6ff; border-radius: 17px; background: linear-gradient(120deg, #f8f7ff, white); }
 .victory-tiu-section > .muted { margin: 11px 0 17px; font-size: 11px; }
-.victory-tiu-levels { display: grid; gap: 9px; }
+.victory-tiu-levels { display: grid; gap: 20px; }
+.victory-tiu-group { display: grid; gap: 10px; }
+.victory-tiu-group > h3 { margin: 0; color: #4d5570; font: 800 12px "Manrope", sans-serif; }
+.victory-tiu-group-list { display: grid; gap: 9px; }
 .victory-tiu-level { display: flex; align-items: center; gap: 13px; padding: 13px; border: 1px solid #e1e4ee; border-radius: 12px; background: #fff; box-shadow: 0 3px 12px #1720330b; }
 .victory-tiu-level.locked { background: #fff; }
 .victory-tiu-level-number { display: grid; flex: 0 0 38px; width: 38px; height: 38px; place-items: center; border-radius: 11px; background: var(--violet-pale); color: var(--violet); font: 800 13px "Manrope", sans-serif; }

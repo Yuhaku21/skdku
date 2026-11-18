@@ -7,7 +7,7 @@ const STORAGE = {
   completedTests: "ruangskd.completedTests",
   history: "ruangskd.history",
   questionRotation: "ruangskd.questionRotation",
-  tiuLearningProgress: "ruangskd.tiuLearningProgress"
+  tiuLearningProgress: "ruangskd.tiuLearningProgress.v2"
 };
 const DIFFICULTIES = {
   mudah: { questionCount: 10, durationSeconds: 10 * 60 },
@@ -15,6 +15,33 @@ const DIFFICULTIES = {
   sulit: { questionCount: 50, durationSeconds: 50 * 60 }
 };
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
+const TIU_LEVEL_COUNT = 9;
+const TIU_LEVEL_GROUPS = [
+  {
+    title: "Numerik · Level 1–3",
+    levels: [
+      { id: 1, title: "Level 1", topic: "Operasi hitung dasar" },
+      { id: 2, title: "Level 2", topic: "Pecahan dan persentase" },
+      { id: 3, title: "Level 3", topic: "Rasio dan penerapan numerik" }
+    ]
+  },
+  {
+    title: "Deret · Level 4–6",
+    levels: [
+      { id: 4, title: "Level 4", topic: "Deret aritmatika" },
+      { id: 5, title: "Level 5", topic: "Deret geometri" },
+      { id: 6, title: "Level 6", topic: "Fibonacci, kuadrat, dan pola" }
+    ]
+  },
+  {
+    title: "Analogi & Verbal · Level 7–9",
+    levels: [
+      { id: 7, title: "Level 7", topic: "Analogi" },
+      { id: 8, title: "Level 8", topic: "Kosakata verbal" },
+      { id: 9, title: "Level 9", topic: "Penalaran verbal" }
+    ]
+  }
+];
 const TEST_BANKS = { TIU: "question.json", TKP: "tkp.json", TWK: "twk.json" };
 const TEST_TARGETS = { TIU: 80, TKP: 156, TWK: 65 };
 const FIXED_ACCESS_LIMITS = {
@@ -535,7 +562,11 @@ function getTiuLearningProgress(email = currentUser()) {
 }
 
 function canAccessTiuLearningLevel(levelId, progress = getTiuLearningProgress()) {
-  return [1, 2].slice(0, levelId - 1).every((previousLevel) => Boolean(progress[previousLevel]));
+  if (!Number.isInteger(levelId) || levelId < 1 || levelId > TIU_LEVEL_COUNT) return false;
+  for (let previousLevel = 1; previousLevel < levelId; previousLevel += 1) {
+    if (!progress[previousLevel]) return false;
+  }
+  return true;
 }
 
 function renderTiuLearningLevels() {
@@ -545,24 +576,28 @@ function renderTiuLearningLevels() {
   if (!isVictory) return;
 
   const progress = getTiuLearningProgress();
-  $("victory-tiu-levels").innerHTML = [
-    { id: 1, title: "Level 1", topic: "Dasar numerik" },
-    { id: 2, title: "Level 2", topic: "Dunia deret" },
-    { id: 3, title: "Level 3", topic: "Analogi & verbal" }
-  ].map((level) => {
-    const completed = Boolean(progress[level.id]);
-    const locked = !canAccessTiuLearningLevel(level.id, progress);
-    const status = locked
-      ? `Terkunci · selesaikan Level ${level.id - 1} terlebih dahulu`
-      : completed ? "Selesai · bisa diulang" : "Materi + 10 soal";
-    return `
-      <article class="victory-tiu-level ${locked ? "locked" : ""}">
-        <span class="victory-tiu-level-number">${String(level.id).padStart(2, "0")}</span>
-        <div class="victory-tiu-level-copy"><strong>${escapeHtml(level.title)}</strong><span>${escapeHtml(level.topic)}</span><small>${status}</small></div>
-        <button class="button ${locked ? "button-outline" : "button-primary"}" type="button" data-tiu-level="${level.id}" ${locked ? "disabled" : ""}>${locked ? "Terkunci" : completed ? "Ulangi" : "Mulai"} <span aria-hidden="true">→</span></button>
-      </article>
-    `;
-  }).join("");
+  $("victory-tiu-levels").innerHTML = TIU_LEVEL_GROUPS.map((group) => `
+    <section class="victory-tiu-group" aria-label="${escapeHtml(group.title)}">
+      <h3>${escapeHtml(group.title)}</h3>
+      <div class="victory-tiu-group-list">${group.levels.map((level) => {
+        const completed = Boolean(progress[level.id]);
+        const locked = !canAccessTiuLearningLevel(level.id, progress);
+        const requiredLevel = locked
+          ? Array.from({ length: level.id - 1 }, (_, index) => index + 1).find((id) => !progress[id])
+          : null;
+        const status = locked
+          ? `Terkunci · selesaikan Level ${requiredLevel} terlebih dahulu`
+          : completed ? "Selesai · bisa diulang" : "Materi + 10 soal";
+        return `
+          <article class="victory-tiu-level ${locked ? "locked" : ""}">
+            <span class="victory-tiu-level-number">${String(level.id).padStart(2, "0")}</span>
+            <div class="victory-tiu-level-copy"><strong>${escapeHtml(level.title)}</strong><span>${escapeHtml(level.topic)}</span><small>${status}</small></div>
+            <button class="button ${locked ? "button-outline" : "button-primary"}" type="button" data-tiu-level="${level.id}" ${locked ? "disabled" : ""}>${locked ? "Terkunci" : completed ? "Ulangi" : "Mulai"} <span aria-hidden="true">→</span></button>
+          </article>
+        `;
+      }).join("")}</div>
+    </section>
+  `).join("");
 }
 
 async function openTiuLearningLevel(levelId) {
@@ -572,7 +607,7 @@ async function openTiuLearningLevel(levelId) {
     return;
   }
   const progress = getTiuLearningProgress();
-  if (!Number.isInteger(levelId) || levelId < 1 || levelId > 3
+  if (!Number.isInteger(levelId) || levelId < 1 || levelId > TIU_LEVEL_COUNT
     || !canAccessTiuLearningLevel(levelId, progress)) {
     showToast("Selesaikan level sebelumnya untuk membuka materi ini.");
     return;
@@ -644,7 +679,7 @@ function renderTiuLearning() {
 
   const correct = activeTiuAnswers.reduce((total, answer, index) => total + (answer === activeTiuQuestions[index].answer ? 1 : 0), 0);
   const score = Math.round((correct / activeTiuQuestions.length) * 100);
-  const nextLevel = activeTiuLevel.id < 3 ? activeTiuLevel.id + 1 : null;
+  const nextLevel = activeTiuLevel.id < TIU_LEVEL_COUNT ? activeTiuLevel.id + 1 : null;
   content.innerHTML = `
     <section class="tiu-result-hero">
       <span class="section-kicker">LEVEL SELESAI</span>

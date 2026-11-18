@@ -2,257 +2,223 @@
   "levels": [
     {
       "id": 1,
-      "title": "Level 1 — Dasar Numerik",
-      "topic": "Operasi hitung, pecahan, persentase, rasio, dan ukuran",
-      "description": "Bangun fondasi numerik dengan memahami operasi dasar dan penerapannya dalam soal sehari-hari.",
+      "title": "Level 1 — Numerik: Operasi Hitung",
+      "topic": "Penjumlahan, pengurangan, perkalian, pembagian, dan urutan operasi",
+      "description": "Pelajari operasi hitung dasar dan urutan pengerjaannya sebelum mulai latihan.",
       "material": [
-        "Kerjakan perkalian dan pembagian sebelum penjumlahan dan pengurangan. Operasi dengan tingkat yang sama dikerjakan dari kiri ke kanan.",
-        "Pecahan a/b berarti a dibagi b. Untuk mencari sebagian dari jumlah, kalikan jumlah itu dengan pecahannya.",
-        "Persentase berarti per seratus. Nilai p% dari n adalah p/100 × n; harga setelah diskon diperoleh dengan mengurangi nilai diskon.",
-        "Pada perbandingan a:b dengan total diketahui, jumlahkan bagian perbandingan terlebih dahulu lalu tentukan nilai setiap bagian.",
-        "Rata-rata adalah jumlah seluruh nilai dibagi banyaknya nilai. Perhatikan juga konversi satuan, misalnya 1 km = 1.000 m."
+        "Penjumlahan dan pengurangan menggabungkan atau mencari selisih jumlah. Contoh: 12 + 19 = 31 dan 45 − 18 = 27.",
+        "Ingat fakta perkalian dan pembagian, misalnya 7 × 8 = 56 dan 63 ÷ 9 = 7.",
+        "Kerjakan perkalian dan pembagian sebelum penjumlahan atau pengurangan. Contoh: 48 ÷ 6 + 7 = 8 + 7 = 15 dan 36 − 4 × 5 = 36 − 20 = 16.",
+        "Kerjakan bagian di dalam tanda kurung terlebih dahulu. Contoh: (12 + 8) × 3 = 20 × 3 = 60.",
+        "Perkalian dan pembagian yang berdampingan dikerjakan dari kiri ke kanan. Contoh: 144 ÷ 12 × 2 = 12 × 2 = 24. Operasi desimal dapat dijumlahkan dengan menyelaraskan angka di belakang koma."
       ],
       "questions": [
-        {
-          "category": "OPERASI HITUNG",
-          "question": "Berapakah hasil dari 18 + 27?",
-          "options": ["35", "45", "46", "55"],
-          "answer": 1,
-          "explanation": "18 + 27 = 45."
-        },
-        {
-          "category": "PECAHAN",
-          "question": "Berapakah 3/4 dari 80?",
-          "options": ["40", "50", "60", "64"],
-          "answer": 2,
-          "explanation": "3/4 × 80 = 3 × 20 = 60."
-        },
-        {
-          "category": "PERSENTASE",
-          "question": "Berapakah 15% dari 200?",
-          "options": ["25", "30", "35", "40"],
-          "answer": 1,
-          "explanation": "15/100 × 200 = 30."
-        },
-        {
-          "category": "PERBANDINGAN",
-          "question": "Perbandingan buku merah dan biru adalah 2:3. Jika jumlahnya 25 buku, berapa banyak buku merah?",
-          "options": ["8", "10", "12", "15"],
-          "answer": 1,
-          "explanation": "Jumlah bagian = 2 + 3 = 5. Setiap bagian bernilai 25 ÷ 5 = 5, sehingga buku merah berjumlah 2 × 5 = 10."
-        },
-        {
-          "category": "RATA-RATA",
-          "question": "Nilai 6, 8, 10, dan 12 memiliki rata-rata ...",
-          "options": ["8", "9", "10", "11"],
-          "answer": 1,
-          "explanation": "Rata-rata = (6 + 8 + 10 + 12) ÷ 4 = 36 ÷ 4 = 9."
-        },
-        {
-          "category": "KONVERSI SATUAN",
-          "question": "2,5 kilometer sama dengan ... meter.",
-          "options": ["250", "2.050", "2.500", "25.000"],
-          "answer": 2,
-          "explanation": "1 kilometer = 1.000 meter, jadi 2,5 × 1.000 = 2.500 meter."
-        },
-        {
-          "category": "PERSENTASE",
-          "question": "Harga sebuah barang Rp120.000 naik 10%. Berapa harga barunya?",
-          "options": ["Rp122.000", "Rp130.000", "Rp132.000", "Rp140.000"],
-          "answer": 2,
-          "explanation": "10% × Rp120.000 = Rp12.000. Harga baru = Rp120.000 + Rp12.000 = Rp132.000."
-        },
-        {
-          "category": "PERBANDINGAN",
-          "question": "Empat pekerja menyelesaikan 24 kotak dalam 3 jam. Dengan kecepatan sama, berapa kotak yang diselesaikan 8 pekerja dalam 3 jam?",
-          "options": ["36", "42", "48", "56"],
-          "answer": 2,
-          "explanation": "Jumlah pekerja menjadi dua kali lipat dalam waktu yang sama, sehingga hasilnya juga dua kali lipat: 24 × 2 = 48 kotak."
-        },
-        {
-          "category": "OPERASI HITUNG",
-          "question": "Berapakah hasil dari 48 ÷ 6 + 7?",
-          "options": ["8", "14", "15", "55"],
-          "answer": 2,
-          "explanation": "Kerjakan pembagian lebih dahulu: 48 ÷ 6 = 8, lalu 8 + 7 = 15."
-        },
-        {
-          "category": "BANGUN DATAR",
-          "question": "Sebuah persegi panjang memiliki panjang 12 cm dan lebar 5 cm. Berapa luasnya?",
-          "options": ["17 cm²", "34 cm²", "60 cm²", "120 cm²"],
-          "answer": 2,
-          "explanation": "Luas persegi panjang = panjang × lebar = 12 × 5 = 60 cm²."
-        }
+        { "category": "PENJUMLAHAN", "question": "Berapakah hasil dari 12 + 19?", "options": ["28", "30", "31", "32"], "answer": 2, "explanation": "12 + 19 = 31." },
+        { "category": "PENGURANGAN", "question": "Berapakah hasil dari 45 − 18?", "options": ["23", "27", "28", "33"], "answer": 1, "explanation": "45 − 18 = 27." },
+        { "category": "PERKALIAN", "question": "Berapakah hasil dari 7 × 8?", "options": ["48", "54", "56", "64"], "answer": 2, "explanation": "7 × 8 = 56." },
+        { "category": "PEMBAGIAN", "question": "Berapakah hasil dari 63 ÷ 9?", "options": ["6", "7", "8", "9"], "answer": 1, "explanation": "63 ÷ 9 = 7." },
+        { "category": "URUTAN OPERASI", "question": "Berapakah hasil dari 48 ÷ 6 + 7?", "options": ["8", "14", "15", "55"], "answer": 2, "explanation": "Pembagian dikerjakan lebih dahulu: 48 ÷ 6 = 8, lalu 8 + 7 = 15." },
+        { "category": "TANDA KURUNG", "question": "Berapakah hasil dari (12 + 8) × 3?", "options": ["20", "36", "60", "68"], "answer": 2, "explanation": "Kerjakan tanda kurung dahulu: 12 + 8 = 20, lalu 20 × 3 = 60." },
+        { "category": "URUTAN OPERASI", "question": "Berapakah hasil dari 36 − 4 × 5?", "options": ["12", "16", "20", "32"], "answer": 1, "explanation": "Perkalian dikerjakan sebelum pengurangan: 4 × 5 = 20, lalu 36 − 20 = 16." },
+        { "category": "BILANGAN DESIMAL", "question": "Berapakah hasil dari 2,5 + 1,75?", "options": ["3,25", "4", "4,25", "4,75"], "answer": 2, "explanation": "Selaraskan angka desimal: 2,50 + 1,75 = 4,25." },
+        { "category": "OPERASI UANG", "question": "Rina memiliki Rp12.500 lalu menerima Rp7.500. Berapa jumlah uangnya sekarang?", "options": ["Rp18.000", "Rp20.000", "Rp21.000", "Rp25.000"], "answer": 1, "explanation": "Rp12.500 + Rp7.500 = Rp20.000." },
+        { "category": "URUTAN OPERASI", "question": "Berapakah hasil dari 144 ÷ 12 × 2?", "options": ["6", "12", "24", "36"], "answer": 2, "explanation": "Pembagian dan perkalian setara, jadi kerjakan dari kiri ke kanan: 144 ÷ 12 = 12, lalu 12 × 2 = 24." }
       ]
     },
     {
       "id": 2,
-      "title": "Level 2 — Dunia Deret",
-      "topic": "Deret aritmatika, geometri, Fibonacci, dan kuadrat",
-      "description": "Kenali pola perubahan antarsuku untuk menemukan angka berikutnya dalam beragam jenis deret.",
+      "title": "Level 2 — Numerik: Pecahan & Persentase",
+      "topic": "Pecahan dari jumlah, persentase, kenaikan, dan diskon",
+      "description": "Pahami cara menghitung bagian dari suatu jumlah serta perubahan nilai dalam persen.",
       "material": [
-        "Deret aritmatika memiliki selisih tetap. Cari selisih antara dua suku yang berurutan.",
-        "Deret geometri memiliki rasio tetap. Bandingkan dengan membagi satu suku dengan suku sebelumnya.",
-        "Dalam deret Fibonacci, setiap suku merupakan jumlah dua suku sebelumnya.",
-        "Deret kuadrat sering memuat bilangan kuadrat seperti 1, 4, 9, 16, 25. Periksa selisihnya yang bertambah ganjil.",
-        "Jika pola belum terlihat, tulis selisih atau rasio suku-sukunya dan uji pola itu pada lebih dari satu langkah."
+        "Untuk mencari pecahan dari jumlah, kalikan pecahan itu dengan jumlahnya. Contoh: 1/2 dari 90 = 45; 2/5 dari 100 = 40.",
+        "Sederhanakan pembagian terlebih dahulu bila mudah. Contoh: 3/4 dari 64 = 3 × (64 ÷ 4) = 3 × 16 = 48.",
+        "Persentase berarti per seratus: p% dari n = (p ÷ 100) × n. Contoh: 25% dari 240 = 60 dan 12% dari 150 = 18.",
+        "Untuk kenaikan, tambahkan nilai persentase ke harga awal. Kenaikan 15% dari Rp200.000 adalah Rp30.000, sehingga harga baru Rp230.000.",
+        "Untuk diskon, kurangi nilai diskon dari harga awal. Diskon 25% dari Rp160.000 adalah Rp40.000, sehingga harga setelah diskon Rp120.000. Bilangan desimal 0,4 sama dengan 40%."
       ],
       "questions": [
-        {
-          "category": "ARITMATIKA",
-          "question": "Tentukan angka berikutnya: 5, 9, 13, 17, ...",
-          "options": ["19", "20", "21", "22"],
-          "answer": 2,
-          "explanation": "Selisih setiap suku adalah +4. Jadi 17 + 4 = 21."
-        },
-        {
-          "category": "ARITMATIKA",
-          "question": "Tentukan angka berikutnya: 30, 25, 20, 15, ...",
-          "options": ["5", "10", "11", "12"],
-          "answer": 1,
-          "explanation": "Setiap suku berkurang 5. Jadi 15 − 5 = 10."
-        },
-        {
-          "category": "GEOMETRI",
-          "question": "Tentukan angka berikutnya: 3, 6, 12, 24, ...",
-          "options": ["36", "42", "48", "54"],
-          "answer": 2,
-          "explanation": "Setiap suku dikalikan 2. Jadi 24 × 2 = 48."
-        },
-        {
-          "category": "GEOMETRI",
-          "question": "Tentukan angka berikutnya: 81, 27, 9, 3, ...",
-          "options": ["0", "1", "2", "6"],
-          "answer": 1,
-          "explanation": "Setiap suku dibagi 3. Jadi 3 ÷ 3 = 1."
-        },
-        {
-          "category": "FIBONACCI",
-          "question": "Tentukan angka berikutnya: 1, 1, 2, 3, 5, 8, ...",
-          "options": ["11", "12", "13", "15"],
-          "answer": 2,
-          "explanation": "Setiap suku adalah jumlah dua suku sebelumnya: 5 + 8 = 13."
-        },
-        {
-          "category": "DERET KUADRAT",
-          "question": "Tentukan angka berikutnya: 1, 4, 9, 16, 25, ...",
-          "options": ["30", "35", "36", "49"],
-          "answer": 2,
-          "explanation": "Ini adalah kuadrat 1², 2², 3², 4², 5². Suku selanjutnya 6² = 36."
-        },
-        {
-          "category": "DERET KUADRAT",
-          "question": "Tentukan angka berikutnya: 4, 9, 16, 25, ...",
-          "options": ["30", "32", "36", "49"],
-          "answer": 2,
-          "explanation": "Suku-sukunya adalah 2², 3², 4², 5². Suku selanjutnya 6² = 36."
-        },
-        {
-          "category": "ARITMATIKA",
-          "question": "Tentukan angka berikutnya: 2, 5, 8, 11, ...",
-          "options": ["12", "13", "14", "15"],
-          "answer": 2,
-          "explanation": "Selisih tetapnya +3, sehingga 11 + 3 = 14."
-        },
-        {
-          "category": "POLA SELANG-SELING",
-          "question": "Tentukan angka berikutnya: 2, 6, 3, 9, 4, 12, ...",
-          "options": ["5", "8", "15", "16"],
-          "answer": 0,
-          "explanation": "Ada dua pola berselang-seling: 2, 3, 4, 5 dan 6, 9, 12. Jadi suku berikutnya adalah 5."
-        },
-        {
-          "category": "POLA BERTINGKAT",
-          "question": "Tentukan angka berikutnya: 1, 2, 4, 7, 11, ...",
-          "options": ["15", "16", "17", "18"],
-          "answer": 1,
-          "explanation": "Selisihnya berturut-turut +1, +2, +3, +4. Selanjutnya tambah 5: 11 + 5 = 16."
-        }
+        { "category": "PECAHAN", "question": "Berapakah 1/2 dari 90?", "options": ["40", "45", "50", "55"], "answer": 1, "explanation": "1/2 × 90 = 90 ÷ 2 = 45." },
+        { "category": "PECAHAN", "question": "Berapakah 2/5 dari 100?", "options": ["20", "30", "40", "50"], "answer": 2, "explanation": "2/5 × 100 = 2 × (100 ÷ 5) = 40." },
+        { "category": "PECAHAN", "question": "Berapakah 3/4 dari 64?", "options": ["40", "46", "48", "54"], "answer": 2, "explanation": "3/4 × 64 = 3 × 16 = 48." },
+        { "category": "PERSENTASE", "question": "Berapakah 25% dari 240?", "options": ["50", "60", "65", "75"], "answer": 1, "explanation": "25/100 × 240 = 60." },
+        { "category": "PERSENTASE", "question": "Berapakah 12% dari 150?", "options": ["12", "15", "18", "20"], "answer": 2, "explanation": "12/100 × 150 = 18." },
+        { "category": "PERSENTASE", "question": "Berapakah 30% dari 80?", "options": ["18", "20", "24", "30"], "answer": 2, "explanation": "30/100 × 80 = 24." },
+        { "category": "KENAIKAN HARGA", "question": "Harga barang Rp200.000 naik 15%. Berapa harga setelah kenaikan?", "options": ["Rp215.000", "Rp225.000", "Rp230.000", "Rp240.000"], "answer": 2, "explanation": "15% × Rp200.000 = Rp30.000. Harga baru = Rp200.000 + Rp30.000 = Rp230.000." },
+        { "category": "DISKON", "question": "Barang seharga Rp160.000 mendapat diskon 25%. Berapa harga setelah diskon?", "options": ["Rp110.000", "Rp120.000", "Rp125.000", "Rp140.000"], "answer": 1, "explanation": "Diskon = 25% × Rp160.000 = Rp40.000. Harga setelah diskon = Rp160.000 − Rp40.000 = Rp120.000." },
+        { "category": "PERSEN DAN DESIMAL", "question": "Bilangan desimal 0,4 sama dengan ...", "options": ["4%", "14%", "40%", "400%"], "answer": 2, "explanation": "Untuk mengubah desimal ke persen, kalikan 100%. Jadi 0,4 × 100% = 40%." },
+        { "category": "PERSENTASE", "question": "Berapakah 35% dari 200?", "options": ["65", "70", "75", "80"], "answer": 1, "explanation": "35/100 × 200 = 70." }
       ]
     },
     {
       "id": 3,
-      "title": "Level 3 — Analogi & Verbal",
-      "topic": "Hubungan kata, sinonim, antonim, dan penalaran verbal",
-      "description": "Latih ketepatan memahami hubungan antarkata serta menarik kesimpulan dari informasi tertulis.",
+      "title": "Level 3 — Numerik: Rasio & Penerapan",
+      "topic": "Perbandingan, rata-rata, konversi satuan, dan luas",
+      "description": "Gunakan perbandingan dan rumus numerik untuk menyelesaikan soal penerapan sehari-hari.",
       "material": [
-        "Dalam analogi, tentukan hubungan pasangan kata pertama (misalnya fungsi, tempat, profesi, atau bagian-keseluruhan), lalu terapkan hubungan yang sama.",
-        "Sinonim adalah kata yang maknanya mirip, sedangkan antonim memiliki makna berlawanan.",
-        "Untuk soal makna kata, perhatikan konteks kalimat; satu kata dapat memiliki arti berbeda pada konteks yang berbeda.",
-        "Dalam penalaran verbal, gunakan hanya informasi yang diberikan. Kesimpulan harus mengikuti premis dan tidak menambahkan asumsi.",
-        "Baca semua pilihan sebelum menjawab dan pilih hubungan atau kesimpulan yang paling tepat."
+        "Pada rasio a:b dengan jumlah total diketahui, jumlahkan bagian rasionya. Jika rasio 2:5 berjumlah 35, satu bagian = 35 ÷ 7 = 5, sehingga bagian pertama = 2 × 5 = 10.",
+        "Rasio dengan total 49 dan perbandingan 3:4 memiliki 7 bagian. Nilai bagian kedua adalah 4 × (49 ÷ 7) = 28.",
+        "Rata-rata = jumlah seluruh nilai ÷ banyaknya nilai. Contoh: rata-rata 5, 7, 9, dan 11 adalah 32 ÷ 4 = 8.",
+        "Konversi satuan: 1 km = 1.000 m dan 100 cm = 1 m. Jadi 3 km = 3.000 m dan 450 cm = 4,5 m.",
+        "Untuk waktu yang sama dan kecepatan kerja tetap, jumlah hasil berbanding lurus dengan jumlah pekerja. Rumus luas persegi panjang adalah panjang × lebar; luas persegi adalah sisi × sisi."
       ],
       "questions": [
-        {
-          "category": "ANALOGI",
-          "question": "Kompas berhubungan dengan arah, sebagaimana termometer berhubungan dengan ...",
-          "options": ["Kecepatan", "Suhu", "Jarak", "Berat"],
-          "answer": 1,
-          "explanation": "Kompas digunakan untuk mengetahui arah; termometer digunakan untuk mengukur suhu."
-        },
-        {
-          "category": "ANALOGI",
-          "question": "Dokter berhubungan dengan pasien, sebagaimana guru berhubungan dengan ...",
-          "options": ["Buku", "Sekolah", "Murid", "Kelas"],
-          "answer": 2,
-          "explanation": "Dokter melayani pasien, sedangkan guru mengajar murid."
-        },
-        {
-          "category": "ANALOGI",
-          "question": "Kunci berhubungan dengan pintu, sebagaimana kata sandi berhubungan dengan ...",
-          "options": ["Akun", "Layar", "Komputer", "Jaringan"],
-          "answer": 0,
-          "explanation": "Kunci digunakan untuk membuka pintu; kata sandi digunakan untuk membuka akses ke akun."
-        },
-        {
-          "category": "ANALOGI",
-          "question": "Padi berhubungan dengan beras, sebagaimana gandum berhubungan dengan ...",
-          "options": ["Tepung", "Roti", "Sawah", "Jagung"],
-          "answer": 0,
-          "explanation": "Beras dihasilkan dari pengolahan padi; tepung dapat dihasilkan dari pengolahan gandum."
-        },
-        {
-          "category": "SINONIM",
-          "question": "Kata yang paling dekat maknanya dengan \"cermat\" adalah ...",
-          "options": ["Ceroboh", "Teliti", "Cepat", "Ragu"],
-          "answer": 1,
-          "explanation": "Cermat berarti teliti atau berhati-hati dalam melakukan sesuatu."
-        },
-        {
-          "category": "ANTONIM",
-          "question": "Lawan kata \"optimis\" adalah ...",
-          "options": ["Antusias", "Pesimis", "Realistis", "Yakin"],
-          "answer": 1,
-          "explanation": "Optimis berarti memiliki harapan baik; pesimis berarti cenderung mengharapkan hal yang buruk."
-        },
-        {
-          "category": "MAKNA KATA",
-          "question": "Dalam kalimat \"Keputusan itu diambil secara objektif\", kata \"objektif\" berarti ...",
-          "options": ["Berdasarkan perasaan pribadi", "Berdasarkan fakta dan tidak memihak", "Dilakukan dengan tergesa-gesa", "Mengikuti pendapat terbanyak"],
-          "answer": 1,
-          "explanation": "Objektif berarti berdasarkan fakta atau keadaan sebenarnya, bukan kepentingan maupun perasaan pribadi."
-        },
-        {
-          "category": "PENALARAN VERBAL",
-          "question": "Semua peserta yang lulus administrasi boleh mengikuti tes. Rina lulus administrasi. Kesimpulan yang tepat adalah ...",
-          "options": ["Rina pasti lulus tes", "Rina boleh mengikuti tes", "Semua peserta adalah Rina", "Rina tidak mengikuti tes"],
-          "answer": 1,
-          "explanation": "Premis menyatakan peserta yang lulus administrasi boleh mengikuti tes. Karena Rina lulus administrasi, ia boleh mengikuti tes."
-        },
-        {
-          "category": "PENALARAN VERBAL",
-          "question": "Semua anggota klub membaca buku. Dita adalah anggota klub. Kesimpulan yang tepat adalah ...",
-          "options": ["Dita membaca buku", "Dita menulis buku", "Semua pembaca adalah anggota klub", "Dita bukan anggota klub"],
-          "answer": 0,
-          "explanation": "Karena semua anggota klub membaca buku dan Dita adalah anggota klub, Dita membaca buku."
-        },
-        {
-          "category": "ANTONIM",
-          "question": "Lawan kata \"sementara\" adalah ...",
-          "options": ["Singkat", "Sebentar", "Permanen", "Berubah"],
-          "answer": 2,
-          "explanation": "Sementara berarti tidak tetap atau hanya untuk waktu tertentu. Lawannya adalah permanen."
-        }
+        { "category": "PERBANDINGAN", "question": "Perbandingan kelereng merah dan biru adalah 2:5. Jika jumlahnya 35, berapa kelereng merah?", "options": ["7", "10", "14", "25"], "answer": 1, "explanation": "Jumlah bagian = 2 + 5 = 7. Satu bagian = 35 ÷ 7 = 5, sehingga kelereng merah = 2 × 5 = 10." },
+        { "category": "PERBANDINGAN", "question": "Perbandingan siswa laki-laki dan perempuan adalah 3:4. Jika jumlah siswa 49, berapa siswa perempuan?", "options": ["21", "24", "28", "32"], "answer": 2, "explanation": "Jumlah bagian = 3 + 4 = 7. Satu bagian = 49 ÷ 7 = 7, sehingga siswa perempuan = 4 × 7 = 28." },
+        { "category": "RATA-RATA", "question": "Berapakah rata-rata dari 5, 7, 9, dan 11?", "options": ["7", "8", "9", "10"], "answer": 1, "explanation": "(5 + 7 + 9 + 11) ÷ 4 = 32 ÷ 4 = 8." },
+        { "category": "RATA-RATA", "question": "Tiga nilai adalah 70, 80, dan 90. Berapa rata-ratanya?", "options": ["75", "80", "85", "90"], "answer": 1, "explanation": "(70 + 80 + 90) ÷ 3 = 240 ÷ 3 = 80." },
+        { "category": "KONVERSI SATUAN", "question": "3 kilometer sama dengan ... meter.", "options": ["300", "3.000", "30.000", "300.000"], "answer": 1, "explanation": "1 km = 1.000 m, jadi 3 km = 3 × 1.000 = 3.000 m." },
+        { "category": "KONVERSI SATUAN", "question": "450 sentimeter sama dengan ... meter.", "options": ["0,45", "4,5", "45", "450"], "answer": 1, "explanation": "100 cm = 1 m, jadi 450 ÷ 100 = 4,5 m." },
+        { "category": "PERBANDINGAN SENILAI", "question": "Empat pekerja membuat 32 kotak dalam 2 jam. Dengan kecepatan sama, berapa kotak yang dibuat 6 pekerja dalam 2 jam?", "options": ["40", "44", "48", "56"], "answer": 2, "explanation": "Jumlah pekerja menjadi 6/4 kali. Hasilnya 32 × 6/4 = 48 kotak." },
+        { "category": "PERBANDINGAN SENILAI", "question": "Lima buku berharga Rp25.000. Berapa harga 8 buku dengan harga satuan yang sama?", "options": ["Rp30.000", "Rp35.000", "Rp40.000", "Rp45.000"], "answer": 2, "explanation": "Harga satu buku = Rp25.000 ÷ 5 = Rp5.000. Harga 8 buku = 8 × Rp5.000 = Rp40.000." },
+        { "category": "LUAS PERSEGI PANJANG", "question": "Persegi panjang memiliki panjang 9 cm dan lebar 7 cm. Berapa luasnya?", "options": ["16 cm²", "32 cm²", "63 cm²", "72 cm²"], "answer": 2, "explanation": "Luas = panjang × lebar = 9 × 7 = 63 cm²." },
+        { "category": "LUAS PERSEGI", "question": "Sebuah persegi memiliki sisi 8 cm. Berapa luasnya?", "options": ["16 cm²", "32 cm²", "64 cm²", "80 cm²"], "answer": 2, "explanation": "Luas persegi = sisi × sisi = 8 × 8 = 64 cm²." }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Level 4 — Deret: Aritmatika",
+      "topic": "Deret dengan selisih tetap, positif maupun negatif",
+      "description": "Temukan selisih tetap antarsuku untuk melanjutkan deret aritmatika.",
+      "material": [
+        "Deret aritmatika memiliki selisih yang sama antara setiap dua suku berurutan. Cari selisih dengan mengurangkan suku sebelumnya dari suku berikutnya.",
+        "Jika selisih positif, nilainya bertambah. Contoh: 5, 9, 13, 17 memiliki selisih +4, sehingga suku selanjutnya 21.",
+        "Jika selisih negatif, nilainya berkurang. Contoh: 30, 25, 20, 15 memiliki selisih −5, sehingga suku selanjutnya 10.",
+        "Untuk mencari suku yang hilang, tambahkan atau kurangi selisih tetap pada suku di sebelahnya. Uji hasilnya terhadap suku sebelum dan sesudahnya."
+      ],
+      "questions": [
+        { "category": "ARITMATIKA +4", "question": "Tentukan angka berikutnya: 5, 9, 13, 17, ...", "options": ["19", "20", "21", "22"], "answer": 2, "explanation": "Selisihnya selalu +4. Jadi 17 + 4 = 21." },
+        { "category": "ARITMATIKA −5", "question": "Tentukan angka berikutnya: 30, 25, 20, 15, ...", "options": ["5", "10", "11", "12"], "answer": 1, "explanation": "Setiap suku berkurang 5. Jadi 15 − 5 = 10." },
+        { "category": "ARITMATIKA +5", "question": "Tentukan angka berikutnya: 2, 7, 12, ...", "options": ["15", "16", "17", "18"], "answer": 2, "explanation": "Selisih tetapnya +5. Jadi 12 + 5 = 17." },
+        { "category": "ARITMATIKA −10", "question": "Tentukan angka berikutnya: 100, 90, 80, ...", "options": ["60", "70", "75", "90"], "answer": 1, "explanation": "Setiap suku berkurang 10. Jadi 80 − 10 = 70." },
+        { "category": "SUKU YANG HILANG", "question": "Angka yang tepat untuk melengkapi deret 6, 10, 14, ..., 22 adalah ...", "options": ["16", "18", "19", "20"], "answer": 1, "explanation": "Selisihnya +4: 6, 10, 14, 18, 22." },
+        { "category": "ARITMATIKA +3", "question": "Tentukan angka berikutnya: −3, 0, 3, 6, ...", "options": ["7", "8", "9", "10"], "answer": 2, "explanation": "Setiap suku bertambah 3. Jadi 6 + 3 = 9." },
+        { "category": "ARITMATIKA +7", "question": "Tentukan angka berikutnya: 5, 12, 19, 26, ...", "options": ["31", "32", "33", "34"], "answer": 2, "explanation": "Selisihnya selalu +7. Jadi 26 + 7 = 33." },
+        { "category": "ARITMATIKA −7", "question": "Tentukan angka berikutnya: 42, 35, 28, 21, ...", "options": ["12", "14", "15", "16"], "answer": 1, "explanation": "Setiap suku berkurang 7. Jadi 21 − 7 = 14." },
+        { "category": "ARITMATIKA +5", "question": "Tentukan angka berikutnya: 3, 8, 13, 18, ...", "options": ["21", "22", "23", "24"], "answer": 2, "explanation": "Selisih tetapnya +5. Jadi 18 + 5 = 23." },
+        { "category": "ARITMATIKA +4", "question": "Tentukan angka berikutnya: 14, 18, 22, 26, ...", "options": ["28", "29", "30", "32"], "answer": 2, "explanation": "Setiap suku bertambah 4. Jadi 26 + 4 = 30." }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Level 5 — Deret: Geometri",
+      "topic": "Deret dengan rasio perkalian atau pembagian tetap",
+      "description": "Kenali rasio tetap dengan membagi satu suku dengan suku sebelumnya.",
+      "material": [
+        "Deret geometri memiliki rasio tetap. Cari rasionya dengan membagi sebuah suku dengan suku tepat sebelumnya.",
+        "Rasio lebih dari 1 biasanya berarti setiap suku dikalikan. Contoh: 2, 6, 18, 54 dikali 3, sehingga berikutnya 162.",
+        "Rasio antara 0 dan 1 berarti nilai mengecil. Contoh: 128, 64, 32, 16 dibagi 2, sehingga berikutnya 8.",
+        "Periksa rasio pada beberapa pasangan suku agar pola perkalian atau pembagian yang dipilih benar."
+      ],
+      "questions": [
+        { "category": "GEOMETRI ×3", "question": "Tentukan angka berikutnya: 2, 6, 18, 54, ...", "options": ["108", "144", "162", "216"], "answer": 2, "explanation": "Setiap suku dikalikan 3. Jadi 54 × 3 = 162." },
+        { "category": "GEOMETRI ×2", "question": "Tentukan angka berikutnya: 5, 10, 20, 40, ...", "options": ["60", "70", "80", "100"], "answer": 2, "explanation": "Setiap suku dikalikan 2. Jadi 40 × 2 = 80." },
+        { "category": "GEOMETRI ÷2", "question": "Tentukan angka berikutnya: 128, 64, 32, 16, ...", "options": ["4", "8", "10", "12"], "answer": 1, "explanation": "Setiap suku dibagi 2. Jadi 16 ÷ 2 = 8." },
+        { "category": "GEOMETRI ×4", "question": "Tentukan angka berikutnya: 1, 4, 16, 64, ...", "options": ["128", "196", "256", "320"], "answer": 2, "explanation": "Setiap suku dikalikan 4. Jadi 64 × 4 = 256." },
+        { "category": "GEOMETRI ×3", "question": "Tentukan angka berikutnya: 7, 21, 63, ...", "options": ["126", "168", "189", "210"], "answer": 2, "explanation": "Setiap suku dikalikan 3. Jadi 63 × 3 = 189." },
+        { "category": "GEOMETRI ÷5", "question": "Tentukan angka berikutnya: 625, 125, 25, 5, ...", "options": ["0", "1", "2", "5"], "answer": 1, "explanation": "Setiap suku dibagi 5. Jadi 5 ÷ 5 = 1." },
+        { "category": "GEOMETRI ×4", "question": "Tentukan angka berikutnya: 3, 12, 48, ...", "options": ["96", "144", "192", "240"], "answer": 2, "explanation": "Setiap suku dikalikan 4. Jadi 48 × 4 = 192." },
+        { "category": "GEOMETRI ÷2", "question": "Tentukan angka berikutnya: 160, 80, 40, 20, ...", "options": ["5", "10", "12", "15"], "answer": 1, "explanation": "Setiap suku dibagi 2. Jadi 20 ÷ 2 = 10." },
+        { "category": "GEOMETRI ×5", "question": "Tentukan angka berikutnya: 2, 10, 50, 250, ...", "options": ["750", "1.000", "1.250", "1.500"], "answer": 2, "explanation": "Setiap suku dikalikan 5. Jadi 250 × 5 = 1.250." },
+        { "category": "GEOMETRI ÷3", "question": "Tentukan angka berikutnya: 729, 243, 81, 27, ...", "options": ["3", "9", "12", "18"], "answer": 1, "explanation": "Setiap suku dibagi 3. Jadi 27 ÷ 3 = 9." }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Level 6 — Deret: Fibonacci, Kuadrat & Pola",
+      "topic": "Fibonacci, bilangan kuadrat, pola selang-seling, dan selisih bertingkat",
+      "description": "Latih pola deret yang dibentuk dari dua suku sebelumnya, kuadrat, dan perubahan selisih.",
+      "material": [
+        "Dalam pola Fibonacci, setiap suku adalah jumlah dua suku sebelumnya. Contoh: 1, 1, 2, 3, 5, 8 dilanjutkan dengan 13.",
+        "Bilangan kuadrat berbentuk n². Contoh: 1, 4, 9, 16, 25 adalah 1², 2², 3², 4², 5², sehingga berikutnya 6² = 36.",
+        "Pada deret selang-seling, pisahkan suku pada posisi ganjil dan genap. Contoh: 2, 6, 3, 9, 4, 12 memiliki pola posisi ganjil 2, 3, 4, lalu 5.",
+        "Selisih antarangka bisa bertambah teratur. Untuk 1, 2, 4, 7, 11 selisihnya +1, +2, +3, +4, jadi selanjutnya tambah 5."
+      ],
+      "questions": [
+        { "category": "FIBONACCI", "question": "Tentukan angka berikutnya: 1, 1, 2, 3, 5, 8, ...", "options": ["11", "12", "13", "15"], "answer": 2, "explanation": "Jumlahkan dua suku sebelumnya: 5 + 8 = 13." },
+        { "category": "FIBONACCI", "question": "Tentukan angka berikutnya: 2, 3, 5, 8, 13, ...", "options": ["18", "20", "21", "23"], "answer": 2, "explanation": "Setiap suku adalah jumlah dua suku sebelumnya: 8 + 13 = 21." },
+        { "category": "FIBONACCI", "question": "Tentukan angka berikutnya: 0, 1, 1, 2, 3, 5, ...", "options": ["6", "7", "8", "9"], "answer": 2, "explanation": "Dua suku terakhir adalah 3 dan 5. Jumlahnya 8." },
+        { "category": "BILANGAN KUADRAT", "question": "Tentukan angka berikutnya: 1, 4, 9, 16, 25, ...", "options": ["30", "35", "36", "49"], "answer": 2, "explanation": "Deret adalah 1², 2², 3², 4², 5². Suku berikutnya 6² = 36." },
+        { "category": "BILANGAN KUADRAT", "question": "Tentukan angka berikutnya: 4, 9, 16, 25, ...", "options": ["30", "32", "36", "49"], "answer": 2, "explanation": "Deret adalah 2², 3², 4², 5². Suku berikutnya 6² = 36." },
+        { "category": "BILANGAN KUADRAT", "question": "Tentukan angka berikutnya: 9, 16, 25, 36, ...", "options": ["42", "45", "49", "64"], "answer": 2, "explanation": "Deret adalah 3², 4², 5², 6². Suku berikutnya 7² = 49." },
+        { "category": "POLA SELANG-SELING", "question": "Tentukan angka berikutnya: 2, 6, 3, 9, 4, 12, ...", "options": ["5", "8", "15", "16"], "answer": 0, "explanation": "Pisahkan posisi ganjil: 2, 3, 4, ... dan genap: 6, 9, 12. Suku berikut pada posisi ganjil adalah 5." },
+        { "category": "POLA SELANG-SELING", "question": "Tentukan angka berikutnya: 1, 5, 2, 10, 3, 15, ...", "options": ["4", "12", "18", "20"], "answer": 0, "explanation": "Posisi ganjil membentuk 1, 2, 3, 4; posisi genap membentuk 5, 10, 15. Suku berikutnya adalah 4." },
+        { "category": "SELISIH BERTINGKAT", "question": "Tentukan angka berikutnya: 1, 2, 4, 7, 11, ...", "options": ["15", "16", "17", "18"], "answer": 1, "explanation": "Selisihnya +1, +2, +3, +4. Selanjutnya tambah 5: 11 + 5 = 16." },
+        { "category": "FIBONACCI", "question": "Tentukan angka berikutnya: 2, 4, 6, 10, 16, ...", "options": ["22", "24", "26", "28"], "answer": 2, "explanation": "Mulai dari suku ketiga, jumlahkan dua suku sebelumnya. Jadi 10 + 16 = 26." }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Level 7 — Analogi",
+      "topic": "Hubungan fungsi, profesi, alat, tempat, dan hasil",
+      "description": "Kenali hubungan antara dua kata dan terapkan hubungan yang sama pada pasangan berikutnya.",
+      "material": [
+        "Dalam analogi, temukan hubungan yang paling tepat pada pasangan pertama sebelum memilih jawaban. Jangan hanya mencocokkan kata yang tampak berkaitan.",
+        "Hubungan dapat berupa alat dan fungsi: kompas menunjukkan arah, sedangkan termometer mengukur suhu; mata digunakan untuk melihat, telinga untuk mendengar.",
+        "Hubungan dapat berupa profesi dan pihak atau tempat kerja: dokter melayani pasien, guru mengajar murid, dan pilot bekerja menerbangkan pesawat.",
+        "Hubungan dapat berupa benda dan akses/fungsi: kunci membuka pintu, kata sandi memberi akses ke akun.",
+        "Hubungan dapat berupa bahan dan hasil olahan atau pencipta dan hasil karya: padi menjadi beras, gandum menjadi tepung; penulis membuat novel, komponis menciptakan lagu."
+      ],
+      "questions": [
+        { "category": "ALAT DAN FUNGSI", "question": "Kompas berhubungan dengan arah, sebagaimana termometer berhubungan dengan ...", "options": ["Kecepatan", "Suhu", "Jarak", "Berat"], "answer": 1, "explanation": "Kompas digunakan untuk mengetahui arah; termometer digunakan untuk mengukur suhu." },
+        { "category": "PROFESI DAN PIHAK YANG DILAYANI", "question": "Dokter berhubungan dengan pasien, sebagaimana guru berhubungan dengan ...", "options": ["Buku", "Sekolah", "Murid", "Kelas"], "answer": 2, "explanation": "Dokter melayani pasien, sedangkan guru mengajar murid." },
+        { "category": "ALAT DAN AKSES", "question": "Kunci berhubungan dengan pintu, sebagaimana kata sandi berhubungan dengan ...", "options": ["Akun", "Layar", "Komputer", "Jaringan"], "answer": 0, "explanation": "Kunci dapat membuka pintu; kata sandi digunakan untuk membuka akses ke akun." },
+        { "category": "BAHAN DAN HASIL OLAHAN", "question": "Padi berhubungan dengan beras, sebagaimana gandum berhubungan dengan ...", "options": ["Tepung", "Sawah", "Pupuk", "Jagung"], "answer": 0, "explanation": "Beras dihasilkan dari pengolahan padi; tepung dapat dihasilkan dari pengolahan gandum." },
+        { "category": "INDRA DAN FUNGSI", "question": "Mata berhubungan dengan melihat, sebagaimana telinga berhubungan dengan ...", "options": ["Berbicara", "Mendengar", "Mencium", "Menyentuh"], "answer": 1, "explanation": "Mata berfungsi untuk melihat; telinga berfungsi untuk mendengar." },
+        { "category": "PROFESI DAN TEMPAT KERJA", "question": "Guru berhubungan dengan sekolah, sebagaimana dokter berhubungan dengan ...", "options": ["Pasar", "Rumah sakit", "Terminal", "Studio"], "answer": 1, "explanation": "Sekolah merupakan tempat guru bekerja; rumah sakit merupakan salah satu tempat dokter bekerja." },
+        { "category": "PROFESI DAN OBJEK KERJA", "question": "Pilot berhubungan dengan pesawat, sebagaimana nahkoda berhubungan dengan ...", "options": ["Kereta", "Kapal", "Bus", "Sepeda"], "answer": 1, "explanation": "Pilot mengemudikan pesawat; nahkoda memimpin atau mengemudikan kapal." },
+        { "category": "PENCIPTA DAN KARYA", "question": "Penulis berhubungan dengan novel, sebagaimana komponis berhubungan dengan ...", "options": ["Lagu", "Panggung", "Pena", "Kertas"], "answer": 0, "explanation": "Penulis menghasilkan karya tulis seperti novel; komponis menciptakan lagu atau komposisi musik." },
+        { "category": "HEWAN DAN TEMPAT HIDUP", "question": "Ikan berhubungan dengan air, sebagaimana burung berhubungan dengan ...", "options": ["Sarang", "Udara", "Pohon", "Bulu"], "answer": 1, "explanation": "Ikan hidup di air; burung bergerak dan hidup di lingkungan udara." },
+        { "category": "ALAT DAN KEGUNAAN", "question": "Gunting berhubungan dengan memotong, sebagaimana sapu berhubungan dengan ...", "options": ["Menyapu", "Mencuci", "Mengukur", "Menjahit"], "answer": 0, "explanation": "Gunting digunakan untuk memotong; sapu digunakan untuk menyapu." }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Level 8 — Verbal: Kosakata",
+      "topic": "Sinonim, antonim, dan makna kata berdasarkan konteks",
+      "description": "Perkaya pemahaman kosakata dengan membedakan persamaan, lawan, dan makna kata.",
+      "material": [
+        "Sinonim adalah kata yang memiliki makna sama atau hampir sama. Contoh: cermat bersinonim dengan teliti; abadi bersinonim dengan kekal.",
+        "Antonim adalah kata yang maknanya berlawanan. Contoh: optimis berlawanan dengan pesimis; sementara berlawanan dengan permanen; luas berlawanan dengan sempit.",
+        "Perhatikan konteks kalimat untuk memahami makna. Objektif berarti berdasarkan fakta dan tidak memihak; efisien berarti mencapai hasil dengan penggunaan waktu atau sumber daya yang baik.",
+        "Pahami makna kata dalam penggunaan sehari-hari: konsisten berarti tetap atau ajek, kendala berarti hambatan, dan prioritas berarti hal yang didahulukan."
+      ],
+      "questions": [
+        { "category": "SINONIM", "question": "Kata yang paling dekat maknanya dengan \"cermat\" adalah ...", "options": ["Ceroboh", "Teliti", "Cepat", "Ragu"], "answer": 1, "explanation": "Cermat berarti teliti atau berhati-hati dalam melakukan sesuatu." },
+        { "category": "SINONIM", "question": "Sinonim kata \"abadi\" adalah ...", "options": ["Kekal", "Singkat", "Rapuh", "Sementara"], "answer": 0, "explanation": "Abadi berarti kekal atau berlangsung selamanya." },
+        { "category": "ANTONIM", "question": "Lawan kata \"optimis\" adalah ...", "options": ["Antusias", "Pesimis", "Realistis", "Yakin"], "answer": 1, "explanation": "Optimis cenderung memiliki harapan baik; pesimis cenderung mengharapkan hal yang buruk." },
+        { "category": "ANTONIM", "question": "Lawan kata \"sementara\" adalah ...", "options": ["Singkat", "Sebentar", "Permanen", "Berubah"], "answer": 2, "explanation": "Sementara berlaku hanya untuk waktu tertentu; lawannya adalah permanen atau tetap." },
+        { "category": "ANTONIM", "question": "Lawan kata \"luas\" adalah ...", "options": ["Lapangan", "Sempit", "Panjang", "Lebar"], "answer": 1, "explanation": "Luas dan sempit memiliki makna yang berlawanan." },
+        { "category": "MAKNA DALAM KONTEKS", "question": "Dalam kalimat \"Keputusan itu diambil secara objektif\", kata \"objektif\" berarti ...", "options": ["Berdasarkan perasaan pribadi", "Berdasarkan fakta dan tidak memihak", "Dilakukan dengan tergesa-gesa", "Mengikuti pendapat terbanyak"], "answer": 1, "explanation": "Objektif berarti berdasarkan fakta atau keadaan sebenarnya, bukan kepentingan maupun perasaan pribadi." },
+        { "category": "MAKNA KATA", "question": "Kata \"efisien\" paling tepat berarti ...", "options": ["Menggunakan banyak sumber daya", "Mencapai hasil baik dengan penggunaan sumber daya yang tepat", "Bekerja tanpa tujuan", "Mengulang pekerjaan yang sama"], "answer": 1, "explanation": "Efisien berarti mencapai hasil yang diinginkan dengan penggunaan waktu, tenaga, atau biaya secara tepat." },
+        { "category": "MAKNA KATA", "question": "Sikap \"konsisten\" berarti ...", "options": ["Mudah berubah", "Tetap dan ajek", "Tidak memiliki pendirian", "Selalu terburu-buru"], "answer": 1, "explanation": "Konsisten berarti tetap atau ajek dalam sikap maupun tindakan." },
+        { "category": "MAKNA KATA", "question": "Makna kata \"kendala\" adalah ...", "options": ["Kesempatan", "Hambatan", "Tujuan", "Keputusan"], "answer": 1, "explanation": "Kendala berarti hal yang menghambat atau menyulitkan suatu pekerjaan." },
+        { "category": "MAKNA KATA", "question": "Dalam menyusun rencana, \"prioritas\" adalah ...", "options": ["Hal yang didahulukan", "Hal yang dibatalkan", "Pilihan yang dihindari", "Pekerjaan yang sudah selesai"], "answer": 0, "explanation": "Prioritas adalah hal yang dianggap paling penting dan perlu didahulukan." }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Level 9 — Verbal: Penalaran",
+      "topic": "Premis, kesimpulan, dan batas informasi",
+      "description": "Tarik kesimpulan yang tepat berdasarkan aturan dan fakta tanpa menambah asumsi.",
+      "material": [
+        "Baca aturan umum dan fakta khusus dengan teliti. Jika semua peserta yang lulus administrasi boleh mengikuti tes dan Rina lulus administrasi, maka Rina boleh mengikuti tes.",
+        "Terapkan pola yang sama pada kelompok lain: jika semua anggota klub membaca buku dan Dita adalah anggota klub, maka Dita membaca buku.",
+        "Kesimpulan harus mengikuti premis, tetapi tidak boleh lebih jauh dari premis. Boleh mengikuti tes tidak berarti pasti sudah mengikuti atau lulus tes.",
+        "Jangan membalik aturan. Dari \"semua A adalah B\" tidak otomatis berarti \"semua B adalah A\".",
+        "Jika beberapa fakta tidak menghubungkan dua kelompok secara langsung, jawab bahwa kesimpulan belum dapat ditentukan."
+      ],
+      "questions": [
+        { "category": "KESIMPULAN LANGSUNG", "question": "Semua peserta yang lulus administrasi boleh mengikuti tes. Rina lulus administrasi. Kesimpulan yang tepat adalah ...", "options": ["Rina pasti lulus tes", "Rina boleh mengikuti tes", "Semua peserta adalah Rina", "Rina tidak mengikuti tes"], "answer": 1, "explanation": "Peserta yang lulus administrasi boleh mengikuti tes. Karena Rina lulus administrasi, ia boleh mengikuti tes; premis tidak menyatakan ia pasti lulus tes." },
+        { "category": "KESIMPULAN LANGSUNG", "question": "Semua anggota klub membaca buku. Dita adalah anggota klub. Kesimpulan yang tepat adalah ...", "options": ["Dita membaca buku", "Dita menulis buku", "Semua pembaca adalah anggota klub", "Dita bukan anggota klub"], "answer": 0, "explanation": "Dita termasuk anggota klub dan semua anggota klub membaca buku, jadi Dita membaca buku." },
+        { "category": "KESIMPULAN LANGSUNG", "question": "Semua peserta yang berlatih rutin mengalami peningkatan. Bima berlatih rutin. Kesimpulan yang tepat adalah ...", "options": ["Bima mengalami peningkatan", "Bima menjadi pelatih", "Semua yang meningkat berlatih rutin", "Bima tidak mengikuti latihan"], "answer": 0, "explanation": "Bima memenuhi syarat sebagai peserta yang berlatih rutin, sehingga sesuai premis ia mengalami peningkatan." },
+        { "category": "KESIMPULAN LANGSUNG", "question": "Semua mamalia bernapas dengan paru-paru. Paus adalah mamalia. Kesimpulan yang tepat adalah ...", "options": ["Paus bernapas dengan paru-paru", "Paus hidup di darat", "Semua hewan berparu-paru adalah paus", "Paus bukan hewan"], "answer": 0, "explanation": "Paus termasuk mamalia, dan semua mamalia pada premis bernapas dengan paru-paru." },
+        { "category": "KESIMPULAN LANGSUNG", "question": "Semua pemegang kartu akses boleh memasuki ruang arsip. Arman memiliki kartu akses. Kesimpulan yang tepat adalah ...", "options": ["Arman boleh memasuki ruang arsip", "Arman bekerja di ruang arsip", "Arman membuat kartu akses", "Semua pengunjung memiliki kartu akses"], "answer": 0, "explanation": "Arman memenuhi syarat pemegang kartu akses, sehingga ia boleh memasuki ruang arsip." },
+        { "category": "HUBUNGAN KELOMPOK", "question": "Semua anggota tim A memakai seragam. Sita adalah anggota tim A. Kesimpulan yang tepat adalah ...", "options": ["Sita memakai seragam", "Semua pemakai seragam adalah anggota tim A", "Sita membuat seragam", "Sita bukan anggota tim A"], "answer": 0, "explanation": "Karena Sita anggota tim A dan semua anggota tim A memakai seragam, Sita memakai seragam." },
+        { "category": "KESIMPULAN DARI LARANGAN", "question": "Tidak ada buku pinjaman yang boleh diberi tanda. Buku novel itu adalah buku pinjaman. Kesimpulan yang tepat adalah ...", "options": ["Novel itu boleh diberi tanda", "Novel itu tidak boleh diberi tanda", "Semua novel adalah buku pinjaman", "Novel itu sudah diberi tanda"], "answer": 1, "explanation": "Buku novel tersebut termasuk buku pinjaman, sedangkan buku pinjaman tidak boleh diberi tanda." },
+        { "category": "KESIMPULAN LANGSUNG", "question": "Semua peserta seminar mendaftar sebelum acara. Rani adalah peserta seminar. Kesimpulan yang tepat adalah ...", "options": ["Rani mendaftar sebelum acara", "Rani menjadi panitia", "Semua pendaftar ikut seminar", "Rani mendaftar setelah acara"], "answer": 0, "explanation": "Rani termasuk peserta seminar, sehingga ia mendaftar sebelum acara sesuai premis." },
+        { "category": "KESIMPULAN DARI BEBERAPA PREMIS", "question": "Beberapa siswa adalah atlet. Semua atlet berlatih rutin. Kesimpulan yang tepat adalah ...", "options": ["Semua siswa adalah atlet", "Beberapa siswa berlatih rutin", "Tidak ada siswa yang berlatih rutin", "Semua yang berlatih rutin adalah siswa"], "answer": 1, "explanation": "Siswa yang termasuk atlet juga berlatih rutin, sehingga dapat disimpulkan beberapa siswa berlatih rutin." },
+        { "category": "BATAS KESIMPULAN", "question": "Semua pelukis adalah orang kreatif. Beberapa orang kreatif disiplin. Kesimpulan tentang kedisiplinan pelukis adalah ...", "options": ["Semua pelukis pasti disiplin", "Tidak ada pelukis yang disiplin", "Belum dapat disimpulkan", "Semua orang disiplin adalah pelukis"], "answer": 2, "explanation": "Premis tidak menyebut apakah pelukis termasuk orang kreatif yang disiplin. Karena itu, kedisiplinan pelukis belum dapat disimpulkan." }
       ]
     }
   ]
