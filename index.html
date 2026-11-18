@@ -78,11 +78,8 @@
 
       <main>
         <section class="landing-view" id="landing-view">
-          <a class="landing-whatsapp-button" href="https://wa.me/6283192124659" target="_blank" rel="noopener noreferrer" aria-label="Hubungi kami melalui WhatsApp" title="Hubungi kami melalui WhatsApp">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M20.5 11.8a8.5 8.5 0 0 1-12.6 7.4L4 20l.9-3.7a8.5 8.5 0 1 1 15.6-4.5Z" />
-              <path d="M8.2 7.8c.2-.4.4-.4.7-.4h.7c.2 0 .3.1.4.4l.8 1.8c.1.2.1.4-.1.6l-.6.7c-.2.2-.2.4 0 .6.6 1.1 1.5 2 2.6 2.6.2.1.4.1.6 0l.7-.6c.2-.2.4-.2.6-.1l1.8.8c.3.1.4.2.4.4v.7c0 .3 0 .5-.4.7-.4.2-1.4.4-2.4 0-1-.3-2.1-.9-3.1-1.9-1-.9-1.6-2-2-3-.3-1-.2-2 0-2.4Z" />
-            </svg>
+          <a class="landing-whatsapp-button" href="https://wa.me/6283192124659" target="_blank" rel="noopener noreferrer">
+            Hubungi kami
           </a>
           <section class="landing-hero">
             <div class="landing-hero-copy">
@@ -215,7 +212,16 @@
               <div><span class="section-kicker">CERITA KOMUNITAS</span><h2 id="landing-reviews-title">Ulasan pengguna</h2><p class="muted">Pengalaman nyata dari pengguna Ruang SKD.</p></div>
               <span class="pill" id="landing-review-count">Memuat ulasan...</span>
             </div>
-            <div class="landing-reviews-list" id="landing-reviews-list"><p class="community-empty">Memuat ulasan...</p></div>
+            <div class="landing-reviews-carousel">
+              <div class="landing-reviews-viewport" role="region" aria-label="Carousel ulasan pengguna" aria-roledescription="carousel">
+                <div class="landing-reviews-list" id="landing-reviews-list"><p class="community-empty">Memuat ulasan...</p></div>
+              </div>
+              <div class="landing-reviews-controls" id="landing-reviews-controls" hidden>
+                <button class="button button-outline" id="landing-reviews-previous" type="button" aria-label="Ulasan sebelumnya">←</button>
+                <span id="landing-review-page" aria-live="polite"></span>
+                <button class="button button-outline" id="landing-reviews-next" type="button" aria-label="Ulasan berikutnya">→</button>
+              </div>
+            </div>
           </section>
         </section>
 

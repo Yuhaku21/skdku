@@ -62,6 +62,11 @@ let remainingSeconds = DIFFICULTIES.mudah.durationSeconds;
 let timerId = null;
 let reviewRefreshId = null;
 let reviewRequestPromise = null;
+let landingReviewCarouselTimer = null;
+let landingReviewPage = 0;
+let landingReviewPageSize = window.matchMedia("(max-width: 800px)").matches ? 2 : 3;
+let landingReviews = [];
+let landingReviewCarouselPaused = false;
 let leaderboardRequestPromise = null;
 let scoreProgressRequestId = 0;
 let sessionFinished = false;
@@ -135,6 +140,10 @@ function showScreen(screenId) {
   if (screenId !== "reviews-view" && screenId !== "landing-view" && reviewRefreshId !== null) {
     clearInterval(reviewRefreshId);
     reviewRefreshId = null;
+  }
+  if (screenId !== "landing-view" && landingReviewCarouselTimer !== null) {
+    clearInterval(landingReviewCarouselTimer);
+    landingReviewCarouselTimer = null;
   }
   closeMobileMenu();
   $("landing-nav").classList.toggle("hidden", screenId !== "landing-view" || Boolean(currentUser()));
@@ -392,6 +401,70 @@ function printCertificate() {
   window.print();
 }
 
+function showLandingReviewPage(page) {
+  const track = $("landing-reviews-list");
+  const slides = [...track.querySelectorAll(".landing-review-slide")];
+  if (!slides.length) return;
+  landingReviewPage = (page + slides.length) % slides.length;
+  track.style.transform = `translateX(-${landingReviewPage * 100}%)`;
+  slides.forEach((slide, index) => {
+    slide.setAttribute("aria-hidden", String(index !== landingReviewPage));
+  });
+  $("landing-review-page").textContent = `${landingReviewPage + 1} / ${slides.length}`;
+}
+
+function renderLandingReviewCarousel(renderReview) {
+  const track = $("landing-reviews-list");
+  const controls = $("landing-reviews-controls");
+  if (!landingReviews.length) {
+    track.style.transform = "";
+    track.innerHTML = '<p class="community-empty">Belum ada ulasan pengguna.</p>';
+    controls.hidden = true;
+    if (landingReviewCarouselTimer !== null) {
+      clearInterval(landingReviewCarouselTimer);
+      landingReviewCarouselTimer = null;
+    }
+    return;
+  }
+
+  const pageCount = Math.ceil(landingReviews.length / landingReviewPageSize);
+  landingReviewPage = Math.min(landingReviewPage, pageCount - 1);
+  track.innerHTML = Array.from({ length: pageCount }, (_, page) => {
+    const start = Math.min(page * landingReviewPageSize, landingReviews.length - landingReviewPageSize);
+    const slideReviews = landingReviews.slice(start, start + landingReviewPageSize);
+    const firstReview = start + 1;
+    const lastReview = start + slideReviews.length;
+    return `<div class="landing-review-slide" role="group" aria-roledescription="slide" aria-label="Ulasan ${firstReview} sampai ${lastReview} dari ${landingReviews.length}">
+      ${slideReviews.map(renderReview).join("")}
+    </div>`;
+  }).join("");
+  controls.hidden = pageCount <= 1;
+  showLandingReviewPage(landingReviewPage);
+
+  if (pageCount > 1 && !$("landing-view").classList.contains("hidden")
+    && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (landingReviewCarouselTimer === null) {
+      landingReviewCarouselTimer = setInterval(() => {
+        if (!landingReviewCarouselPaused) showLandingReviewPage(landingReviewPage + 1);
+      }, 5000);
+    }
+  } else if (landingReviewCarouselTimer !== null) {
+    clearInterval(landingReviewCarouselTimer);
+    landingReviewCarouselTimer = null;
+  }
+}
+
+function renderReviewCard(review) {
+  const date = new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date(review.createdAt));
+  return `<article class="user-review">
+    <div class="user-review-heading">
+      <div><strong class="user-review-name">${escapeHtml(review.username)}</strong><span class="user-review-date">${escapeHtml(date)}</span></div>
+      <span class="user-review-stars" aria-label="${review.rating} dari 5 bintang">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</span>
+    </div>
+    <p>${escapeHtml(review.comment)}</p>
+  </article>`;
+}
+
 function renderReviews() {
   if (reviewRequestPromise) return reviewRequestPromise;
   reviewRequestPromise = fetchAndRenderReviews();
@@ -412,28 +485,26 @@ async function fetchAndRenderReviews() {
     $("community-review-count").textContent = `${reviews.length} ulasan`;
     $("landing-review-count").textContent = `${reviews.length} ulasan`;
     if (!reviews.length) {
+      landingReviews = [];
       $("reviews-list").innerHTML = '<p class="empty-state">Belum ada ulasan. Jadilah yang pertama berbagi pengalaman.</p>';
-      $("landing-reviews-list").innerHTML = '<p class="community-empty">Belum ada ulasan pengguna.</p>';
+      renderLandingReviewCarousel(renderReviewCard);
       return;
     }
-    const renderReview = (review) => {
-      const date = new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date(review.createdAt));
-      return `<article class="user-review">
-        <div class="user-review-heading">
-          <div><strong class="user-review-name">${escapeHtml(review.username)}</strong><span class="user-review-date">${escapeHtml(date)}</span></div>
-          <span class="user-review-stars" aria-label="${review.rating} dari 5 bintang">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</span>
-        </div>
-        <p>${escapeHtml(review.comment)}</p>
-      </article>`;
-    };
-    $("reviews-list").innerHTML = reviews.map(renderReview).join("");
-    $("landing-reviews-list").innerHTML = reviews.slice(0, 5).map(renderReview).join("");
+    landingReviews = reviews;
+    $("reviews-list").innerHTML = reviews.map(renderReviewCard).join("");
+    renderLandingReviewCarousel(renderReviewCard);
   } catch (error) {
     console.error("Tidak dapat memuat ulasan:", error);
     $("community-review-count").textContent = "Tidak tersedia";
     $("landing-review-count").textContent = "Tidak tersedia";
     $("reviews-list").innerHTML = '<p class="empty-state">Ulasan tidak dapat dimuat. Pastikan API sudah ter-deploy, lalu muat ulang halaman.</p>';
+    landingReviews = [];
     $("landing-reviews-list").innerHTML = '<p class="community-empty">Ulasan belum dapat dimuat. Silakan coba beberapa saat lagi.</p>';
+    $("landing-reviews-controls").hidden = true;
+    if (landingReviewCarouselTimer !== null) {
+      clearInterval(landingReviewCarouselTimer);
+      landingReviewCarouselTimer = null;
+    }
   } finally {
     reviewRequestPromise = null;
   }
@@ -795,6 +866,22 @@ function initialize() {
   $("package-dialog-close").addEventListener("click", () => $("package-dialog").close());
   $("package-dialog").addEventListener("click", (event) => {
     if (event.target === $("package-dialog")) $("package-dialog").close();
+  });
+  $("landing-reviews-previous").addEventListener("click", () => showLandingReviewPage(landingReviewPage - 1));
+  $("landing-reviews-next").addEventListener("click", () => showLandingReviewPage(landingReviewPage + 1));
+  $("landing-reviews-section").addEventListener("mouseenter", () => { landingReviewCarouselPaused = true; });
+  $("landing-reviews-section").addEventListener("mouseleave", () => { landingReviewCarouselPaused = false; });
+  $("landing-reviews-section").addEventListener("focusin", () => { landingReviewCarouselPaused = true; });
+  $("landing-reviews-section").addEventListener("focusout", (event) => {
+    if (!$("landing-reviews-section").contains(event.relatedTarget)) landingReviewCarouselPaused = false;
+  });
+  window.addEventListener("resize", () => {
+    const pageSize = window.matchMedia("(max-width: 800px)").matches ? 2 : 3;
+    if (pageSize === landingReviewPageSize) return;
+    const firstVisibleReview = landingReviewPage * landingReviewPageSize;
+    landingReviewPageSize = pageSize;
+    landingReviewPage = Math.floor(firstVisibleReview / pageSize);
+    renderLandingReviewCarousel(renderReviewCard);
   });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") closeMobileMenu();
