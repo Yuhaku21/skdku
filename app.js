@@ -7,7 +7,10 @@ const STORAGE = {
   completedTests: "ruangskd.completedTests",
   history: "ruangskd.history",
   questionRotation: "ruangskd.questionRotation",
-  tiuLearningProgress: "ruangskd.tiuLearningProgress.v2"
+  tiuLearningProgress: "ruangskd.tiuLearningProgress.v2",
+  learningProgress: "ruangskd.learningProgress.v1",
+  learningHistory: "ruangskd.learningHistory.v1",
+  activityTotals: "ruangskd.activityTotals.v1"
 };
 const DIFFICULTIES = {
   mudah: { questionCount: 10, durationSeconds: 10 * 60 },
@@ -15,7 +18,6 @@ const DIFFICULTIES = {
   sulit: { questionCount: 50, durationSeconds: 50 * 60 }
 };
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
-const TIU_LEVEL_COUNT = 9;
 const TIU_LEVEL_GROUPS = [
   {
     title: "Numerik · Level 1–3",
@@ -42,6 +44,46 @@ const TIU_LEVEL_GROUPS = [
     ]
   }
 ];
+const TKP_LEVELS = [
+  { id: 1, title: "Level 1", topic: "Pelayanan publik", sections: [{ category: "PELAYANAN PUBLIK" }, { category: "ORIENTASI PELAYANAN" }], material: ["Dengarkan kebutuhan pengguna layanan dengan empati, lalu pastikan informasi yang diberikan akurat dan mudah dipahami.", "Utamakan akses layanan yang adil, tanggap, dan sesuai prosedur. Jelaskan tindak lanjut jika masalah belum dapat diselesaikan saat itu."] },
+  { id: 2, title: "Level 2", topic: "Integritas", sections: [{ category: "INTEGRITAS" }], material: ["Jaga kejujuran, konsistensi, dan tanggung jawab dalam setiap keputusan kerja.", "Tolak manipulasi data, gratifikasi, dan penyalahgunaan wewenang. Laporkan masalah melalui jalur yang tepat dan berbasis fakta."] },
+  { id: 3, title: "Level 3", topic: "Kerja sama", sections: [{ category: "KERJA SAMA" }], material: ["Bangun tujuan bersama dengan berbagi informasi, menghargai kontribusi, dan menyelesaikan perbedaan secara profesional.", "Ambil peran yang dibutuhkan tim serta berikan dukungan tanpa mengabaikan tanggung jawab pribadi."] },
+  { id: 4, title: "Level 4", topic: "Profesionalisme", sections: [{ category: "PROFESIONALISME" }], material: ["Pahami aturan dan standar kerja, lalu gunakan kompetensi secara objektif dan konsisten.", "Kelola tugas dengan cermat, jaga kerahasiaan, dan kembangkan kemampuan untuk memperbaiki kualitas hasil."] },
+  { id: 5, title: "Level 5", topic: "Sosial budaya", sections: [{ category: "SOSIAL BUDAYA" }], material: ["Hormati perbedaan latar belakang, budaya, dan cara berkomunikasi.", "Ciptakan lingkungan inklusif dengan bersikap terbuka, tidak diskriminatif, dan menjaga hubungan yang harmonis."] },
+  { id: 6, title: "Level 6", topic: "Orientasi hasil & tanggung jawab", sections: [{ category: "ORIENTASI HASIL" }, { category: "TANGGUNG JAWAB" }], material: ["Tetapkan prioritas dan target yang terukur, lalu pantau kemajuan pekerjaan.", "Akui tanggung jawab atas hasil dan tindak lanjuti hambatan dengan solusi yang realistis."] },
+  { id: 7, title: "Level 7", topic: "Komunikasi, adaptasi & pengendalian diri", sections: [{ category: "KOMUNIKASI" }, { category: "ADAPTASI" }, { category: "PENGENDALIAN DIRI" }], material: ["Sampaikan gagasan dengan jelas dan dengarkan masukan untuk memastikan pemahaman bersama.", "Hadapi perubahan dengan fleksibel dan kendalikan respons emosi, terutama saat berada di bawah tekanan."] },
+  { id: 8, title: "Level 8", topic: "Teknologi & keamanan informasi", sections: [{ category: "TEKNOLOGI INFORMASI" }, { category: "KEAMANAN INFORMASI" }], material: ["Gunakan teknologi untuk bekerja lebih efektif sambil mengikuti kebijakan organisasi.", "Lindungi data dan kredensial, verifikasi sumber informasi, dan laporkan potensi insiden keamanan."] }
+];
+const TWK_LEVELS = [
+  { id: 1, title: "Level 1", topic: "Pancasila", sections: [{ category: "PANCASILA" }], material: ["Pahami Pancasila sebagai dasar negara dan pandangan hidup bangsa.", "Pelajari makna setiap sila dan penerapannya dalam kehidupan bermasyarakat, berbangsa, dan bernegara."] },
+  { id: 2, title: "Level 2", topic: "UUD 1945 · Bagian 1", sections: [{ category: "UUD 1945", start: 0, count: 10 }], material: ["Kenali kedudukan UUD Negara Republik Indonesia Tahun 1945 sebagai hukum dasar tertulis.", "Pelajari prinsip kedaulatan rakyat, bentuk negara, dan ketentuan dasar dalam konstitusi."] },
+  { id: 3, title: "Level 3", topic: "UUD 1945 · Bagian 2", sections: [{ category: "UUD 1945", start: 10, count: 10 }], material: ["Pahami pembagian kekuasaan dan hubungan antarlembaga negara menurut konstitusi.", "Gunakan bunyi pasal dan konteksnya untuk menilai pernyataan tentang ketatanegaraan."] },
+  { id: 4, title: "Level 4", topic: "UUD 1945 · Bagian 3", sections: [{ category: "UUD 1945", start: 20, count: 10 }], material: ["Pelajari hak, kewajiban, dan jaminan konstitusional warga negara.", "Bedakan ketentuan yang mengatur kewenangan lembaga dengan hak warga negara."] },
+  { id: 5, title: "Level 5", topic: "Bentuk negara & kebinekaan", sections: [{ category: "BENTUK NEGARA" }, { category: "BHINNEKA TUNGGAL IKA" }, { category: "LEMBAGA NEGARA" }, { category: "HAK DAN KEWAJIBAN" }], material: ["Pahami bentuk Negara Kesatuan Republik Indonesia dan makna Bhinneka Tunggal Ika.", "Kenali fungsi lembaga negara serta keseimbangan hak dan kewajiban warga."] },
+  { id: 6, title: "Level 6", topic: "Nasionalisme & wawasan kebangsaan", sections: [{ category: "NASIONALISME" }, { category: "WAWASAN KEBANGSAAN" }], material: ["Nasionalisme diwujudkan melalui kepentingan bersama, persatuan, dan kontribusi positif bagi bangsa.", "Wawasan kebangsaan memandang keberagaman sebagai kekuatan dalam kerangka persatuan Indonesia."] },
+  { id: 7, title: "Level 7", topic: "Sejarah Indonesia", sections: [{ category: "SEJARAH KEMERDEKAAN" }, { category: "SEJARAH INDONESIA", start: 0, count: 8 }], material: ["Susun peristiwa sejarah dalam urutan waktu dan pahami hubungan sebab-akibatnya.", "Pelajari perjuangan kemerdekaan serta peran tokoh dan peristiwa penting dalam sejarah Indonesia."] },
+  { id: 8, title: "Level 8", topic: "Sejarah & bela negara", sections: [{ category: "SEJARAH INDONESIA", start: 8, count: 3 }, { category: "BELA NEGARA" }], material: ["Tinjau kembali peristiwa sejarah dan nilai persatuan yang terkandung di dalamnya.", "Bela negara dapat diwujudkan melalui sikap taat aturan, menjaga persatuan, dan berkontribusi sesuai peran."] }
+];
+const PRACTICE_SUBJECTS = {
+  TIU: {
+    name: "Tes Intelegensia Umum",
+    description: "Numerik, deret, analogi, dan kemampuan verbal.",
+    levels: TIU_LEVEL_GROUPS.flatMap((group) => group.levels),
+    groups: TIU_LEVEL_GROUPS
+  },
+  TKP: {
+    name: "Tes Karakteristik Pribadi",
+    description: "Pelayanan, integritas, kerja sama, dan karakter kerja.",
+    levels: TKP_LEVELS,
+    groups: [{ title: "Pengembangan karakter kerja · 8 level", levels: TKP_LEVELS }]
+  },
+  TWK: {
+    name: "Tes Wawasan Kebangsaan",
+    description: "Pancasila, konstitusi, kebangsaan, dan sejarah Indonesia.",
+    levels: TWK_LEVELS,
+    groups: [{ title: "Wawasan kebangsaan · 8 level", levels: TWK_LEVELS }]
+  }
+};
 const TEST_BANKS = { TIU: "question.json", TKP: "tkp.json", TWK: "twk.json" };
 const TEST_TARGETS = { TIU: 80, TKP: 156, TWK: 65 };
 const FIXED_ACCESS_LIMITS = {
@@ -57,7 +99,8 @@ const PACKAGES = {
       { included: true, text: "10 soal per sesi" },
       { included: false, text: "Pilih tingkat kesulitan" },
       { included: false, text: "Masuk leaderboard tertinggi" },
-      { included: false, text: "E-book gratis" }
+      { included: false, text: "E-book gratis" },
+      { included: false, text: "Analisis belajar lanjutan" }
     ]
   },
   tempur: {
@@ -68,7 +111,8 @@ const PACKAGES = {
       { included: true, text: "15 soal per sesi" },
       { included: false, text: "Pilih tingkat kesulitan" },
       { included: false, text: "Masuk leaderboard tertinggi" },
-      { included: true, text: "E-book gratis" }
+      { included: true, text: "E-book gratis" },
+      { included: false, text: "Analisis belajar lanjutan" }
     ]
   },
   victory: {
@@ -78,11 +122,12 @@ const PACKAGES = {
       { included: true, text: "Akses selamanya" },
       { included: true, text: "Pilih jumlah soal dan tingkat kesulitan" },
       { included: true, text: "Masuk leaderboard tertinggi" },
-      { included: true, text: "E-book gratis" }
+      { included: true, text: "E-book gratis" },
+      { included: true, text: "Analisis belajar lanjutan" }
     ]
   }
 };
-const screens = ["landing-view", "auth-view", "starter-auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view", "tiu-learning-view"];
+const screens = ["landing-view", "auth-view", "starter-auth-view", "dashboard-view", "practice-view", "analysis-view", "profile-view", "reviews-view", "quiz-view", "result-view", "tiu-learning-view"];
 
 let selectedTest = "TIU";
 let selectedDifficulty = null;
@@ -102,12 +147,13 @@ let leaderboardRequestPromise = null;
 let scoreProgressRequestId = 0;
 let sessionFinished = false;
 let accountExpiryTimer = null;
-let tiuLearningData = null;
-let activeTiuLevel = null;
-let activeTiuQuestions = [];
-let activeTiuAnswers = [];
-let activeTiuQuestion = 0;
-let tiuLearningStage = "lesson";
+const practiceDataCache = {};
+let selectedPracticeSubject = null;
+let activeLearningLevel = null;
+let activeLearningQuestions = [];
+let activeLearningAnswers = [];
+let activeLearningQuestion = 0;
+let learningStage = "lesson";
 
 const $ = (id) => document.getElementById(id);
 const readStored = (key, fallback) => {
@@ -221,6 +267,14 @@ function showScreen(screenId) {
   closeMobileMenu();
   $("landing-nav").classList.toggle("hidden", screenId !== "landing-view" || Boolean(currentUser()));
   $("mobile-menu-toggle").classList.toggle("hidden", screenId !== "landing-view" || Boolean(currentUser()));
+  const navScreens = ["dashboard-view", "practice-view", "analysis-view", "profile-view"];
+  const showUserNavigation = Boolean(currentUser()) && navScreens.includes(screenId);
+  $("user-bottom-nav").classList.toggle("hidden", !showUserNavigation);
+  document.body.classList.toggle("has-user-bottom-nav", showUserNavigation);
+  $("user-bottom-nav").querySelectorAll("[data-nav-screen]").forEach((button) => {
+    if (button.dataset.navScreen === screenId) button.setAttribute("aria-current", "page");
+    else button.removeAttribute("aria-current");
+  });
   screens.forEach((id) => $(id).classList.toggle("hidden", id !== screenId));
 }
 
@@ -327,16 +381,20 @@ function profilePhotoUrl(profilePhotoId) {
 
 function renderProfilePhoto() {
   const profilePhotoId = localStorage.getItem(STORAGE.profilePhotoId);
-  const image = $("profile-avatar-image");
-  const initial = $("profile-avatar-initial");
-  initial.textContent = Array.from(currentUserName().trim())[0] || "U";
-  initial.hidden = false;
-  initial.classList.remove("hidden");
-  image.hidden = true;
-  image.classList.add("hidden");
-  if (!profilePhotoId) return;
-  image.src = `${profilePhotoUrl(profilePhotoId)}&v=${Date.now()}`;
-  activateAvatarImages($("profile-avatar"));
+  ["profile-avatar", "profile-page-avatar"].forEach((avatarId) => {
+    const avatar = $(avatarId);
+    if (!avatar) return;
+    const image = avatar.querySelector(".avatar-image");
+    const initial = avatar.querySelector(".avatar-initial");
+    initial.textContent = Array.from(currentUserName().trim())[0] || "U";
+    initial.hidden = false;
+    initial.classList.remove("hidden");
+    image.hidden = true;
+    image.classList.add("hidden");
+    if (!profilePhotoId) return;
+    image.src = `${profilePhotoUrl(profilePhotoId)}&v=${Date.now()}`;
+    activateAvatarImages(avatar);
+  });
 }
 
 function activateAvatarImages(root) {
@@ -462,6 +520,8 @@ function syncHeader() {
   $("profile-menu-name").textContent = email ? currentUserName() : "";
   $("profile-menu-email").textContent = email || "";
   $("profile-menu").classList.toggle("hidden", !email);
+  $("profile-edit-name").value = email ? currentUserName() : "";
+  $("profile-account-email").value = email || "";
   if (!email) closeProfileMenu();
 }
 
@@ -475,6 +535,31 @@ function toggleProfileMenu() {
   const isOpen = !panel.hidden;
   panel.hidden = isOpen;
   $("profile-menu-toggle").setAttribute("aria-expanded", String(!isOpen));
+}
+
+async function logoutUser() {
+  try {
+    const response = await fetch("/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "logout" })
+    });
+    const result = await readApiJson(response);
+    if (!response.ok) throw new Error(result.error || "Logout tidak dapat diproses.");
+  } catch (error) {
+    console.error("Tidak dapat mengakhiri sesi:", error);
+  } finally {
+    clearAccountExpiryTimer();
+    scoreProgressRequestId += 1;
+    $("print-certificate-button").disabled = true;
+    $("certificate-status").textContent = "Masuk dengan akun Victory untuk memeriksa kelayakan sertifikat.";
+    localStorage.removeItem(STORAGE.currentUser);
+    localStorage.removeItem(STORAGE.currentName);
+    localStorage.removeItem(STORAGE.currentValidity);
+    localStorage.removeItem(STORAGE.profilePhotoId);
+    syncHeader();
+    showLanding();
+  }
 }
 
 function clearAccountExpiryTimer() {
@@ -545,54 +630,327 @@ function showDashboard() {
   renderProfilePhoto();
   syncHeader();
   configureAccountAccess();
-  renderTiuLearningLevels();
+  renderHomeSummary();
+  renderHomeLeaderboardRank();
   renderHistory();
   renderScoreProgress();
   showScreen("dashboard-view");
 }
 
-function getTiuLearningProgress(email = currentUser()) {
-  const stored = readStored(STORAGE.tiuLearningProgress, {});
+function getLearningProgress(subject, email = currentUser()) {
+  const stored = readStored(STORAGE.learningProgress, {});
   const userProgress = stored && typeof stored === "object" && !Array.isArray(stored)
     ? stored[email]
     : null;
-  return userProgress && typeof userProgress === "object" && !Array.isArray(userProgress)
-    ? userProgress
-    : {};
+  const subjectProgress = userProgress && typeof userProgress === "object" && !Array.isArray(userProgress)
+    ? userProgress[subject]
+    : null;
+  if (subjectProgress && typeof subjectProgress === "object" && !Array.isArray(subjectProgress)) return subjectProgress;
+  if (subject === "TIU") {
+    const oldProgress = readStored(STORAGE.tiuLearningProgress, {});
+    const oldUserProgress = oldProgress && typeof oldProgress === "object" && !Array.isArray(oldProgress)
+      ? oldProgress[email]
+      : null;
+    if (oldUserProgress && typeof oldUserProgress === "object" && !Array.isArray(oldUserProgress)) return oldUserProgress;
+  }
+  return {};
 }
 
-function canAccessTiuLearningLevel(levelId, progress = getTiuLearningProgress()) {
-  if (!Number.isInteger(levelId) || levelId < 1 || levelId > TIU_LEVEL_COUNT) return false;
+function canAccessLearningLevel(subject, levelId, progress = getLearningProgress(subject)) {
+  const course = PRACTICE_SUBJECTS[subject];
+  if (!course || !Number.isInteger(levelId) || levelId < 1 || levelId > course.levels.length) return false;
   for (let previousLevel = 1; previousLevel < levelId; previousLevel += 1) {
     if (!progress[previousLevel]) return false;
   }
   return true;
 }
 
-function renderTiuLearningLevels() {
-  const section = $("victory-tiu-section");
-  const isVictory = currentValidity() === "forever";
-  section.classList.toggle("hidden", !isVictory);
-  if (!isVictory) return;
+function renderHomeSummary() {
+  const totals = getStudyTotals();
+  $("home-tryout-count").textContent = String(totals.tryoutQuestions);
+  $("home-practice-count").textContent = String(totals.practiceQuestions);
+}
 
-  const progress = getTiuLearningProgress();
-  $("victory-tiu-levels").innerHTML = TIU_LEVEL_GROUPS.map((group) => `
+function getStudyTotals(email = currentUser()) {
+  const totals = { tryoutQuestions: 0, practiceQuestions: 0, bySubject: {} };
+  Object.keys(PRACTICE_SUBJECTS).forEach((subject) => {
+    totals.bySubject[subject] = { practice: 0, tryout: 0 };
+  });
+  const tryouts = readStored(STORAGE.history, []);
+  if (Array.isArray(tryouts)) {
+    tryouts.forEach((item) => {
+      if (!item || item.email !== email || !Object.prototype.hasOwnProperty.call(totals.bySubject, item.test)) return;
+      const count = Number.isSafeInteger(item.answeredCount) && item.answeredCount >= 0
+        ? item.answeredCount
+        : Number.isSafeInteger(item.questionCount) && item.questionCount >= 0 ? item.questionCount : 0;
+      totals.tryoutQuestions += count;
+      totals.bySubject[item.test].tryout += count;
+    });
+  }
+  const practice = readStored(STORAGE.learningHistory, []);
+  if (Array.isArray(practice)) {
+    practice.forEach((item) => {
+      if (!item || item.email !== email || !Object.prototype.hasOwnProperty.call(totals.bySubject, item.subject)) return;
+      const count = Number.isSafeInteger(item.answeredCount) && item.answeredCount >= 0 ? item.answeredCount : 0;
+      totals.practiceQuestions += count;
+      totals.bySubject[item.subject].practice += count;
+    });
+  }
+  const savedTotals = readStored(STORAGE.activityTotals, {});
+  const userTotals = savedTotals && typeof savedTotals === "object" && !Array.isArray(savedTotals)
+    ? savedTotals[email]
+    : null;
+  Object.keys(totals.bySubject).forEach((subject) => {
+    ["practice", "tryout"].forEach((activity) => {
+      const savedCount = userTotals && userTotals[subject] && userTotals[subject][activity];
+      if (Number.isSafeInteger(savedCount) && savedCount >= 0) {
+        totals.bySubject[subject][activity] = Math.max(totals.bySubject[subject][activity], savedCount);
+      }
+    });
+  });
+  totals.practiceQuestions = Object.values(totals.bySubject).reduce((sum, item) => sum + item.practice, 0);
+  totals.tryoutQuestions = Object.values(totals.bySubject).reduce((sum, item) => sum + item.tryout, 0);
+  return totals;
+}
+
+function recordActivityQuestions(activity, subject, answeredCount, email = currentUser()) {
+  const totals = getStudyTotals(email);
+  const saved = readStored(STORAGE.activityTotals, {});
+  const allTotals = saved && typeof saved === "object" && !Array.isArray(saved) ? saved : {};
+  const userTotals = Object.fromEntries(Object.entries(totals.bySubject).map(([name, counts]) => [name, { ...counts }]));
+  userTotals[subject][activity] += answeredCount;
+  allTotals[email] = userTotals;
+  writeStored(STORAGE.activityTotals, allTotals);
+}
+
+function renderAnalysis() {
+  const hasAnalysisAccess = currentValidity() === "forever";
+  $("analysis-locked").classList.toggle("hidden", hasAnalysisAccess);
+  $("analysis-content").classList.toggle("hidden", !hasAnalysisAccess);
+  if (!hasAnalysisAccess) return;
+
+  const totals = getStudyTotals();
+  $("analysis-practice-total").textContent = String(totals.practiceQuestions);
+  $("analysis-tryout-total").textContent = String(totals.tryoutQuestions);
+  const maxCount = Math.max(1, ...Object.values(totals.bySubject).flatMap((counts) => [counts.practice, counts.tryout]));
+  $("analysis-chart").innerHTML = Object.entries(totals.bySubject).map(([subject, counts]) => `
+    <article class="analysis-subject">
+      <h3>${subject}</h3>
+      <div class="analysis-bar-row"><span>Latihan</span><div class="analysis-bar-track"><span class="analysis-bar practice-bar" style="width:${Math.round((counts.practice / maxCount) * 100)}%"></span></div><strong>${counts.practice}</strong></div>
+      <div class="analysis-bar-row"><span>Tryout</span><div class="analysis-bar-track"><span class="analysis-bar tryout-bar" style="width:${Math.round((counts.tryout / maxCount) * 100)}%"></span></div><strong>${counts.tryout}</strong></div>
+    </article>
+  `).join("");
+  const tryouts = readStored(STORAGE.history, []);
+  const practice = readStored(STORAGE.learningHistory, []);
+  const recentItems = [
+    ...(Array.isArray(tryouts) ? tryouts.filter((item) => item.email === currentUser()).map((item) => ({ ...item, activity: "Tryout", subject: item.test })) : []),
+    ...(Array.isArray(practice) ? practice.filter((item) => item.email === currentUser()).map((item) => ({ ...item, activity: "Latihan", subject: item.subject })) : [])
+  ].sort((first, second) => Date.parse(second.completedAt || "") - Date.parse(first.completedAt || "")).slice(0, 8);
+  $("analysis-history").innerHTML = recentItems.length
+    ? recentItems.map((item) => {
+      const completedAt = Date.parse(item.completedAt || "");
+      const date = item.date || (Number.isFinite(completedAt)
+        ? new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date(completedAt))
+        : "Tanggal tidak tersedia");
+      return `<div class="history-item"><span>${escapeHtml(item.activity)} · ${escapeHtml(item.subject)}${item.level ? ` · ${escapeHtml(item.level)}` : ""} · ${escapeHtml(date)}</span><strong>${Number.isFinite(item.score) ? `${item.score}%` : "—"}</strong></div>`;
+    }).join("")
+    : '<p class="empty-state">Selesaikan latihan atau tryout untuk mulai melihat progresmu.</p>';
+}
+
+function renderHomeLeaderboardRank() {
+  const position = $("home-rank-position");
+  const participants = $("home-rank-participants");
+  const message = $("home-rank-message");
+  const action = $("home-rank-action");
+  const hasLeaderboardAccess = currentValidity() === "forever";
+  if (!hasLeaderboardAccess) {
+    position.textContent = "Terkunci";
+    participants.textContent = "Fitur khusus paket Victory";
+    message.textContent = "Buka akses leaderboard untuk melihat peringkatmu.";
+    action.innerHTML = 'Buka kunci <span aria-hidden="true">→</span>';
+    return;
+  }
+  action.innerHTML = 'Kerjakan tryout <span aria-hidden="true">→</span>';
+  loadHomeLeaderboardRank(position, participants, message);
+}
+
+async function loadHomeLeaderboardRank(position, participants, message) {
+  position.textContent = "Memuat...";
+  participants.textContent = "Memuat jumlah peserta...";
+  message.textContent = "Kerjakan tryout untuk mengejar peringkat 1.";
+  try {
+    const response = await fetch("/api/leaderboard", { cache: "no-store" });
+    const result = await readApiJson(response);
+    const rank = result && result.leaderboard && result.leaderboard.rank;
+    const participantCount = result && result.leaderboard && result.leaderboard.participantCount;
+    if (!response.ok) throw new Error((result && result.error) || `Peringkat gagal dimuat (${response.status}).`);
+    if (!Number.isSafeInteger(participantCount) || participantCount < 0
+      || (rank !== null && (!Number.isSafeInteger(rank) || rank < 1 || rank > participantCount))) {
+      throw new Error("Data peringkat leaderboard dari server tidak valid.");
+    }
+    position.textContent = rank === null ? "Belum masuk" : `#${rank}`;
+    participants.textContent = `dari ${participantCount} peserta`;
+    message.textContent = rank === 1
+      ? "Kamu berada di peringkat 1. Kerjakan tryout lagi untuk mempertahankan posisi!"
+      : "Kerjakan tryout untuk mengejar peringkat 1.";
+  } catch (error) {
+    console.error("Tidak dapat memuat peringkat pengguna:", error);
+    position.textContent = "—";
+    participants.textContent = "Peringkat belum tersedia";
+    message.textContent = error.message || "Data peringkat belum dapat dimuat. Coba lagi nanti.";
+  }
+}
+
+function renderPracticeSubjects() {
+  $("practice-subject-picker").innerHTML = Object.entries(PRACTICE_SUBJECTS).map(([subject, course]) => {
+    const completed = Object.keys(getLearningProgress(subject)).length;
+    return `
+      <button class="practice-subject-card" type="button" data-practice-subject="${subject}">
+        <span class="practice-subject-icon">${subject}</span>
+        <span class="practice-subject-name">${escapeHtml(course.name)}</span>
+        <span class="practice-subject-description">${escapeHtml(course.description)}</span>
+        <span class="practice-subject-progress">${completed} dari ${course.levels.length} level selesai <span aria-hidden="true">→</span></span>
+      </button>
+    `;
+  }).join("");
+}
+
+function showPractice() {
+  if (!currentUser()) {
+    showLogin();
+    return;
+  }
+  selectedPracticeSubject = null;
+  $("practice-level-view").classList.add("hidden");
+  $("practice-subject-picker").classList.remove("hidden");
+  renderPracticeSubjects();
+  showScreen("practice-view");
+}
+
+function showAnalysis() {
+  if (!currentUser()) {
+    showLogin();
+    return;
+  }
+  renderAnalysis();
+  showScreen("analysis-view");
+}
+
+function showProfile() {
+  if (!currentUser()) {
+    showLogin();
+    return;
+  }
+  $("profile-edit-name").value = currentUserName();
+  $("profile-name-message").textContent = "";
+  $("profile-name-message").classList.remove("success");
+  $("profile-photo-message").textContent = "";
+  $("profile-photo-message").classList.remove("success");
+  renderProfilePhoto();
+  syncHeader();
+  showScreen("profile-view");
+}
+
+async function updateProfileName(event) {
+  event.preventDefault();
+  const name = $("profile-edit-name").value.trim();
+  const message = $("profile-name-message");
+  const button = $("profile-save-button");
+  message.classList.remove("success");
+  message.textContent = "";
+  if (!name || name.length > 80) {
+    message.textContent = "Nama wajib diisi dan maksimal 80 karakter.";
+    return;
+  }
+  button.disabled = true;
+  message.textContent = "Menyimpan perubahan...";
+  try {
+    const response = await fetch("/api/profile", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name })
+    });
+    const result = await readApiJson(response);
+    if (!response.ok || !result.user || result.user.name !== name) {
+      throw new Error(result.error || "Nama profil gagal diperbarui.");
+    }
+    localStorage.setItem(STORAGE.currentName, result.user.name);
+    syncHeader();
+    renderProfilePhoto();
+    $("welcome-title").textContent = `Siap latihan hari ini, ${currentUserName().split(" ")[0]}?`;
+    message.textContent = "Nama profil berhasil diperbarui.";
+    message.classList.add("success");
+  } catch (error) {
+    console.error("Tidak dapat memperbarui nama profil:", error);
+    message.textContent = error.message || "Nama profil gagal diperbarui. Coba lagi.";
+  } finally {
+    button.disabled = false;
+  }
+}
+
+async function loadPracticeData(subject) {
+  if (practiceDataCache[subject]) return practiceDataCache[subject];
+  const path = subject === "TIU" ? "./tiu-learning.json" : `./${TEST_BANKS[subject]}`;
+  const response = await fetch(path);
+  if (!response.ok) throw new Error(`Materi ${subject} tidak dapat dimuat (${response.status}).`);
+  const data = await response.json();
+  if (subject === "TIU" ? !data || !Array.isArray(data.levels) : !Array.isArray(data)) {
+    throw new Error(`Bank soal ${subject} tidak memiliki format yang valid.`);
+  }
+  practiceDataCache[subject] = data;
+  return data;
+}
+
+function getPracticeQuestions(subject, level, data) {
+  if (subject === "TIU") return level.questions;
+  return level.sections.flatMap((section) => {
+    const matching = data.filter((question) => question.category === section.category);
+    const start = section.start || 0;
+    return section.count === undefined ? matching.slice(start) : matching.slice(start, start + section.count);
+  });
+}
+
+async function openPracticeSubject(subject) {
+  if (!Object.prototype.hasOwnProperty.call(PRACTICE_SUBJECTS, subject)) return;
+  selectedPracticeSubject = subject;
+  try {
+    const data = await loadPracticeData(subject);
+    const course = PRACTICE_SUBJECTS[subject];
+    $("practice-subject-picker").classList.add("hidden");
+    $("practice-level-view").classList.remove("hidden");
+    $("practice-subject-title").textContent = `Belajar ${subject}`;
+    $("practice-subject-description").textContent = course.description;
+    await renderPracticeLevels(subject, data);
+  } catch (error) {
+    console.error(`Tidak dapat memuat materi ${subject}:`, error);
+    showToast(error.message || `Materi ${subject} gagal dimuat.`);
+  }
+}
+
+async function renderPracticeLevels(subject, loadedData) {
+  const course = PRACTICE_SUBJECTS[subject];
+  const data = loadedData || await loadPracticeData(subject);
+  const progress = getLearningProgress(subject);
+  $("practice-levels").innerHTML = course.groups.map((group) => `
     <section class="victory-tiu-group" aria-label="${escapeHtml(group.title)}">
       <h3>${escapeHtml(group.title)}</h3>
-      <div class="victory-tiu-group-list">${group.levels.map((level) => {
+      <div class="victory-tiu-group-list">${group.levels.map((levelInfo) => {
+        const level = subject === "TIU" ? data.levels.find((item) => item.id === levelInfo.id) : levelInfo;
+        if (!level) return "";
+        const questions = getPracticeQuestions(subject, level, data);
         const completed = Boolean(progress[level.id]);
-        const locked = !canAccessTiuLearningLevel(level.id, progress);
+        const locked = !canAccessLearningLevel(subject, level.id, progress);
         const requiredLevel = locked
           ? Array.from({ length: level.id - 1 }, (_, index) => index + 1).find((id) => !progress[id])
           : null;
         const status = locked
-          ? `Terkunci · selesaikan Level ${requiredLevel} terlebih dahulu`
-          : completed ? "Selesai · bisa diulang" : "Materi + 10 soal";
+          ? `Terkunci · selesaikan Level ${requiredLevel} terlebih dahulu · ${questions.length} soal`
+          : completed ? `Selesai · ${progress[level.id].score}% · bisa diulang` : `Materi + ${questions.length} soal`;
         return `
           <article class="victory-tiu-level ${locked ? "locked" : ""}">
             <span class="victory-tiu-level-number">${String(level.id).padStart(2, "0")}</span>
             <div class="victory-tiu-level-copy"><strong>${escapeHtml(level.title)}</strong><span>${escapeHtml(level.topic)}</span><small>${status}</small></div>
-            <button class="button ${locked ? "button-outline" : "button-primary"}" type="button" data-tiu-level="${level.id}" ${locked ? "disabled" : ""}>${locked ? "Terkunci" : completed ? "Ulangi" : "Mulai"} <span aria-hidden="true">→</span></button>
+            <button class="button ${locked ? "button-outline" : "button-primary"}" type="button" data-learning-level="${level.id}" ${locked ? "disabled" : ""}>${locked ? "Terkunci" : completed ? "Ulangi" : "Mulai"} <span aria-hidden="true">→</span></button>
           </article>
         `;
       }).join("")}</div>
@@ -600,102 +958,118 @@ function renderTiuLearningLevels() {
   `).join("");
 }
 
-async function openTiuLearningLevel(levelId) {
-  if (currentValidity() !== "forever") {
-    showToast("Kelas TIU bertahap hanya tersedia untuk akun Victory.");
-    showDashboard();
+function returnToPracticeLevels() {
+  if (!currentUser()) {
+    showLanding();
     return;
   }
-  const progress = getTiuLearningProgress();
-  if (!Number.isInteger(levelId) || levelId < 1 || levelId > TIU_LEVEL_COUNT
-    || !canAccessTiuLearningLevel(levelId, progress)) {
+  if (!selectedPracticeSubject) {
+    showPractice();
+    return;
+  }
+  $("practice-subject-picker").classList.add("hidden");
+  $("practice-level-view").classList.remove("hidden");
+  renderPracticeLevels(selectedPracticeSubject).catch((error) => {
+    console.error("Tidak dapat memperbarui daftar level:", error);
+    showToast(error.message || "Daftar level gagal dimuat.");
+  });
+  showScreen("practice-view");
+}
+
+async function openLearningLevel(subject, levelId) {
+  const course = PRACTICE_SUBJECTS[subject];
+  const progress = getLearningProgress(subject);
+  if (!course || !canAccessLearningLevel(subject, levelId, progress)) {
     showToast("Selesaikan level sebelumnya untuk membuka materi ini.");
     return;
   }
 
   try {
-    if (!tiuLearningData) {
-      const response = await fetch("./tiu-learning.json");
-      if (!response.ok) throw new Error(`Materi TIU tidak dapat dimuat (${response.status}).`);
-      tiuLearningData = await response.json();
+    const data = await loadPracticeData(subject);
+    const level = subject === "TIU"
+      ? data.levels.find((item) => item.id === levelId)
+      : course.levels.find((item) => item.id === levelId);
+    const questions = level && getPracticeQuestions(subject, level, data);
+    if (!level || !Array.isArray(questions) || !questions.length
+      || (subject === "TIU" && questions.length !== 10)) {
+      throw new Error(`Materi Level ${levelId} ${subject} tidak lengkap. Silakan coba lagi nanti.`);
     }
-    const level = tiuLearningData.levels.find((item) => item.id === levelId);
-    if (!level || !Array.isArray(level.questions) || level.questions.length !== 10) {
-      throw new Error("Materi level TIU tidak lengkap. Silakan coba lagi nanti.");
-    }
-    activeTiuLevel = level;
-    tiuLearningStage = "lesson";
-    renderTiuLearning();
+    activeLearningLevel = { ...level, questions, subject };
+    activeLearningQuestions = questions;
+    learningStage = "lesson";
+    $("tiu-learning-heading").textContent = `KELAS ${subject} · ${course.name.toUpperCase()}`;
+    renderLearning();
     showScreen("tiu-learning-view");
   } catch (error) {
-    console.error("Tidak dapat membuka materi TIU:", error);
-    showToast(error.message || "Materi TIU gagal dimuat.");
+    console.error(`Tidak dapat membuka materi ${subject}:`, error);
+    showToast(error.message || `Materi ${subject} gagal dimuat.`);
   }
 }
 
-function renderTiuLearning() {
+function renderLearning() {
   const content = $("tiu-learning-content");
-  if (tiuLearningStage === "lesson") {
+  const questionCount = activeLearningQuestions.length;
+  if (learningStage === "lesson") {
     content.innerHTML = `
       <article class="tiu-lesson-card">
-        <span class="section-kicker">${escapeHtml(activeTiuLevel.topic)}</span>
-        <h1>${escapeHtml(activeTiuLevel.title)}</h1>
-        <p class="muted">${escapeHtml(activeTiuLevel.description)}</p>
+        <span class="section-kicker">${escapeHtml(activeLearningLevel.subject)} · ${escapeHtml(activeLearningLevel.topic)}</span>
+        <h1>${escapeHtml(activeLearningLevel.title)}</h1>
+        <p class="muted">${escapeHtml(activeLearningLevel.description || `Pelajari materi ${activeLearningLevel.topic} sebelum mengerjakan latihan.`)}</p>
         <h2>Materi sebelum latihan</h2>
-        <ol class="tiu-material-list">${activeTiuLevel.material.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>
-        <div class="tiu-lesson-footer"><span>10 soal · Tanpa batas waktu</span><button class="button button-primary" type="button" data-tiu-action="start">Mulai latihan <span aria-hidden="true">→</span></button></div>
+        <ol class="tiu-material-list">${activeLearningLevel.material.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>
+        <div class="tiu-lesson-footer"><span>${questionCount} soal · Tanpa batas waktu</span><button class="button button-primary" type="button" data-tiu-action="start">Mulai latihan <span aria-hidden="true">→</span></button></div>
       </article>
     `;
     return;
   }
-  if (tiuLearningStage === "quiz") {
-    const question = activeTiuQuestions[activeTiuQuestion];
+  if (learningStage === "quiz") {
+    const question = activeLearningQuestions[activeLearningQuestion];
     content.innerHTML = `
-      <div class="tiu-practice-heading"><div><span class="section-kicker">${escapeHtml(activeTiuLevel.title)}</span><h1>Latihan ${activeTiuLevel.title}</h1></div><span class="pill">Tanpa batas waktu</span></div>
-      <div class="progress-track"><div class="progress-fill" style="width:${((activeTiuQuestion + 1) / activeTiuQuestions.length) * 100}%"></div></div>
+      <div class="tiu-practice-heading"><div><span class="section-kicker">${escapeHtml(activeLearningLevel.subject)} · ${escapeHtml(activeLearningLevel.title)}</span><h1>Latihan ${escapeHtml(activeLearningLevel.title)}</h1></div><span class="pill">Tanpa batas waktu</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:${((activeLearningQuestion + 1) / questionCount) * 100}%"></div></div>
       <article class="tiu-question-card">
         <div class="question-category">${escapeHtml(question.category)}</div>
-        <span class="tiu-question-count">SOAL ${String(activeTiuQuestion + 1).padStart(2, "0")} / 10</span>
+        <span class="tiu-question-count">SOAL ${String(activeLearningQuestion + 1).padStart(2, "0")} / ${questionCount}</span>
         <h2>${escapeHtml(question.question)}</h2>
         <div class="answer-list">${question.options.map((option, index) => `
-          <button class="answer-option ${activeTiuAnswers[activeTiuQuestion] === index ? "selected" : ""}" type="button" data-tiu-answer="${index}">
+          <button class="answer-option ${activeLearningAnswers[activeLearningQuestion] === index ? "selected" : ""}" type="button" data-tiu-answer="${index}">
             <span class="answer-letter">${LETTERS[index] || index + 1}</span><span>${escapeHtml(option)}</span>
           </button>
         `).join("")}</div>
         <div class="tiu-question-navigation">
-          <button class="button button-outline" type="button" data-tiu-action="previous" ${activeTiuQuestion === 0 ? "disabled" : ""}>← Sebelumnya</button>
-          <span>${activeTiuAnswers.filter((answer) => answer !== null).length} / 10 terjawab</span>
-          ${activeTiuQuestion === activeTiuQuestions.length - 1
+          <button class="button button-outline" type="button" data-tiu-action="previous" ${activeLearningQuestion === 0 ? "disabled" : ""}>← Sebelumnya</button>
+          <span>${activeLearningAnswers.filter((answer) => answer !== null).length} / ${questionCount} terjawab</span>
+          ${activeLearningQuestion === questionCount - 1
             ? '<button class="button button-primary" type="button" data-tiu-action="finish">Lihat hasil <span aria-hidden="true">✓</span></button>'
             : '<button class="button button-primary" type="button" data-tiu-action="next">Berikutnya <span aria-hidden="true">→</span></button>'}
         </div>
-        <div class="tiu-question-grid">${activeTiuQuestions.map((_, index) => `
-          <button class="question-number ${activeTiuAnswers[index] !== null ? "answered" : ""} ${index === activeTiuQuestion ? "current" : ""}" type="button" data-tiu-question="${index}" aria-label="Soal ${index + 1}">${String(index + 1).padStart(2, "0")}</button>
+        <div class="tiu-question-grid">${activeLearningQuestions.map((_, index) => `
+          <button class="question-number ${activeLearningAnswers[index] !== null ? "answered" : ""} ${index === activeLearningQuestion ? "current" : ""}" type="button" data-tiu-question="${index}" aria-label="Soal ${index + 1}">${String(index + 1).padStart(2, "0")}</button>
         `).join("")}</div>
       </article>
     `;
     return;
   }
 
-  const correct = activeTiuAnswers.reduce((total, answer, index) => total + (answer === activeTiuQuestions[index].answer ? 1 : 0), 0);
-  const score = Math.round((correct / activeTiuQuestions.length) * 100);
-  const nextLevel = activeTiuLevel.id < TIU_LEVEL_COUNT ? activeTiuLevel.id + 1 : null;
+  const correct = activeLearningAnswers.reduce((total, answer, index) => total + (answer === activeLearningQuestions[index].answer ? 1 : 0), 0);
+  const score = Math.round((correct / questionCount) * 100);
+  const nextLevel = activeLearningLevel.id < PRACTICE_SUBJECTS[activeLearningLevel.subject].levels.length ? activeLearningLevel.id + 1 : null;
   content.innerHTML = `
     <section class="tiu-result-hero">
       <span class="section-kicker">LEVEL SELESAI</span>
       <h1>${score === 100 ? "Sempurna, hebat!" : "Latihan selesai!"}</h1>
-      <p class="muted">${escapeHtml(activeTiuLevel.title)} · ${correct} dari 10 jawaban benar</p>
+      <p class="muted">${escapeHtml(activeLearningLevel.subject)} · ${escapeHtml(activeLearningLevel.title)} · ${correct} dari ${questionCount} jawaban benar</p>
       <div class="tiu-result-score">${score}<small>/ 100</small></div>
-      <p class="tiu-result-unlock">${nextLevel ? "Kunci jawaban dan pembahasan sudah tersedia. Level berikutnya sekarang terbuka." : "Kunci jawaban dan pembahasan sudah tersedia. Kamu telah menyelesaikan seluruh kelas TIU."}</p>
+      <p class="tiu-result-unlock">${nextLevel ? "Kunci jawaban dan pembahasan sudah tersedia. Level berikutnya sekarang terbuka." : "Kunci jawaban dan pembahasan sudah tersedia. Kamu telah menyelesaikan seluruh level materi ini."}</p>
       ${nextLevel
         ? `<button class="button button-primary" type="button" data-tiu-action="next-level">Lanjut ke Level ${nextLevel} <span aria-hidden="true">→</span></button>`
-        : '<button class="button button-primary" type="button" data-tiu-action="dashboard">Kembali ke dashboard <span aria-hidden="true">→</span></button>'}
+        : '<button class="button button-primary" type="button" data-tiu-action="dashboard">Kembali ke materi <span aria-hidden="true">→</span></button>'}
     </section>
     <section class="tiu-corrections">
-      <div class="section-heading compact"><div><span class="section-kicker">KUNCI & PEMBAHASAN</span><h2>Koreksi jawabanmu</h2></div><span class="pill">${10 - correct} perlu dipelajari</span></div>
-      <div class="review-list">${activeTiuQuestions.map((question, index) => {
-        const isCorrect = activeTiuAnswers[index] === question.answer;
-        const yourAnswer = activeTiuAnswers[index] === null ? "Belum dijawab" : `${LETTERS[activeTiuAnswers[index]] || activeTiuAnswers[index] + 1}. ${question.options[activeTiuAnswers[index]]}`;
+      <div class="section-heading compact"><div><span class="section-kicker">KUNCI & PEMBAHASAN</span><h2>Koreksi jawabanmu</h2></div><span class="pill">${questionCount - correct} perlu dipelajari</span></div>
+      <div class="review-list">${activeLearningQuestions.map((question, index) => {
+        const isCorrect = activeLearningAnswers[index] === question.answer;
+        const yourAnswer = activeLearningAnswers[index] === null ? "Belum dijawab" : `${LETTERS[activeLearningAnswers[index]] || activeLearningAnswers[index] + 1}. ${question.options[activeLearningAnswers[index]]}`;
         const keyAnswer = `${LETTERS[question.answer] || question.answer + 1}. ${question.options[question.answer]}`;
         return `
           <article class="review-card ${isCorrect ? "correct" : "incorrect"}">
@@ -711,59 +1085,83 @@ function renderTiuLearning() {
 }
 
 function startTiuLearningPractice() {
-  activeTiuQuestions = [...activeTiuLevel.questions];
-  activeTiuAnswers = Array(activeTiuQuestions.length).fill(null);
-  activeTiuQuestion = 0;
-  tiuLearningStage = "quiz";
-  renderTiuLearning();
+  activeLearningQuestions = [...activeLearningLevel.questions];
+  activeLearningAnswers = Array(activeLearningQuestions.length).fill(null);
+  activeLearningQuestion = 0;
+  learningStage = "quiz";
+  renderLearning();
 }
 
 function finishTiuLearningPractice() {
-  const correct = activeTiuAnswers.reduce((total, answer, index) => total + (answer === activeTiuQuestions[index].answer ? 1 : 0), 0);
-  const score = Math.round((correct / activeTiuQuestions.length) * 100);
-  const stored = readStored(STORAGE.tiuLearningProgress, {});
-  const progress = stored && typeof stored === "object" && !Array.isArray(stored) ? stored : {};
-  const userProgress = getTiuLearningProgress();
-  userProgress[activeTiuLevel.id] = { score, completedAt: new Date().toISOString() };
-  progress[currentUser()] = userProgress;
-  writeStored(STORAGE.tiuLearningProgress, progress);
-  tiuLearningStage = "result";
-  renderTiuLearning();
-  renderTiuLearningLevels();
+  const correct = activeLearningAnswers.reduce((total, answer, index) => total + (answer === activeLearningQuestions[index].answer ? 1 : 0), 0);
+  const score = Math.round((correct / activeLearningQuestions.length) * 100);
+  const completedAt = new Date().toISOString();
+  const answeredCount = activeLearningAnswers.filter((answer) => answer !== null).length;
+  recordActivityQuestions("practice", activeLearningLevel.subject, answeredCount);
+  const users = readStored(STORAGE.learningProgress, {});
+  const allProgress = users && typeof users === "object" && !Array.isArray(users) ? users : {};
+  const userProgress = allProgress[currentUser()] && typeof allProgress[currentUser()] === "object"
+    ? allProgress[currentUser()]
+    : {};
+  userProgress[activeLearningLevel.subject] = {
+    ...getLearningProgress(activeLearningLevel.subject),
+    [activeLearningLevel.id]: { score, completedAt }
+  };
+  allProgress[currentUser()] = userProgress;
+  writeStored(STORAGE.learningProgress, allProgress);
+  const history = readStored(STORAGE.learningHistory, []);
+  const learningHistory = Array.isArray(history) ? history : [];
+  learningHistory.unshift({
+    email: currentUser(),
+    subject: activeLearningLevel.subject,
+    level: activeLearningLevel.title,
+    score,
+    correct,
+    questionCount: activeLearningQuestions.length,
+    answeredCount,
+    completedAt
+  });
+  writeStored(STORAGE.learningHistory, learningHistory.slice(0, 200));
+  learningStage = "result";
+  renderLearning();
+  renderPracticeLevels(activeLearningLevel.subject).catch((error) => {
+    console.error("Tidak dapat memperbarui progres level:", error);
+  });
+  renderHomeSummary();
 }
 
 function handleTiuLearningAction(event) {
   const answerButton = event.target.closest("[data-tiu-answer]");
   if (answerButton) {
-    activeTiuAnswers[activeTiuQuestion] = Number(answerButton.dataset.tiuAnswer);
-    renderTiuLearning();
+    activeLearningAnswers[activeLearningQuestion] = Number(answerButton.dataset.tiuAnswer);
+    renderLearning();
     return;
   }
   const questionButton = event.target.closest("[data-tiu-question]");
   if (questionButton) {
-    activeTiuQuestion = Number(questionButton.dataset.tiuQuestion);
-    renderTiuLearning();
+    activeLearningQuestion = Number(questionButton.dataset.tiuQuestion);
+    renderLearning();
     return;
   }
   const actionButton = event.target.closest("[data-tiu-action]");
   if (!actionButton) return;
   const action = actionButton.dataset.tiuAction;
   if (action === "start") startTiuLearningPractice();
-  if (action === "previous" && activeTiuQuestion > 0) {
-    activeTiuQuestion -= 1;
-    renderTiuLearning();
+  if (action === "previous" && activeLearningQuestion > 0) {
+    activeLearningQuestion -= 1;
+    renderLearning();
   }
-  if (action === "next" && activeTiuQuestion < activeTiuQuestions.length - 1) {
-    activeTiuQuestion += 1;
-    renderTiuLearning();
+  if (action === "next" && activeLearningQuestion < activeLearningQuestions.length - 1) {
+    activeLearningQuestion += 1;
+    renderLearning();
   }
   if (action === "finish") {
-    const unanswered = activeTiuAnswers.filter((answer) => answer === null).length;
+    const unanswered = activeLearningAnswers.filter((answer) => answer === null).length;
     if (unanswered && !window.confirm(`Masih ada ${unanswered} soal belum dijawab. Selesaikan latihan sekarang?`)) return;
     finishTiuLearningPractice();
   }
-  if (action === "next-level") openTiuLearningLevel(activeTiuLevel.id + 1);
-  if (action === "dashboard") showDashboard();
+  if (action === "next-level") openLearningLevel(activeLearningLevel.subject, activeLearningLevel.id + 1);
+  if (action === "dashboard") returnToPracticeLevels();
 }
 
 function showLanding() {
@@ -1410,6 +1808,8 @@ function finishQuiz(expired = false) {
   clearInterval(timerId);
   const correct = answers.reduce((total, answer, index) => total + (answer === sessionQuestions[index].answer ? 1 : 0), 0);
   const score = Math.round((correct / sessionQuestions.length) * 100);
+  const answeredCount = answers.filter((answer) => answer !== null).length;
+  recordActivityQuestions("tryout", selectedTest, answeredCount);
   $("score-value").textContent = String(score);
   $("correct-value").textContent = `${correct} / ${sessionQuestions.length}`;
   $("result-test").textContent = selectedTest;
@@ -1418,12 +1818,15 @@ function finishQuiz(expired = false) {
   $("result-subtitle").textContent = expired ? "Waktu habis. Pelajari pembahasan dan coba lagi untuk meningkatkan skor." : "Setiap latihan membawamu selangkah lebih siap.";
 
   const history = readStored(STORAGE.history, []);
+  const completedAt = new Date().toISOString();
   history.unshift({
     email: currentUser(),
     test: selectedTest,
     correct,
     score,
     questionCount: sessionQuestions.length,
+    answeredCount,
+    completedAt,
     date: new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date())
   });
   writeStored(STORAGE.history, history.slice(0, 30));
@@ -1591,14 +1994,41 @@ function initialize() {
   });
   $("start-button").addEventListener("click", beginQuiz);
   $("profile-menu-toggle").addEventListener("click", toggleProfileMenu);
-  $("victory-tiu-levels").addEventListener("click", (event) => {
-    const button = event.target.closest("[data-tiu-level]");
-    if (button && !button.disabled) openTiuLearningLevel(Number(button.dataset.tiuLevel));
+  $("profile-menu-open-profile").addEventListener("click", () => {
+    closeProfileMenu();
+    showProfile();
   });
+  $("user-bottom-nav").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-nav-screen]");
+    if (!button) return;
+    const actions = {
+      "dashboard-view": showDashboard,
+      "practice-view": showPractice,
+      "analysis-view": showAnalysis,
+      "profile-view": showProfile
+    };
+    if (actions[button.dataset.navScreen]) actions[button.dataset.navScreen]();
+  });
+  $("analysis-unlock-button").addEventListener("click", () => showPackageDetails("victory"));
+  $("home-rank-action").addEventListener("click", () => {
+    if (currentValidity() === "forever") showDashboard();
+    else showPackageDetails("victory");
+  });
+  $("practice-subject-picker").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-practice-subject]");
+    if (button) openPracticeSubject(button.dataset.practiceSubject);
+  });
+  $("practice-levels").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-learning-level]");
+    if (button && !button.disabled) openLearningLevel(selectedPracticeSubject, Number(button.dataset.learningLevel));
+  });
+  $("practice-subjects-back").addEventListener("click", showPractice);
   $("tiu-learning-content").addEventListener("click", handleTiuLearningAction);
-  $("tiu-learning-back").addEventListener("click", showDashboard);
+  $("tiu-learning-back").addEventListener("click", returnToPracticeLevels);
+  $("profile-form").addEventListener("submit", updateProfileName);
   $("profile-photo-button").addEventListener("click", () => $("profile-photo-input").click());
   $("profile-photo-input").addEventListener("change", handleProfilePhotoChange);
+  $("profile-logout-button").addEventListener("click", logoutUser);
   $("open-reviews-button").addEventListener("click", showReviews);
   $("reviews-home-button").addEventListener("click", showDashboard);
   $("review-form").addEventListener("submit", handleReviewSubmit);
@@ -1621,30 +2051,7 @@ function initialize() {
   $("home-button").addEventListener("click", showDashboard);
   $("print-certificate-button").addEventListener("click", printCertificate);
   window.addEventListener("afterprint", () => $("certificate-page").classList.add("hidden"));
-  $("logout-button").addEventListener("click", async () => {
-    try {
-      const response = await fetch("/api/auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "logout" })
-      });
-      const result = await readApiJson(response);
-      if (!response.ok) throw new Error(result.error || "Logout tidak dapat diproses.");
-    } catch (error) {
-      console.error("Tidak dapat mengakhiri sesi:", error);
-    } finally {
-      clearAccountExpiryTimer();
-      scoreProgressRequestId += 1;
-      $("print-certificate-button").disabled = true;
-      $("certificate-status").textContent = "Masuk dengan akun Victory untuk memeriksa kelayakan sertifikat.";
-      localStorage.removeItem(STORAGE.currentUser);
-      localStorage.removeItem(STORAGE.currentName);
-      localStorage.removeItem(STORAGE.currentValidity);
-      localStorage.removeItem(STORAGE.profilePhotoId);
-      syncHeader();
-      showLanding();
-    }
-  });
+  $("logout-button").addEventListener("click", logoutUser);
   document.querySelectorAll("[data-home]").forEach((element) => element.addEventListener("click", (event) => {
     event.preventDefault();
     if (currentUser()) showDashboard();

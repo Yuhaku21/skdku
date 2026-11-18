@@ -159,7 +159,7 @@ async function handleLeaderboardApi(request, response) {
 }
 
 async function handleProfileApi(request, response) {
-  if (request.method === "POST" && /^application\/json(?:\s*;|$)/i.test(request.headers["content-type"] || "")) {
+  if (["POST", "PUT"].includes(request.method) && /^application\/json(?:\s*;|$)/i.test(request.headers["content-type"] || "")) {
     request.body = await readJsonBody(request, MAX_PROFILE_BODY_BYTES);
   }
   await profileHandler(request, response);
@@ -221,8 +221,8 @@ const server = http.createServer((request, response) => {
         sendJson(response, error.statusCode, { error: error.message });
         return;
       }
-      console.error("API foto profil gagal:", error);
-      sendJson(response, 500, { error: "Foto profil tidak dapat diproses saat ini." });
+      console.error("API profil gagal:", error);
+      sendJson(response, 500, { error: "Profil tidak dapat diproses saat ini." });
     });
     return;
   }

@@ -21,12 +21,12 @@ const SAVE_ACCUMULATED_SCORE_SCRIPT = [
   "return total"
 ].join("\n");
 
-async function getLeaderboard() {
+async function getLeaderboard(currentEmail = null) {
   const entries = await redisCommand(["ZREVRANGE", LEADERBOARD_KEY, 0, -1, "WITHSCORES"]);
   if (!Array.isArray(entries) || entries.length % 2 !== 0) {
     throw new Error("Format data leaderboard tidak valid.");
   }
-  if (!entries.length) return [];
+  if (!entries.length) return { users: [], rank: null, participantCount: 0 };
 
   const accounts = await redisCommand(["HGETALL", USERS_KEY]);
   if (!Array.isArray(accounts) || accounts.length % 2 !== 0) {
@@ -47,9 +47,12 @@ async function getLeaderboard() {
   for (let index = 0; index < entries.length; index += 2) {
     if (lifetimeEmails.has(entries[index])) eligibleEntries.push(entries[index], entries[index + 1]);
   }
-  const emails = eligibleEntries.filter((_, index) => index % 2 === 0).slice(0, 5);
+  const eligibleEmails = eligibleEntries.filter((_, index) => index % 2 === 0);
+  const rankIndex = currentEmail ? eligibleEmails.indexOf(currentEmail) : -1;
+  const participantCount = eligibleEmails.length;
+  const emails = eligibleEmails.slice(0, 5);
   const topEntries = eligibleEntries.slice(0, emails.length * 2);
-  if (!emails.length) return [];
+  if (!emails.length) return { users: [], rank: null, participantCount };
   const scoreFields = emails.flatMap((email) => [`${email}:TIU`, `${email}:TKP`, `${email}:TWK`]);
   const [names, scores] = await Promise.all([
     redisCommand(["HMGET", LEADERBOARD_NAMES_KEY, ...emails]),
@@ -68,7 +71,7 @@ async function getLeaderboard() {
       profilePhotoIds.set(accounts[index], account.profilePhotoId);
     }
   }
-  return emails.map((email, index) => {
+  const users = emails.map((email, index) => {
     const score = Number(topEntries[index * 2 + 1]);
     const sectionScores = scores.slice(index * 3, index * 3 + 3).map((value) => Number(value || 0));
     if (typeof names[index] !== "string" || !Number.isSafeInteger(score) || score < 0
@@ -83,6 +86,11 @@ async function getLeaderboard() {
       scores: { TIU: sectionScores[0], TKP: sectionScores[1], TWK: sectionScores[2] }
     };
   });
+  return {
+    users,
+    rank: rankIndex < 0 ? null : rankIndex + 1,
+    participantCount
+  };
 }
 
 async function getUserProgress(email) {
@@ -128,8 +136,13 @@ module.exports = async function leaderboardHandler(request, response) {
       const validity = authenticatedUser ? await getSessionValidity(session) : null;
       const certificateEligible = validity === "forever" && progress
         && Object.entries(CERTIFICATE_TARGETS).every(([test, target]) => progress[test] >= target);
+      const leaderboard = await getLeaderboard(authenticatedUser ? session.email : null);
       sendJson(response, 200, {
-        users: await getLeaderboard(),
+        users: leaderboard.users,
+        leaderboard: {
+          rank: leaderboard.rank,
+          participantCount: leaderboard.participantCount
+        },
         progress,
         certificateEligible: Boolean(certificateEligible),
         certificateName: authenticatedUser ? session.name : null

@@ -1,4 +1,4 @@
-const { getSession } = require("../lib/session");
+const { createSession, getSession } = require("../lib/session");
 const { redisCommand } = require("../lib/redis");
 const { sendJson } = require("../lib/http");
 const { ensureProfilePhotoId, isProfilePhotoId } = require("../lib/profile-photo");
@@ -24,8 +24,8 @@ function sendPhoto(response, base64) {
 }
 
 module.exports = async function profileHandler(request, response) {
-  if (request.method !== "GET" && request.method !== "POST") {
-    response.setHeader("Allow", "GET, POST");
+  if (!["GET", "POST", "PUT"].includes(request.method)) {
+    response.setHeader("Allow", "GET, POST, PUT");
     sendJson(response, 405, { error: "Metode tidak diizinkan." });
     return;
   }
@@ -52,7 +52,7 @@ module.exports = async function profileHandler(request, response) {
     }
     const session = await getSession(request);
     if (!session || session.role !== "user" || !session.email) {
-      sendJson(response, 401, { error: "Masuk terlebih dahulu untuk mengunggah foto profil." });
+      sendJson(response, 401, { error: "Masuk terlebih dahulu untuk mengubah profil." });
       return;
     }
     let payload;
@@ -63,8 +63,38 @@ module.exports = async function profileHandler(request, response) {
       return;
     }
     if (!payload || typeof payload !== "object" || Array.isArray(payload)
-      || Buffer.byteLength(JSON.stringify(payload), "utf8") > MAX_BODY_BYTES
-      || typeof payload.image !== "string"
+      || Buffer.byteLength(JSON.stringify(payload), "utf8") > MAX_BODY_BYTES) {
+      sendJson(response, 400, { error: "Data permintaan tidak valid atau terlalu besar." });
+      return;
+    }
+
+    if (request.method === "PUT") {
+      const name = typeof payload.name === "string" ? payload.name.trim() : "";
+      if (!name || name.length > 80 || /[\u0000-\u001f\u007f]/.test(name)) {
+        sendJson(response, 400, { error: "Nama wajib diisi, tidak boleh memuat karakter kontrol, dan maksimal 80 karakter." });
+        return;
+      }
+      const stored = await redisCommand(["HGET", USERS_KEY, session.email]);
+      if (typeof stored !== "string") {
+        sendJson(response, 404, { error: "Akun pengguna tidak ditemukan." });
+        return;
+      }
+      const account = JSON.parse(stored);
+      if (!account || typeof account !== "object" || Array.isArray(account)) {
+        throw new Error("Data akun di database tidak valid.");
+      }
+      await redisCommand(["HSET", USERS_KEY, session.email, JSON.stringify({ ...account, name })]);
+      await createSession(request, response, {
+        ...session,
+        name,
+        validity: session.validity || account.validity,
+        expiresAt: session.expiresAt === undefined ? account.expiresAt : session.expiresAt
+      });
+      sendJson(response, 200, { user: { name, email: session.email } });
+      return;
+    }
+
+    if (typeof payload.image !== "string"
       || !/^data:image\/webp;base64,[A-Za-z0-9+/]+={0,2}$/.test(payload.image)) {
       sendJson(response, 400, { error: "Foto harus berupa gambar WebP yang valid dan berukuran maksimal 20 KB." });
       return;
@@ -98,8 +128,8 @@ module.exports = async function profileHandler(request, response) {
     ]);
     sendJson(response, 200, { profilePhotoId });
   } catch (error) {
-    if (error.statusCode === 503) {
-      sendJson(response, 503, { error: error.message });
+    if (error.statusCode && error.statusCode < 600) {
+      sendJson(response, error.statusCode, { error: error.message });
       return;
     }
     console.error("API foto profil gagal:", error);
