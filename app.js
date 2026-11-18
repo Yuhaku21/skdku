@@ -52,7 +52,7 @@ const PACKAGES = {
     ]
   }
 };
-const screens = ["landing-view", "auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view"];
+const screens = ["landing-view", "auth-view", "starter-auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view"];
 
 let selectedTest = "TIU";
 let selectedDifficulty = null;
@@ -99,6 +99,10 @@ function closeMobileMenu() {
 function showPackageDetails(packageKey) {
   const selectedPackage = PACKAGES[packageKey];
   if (!selectedPackage) return;
+  if (packageKey === "starter") {
+    showStarterAuth("register");
+    return;
+  }
 
   const formatPrice = (price) => price === 0 ? "Gratis" : new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -447,6 +451,116 @@ function showLogin() {
   $("auth-email").focus();
 }
 
+function setStarterAuthMode(mode) {
+  const isRegister = mode === "register";
+  $("starter-register-form").classList.toggle("hidden", !isRegister);
+  $("starter-login-form").classList.toggle("hidden", isRegister);
+  $("starter-register-tab").classList.toggle("active", isRegister);
+  $("starter-register-tab").setAttribute("aria-pressed", String(isRegister));
+  $("starter-login-tab").classList.toggle("active", !isRegister);
+  $("starter-login-tab").setAttribute("aria-pressed", String(!isRegister));
+  $("starter-auth-title").textContent = isRegister ? "Buat akun Starter" : "Masuk ke Starter";
+  $("starter-auth-description").textContent = isRegister
+    ? "Akses latihan selama 1 hari dengan 10 soal per sesi."
+    : "Masuk dengan akun Starter yang masih berlaku.";
+  if (isRegister) $("starter-register-name").focus();
+  else $("starter-login-email").focus();
+}
+
+function showStarterAuth(mode) {
+  if (currentUser()) {
+    showDashboard();
+    return;
+  }
+  showScreen("starter-auth-view");
+  setStarterAuthMode(mode);
+}
+
+function returnToPricing() {
+  if (currentUser()) {
+    showDashboard();
+    return;
+  }
+  showLanding();
+  $("pricing-section").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function startUserSession(user) {
+  localStorage.setItem(STORAGE.currentUser, user.email);
+  localStorage.setItem(STORAGE.currentName, user.name);
+  localStorage.setItem(STORAGE.currentValidity, user.validity);
+  if (user.profilePhotoId) localStorage.setItem(STORAGE.profilePhotoId, user.profilePhotoId);
+  else localStorage.removeItem(STORAGE.profilePhotoId);
+  scheduleAccountExpiry(user.expiresAt);
+  syncHeader();
+  showDashboard();
+}
+
+async function handleStarterRegister(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const message = $("starter-register-message");
+  const name = $("starter-register-name").value.trim();
+  const email = $("starter-register-email").value.trim().toLowerCase();
+  const password = $("starter-register-password").value;
+  const passwordConfirm = $("starter-register-password-confirm").value;
+  message.classList.remove("success");
+  message.textContent = "";
+  if (password !== passwordConfirm) {
+    message.textContent = "Kata sandi dan ulangannya belum sama.";
+    return;
+  }
+
+  const submitButton = form.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  try {
+    const response = await fetch("/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "starter-register", name, email, password })
+    });
+    const result = await readApiJson(response);
+    if (!response.ok || !result.user || result.user.role !== "user" || result.user.validity !== "1-day") {
+      throw new Error(result.error || "Pendaftaran Starter tidak berhasil.");
+    }
+    form.reset();
+    startUserSession(result.user);
+  } catch (error) {
+    message.textContent = error.message || "Pendaftaran tidak dapat diproses saat ini.";
+  } finally {
+    submitButton.disabled = false;
+  }
+}
+
+async function handleStarterLogin(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const message = $("starter-login-message");
+  message.classList.remove("success");
+  message.textContent = "";
+  const email = $("starter-login-email").value.trim().toLowerCase();
+  const password = $("starter-login-password").value;
+  const submitButton = form.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  try {
+    const response = await fetch("/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "starter-login", email, password })
+    });
+    const result = await readApiJson(response);
+    if (!response.ok || !result.user || result.user.role !== "user" || result.user.validity !== "1-day") {
+      throw new Error(result.error || "Email atau kata sandi akun Starter tidak sesuai.");
+    }
+    form.reset();
+    startUserSession(result.user);
+  } catch (error) {
+    message.textContent = error.message || "Login Starter tidak dapat diproses saat ini.";
+  } finally {
+    submitButton.disabled = false;
+  }
+}
+
 function showReviews() {
   if (!currentUser()) {
     showLogin();
@@ -469,7 +583,6 @@ function renderHistory() {
   list.innerHTML = history.map((item) => `
     <div class="history-item"><span>${escapeHtml(item.test || "TIU")} · ${escapeHtml(item.date)} · ${item.correct}/${item.questionCount || 10} benar</span><strong>${item.score}</strong></div>
   `).join("");
-  activateAvatarImages(list);
 }
 
 async function renderScoreProgress() {
@@ -502,7 +615,6 @@ async function renderScoreProgress() {
         </div>
       `;
     }).join("");
-    activateAvatarImages(track);
     updateCertificate(result.progress, result.certificateEligible, result.certificateName);
   } catch (error) {
     console.error("Tidak dapat memuat progres skor:", error);
@@ -580,6 +692,7 @@ function renderLandingReviewCarousel(renderReview) {
       ${slideReviews.map(renderReview).join("")}
     </div>`;
   }).join("");
+  activateAvatarImages(track);
   controls.hidden = pageCount <= 1;
   showLandingReviewPage(landingReviewPage);
 
@@ -696,6 +809,7 @@ async function fetchAndRenderLeaderboard() {
         <strong class="leaderboard-score">${user.score}<small>total</small></strong>
       </li>
     `).join("");
+    activateAvatarImages(list);
   } catch (error) {
     console.error("Tidak dapat memuat leaderboard:", error);
     message.textContent = error.message || "Leaderboard tidak dapat dimuat.";
@@ -991,14 +1105,7 @@ async function restoreUserSession() {
       }
       return;
     }
-    localStorage.setItem(STORAGE.currentUser, result.user.email);
-    localStorage.setItem(STORAGE.currentName, result.user.name);
-    localStorage.setItem(STORAGE.currentValidity, result.user.validity);
-    if (result.user.profilePhotoId) localStorage.setItem(STORAGE.profilePhotoId, result.user.profilePhotoId);
-    else localStorage.removeItem(STORAGE.profilePhotoId);
-    scheduleAccountExpiry(result.user.expiresAt);
-    syncHeader();
-    showDashboard();
+    startUserSession(result.user);
   } catch (error) {
     console.error("Tidak dapat memulihkan sesi:", error);
     clearAccountExpiryTimer();
@@ -1044,9 +1151,13 @@ function initialize() {
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") closeMobileMenu();
   });
-  $("start-test-button").addEventListener("click", showLogin);
   $("nav-start-test-button").addEventListener("click", showLogin);
   $("back-to-landing-button").addEventListener("click", showLanding);
+  $("starter-back-button").addEventListener("click", returnToPricing);
+  $("starter-register-tab").addEventListener("click", () => setStarterAuthMode("register"));
+  $("starter-login-tab").addEventListener("click", () => setStarterAuthMode("login"));
+  $("starter-register-form").addEventListener("submit", handleStarterRegister);
+  $("starter-login-form").addEventListener("submit", handleStarterLogin);
   $("auth-form").addEventListener("submit", handleAuth);
   $("level-options").querySelectorAll("[data-test]").forEach((button) => {
     button.addEventListener("click", () => {

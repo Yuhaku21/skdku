@@ -88,7 +88,7 @@
               <h1>Latihan cerdas. <span>Strategi terasah.</span></h1>
               <p class="landing-jargon">Selangkah lebih dekat menuju impianmu.</p>
               <p class="muted">Bangun kesiapan SKD dengan latihan TIU, TKP, dan TWK yang terarah serta evaluasi setiap sesi.</p>
-              <button class="button button-primary landing-cta" id="start-test-button" type="button">Mulai tes sekarang <span>→</span></button>
+              <a class="button button-primary landing-cta" id="start-test-button" href="#pricing-section">Mulai tes sekarang <span>→</span></a>
               <div class="landing-hero-stats">
                 <div><strong>10–50</strong><span>soal per sesi</span></div>
                 <div><strong>12–52 menit</strong><span>waktu latihan</span></div>
@@ -127,7 +127,7 @@
             <div class="landing-section-intro">
               <span class="section-kicker">MULAI BELAJAR</span>
               <h2 id="order-title">Cara order paketan di SKDKU.</h2>
-              <p class="muted">Pilih paket yang sesuai, lalu ikuti langkah mudah berikut.</p>
+              <p class="muted">Starter bisa langsung didaftarkan. Untuk Tempur atau Victory, lanjutkan pemesanan melalui WhatsApp.</p>
             </div>
             <div class="order-steps">
               <article class="order-card">
@@ -136,11 +136,11 @@
               </article>
               <article class="order-card">
                 <span class="order-step">02</span>
-                <div><h3>Hubungi admin via WhatsApp</h3><p>Tekan tombol pilih paket, periksa rinciannya, lalu lanjutkan melalui WhatsApp. Starter gratis dapat diaktifkan lewat WhatsApp.</p></div>
+                <div><h3>Daftar atau hubungi admin</h3><p>Starter: pilih paket lalu daftar langsung. Tempur dan Victory: periksa rincian paket lalu lanjutkan melalui WhatsApp.</p></div>
               </article>
               <article class="order-card">
                 <span class="order-step">03</span>
-                <div><h3>Terima akun dan mulai tryout</h3><p>Setelah pesanan dikonfirmasi, admin membuat akun dan memberikan kredensial untuk masuk ke SKDKU.</p></div>
+                <div><h3>Aktifkan akun dan mulai tryout</h3><p>Akun Starter aktif selama 1 hari setelah pendaftaran. Untuk Tempur dan Victory, admin akan membantu aktivasi setelah pesanan dikonfirmasi.</p></div>
               </article>
             </div>
             <div class="order-cta-row">
@@ -242,7 +242,7 @@
           <div class="auth-panel">
             <button class="button button-quiet auth-back-button" id="back-to-landing-button" type="button">← Kembali ke beranda</button>
             <h2 id="auth-title">Masuk ke akun</h2>
-            <p class="muted" id="auth-description">Masuk dengan akun yang dibuat oleh admin.</p>
+            <p class="muted" id="auth-description">Masuk dengan akun SKDKU yang sudah terdaftar.</p>
             <form id="auth-form">
               <label for="auth-email">Email</label>
               <input id="auth-email" class="form-input" type="email" autocomplete="username" placeholder="nama@email.com" required />
@@ -251,7 +251,41 @@
               <p class="form-message" id="auth-message" aria-live="polite"></p>
               <button class="button button-primary button-wide" id="auth-submit" type="submit">Masuk ke akun <span>→</span></button>
             </form>
-            <p class="tiny-note">Belum punya akun? Hubungi admin. <a href="/admin-register">Login admin</a></p>
+            <p class="tiny-note">Belum punya akun Starter? Pilih paket Starter untuk mendaftar. Untuk paket lainnya, hubungi admin. <a href="/admin-register">Login admin</a></p>
+          </div>
+        </section>
+
+        <section class="starter-auth-view hidden" id="starter-auth-view">
+          <div class="starter-auth-card">
+            <button class="button button-quiet auth-back-button" id="starter-back-button" type="button">← Kembali ke paket</button>
+            <span class="section-kicker">PAKET STARTER · GRATIS</span>
+            <h1 id="starter-auth-title">Buat akun Starter</h1>
+            <p class="muted starter-auth-description" id="starter-auth-description">Akses latihan selama 1 hari dengan 10 soal per sesi.</p>
+            <div class="starter-auth-tabs" role="group" aria-label="Daftar atau masuk ke Starter">
+              <button class="starter-auth-tab active" id="starter-register-tab" type="button" aria-pressed="true">Daftar</button>
+              <button class="starter-auth-tab" id="starter-login-tab" type="button" aria-pressed="false">Masuk</button>
+            </div>
+            <form id="starter-register-form">
+              <label for="starter-register-name">Nama</label>
+              <input id="starter-register-name" class="form-input" type="text" autocomplete="name" maxlength="80" placeholder="Nama lengkap" required />
+              <label for="starter-register-email">Email</label>
+              <input id="starter-register-email" class="form-input" type="email" autocomplete="email" maxlength="254" placeholder="nama@email.com" required />
+              <label for="starter-register-password">Kata sandi</label>
+              <input id="starter-register-password" class="form-input" type="password" autocomplete="new-password" minlength="10" maxlength="128" placeholder="Minimal 10 karakter" required />
+              <label for="starter-register-password-confirm">Ulangi kata sandi</label>
+              <input id="starter-register-password-confirm" class="form-input" type="password" autocomplete="new-password" minlength="10" maxlength="128" placeholder="Masukkan ulang kata sandi" required />
+              <p class="form-message" id="starter-register-message" aria-live="polite"></p>
+              <button class="button button-primary button-wide" type="submit">Daftar dan mulai <span>→</span></button>
+            </form>
+            <form class="hidden" id="starter-login-form">
+              <label for="starter-login-email">Email</label>
+              <input id="starter-login-email" class="form-input" type="email" autocomplete="username" placeholder="nama@email.com" required />
+              <label for="starter-login-password">Kata sandi</label>
+              <input id="starter-login-password" class="form-input" type="password" autocomplete="current-password" placeholder="Minimal 10 karakter" minlength="10" required />
+              <p class="form-message" id="starter-login-message" aria-live="polite"></p>
+              <button class="button button-primary button-wide" type="submit">Masuk ke Starter <span>→</span></button>
+            </form>
+            <p class="tiny-note">Paket Starter hanya berlaku 1 hari sejak pendaftaran. Satu email hanya dapat digunakan untuk satu akun.</p>
           </div>
         </section>
 

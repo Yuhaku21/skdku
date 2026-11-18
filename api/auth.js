@@ -104,6 +104,10 @@ async function loginUser(request, response, payload) {
     sendJson(response, 401, { error: "Email atau password tidak sesuai." });
     return;
   }
+  if (payload.action === "starter-login" && getAccountValidity(account) !== "1-day") {
+    sendJson(response, 403, { error: "Halaman ini hanya untuk akun paket Starter." });
+    return;
+  }
   const expiresAt = account.expiresAt === undefined ? null : account.expiresAt;
   if (expiresAt !== null && (!Number.isSafeInteger(expiresAt) || expiresAt <= Date.now())) {
     sendJson(response, 403, { error: "Masa berlaku akun sudah habis. Hubungi admin." });
@@ -120,6 +124,45 @@ async function loginUser(request, response, payload) {
   };
   await createSession(request, response, user);
   sendJson(response, 200, { user });
+}
+
+async function registerStarterUser(request, response, payload) {
+  const name = typeof payload.name === "string" ? payload.name.trim() : "";
+  const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
+  const password = typeof payload.password === "string" ? payload.password : "";
+  if (!name || name.length > 80 || email.length > 254 || !isValidEmail(email)
+    || password.length < MIN_PASSWORD_LENGTH || password.length > 128) {
+    sendJson(response, 400, { error: "Nama, email valid, dan password 10–128 karakter wajib diisi." });
+    return;
+  }
+
+  const expiresAt = Date.now() + ACCOUNT_VALIDITY_MS["1-day"];
+  const salt = crypto.randomBytes(16).toString("hex");
+  const passwordHash = await hashPassword(password, salt);
+  const account = {
+    name,
+    salt,
+    passwordHash,
+    validity: "1-day",
+    expiresAt,
+    profilePhotoId: crypto.randomUUID()
+  };
+  const created = await redisCommand(["HSETNX", USERS_KEY, email, JSON.stringify(account)]);
+  if (created !== 1) {
+    sendJson(response, 409, { error: "Email sudah terdaftar. Silakan masuk atau gunakan email lain." });
+    return;
+  }
+
+  const user = {
+    role: "user",
+    email,
+    name,
+    validity: account.validity,
+    expiresAt,
+    profilePhotoId: null
+  };
+  await createSession(request, response, user);
+  sendJson(response, 201, { user });
 }
 
 async function createUser(request, response, payload) {
@@ -234,6 +277,8 @@ module.exports = async function authHandler(request, response) {
     if (!payload) return;
     if (payload.action === "admin-login") return await loginAdmin(request, response, payload);
     if (payload.action === "user-login") return await loginUser(request, response, payload);
+    if (payload.action === "starter-login") return await loginUser(request, response, payload);
+    if (payload.action === "starter-register") return await registerStarterUser(request, response, payload);
     if (payload.action === "create-user") return await createUser(request, response, payload);
     if (payload.action === "change-user-password") return await changeUserPassword(request, response, payload);
     if (payload.action === "list-users") return await listUsers(request, response);

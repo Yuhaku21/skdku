@@ -148,6 +148,14 @@ main { flex: 1; }
 }
 .auth-back-button { margin-bottom: 18px; padding-left: 0; }
 .auth-view { display: grid; grid-template-columns: 1.1fr .9fr; gap: 80px; align-items: center; min-height: 640px; padding: 58px 28px 70px; }
+.starter-auth-view { display: grid; min-height: 640px; place-items: center; padding: 58px 18px 70px; }
+.starter-auth-card { width: min(440px, 100%); padding: 27px 30px; border: 1px solid #ebedf2; border-radius: 18px; background: white; box-shadow: 0 12px 35px #1720330b; }
+.starter-auth-card h1 { margin: 10px 0 7px; color: var(--ink); font: 800 24px "Manrope", sans-serif; letter-spacing: -.7px; }
+.starter-auth-description { margin-bottom: 20px; font-size: 11px; }
+.starter-auth-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 18px; padding: 4px; border-radius: 10px; background: #f5f5f9; }
+.starter-auth-tab { min-height: 36px; border: 0; border-radius: 7px; background: transparent; color: #858b98; font-size: 11px; font-weight: 700; }
+.starter-auth-tab.active { background: white; color: var(--violet); box-shadow: 0 1px 5px #17203314; }
+.starter-auth-card .tiny-note { margin-top: 15px; }
 .auth-aside { position: relative; overflow: hidden; min-height: 440px; display: flex; flex-direction: column; justify-content: center; padding: 42px; border-radius: 25px; background: #ecebff; }
 .eyebrow, .section-kicker { color: var(--violet); font-size: 10px; letter-spacing: 1.5px; font-weight: 700; }
 .eyebrow { display: flex; align-items: center; gap: 8px; }
@@ -431,6 +439,7 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .landing-community-card { padding: 21px; }
   .landing-review-slide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .auth-view { grid-template-columns: 1fr; gap: 34px; min-height: 0; padding: 36px 0 45px; }
+  .starter-auth-view { min-height: 0; padding: 38px 0 48px; }
   .auth-aside { min-height: 300px; padding: 30px; }
   .auth-aside h1 { font-size: 31px; margin-top: 18px; }
   .auth-stats { margin-top: 21px; gap: 24px; }
@@ -488,6 +497,7 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .leaderboard-badge { padding: 7px 8px; font-size: 7px; }
   .landing-reviews-list { grid-template-columns: 1fr; }
   .auth-back-button { margin-bottom: 12px; }
+  .starter-auth-card { padding: 23px 18px; }
   .session-label { display: none; }
   .button-quiet { font-size: 10px; }
   .welcome-row { align-items: flex-start; flex-direction: column; gap: 14px; }

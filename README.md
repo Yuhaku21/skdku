@@ -16,10 +16,10 @@ Untuk memakai login, pembuatan akun, leaderboard, dan ulasan lokal, server juga 
 
 ## Fitur
 
-- Login pengguna dan admin memakai sesi aman dari API server. Akun pengguna hanya dapat dibuat oleh admin dengan masa berlaku 1 hari, 7 hari, atau selamanya; akun kedaluwarsa tidak dapat login dan sesi aktif dihentikan saat masa berlaku habis. Admin dapat melihat username, email, dan masa berlaku akun di tabel pengelolaan. Password pengguna disimpan sebagai hash PBKDF2.
+- Login pengguna dan admin memakai sesi aman dari API server. Pengunjung dapat mendaftar sendiri untuk paket Starter gratis yang berlaku 1 hari; akun lainnya dibuat oleh admin dengan masa berlaku 1 hari, 7 hari, atau selamanya. Akun kedaluwarsa tidak dapat login dan sesi aktif dihentikan saat masa berlaku habis. Admin dapat melihat username, email, dan masa berlaku akun di tabel pengelolaan. Password pengguna disimpan sebagai hash PBKDF2.
 - Landing page publik menampilkan hero dengan tombol login, informasi aplikasi, lima skor akumulasi global (TIU, TKP, TWK, dan total), dan ulasan terbaru dari pengguna. Skor tiap sesi dijumlahkan berdasarkan jenis tes dan disimpan di Upstash.
-- Landing page menampilkan paket Starter gratis (1 hari, 10 soal), Tempur (7 hari, 15 soal, diskon dari Rp50.000 menjadi Rp30.000), dan Victory (selamanya, diskon dari Rp70.000 menjadi Rp50.000). Pengunjung dapat melihat benefit dan total harga di dialog, lalu memesan melalui WhatsApp.
-- Landing page menyediakan section manfaat SKDKU dan panduan order tiga langkah: pilih paket, hubungi admin melalui WhatsApp, lalu gunakan akun yang dibuat admin untuk mulai tryout.
+- Landing page menampilkan paket Starter gratis (1 hari, 10 soal), Tempur (7 hari, 15 soal, diskon dari Rp50.000 menjadi Rp30.000), dan Victory (selamanya, diskon dari Rp70.000 menjadi Rp50.000). Tombol “Mulai tes sekarang” menuju bagian paket; Starter membuka card daftar/masuk, sedangkan Tempur dan Victory menggunakan alur pemesanan WhatsApp.
+- Landing page menyediakan section manfaat SKDKU dan panduan order: Starter dapat langsung mendaftar, sedangkan pengguna Tempur/Victory menghubungi admin via WhatsApp untuk aktivasi.
 - SEO landing page mencakup canonical URL, metadata Open Graph/Twitter dengan gambar pratinjau SKDKU, favicon, data terstruktur, `robots.txt`, dan `sitemap.xml`.
 - Dashboard pengguna menampilkan progres akumulasi TIU, TKP, dan TWK terhadap target masing-masing 80, 156, dan 65. Skor tiap sesi tryout (maksimal 100) ditambahkan ke akumulasi jenis tes terkait.
 - Pengguna dapat mengunggah foto profil dari dashboard. Foto otomatis dipotong persegi dan diperkecil sebelum disimpan di Upstash; foto ditampilkan di ulasan dan leaderboard, sehingga dapat dilihat oleh semua pengunjung.
