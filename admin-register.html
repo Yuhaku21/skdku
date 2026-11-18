@@ -86,10 +86,10 @@
           <div class="admin-table-wrap">
             <table class="admin-users-table">
               <thead>
-                <tr><th>Username</th><th>Email</th><th>Masa berlaku akun</th></tr>
+                <tr><th>Username</th><th>Email</th><th>Masa berlaku akun</th><th>Aksi</th></tr>
               </thead>
               <tbody id="admin-users-table-body">
-                <tr><td colspan="3" class="admin-users-empty">Memuat data akun...</td></tr>
+                <tr><td colspan="4" class="admin-users-empty">Memuat data akun...</td></tr>
               </tbody>
             </table>
           </div>
@@ -97,6 +97,22 @@
       </main>
       <footer class="footer"><span>© 2026 Ruang SKD</span><span>Halaman pengelolaan admin.</span></footer>
     </div>
+    <dialog id="change-password-dialog" class="admin-password-dialog" aria-labelledby="change-password-heading">
+      <form id="change-password-form">
+        <span class="section-kicker">KELOLA AKUN</span>
+        <h2 id="change-password-heading">Ubah password</h2>
+        <p class="muted">Akun: <strong id="change-password-email"></strong></p>
+        <label for="change-user-password">Password baru</label>
+        <input id="change-user-password" class="form-input" type="password" autocomplete="new-password" minlength="10" maxlength="128" required />
+        <label for="confirm-user-password">Konfirmasi password baru</label>
+        <input id="confirm-user-password" class="form-input" type="password" autocomplete="new-password" minlength="10" maxlength="128" required />
+        <p id="change-password-message" class="form-message" aria-live="polite"></p>
+        <div class="admin-password-actions">
+          <button id="cancel-change-password" class="button button-outline" type="button">Batal</button>
+          <button class="button button-primary" type="submit">Simpan password</button>
+        </div>
+      </form>
+    </dialog>
     <script src="admin-register.js"></script>
   </body>
 </html>

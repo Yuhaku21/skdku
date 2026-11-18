@@ -143,6 +143,34 @@ async function createUser(request, response, payload) {
   sendJson(response, 201, { user: { email, name, validity, expiresAt } });
 }
 
+async function changeUserPassword(request, response, payload) {
+  const session = await getSession(request);
+  if (!session || session.role !== "admin") {
+    sendJson(response, 401, { error: "Hanya admin yang dapat mengubah password pengguna." });
+    return;
+  }
+  const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
+  const password = typeof payload.password === "string" ? payload.password : "";
+  if (!isValidEmail(email) || password.length < MIN_PASSWORD_LENGTH || password.length > 128) {
+    sendJson(response, 400, { error: "Email valid dan password baru minimal 10 karakter wajib diisi." });
+    return;
+  }
+
+  const stored = await redisCommand(["HGET", USERS_KEY, email]);
+  if (!stored) {
+    sendJson(response, 404, { error: "Akun pengguna tidak ditemukan." });
+    return;
+  }
+  const account = JSON.parse(stored);
+  if (!account || typeof account !== "object" || Array.isArray(account)) {
+    throw new Error("Data akun di database tidak valid.");
+  }
+  const salt = crypto.randomBytes(16).toString("hex");
+  const passwordHash = await hashPassword(password, salt);
+  await redisCommand(["HSET", USERS_KEY, email, JSON.stringify({ ...account, salt, passwordHash })]);
+  sendJson(response, 200, { success: true, email });
+}
+
 async function listUsers(request, response) {
   const session = await getSession(request);
   if (!session || session.role !== "admin") {
@@ -192,6 +220,7 @@ module.exports = async function authHandler(request, response) {
     if (payload.action === "admin-login") return await loginAdmin(request, response, payload);
     if (payload.action === "user-login") return await loginUser(request, response, payload);
     if (payload.action === "create-user") return await createUser(request, response, payload);
+    if (payload.action === "change-user-password") return await changeUserPassword(request, response, payload);
     if (payload.action === "list-users") return await listUsers(request, response);
     if (payload.action === "logout") {
       await destroySession(request, response);

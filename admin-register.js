@@ -51,7 +51,7 @@ function renderUserAccounts(users) {
   if (!users.length) {
     const row = document.createElement("tr");
     const cell = document.createElement("td");
-    cell.colSpan = 3;
+    cell.colSpan = 4;
     cell.className = "admin-users-empty";
     cell.textContent = "Belum ada akun pengguna.";
     row.append(cell);
@@ -64,13 +64,21 @@ function renderUserAccounts(users) {
     const nameCell = document.createElement("td");
     const emailCell = document.createElement("td");
     const validityCell = document.createElement("td");
+    const actionCell = document.createElement("td");
+    const changePasswordButton = document.createElement("button");
+    changePasswordButton.className = "button button-outline admin-change-password-button";
+    changePasswordButton.type = "button";
+    changePasswordButton.dataset.changePassword = "true";
+    changePasswordButton.dataset.email = user.email;
+    changePasswordButton.textContent = "Ubah password";
     nameCell.textContent = user.name;
     emailCell.textContent = user.email;
     validityCell.textContent = formatAccountValidity(user);
+    actionCell.append(changePasswordButton);
     if (user.expiresAt !== null && Number.isSafeInteger(user.expiresAt) && user.expiresAt <= Date.now()) {
       validityCell.className = "admin-user-expired";
     }
-    row.append(nameCell, emailCell, validityCell);
+    row.append(nameCell, emailCell, validityCell, actionCell);
     body.append(row);
   }
 }
@@ -82,7 +90,7 @@ async function loadUserAccounts() {
   body.textContent = "";
   const loadingRow = document.createElement("tr");
   const loadingCell = document.createElement("td");
-  loadingCell.colSpan = 3;
+  loadingCell.colSpan = 4;
   loadingCell.className = "admin-users-empty";
   loadingCell.textContent = "Memuat data akun...";
   loadingRow.append(loadingCell);
@@ -96,12 +104,56 @@ async function loadUserAccounts() {
     body.textContent = "";
     const errorRow = document.createElement("tr");
     const errorCell = document.createElement("td");
-    errorCell.colSpan = 3;
+    errorCell.colSpan = 4;
     errorCell.className = "admin-users-empty";
     errorCell.textContent = "Daftar akun tidak dapat dimuat.";
     errorRow.append(errorCell);
     body.append(errorRow);
     message.textContent = error.message || "Daftar akun tidak dapat dimuat.";
+  }
+}
+
+let selectedUserEmail = "";
+
+function openChangePasswordDialog(email) {
+  selectedUserEmail = email;
+  $("change-password-form").reset();
+  $("change-password-message").textContent = "";
+  $("change-password-message").classList.remove("success");
+  $("change-password-email").textContent = email;
+  $("change-password-dialog").showModal();
+  $("change-user-password").focus();
+}
+
+async function handleChangePassword(event) {
+  event.preventDefault();
+  const password = $("change-user-password").value;
+  const confirmation = $("confirm-user-password").value;
+  const message = $("change-password-message");
+  message.classList.remove("success");
+  message.textContent = "";
+  if (password !== confirmation) {
+    message.textContent = "Konfirmasi password tidak sama.";
+    return;
+  }
+
+  const submitButton = $("change-password-form").querySelector('button[type="submit"]');
+  submitButton.disabled = true;
+  try {
+    await sendAuthRequest({
+      action: "change-user-password",
+      email: selectedUserEmail,
+      password
+    });
+    $("change-password-dialog").close();
+    $("change-password-form").reset();
+    const usersMessage = $("admin-users-message");
+    usersMessage.textContent = `Password untuk ${selectedUserEmail} berhasil diubah.`;
+    usersMessage.classList.add("success");
+  } catch (error) {
+    message.textContent = error.message || "Password tidak dapat diubah.";
+  } finally {
+    submitButton.disabled = false;
   }
 }
 
@@ -158,6 +210,12 @@ async function restoreAdminSession() {
 function initializeAdminPage() {
   $("admin-login-form").addEventListener("submit", handleAdminLogin);
   $("create-user-form").addEventListener("submit", handleCreateUser);
+  $("admin-users-table-body").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-change-password]");
+    if (button) openChangePasswordDialog(button.dataset.email);
+  });
+  $("change-password-form").addEventListener("submit", handleChangePassword);
+  $("cancel-change-password").addEventListener("click", () => $("change-password-dialog").close());
   $("admin-logout-button").addEventListener("click", async () => {
     try {
       await sendAuthRequest({ action: "logout" });
