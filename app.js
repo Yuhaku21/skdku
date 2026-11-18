@@ -123,6 +123,7 @@ const PACKAGES = {
       { included: true, text: "Pilih jumlah soal dan tingkat kesulitan" },
       { included: true, text: "Masuk leaderboard tertinggi" },
       { included: true, text: "E-book gratis" },
+      { included: true, text: "Fitur materi belajar" },
       { included: true, text: "Analisis belajar lanjutan" }
     ]
   }
@@ -1574,7 +1575,7 @@ async function fetchAndRenderLeaderboard() {
       <li class="leaderboard-item">
         <span class="leaderboard-rank">${String(index + 1).padStart(2, "0")}</span>
         ${avatarMarkup(user.profilePhotoId, user.username, "leaderboard-avatar")}
-        <span class="leaderboard-player"><strong>${escapeHtml(user.username)}</strong><small>TIU ${user.scores.TIU} · TKP ${user.scores.TKP} · TWK ${user.scores.TWK}</small></span>
+        <span class="leaderboard-player"><strong>${escapeHtml(maskReviewUsername(user.username))}</strong><small>TIU ${user.scores.TIU} · TKP ${user.scores.TKP} · TWK ${user.scores.TWK}</small></span>
         <strong class="leaderboard-score">${user.score}<small>total</small></strong>
       </li>
     `).join("");

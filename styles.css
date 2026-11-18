@@ -104,8 +104,9 @@ main { flex: 1; }
 .order-cta-row { display: flex; justify-content: center; margin-top: 21px; }
 .landing-pricing { padding: 48px 0 8px; }
 .pricing-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; align-items: stretch; }
-.pricing-card { display: flex; flex-direction: column; padding: 23px; border: 1px solid #ebedf2; border-radius: 17px; background: white; }
-.pricing-card-featured { border-color: #bcb6fb; box-shadow: 0 12px 30px #6254d911; }
+.pricing-card { position: relative; display: flex; flex-direction: column; padding: 23px; border: 1px solid #ebedf2; border-radius: 17px; background: white; }
+.pricing-card-featured { border-color: #7666f0; box-shadow: 0 12px 30px #6254d91c; }
+.pricing-recommendation-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); padding: 6px 12px; border: 1px solid #fff; border-radius: 30px; background: var(--violet); color: #fff; font-size: 9px; font-weight: 700; white-space: nowrap; box-shadow: 0 4px 12px #6254d933; }
 .pricing-label { color: var(--violet); font-size: 9px; font-weight: 700; letter-spacing: 1px; }
 .pricing-card h3 { margin: 12px 0 6px; font: 800 21px "Manrope", sans-serif; }
 .pricing-description { min-height: 38px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
