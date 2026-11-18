@@ -38,18 +38,27 @@ function getAccountValidity(account) {
   return account.expiresAt === null || account.expiresAt === undefined ? "forever" : "7-days";
 }
 
-async function getAuthenticatedUser(request) {
+async function getAuthenticatedUser(request, response) {
   const session = await getSession(request);
   if (!session || session.role !== "user" || !session.email) return session;
   const stored = await redisCommand(["HGET", USERS_KEY, session.email]);
   if (!stored) return session;
   const account = JSON.parse(stored);
   const profilePhotoId = await ensureProfilePhotoId(session.email, account);
-  return {
+  const validity = getAccountValidity(account);
+  const expiresAt = account.expiresAt === undefined ? null : account.expiresAt;
+  const user = {
     ...session,
-    validity: session.validity || getAccountValidity(account),
+    name: account.name,
+    validity,
+    expiresAt,
     profilePhotoId: account.profilePhotoUploadedAt ? profilePhotoId : null
   };
+  const sessionExpiresAt = session.expiresAt === undefined ? null : session.expiresAt;
+  if (session.name !== user.name || session.validity !== validity || sessionExpiresAt !== expiresAt) {
+    await createSession(request, response, user);
+  }
+  return user;
 }
 
 function readPayload(request, response) {
@@ -201,6 +210,40 @@ async function createUser(request, response, payload) {
   sendJson(response, 201, { user: { email, name, validity, expiresAt } });
 }
 
+async function upgradeUser(request, response, payload) {
+  const session = await getSession(request);
+  if (!session || session.role !== "admin") {
+    sendJson(response, 401, { error: "Hanya admin yang dapat meng-upgrade akun pengguna." });
+    return;
+  }
+
+  const email = typeof payload.email === "string" ? payload.email.trim().toLowerCase() : "";
+  const validity = payload.validity;
+  if (!isValidEmail(email) || !["7-days", "forever"].includes(validity)) {
+    sendJson(response, 400, { error: "Email valid dan paket upgrade 7 hari atau selamanya wajib dipilih." });
+    return;
+  }
+
+  const stored = await redisCommand(["HGET", USERS_KEY, email]);
+  if (!stored) {
+    sendJson(response, 404, { error: "Akun pengguna tidak ditemukan." });
+    return;
+  }
+  const account = JSON.parse(stored);
+  if (!account || typeof account !== "object" || Array.isArray(account) || typeof account.name !== "string") {
+    throw new Error("Data akun di database tidak valid.");
+  }
+  if (getAccountValidity(account) === "forever" && validity !== "forever") {
+    sendJson(response, 409, { error: "Akun dengan akses selamanya tidak dapat diturunkan ke paket 7 hari." });
+    return;
+  }
+
+  const expiresAt = validity === "forever" ? null : Date.now() + ACCOUNT_VALIDITY_MS[validity];
+  const upgradedAccount = { ...account, validity, expiresAt };
+  await redisCommand(["HSET", USERS_KEY, email, JSON.stringify(upgradedAccount)]);
+  sendJson(response, 200, { user: { email, name: account.name, validity, expiresAt } });
+}
+
 async function changeUserPassword(request, response, payload) {
   const session = await getSession(request);
   if (!session || session.role !== "admin") {
@@ -265,7 +308,7 @@ async function listUsers(request, response) {
 module.exports = async function authHandler(request, response) {
   try {
     if (request.method === "GET") {
-      sendJson(response, 200, { user: await getAuthenticatedUser(request) });
+      sendJson(response, 200, { user: await getAuthenticatedUser(request, response) });
       return;
     }
     if (request.method !== "POST") {
@@ -280,6 +323,7 @@ module.exports = async function authHandler(request, response) {
     if (payload.action === "starter-login") return await loginUser(request, response, payload);
     if (payload.action === "starter-register") return await registerStarterUser(request, response, payload);
     if (payload.action === "create-user") return await createUser(request, response, payload);
+    if (payload.action === "upgrade-user") return await upgradeUser(request, response, payload);
     if (payload.action === "change-user-password") return await changeUserPassword(request, response, payload);
     if (payload.action === "list-users") return await listUsers(request, response);
     if (payload.action === "logout") {

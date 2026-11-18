@@ -235,7 +235,7 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .admin-users-heading { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 15px; }
 .admin-users-heading h2 { margin: 8px 0 0; font: 800 18px "Manrope", sans-serif; letter-spacing: -.5px; }
 .admin-table-wrap { overflow-x: auto; }
-.admin-users-table { width: 100%; min-width: 640px; border-collapse: collapse; text-align: left; }
+.admin-users-table { width: 100%; min-width: 900px; border-collapse: collapse; text-align: left; }
 .admin-users-table th, .admin-users-table td { padding: 13px 12px; border-bottom: 1px solid #f0f1f5; font-size: 11px; }
 .admin-users-table th { color: #8c95a4; font-size: 9px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
 .admin-users-table td { color: #4c586c; overflow-wrap: anywhere; }
@@ -243,6 +243,9 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .admin-users-table .admin-users-empty { padding: 23px 12px; color: #9aa2b0; text-align: center; }
 .admin-users-table .admin-user-expired { color: var(--red); font-weight: 700; }
 .admin-change-password-button { padding: 8px 10px; font-size: 10px; white-space: nowrap; }
+.admin-upgrade-controls { display: flex; align-items: center; gap: 7px; min-width: 190px; }
+.admin-upgrade-select { flex: 1; width: auto; height: 36px; min-width: 100px; padding: 0 8px; font-size: 10px; }
+.admin-upgrade-button { padding: 8px 10px; font-size: 10px; white-space: nowrap; }
 .admin-password-dialog { width: min(420px, calc(100% - 32px)); padding: 24px; border: 1px solid #ebedf2; border-radius: 17px; color: var(--ink); box-shadow: 0 24px 80px #17203333; }
 .admin-password-dialog::backdrop { background: #17203388; }
 .admin-password-dialog h2 { margin: 8px 0; font: 800 20px "Manrope", sans-serif; }

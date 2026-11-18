@@ -51,7 +51,7 @@ function renderUserAccounts(users) {
   if (!users.length) {
     const row = document.createElement("tr");
     const cell = document.createElement("td");
-    cell.colSpan = 4;
+    cell.colSpan = 5;
     cell.className = "admin-users-empty";
     cell.textContent = "Belum ada akun pengguna.";
     row.append(cell);
@@ -65,12 +65,36 @@ function renderUserAccounts(users) {
     const emailCell = document.createElement("td");
     const validityCell = document.createElement("td");
     const actionCell = document.createElement("td");
+    const upgradeCell = document.createElement("td");
     const changePasswordButton = document.createElement("button");
     changePasswordButton.className = "button button-outline admin-change-password-button";
     changePasswordButton.type = "button";
     changePasswordButton.dataset.changePassword = "true";
     changePasswordButton.dataset.email = user.email;
     changePasswordButton.textContent = "Ubah password";
+    const upgradeControls = document.createElement("div");
+    upgradeControls.className = "admin-upgrade-controls";
+    const upgradeSelect = document.createElement("select");
+    upgradeSelect.className = "form-input admin-upgrade-select";
+    upgradeSelect.dataset.upgradeValidity = "true";
+    upgradeSelect.setAttribute("aria-label", `Paket upgrade untuk ${user.email}`);
+    const sevenDayOption = document.createElement("option");
+    sevenDayOption.value = "7-days";
+    sevenDayOption.textContent = "7 hari";
+    sevenDayOption.disabled = user.validity === "forever";
+    const foreverOption = document.createElement("option");
+    foreverOption.value = "forever";
+    foreverOption.textContent = "Selamanya";
+    upgradeSelect.append(sevenDayOption, foreverOption);
+    upgradeSelect.value = user.validity === "forever" ? "forever" : "7-days";
+    const upgradeButton = document.createElement("button");
+    upgradeButton.className = "button button-primary admin-upgrade-button";
+    upgradeButton.type = "button";
+    upgradeButton.dataset.upgradeUser = "true";
+    upgradeButton.dataset.email = user.email;
+    upgradeButton.textContent = "Upgrade";
+    upgradeControls.append(upgradeSelect, upgradeButton);
+    upgradeCell.append(upgradeControls);
     nameCell.textContent = user.name;
     emailCell.textContent = user.email;
     validityCell.textContent = formatAccountValidity(user);
@@ -78,7 +102,7 @@ function renderUserAccounts(users) {
     if (user.expiresAt !== null && Number.isSafeInteger(user.expiresAt) && user.expiresAt <= Date.now()) {
       validityCell.className = "admin-user-expired";
     }
-    row.append(nameCell, emailCell, validityCell, actionCell);
+    row.append(nameCell, emailCell, validityCell, actionCell, upgradeCell);
     body.append(row);
   }
 }
@@ -87,10 +111,11 @@ async function loadUserAccounts() {
   const message = $("admin-users-message");
   const body = $("admin-users-table-body");
   message.textContent = "";
+  message.classList.remove("success");
   body.textContent = "";
   const loadingRow = document.createElement("tr");
   const loadingCell = document.createElement("td");
-  loadingCell.colSpan = 4;
+  loadingCell.colSpan = 5;
   loadingCell.className = "admin-users-empty";
   loadingCell.textContent = "Memuat data akun...";
   loadingRow.append(loadingCell);
@@ -104,12 +129,38 @@ async function loadUserAccounts() {
     body.textContent = "";
     const errorRow = document.createElement("tr");
     const errorCell = document.createElement("td");
-    errorCell.colSpan = 4;
+    errorCell.colSpan = 5;
     errorCell.className = "admin-users-empty";
     errorCell.textContent = "Daftar akun tidak dapat dimuat.";
     errorRow.append(errorCell);
     body.append(errorRow);
     message.textContent = error.message || "Daftar akun tidak dapat dimuat.";
+  }
+}
+
+async function handleUpgradeUser(email, validity, button) {
+  const duration = validity === "forever" ? "selamanya" : "7 hari";
+  if (!window.confirm(`Upgrade akun ${email} menjadi akses ${duration}?`)) return;
+
+  const message = $("admin-users-message");
+  message.classList.remove("success");
+  message.textContent = "";
+  button.disabled = true;
+  try {
+    const result = await sendAuthRequest({
+      action: "upgrade-user",
+      email,
+      validity
+    });
+    await loadUserAccounts();
+    if (!message.textContent) {
+      message.textContent = `Akun ${result.user.email} berhasil di-upgrade menjadi ${duration}. Minta pengguna memuat ulang halaman untuk menerapkan akses baru.`;
+      message.classList.add("success");
+    }
+  } catch (error) {
+    message.textContent = error.message || "Akun pengguna tidak dapat di-upgrade.";
+  } finally {
+    button.disabled = false;
   }
 }
 
@@ -213,6 +264,12 @@ function initializeAdminPage() {
   $("admin-users-table-body").addEventListener("click", (event) => {
     const button = event.target.closest("[data-change-password]");
     if (button) openChangePasswordDialog(button.dataset.email);
+    const upgradeButton = event.target.closest("[data-upgrade-user]");
+    if (upgradeButton) {
+      const row = upgradeButton.closest("tr");
+      const validity = row.querySelector("[data-upgrade-validity]").value;
+      handleUpgradeUser(upgradeButton.dataset.email, validity, upgradeButton);
+    }
   });
   $("change-password-form").addEventListener("submit", handleChangePassword);
   $("cancel-change-password").addEventListener("click", () => $("change-password-dialog").close());
