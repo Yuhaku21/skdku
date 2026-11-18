@@ -6,12 +6,13 @@ const STORAGE = {
   starterWelcomeDismissed: "ruangskd.starterWelcomeDismissed",
   completedTests: "ruangskd.completedTests",
   history: "ruangskd.history",
-  questionRotation: "ruangskd.questionRotation"
+  questionRotation: "ruangskd.questionRotation",
+  tiuLearningProgress: "ruangskd.tiuLearningProgress"
 };
 const DIFFICULTIES = {
-  mudah: { questionCount: 10, durationSeconds: 12 * 60 },
-  menengah: { questionCount: 30, durationSeconds: 32 * 60 },
-  sulit: { questionCount: 50, durationSeconds: 52 * 60 }
+  mudah: { questionCount: 10, durationSeconds: 10 * 60 },
+  menengah: { questionCount: 30, durationSeconds: 30 * 60 },
+  sulit: { questionCount: 50, durationSeconds: 50 * 60 }
 };
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 const TEST_BANKS = { TIU: "question.json", TKP: "tkp.json", TWK: "twk.json" };
@@ -54,7 +55,7 @@ const PACKAGES = {
     ]
   }
 };
-const screens = ["landing-view", "auth-view", "starter-auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view"];
+const screens = ["landing-view", "auth-view", "starter-auth-view", "dashboard-view", "reviews-view", "quiz-view", "result-view", "tiu-learning-view"];
 
 let selectedTest = "TIU";
 let selectedDifficulty = null;
@@ -74,6 +75,12 @@ let leaderboardRequestPromise = null;
 let scoreProgressRequestId = 0;
 let sessionFinished = false;
 let accountExpiryTimer = null;
+let tiuLearningData = null;
+let activeTiuLevel = null;
+let activeTiuQuestions = [];
+let activeTiuAnswers = [];
+let activeTiuQuestion = 0;
+let tiuLearningStage = "lesson";
 
 const $ = (id) => document.getElementById(id);
 const readStored = (key, fallback) => {
@@ -425,7 +432,22 @@ async function handleProfilePhotoChange(event) {
 function syncHeader() {
   const email = currentUser();
   $("session-label").textContent = email ? `Hai, ${currentUserName()}` : "";
-  $("logout-button").classList.toggle("hidden", !email);
+  $("profile-menu-name").textContent = email ? currentUserName() : "";
+  $("profile-menu-email").textContent = email || "";
+  $("profile-menu").classList.toggle("hidden", !email);
+  if (!email) closeProfileMenu();
+}
+
+function closeProfileMenu() {
+  $("profile-menu-panel").hidden = true;
+  $("profile-menu-toggle").setAttribute("aria-expanded", "false");
+}
+
+function toggleProfileMenu() {
+  const panel = $("profile-menu-panel");
+  const isOpen = !panel.hidden;
+  panel.hidden = isOpen;
+  $("profile-menu-toggle").setAttribute("aria-expanded", String(!isOpen));
 }
 
 function clearAccountExpiryTimer() {
@@ -496,9 +518,217 @@ function showDashboard() {
   renderProfilePhoto();
   syncHeader();
   configureAccountAccess();
+  renderTiuLearningLevels();
   renderHistory();
   renderScoreProgress();
   showScreen("dashboard-view");
+}
+
+function getTiuLearningProgress(email = currentUser()) {
+  const stored = readStored(STORAGE.tiuLearningProgress, {});
+  const userProgress = stored && typeof stored === "object" && !Array.isArray(stored)
+    ? stored[email]
+    : null;
+  return userProgress && typeof userProgress === "object" && !Array.isArray(userProgress)
+    ? userProgress
+    : {};
+}
+
+function canAccessTiuLearningLevel(levelId, progress = getTiuLearningProgress()) {
+  return [1, 2].slice(0, levelId - 1).every((previousLevel) => Boolean(progress[previousLevel]));
+}
+
+function renderTiuLearningLevels() {
+  const section = $("victory-tiu-section");
+  const isVictory = currentValidity() === "forever";
+  section.classList.toggle("hidden", !isVictory);
+  if (!isVictory) return;
+
+  const progress = getTiuLearningProgress();
+  $("victory-tiu-levels").innerHTML = [
+    { id: 1, title: "Level 1", topic: "Dasar numerik" },
+    { id: 2, title: "Level 2", topic: "Dunia deret" },
+    { id: 3, title: "Level 3", topic: "Analogi & verbal" }
+  ].map((level) => {
+    const completed = Boolean(progress[level.id]);
+    const locked = !canAccessTiuLearningLevel(level.id, progress);
+    const status = locked
+      ? `Terkunci · selesaikan Level ${level.id - 1} terlebih dahulu`
+      : completed ? "Selesai · bisa diulang" : "Materi + 10 soal";
+    return `
+      <article class="victory-tiu-level ${locked ? "locked" : ""}">
+        <span class="victory-tiu-level-number">${String(level.id).padStart(2, "0")}</span>
+        <div class="victory-tiu-level-copy"><strong>${escapeHtml(level.title)}</strong><span>${escapeHtml(level.topic)}</span><small>${status}</small></div>
+        <button class="button ${locked ? "button-outline" : "button-primary"}" type="button" data-tiu-level="${level.id}" ${locked ? "disabled" : ""}>${locked ? "Terkunci" : completed ? "Ulangi" : "Mulai"} <span aria-hidden="true">→</span></button>
+      </article>
+    `;
+  }).join("");
+}
+
+async function openTiuLearningLevel(levelId) {
+  if (currentValidity() !== "forever") {
+    showToast("Kelas TIU bertahap hanya tersedia untuk akun Victory.");
+    showDashboard();
+    return;
+  }
+  const progress = getTiuLearningProgress();
+  if (!Number.isInteger(levelId) || levelId < 1 || levelId > 3
+    || !canAccessTiuLearningLevel(levelId, progress)) {
+    showToast("Selesaikan level sebelumnya untuk membuka materi ini.");
+    return;
+  }
+
+  try {
+    if (!tiuLearningData) {
+      const response = await fetch("./tiu-learning.json");
+      if (!response.ok) throw new Error(`Materi TIU tidak dapat dimuat (${response.status}).`);
+      tiuLearningData = await response.json();
+    }
+    const level = tiuLearningData.levels.find((item) => item.id === levelId);
+    if (!level || !Array.isArray(level.questions) || level.questions.length !== 10) {
+      throw new Error("Materi level TIU tidak lengkap. Silakan coba lagi nanti.");
+    }
+    activeTiuLevel = level;
+    tiuLearningStage = "lesson";
+    renderTiuLearning();
+    showScreen("tiu-learning-view");
+  } catch (error) {
+    console.error("Tidak dapat membuka materi TIU:", error);
+    showToast(error.message || "Materi TIU gagal dimuat.");
+  }
+}
+
+function renderTiuLearning() {
+  const content = $("tiu-learning-content");
+  if (tiuLearningStage === "lesson") {
+    content.innerHTML = `
+      <article class="tiu-lesson-card">
+        <span class="section-kicker">${escapeHtml(activeTiuLevel.topic)}</span>
+        <h1>${escapeHtml(activeTiuLevel.title)}</h1>
+        <p class="muted">${escapeHtml(activeTiuLevel.description)}</p>
+        <h2>Materi sebelum latihan</h2>
+        <ol class="tiu-material-list">${activeTiuLevel.material.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ol>
+        <div class="tiu-lesson-footer"><span>10 soal · Tanpa batas waktu</span><button class="button button-primary" type="button" data-tiu-action="start">Mulai latihan <span aria-hidden="true">→</span></button></div>
+      </article>
+    `;
+    return;
+  }
+  if (tiuLearningStage === "quiz") {
+    const question = activeTiuQuestions[activeTiuQuestion];
+    content.innerHTML = `
+      <div class="tiu-practice-heading"><div><span class="section-kicker">${escapeHtml(activeTiuLevel.title)}</span><h1>Latihan ${activeTiuLevel.title}</h1></div><span class="pill">Tanpa batas waktu</span></div>
+      <div class="progress-track"><div class="progress-fill" style="width:${((activeTiuQuestion + 1) / activeTiuQuestions.length) * 100}%"></div></div>
+      <article class="tiu-question-card">
+        <div class="question-category">${escapeHtml(question.category)}</div>
+        <span class="tiu-question-count">SOAL ${String(activeTiuQuestion + 1).padStart(2, "0")} / 10</span>
+        <h2>${escapeHtml(question.question)}</h2>
+        <div class="answer-list">${question.options.map((option, index) => `
+          <button class="answer-option ${activeTiuAnswers[activeTiuQuestion] === index ? "selected" : ""}" type="button" data-tiu-answer="${index}">
+            <span class="answer-letter">${LETTERS[index] || index + 1}</span><span>${escapeHtml(option)}</span>
+          </button>
+        `).join("")}</div>
+        <div class="tiu-question-navigation">
+          <button class="button button-outline" type="button" data-tiu-action="previous" ${activeTiuQuestion === 0 ? "disabled" : ""}>← Sebelumnya</button>
+          <span>${activeTiuAnswers.filter((answer) => answer !== null).length} / 10 terjawab</span>
+          ${activeTiuQuestion === activeTiuQuestions.length - 1
+            ? '<button class="button button-primary" type="button" data-tiu-action="finish">Lihat hasil <span aria-hidden="true">✓</span></button>'
+            : '<button class="button button-primary" type="button" data-tiu-action="next">Berikutnya <span aria-hidden="true">→</span></button>'}
+        </div>
+        <div class="tiu-question-grid">${activeTiuQuestions.map((_, index) => `
+          <button class="question-number ${activeTiuAnswers[index] !== null ? "answered" : ""} ${index === activeTiuQuestion ? "current" : ""}" type="button" data-tiu-question="${index}" aria-label="Soal ${index + 1}">${String(index + 1).padStart(2, "0")}</button>
+        `).join("")}</div>
+      </article>
+    `;
+    return;
+  }
+
+  const correct = activeTiuAnswers.reduce((total, answer, index) => total + (answer === activeTiuQuestions[index].answer ? 1 : 0), 0);
+  const score = Math.round((correct / activeTiuQuestions.length) * 100);
+  const nextLevel = activeTiuLevel.id < 3 ? activeTiuLevel.id + 1 : null;
+  content.innerHTML = `
+    <section class="tiu-result-hero">
+      <span class="section-kicker">LEVEL SELESAI</span>
+      <h1>${score === 100 ? "Sempurna, hebat!" : "Latihan selesai!"}</h1>
+      <p class="muted">${escapeHtml(activeTiuLevel.title)} · ${correct} dari 10 jawaban benar</p>
+      <div class="tiu-result-score">${score}<small>/ 100</small></div>
+      <p class="tiu-result-unlock">${nextLevel ? "Kunci jawaban dan pembahasan sudah tersedia. Level berikutnya sekarang terbuka." : "Kunci jawaban dan pembahasan sudah tersedia. Kamu telah menyelesaikan seluruh kelas TIU."}</p>
+      ${nextLevel
+        ? `<button class="button button-primary" type="button" data-tiu-action="next-level">Lanjut ke Level ${nextLevel} <span aria-hidden="true">→</span></button>`
+        : '<button class="button button-primary" type="button" data-tiu-action="dashboard">Kembali ke dashboard <span aria-hidden="true">→</span></button>'}
+    </section>
+    <section class="tiu-corrections">
+      <div class="section-heading compact"><div><span class="section-kicker">KUNCI & PEMBAHASAN</span><h2>Koreksi jawabanmu</h2></div><span class="pill">${10 - correct} perlu dipelajari</span></div>
+      <div class="review-list">${activeTiuQuestions.map((question, index) => {
+        const isCorrect = activeTiuAnswers[index] === question.answer;
+        const yourAnswer = activeTiuAnswers[index] === null ? "Belum dijawab" : `${LETTERS[activeTiuAnswers[index]] || activeTiuAnswers[index] + 1}. ${question.options[activeTiuAnswers[index]]}`;
+        const keyAnswer = `${LETTERS[question.answer] || question.answer + 1}. ${question.options[question.answer]}`;
+        return `
+          <article class="review-card ${isCorrect ? "correct" : "incorrect"}">
+            <div class="review-heading"><strong>SOAL ${String(index + 1).padStart(2, "0")} · ${escapeHtml(question.category)}</strong><span class="review-status">${isCorrect ? "✓ Benar" : "✕ Perlu dipelajari"}</span></div>
+            <p class="review-question">${escapeHtml(question.question)}</p>
+            <div class="review-answer"><span>Jawabanmu: <strong>${escapeHtml(yourAnswer)}</strong></span><span>Kunci jawaban: <strong>${escapeHtml(keyAnswer)}</strong></span></div>
+            ${!isCorrect ? `<div class="review-explanation"><strong>Pembahasan:</strong> ${escapeHtml(question.explanation)}</div>` : ""}
+          </article>
+        `;
+      }).join("")}</div>
+    </section>
+  `;
+}
+
+function startTiuLearningPractice() {
+  activeTiuQuestions = [...activeTiuLevel.questions];
+  activeTiuAnswers = Array(activeTiuQuestions.length).fill(null);
+  activeTiuQuestion = 0;
+  tiuLearningStage = "quiz";
+  renderTiuLearning();
+}
+
+function finishTiuLearningPractice() {
+  const correct = activeTiuAnswers.reduce((total, answer, index) => total + (answer === activeTiuQuestions[index].answer ? 1 : 0), 0);
+  const score = Math.round((correct / activeTiuQuestions.length) * 100);
+  const stored = readStored(STORAGE.tiuLearningProgress, {});
+  const progress = stored && typeof stored === "object" && !Array.isArray(stored) ? stored : {};
+  const userProgress = getTiuLearningProgress();
+  userProgress[activeTiuLevel.id] = { score, completedAt: new Date().toISOString() };
+  progress[currentUser()] = userProgress;
+  writeStored(STORAGE.tiuLearningProgress, progress);
+  tiuLearningStage = "result";
+  renderTiuLearning();
+  renderTiuLearningLevels();
+}
+
+function handleTiuLearningAction(event) {
+  const answerButton = event.target.closest("[data-tiu-answer]");
+  if (answerButton) {
+    activeTiuAnswers[activeTiuQuestion] = Number(answerButton.dataset.tiuAnswer);
+    renderTiuLearning();
+    return;
+  }
+  const questionButton = event.target.closest("[data-tiu-question]");
+  if (questionButton) {
+    activeTiuQuestion = Number(questionButton.dataset.tiuQuestion);
+    renderTiuLearning();
+    return;
+  }
+  const actionButton = event.target.closest("[data-tiu-action]");
+  if (!actionButton) return;
+  const action = actionButton.dataset.tiuAction;
+  if (action === "start") startTiuLearningPractice();
+  if (action === "previous" && activeTiuQuestion > 0) {
+    activeTiuQuestion -= 1;
+    renderTiuLearning();
+  }
+  if (action === "next" && activeTiuQuestion < activeTiuQuestions.length - 1) {
+    activeTiuQuestion += 1;
+    renderTiuLearning();
+  }
+  if (action === "finish") {
+    const unanswered = activeTiuAnswers.filter((answer) => answer === null).length;
+    if (unanswered && !window.confirm(`Masih ada ${unanswered} soal belum dijawab. Selesaikan latihan sekarang?`)) return;
+    finishTiuLearningPractice();
+  }
+  if (action === "next-level") openTiuLearningLevel(activeTiuLevel.id + 1);
+  if (action === "dashboard") showDashboard();
 }
 
 function showLanding() {
@@ -1278,8 +1508,17 @@ function initialize() {
     landingReviewPage = Math.floor(firstVisibleReview / pageSize);
     renderLandingReviewCarousel(renderReviewCard);
   });
+  document.addEventListener("click", (event) => {
+    if (!$("profile-menu").contains(event.target)) closeProfileMenu();
+  });
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeMobileMenu();
+    if (event.key === "Escape") {
+      closeMobileMenu();
+      if (!$("profile-menu-panel").hidden) {
+        closeProfileMenu();
+        $("profile-menu-toggle").focus();
+      }
+    }
   });
   $("nav-start-test-button").addEventListener("click", showLogin);
   $("landing-login-button").addEventListener("click", showLogin);
@@ -1316,6 +1555,13 @@ function initialize() {
     });
   });
   $("start-button").addEventListener("click", beginQuiz);
+  $("profile-menu-toggle").addEventListener("click", toggleProfileMenu);
+  $("victory-tiu-levels").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-tiu-level]");
+    if (button && !button.disabled) openTiuLearningLevel(Number(button.dataset.tiuLevel));
+  });
+  $("tiu-learning-content").addEventListener("click", handleTiuLearningAction);
+  $("tiu-learning-back").addEventListener("click", showDashboard);
   $("profile-photo-button").addEventListener("click", () => $("profile-photo-input").click());
   $("profile-photo-input").addEventListener("change", handleProfilePhotoChange);
   $("open-reviews-button").addEventListener("click", showReviews);

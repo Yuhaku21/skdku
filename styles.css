@@ -30,6 +30,20 @@ button { cursor: pointer; }
 .brand-accent { color: var(--violet); }
 .topbar-right { display: flex; align-items: center; gap: 12px; }
 .session-label { color: var(--muted); font-size: 13px; }
+.profile-menu { position: relative; }
+.profile-menu-toggle { display: inline-flex; align-items: center; gap: 7px; padding: 3px 6px; border: 0; border-radius: 24px; background: transparent; color: #687286; }
+.profile-menu-toggle:hover, .profile-menu-toggle[aria-expanded="true"] { background: #f0efff; color: var(--violet); }
+.profile-menu-toggle .profile-avatar { flex: 0 0 36px; width: 36px; height: 36px; font-size: 12px; }
+.profile-menu-chevron { font-size: 17px; line-height: 1; }
+.profile-menu-panel { position: absolute; z-index: 25; top: calc(100% + 13px); right: 0; width: min(280px, calc(100vw - 32px)); padding: 9px; border: 1px solid #e8ebf1; border-radius: 14px; background: white; box-shadow: 0 14px 36px #17203324; }
+.profile-menu-heading { display: grid; gap: 4px; padding: 10px 11px 12px; border-bottom: 1px solid #f0f1f5; }
+.profile-menu-heading strong { color: #374256; font-size: 12px; }
+.profile-menu-heading small { overflow: hidden; color: #929baa; font-size: 10px; text-overflow: ellipsis; }
+.profile-menu-action { display: block; width: 100%; padding: 10px 11px; border: 0; border-radius: 8px; background: transparent; color: #586477; font-size: 11px; text-align: left; }
+.profile-menu-action:hover { background: #f5f4ff; color: var(--violet); }
+.profile-menu-logout { margin-top: 5px; border-top: 1px solid #f0f1f5; border-radius: 0 0 8px 8px; color: #bd5555; }
+.profile-menu-logout:hover { background: #fff3f2; color: #a63e3e; }
+.profile-menu-panel .form-message { margin: 0 10px; font-size: 10px; }
 .button { border: 0; border-radius: 11px; font-size: 13px; font-weight: 700; padding: 12px 17px; transition: .18s ease; }
 .button-primary { background: var(--violet); color: #fff; box-shadow: 0 5px 12px #6254d922; }
 .button-primary:hover { background: var(--violet-dark); transform: translateY(-1px); }
@@ -257,15 +271,9 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .welcome-row h1 { margin: 14px 0 8px; font-size: 31px; letter-spacing: -1.2px; }
 .welcome-row p { margin-bottom: 0; }
 .welcome-icon { width: 58px; height: 58px; border-radius: 19px; display: grid; place-items: center; color: #776bf0; background: #e8e6ff; font-size: 24px; }
-.dashboard-profile { display: flex; align-items: center; gap: 14px; padding: 12px 15px; border: 1px solid #ebedf2; border-radius: 15px; background: white; }
 .profile-avatar { position: relative; display: grid; flex: 0 0 56px; width: 56px; height: 56px; place-items: center; overflow: hidden; border-radius: 50%; background: #ecebff; color: var(--violet); font: 800 17px "Manrope", sans-serif; }
 .avatar-initial { display: grid; width: 100%; height: 100%; place-items: center; }
 .avatar-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.dashboard-profile-copy { display: grid; justify-items: start; gap: 4px; }
-.dashboard-profile-copy > strong { color: #374256; font-size: 11px; }
-.dashboard-profile-copy > span { color: #9aa2b0; font-size: 9px; }
-.dashboard-profile-copy .button { margin-top: 3px; padding: 7px 10px; font-size: 9px; }
-.dashboard-profile-copy .form-message { margin: 0; font-size: 9px; }
 .dashboard-grid { display: grid; grid-template-columns: 1.55fr .85fr; gap: 20px; align-items: stretch; }
 .level-card, .bank-card, .history-card { background: white; border: 1px solid #ebedf2; border-radius: 17px; }
 .level-card { padding: 25px; }
@@ -292,6 +300,47 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .difficulty-option.selected { border-color: #8f86eb; background: #f8f7ff; box-shadow: 0 0 0 2px #6254d90d; }
 .difficulty-option strong { font-size: 11px; }
 .difficulty-option span { color: #929baa; font-size: 9px; }
+.victory-tiu-section { margin-top: 20px; padding: 23px 25px; border: 1px solid #e8e6ff; border-radius: 17px; background: linear-gradient(120deg, #f8f7ff, white); }
+.victory-tiu-section > .muted { margin: 11px 0 17px; font-size: 11px; }
+.victory-tiu-levels { display: grid; gap: 9px; }
+.victory-tiu-level { display: flex; align-items: center; gap: 13px; padding: 13px; border: 1px solid #e1e4ee; border-radius: 12px; background: #fff; box-shadow: 0 3px 12px #1720330b; }
+.victory-tiu-level.locked { background: #fff; }
+.victory-tiu-level-number { display: grid; flex: 0 0 38px; width: 38px; height: 38px; place-items: center; border-radius: 11px; background: var(--violet-pale); color: var(--violet); font: 800 13px "Manrope", sans-serif; }
+.victory-tiu-level.locked .victory-tiu-level-number { background: #f0f1f5; color: #9aa2b0; }
+.victory-tiu-level-copy { display: grid; flex: 1; gap: 4px; min-width: 0; }
+.victory-tiu-level-copy strong { color: #374256; font-size: 11px; }
+.victory-tiu-level-copy span, .victory-tiu-level-copy small { color: #748096; font-size: 9px; }
+.victory-tiu-level-copy small { color: var(--violet); }
+.victory-tiu-level.locked .victory-tiu-level-copy small { color: #687286; font-weight: 700; }
+.victory-tiu-level .button { white-space: nowrap; }
+.victory-tiu-level .button:disabled { cursor: not-allowed; opacity: .7; }
+.tiu-learning-view { padding: 29px 0 55px; }
+.tiu-learning-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 20px; }
+.tiu-lesson-card, .tiu-question-card { padding: 30px; border: 1px solid #ebedf2; border-radius: 17px; background: white; }
+.tiu-lesson-card h1, .tiu-practice-heading h1 { margin: 10px 0 7px; font: 800 26px "Manrope", sans-serif; letter-spacing: -.8px; }
+.tiu-lesson-card > .muted { margin-bottom: 22px; }
+.tiu-lesson-card h2 { margin: 0 0 12px; font: 800 15px "Manrope", sans-serif; }
+.tiu-material-list { display: grid; gap: 10px; margin: 0; padding-left: 22px; color: #687286; font-size: 12px; line-height: 1.7; }
+.tiu-material-list li { padding-left: 4px; }
+.tiu-material-list li::marker { color: var(--violet); font-weight: 800; }
+.tiu-lesson-footer { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 24px; padding-top: 18px; border-top: 1px solid #f0f1f5; }
+.tiu-lesson-footer > span { color: #929baa; font-size: 10px; }
+.tiu-practice-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 12px; }
+.tiu-practice-heading h1 { margin-bottom: 0; }
+.tiu-question-card { position: relative; }
+.tiu-question-count { position: absolute; top: 31px; right: 30px; color: #9ca4b1; font-size: 9px; font-weight: 700; letter-spacing: .8px; }
+.tiu-question-card h2 { max-width: 690px; margin: 15px 95px 22px 0; font: 700 19px/1.55 "Manrope", sans-serif; }
+.tiu-question-navigation { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 23px; }
+.tiu-question-navigation > span { color: #929baa; font-size: 10px; }
+.tiu-question-grid { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 8px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #f0f1f5; }
+.tiu-result-hero { margin: 0 0 28px; padding: 30px; border-radius: 18px; background: #ecebff; text-align: center; }
+.tiu-result-hero h1 { margin: 10px 0 5px; font: 800 27px "Manrope", sans-serif; }
+.tiu-result-hero > .muted { margin: 0; }
+.tiu-result-score { margin: 13px 0; color: var(--violet); font: 800 54px "Manrope", sans-serif; line-height: 1; }
+.tiu-result-score small { color: #9891df; font: 700 14px "DM Sans", sans-serif; }
+.tiu-result-unlock { margin: 0 auto 17px; color: #687286; font-size: 11px; }
+.tiu-corrections { padding: 0 4px 20px; }
+.tiu-corrections > .section-heading { margin-bottom: 16px; }
 .start-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 20px; }
 .source-note { color: #98a0ae; font-size: 10px; }
 .side-column { display: grid; gap: 14px; grid-template-rows: 1fr auto auto; }
@@ -483,6 +532,16 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .admin-users-card { margin: 0 0 38px; }
   .dashboard-view { padding: 39px 0 48px; }
   .dashboard-grid { grid-template-columns: 1fr; }
+  .victory-tiu-section { padding: 19px 16px; }
+  .tiu-learning-view { padding: 19px 0 40px; }
+  .tiu-lesson-card, .tiu-question-card { padding: 21px 17px; }
+  .tiu-lesson-card h1, .tiu-practice-heading h1 { font-size: 22px; }
+  .tiu-question-count { top: 23px; right: 17px; }
+  .tiu-question-card h2 { margin-right: 0; padding-top: 13px; font-size: 17px; }
+  .tiu-question-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .tiu-question-navigation { flex-wrap: wrap; }
+  .tiu-question-navigation > span { order: 3; width: 100%; text-align: center; }
+  .tiu-result-hero { padding: 25px 16px; }
   .reviews-view { padding: 38px 0 48px; }
   .reviews-layout { grid-template-columns: 1fr; }
   .side-column { grid-template-columns: 1fr; grid-template-rows: auto; }
@@ -538,14 +597,11 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .landing-reviews-list { grid-template-columns: 1fr; }
   .auth-back-button { margin-bottom: 12px; }
   .starter-auth-card { padding: 23px 18px; }
-  .session-label { display: none; }
+  .topbar-right { gap: 5px; }
+  .session-label { max-width: 90px; overflow: hidden; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
   .button-quiet { font-size: 10px; }
   .welcome-row { align-items: flex-start; flex-direction: column; gap: 14px; }
-  .dashboard-profile { align-self: flex-end; }
   .welcome-row h1 { font-size: 25px; }
-  .dashboard-profile { gap: 8px; padding: 9px; }
-  .profile-avatar { flex-basis: 44px; width: 44px; height: 44px; }
-  .dashboard-profile-copy > span { max-width: 130px; line-height: 1.4; }
   .welcome-icon { width: 45px; height: 45px; }
   .admin-create-card, .admin-users-card { padding: 18px 15px; }
   .admin-users-heading { align-items: flex-start; }

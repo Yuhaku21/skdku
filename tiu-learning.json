@@ -1,0 +1,259 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "title": "Level 1 — Dasar Numerik",
+      "topic": "Operasi hitung, pecahan, persentase, rasio, dan ukuran",
+      "description": "Bangun fondasi numerik dengan memahami operasi dasar dan penerapannya dalam soal sehari-hari.",
+      "material": [
+        "Kerjakan perkalian dan pembagian sebelum penjumlahan dan pengurangan. Operasi dengan tingkat yang sama dikerjakan dari kiri ke kanan.",
+        "Pecahan a/b berarti a dibagi b. Untuk mencari sebagian dari jumlah, kalikan jumlah itu dengan pecahannya.",
+        "Persentase berarti per seratus. Nilai p% dari n adalah p/100 × n; harga setelah diskon diperoleh dengan mengurangi nilai diskon.",
+        "Pada perbandingan a:b dengan total diketahui, jumlahkan bagian perbandingan terlebih dahulu lalu tentukan nilai setiap bagian.",
+        "Rata-rata adalah jumlah seluruh nilai dibagi banyaknya nilai. Perhatikan juga konversi satuan, misalnya 1 km = 1.000 m."
+      ],
+      "questions": [
+        {
+          "category": "OPERASI HITUNG",
+          "question": "Berapakah hasil dari 18 + 27?",
+          "options": ["35", "45", "46", "55"],
+          "answer": 1,
+          "explanation": "18 + 27 = 45."
+        },
+        {
+          "category": "PECAHAN",
+          "question": "Berapakah 3/4 dari 80?",
+          "options": ["40", "50", "60", "64"],
+          "answer": 2,
+          "explanation": "3/4 × 80 = 3 × 20 = 60."
+        },
+        {
+          "category": "PERSENTASE",
+          "question": "Berapakah 15% dari 200?",
+          "options": ["25", "30", "35", "40"],
+          "answer": 1,
+          "explanation": "15/100 × 200 = 30."
+        },
+        {
+          "category": "PERBANDINGAN",
+          "question": "Perbandingan buku merah dan biru adalah 2:3. Jika jumlahnya 25 buku, berapa banyak buku merah?",
+          "options": ["8", "10", "12", "15"],
+          "answer": 1,
+          "explanation": "Jumlah bagian = 2 + 3 = 5. Setiap bagian bernilai 25 ÷ 5 = 5, sehingga buku merah berjumlah 2 × 5 = 10."
+        },
+        {
+          "category": "RATA-RATA",
+          "question": "Nilai 6, 8, 10, dan 12 memiliki rata-rata ...",
+          "options": ["8", "9", "10", "11"],
+          "answer": 1,
+          "explanation": "Rata-rata = (6 + 8 + 10 + 12) ÷ 4 = 36 ÷ 4 = 9."
+        },
+        {
+          "category": "KONVERSI SATUAN",
+          "question": "2,5 kilometer sama dengan ... meter.",
+          "options": ["250", "2.050", "2.500", "25.000"],
+          "answer": 2,
+          "explanation": "1 kilometer = 1.000 meter, jadi 2,5 × 1.000 = 2.500 meter."
+        },
+        {
+          "category": "PERSENTASE",
+          "question": "Harga sebuah barang Rp120.000 naik 10%. Berapa harga barunya?",
+          "options": ["Rp122.000", "Rp130.000", "Rp132.000", "Rp140.000"],
+          "answer": 2,
+          "explanation": "10% × Rp120.000 = Rp12.000. Harga baru = Rp120.000 + Rp12.000 = Rp132.000."
+        },
+        {
+          "category": "PERBANDINGAN",
+          "question": "Empat pekerja menyelesaikan 24 kotak dalam 3 jam. Dengan kecepatan sama, berapa kotak yang diselesaikan 8 pekerja dalam 3 jam?",
+          "options": ["36", "42", "48", "56"],
+          "answer": 2,
+          "explanation": "Jumlah pekerja menjadi dua kali lipat dalam waktu yang sama, sehingga hasilnya juga dua kali lipat: 24 × 2 = 48 kotak."
+        },
+        {
+          "category": "OPERASI HITUNG",
+          "question": "Berapakah hasil dari 48 ÷ 6 + 7?",
+          "options": ["8", "14", "15", "55"],
+          "answer": 2,
+          "explanation": "Kerjakan pembagian lebih dahulu: 48 ÷ 6 = 8, lalu 8 + 7 = 15."
+        },
+        {
+          "category": "BANGUN DATAR",
+          "question": "Sebuah persegi panjang memiliki panjang 12 cm dan lebar 5 cm. Berapa luasnya?",
+          "options": ["17 cm²", "34 cm²", "60 cm²", "120 cm²"],
+          "answer": 2,
+          "explanation": "Luas persegi panjang = panjang × lebar = 12 × 5 = 60 cm²."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Level 2 — Dunia Deret",
+      "topic": "Deret aritmatika, geometri, Fibonacci, dan kuadrat",
+      "description": "Kenali pola perubahan antarsuku untuk menemukan angka berikutnya dalam beragam jenis deret.",
+      "material": [
+        "Deret aritmatika memiliki selisih tetap. Cari selisih antara dua suku yang berurutan.",
+        "Deret geometri memiliki rasio tetap. Bandingkan dengan membagi satu suku dengan suku sebelumnya.",
+        "Dalam deret Fibonacci, setiap suku merupakan jumlah dua suku sebelumnya.",
+        "Deret kuadrat sering memuat bilangan kuadrat seperti 1, 4, 9, 16, 25. Periksa selisihnya yang bertambah ganjil.",
+        "Jika pola belum terlihat, tulis selisih atau rasio suku-sukunya dan uji pola itu pada lebih dari satu langkah."
+      ],
+      "questions": [
+        {
+          "category": "ARITMATIKA",
+          "question": "Tentukan angka berikutnya: 5, 9, 13, 17, ...",
+          "options": ["19", "20", "21", "22"],
+          "answer": 2,
+          "explanation": "Selisih setiap suku adalah +4. Jadi 17 + 4 = 21."
+        },
+        {
+          "category": "ARITMATIKA",
+          "question": "Tentukan angka berikutnya: 30, 25, 20, 15, ...",
+          "options": ["5", "10", "11", "12"],
+          "answer": 1,
+          "explanation": "Setiap suku berkurang 5. Jadi 15 − 5 = 10."
+        },
+        {
+          "category": "GEOMETRI",
+          "question": "Tentukan angka berikutnya: 3, 6, 12, 24, ...",
+          "options": ["36", "42", "48", "54"],
+          "answer": 2,
+          "explanation": "Setiap suku dikalikan 2. Jadi 24 × 2 = 48."
+        },
+        {
+          "category": "GEOMETRI",
+          "question": "Tentukan angka berikutnya: 81, 27, 9, 3, ...",
+          "options": ["0", "1", "2", "6"],
+          "answer": 1,
+          "explanation": "Setiap suku dibagi 3. Jadi 3 ÷ 3 = 1."
+        },
+        {
+          "category": "FIBONACCI",
+          "question": "Tentukan angka berikutnya: 1, 1, 2, 3, 5, 8, ...",
+          "options": ["11", "12", "13", "15"],
+          "answer": 2,
+          "explanation": "Setiap suku adalah jumlah dua suku sebelumnya: 5 + 8 = 13."
+        },
+        {
+          "category": "DERET KUADRAT",
+          "question": "Tentukan angka berikutnya: 1, 4, 9, 16, 25, ...",
+          "options": ["30", "35", "36", "49"],
+          "answer": 2,
+          "explanation": "Ini adalah kuadrat 1², 2², 3², 4², 5². Suku selanjutnya 6² = 36."
+        },
+        {
+          "category": "DERET KUADRAT",
+          "question": "Tentukan angka berikutnya: 4, 9, 16, 25, ...",
+          "options": ["30", "32", "36", "49"],
+          "answer": 2,
+          "explanation": "Suku-sukunya adalah 2², 3², 4², 5². Suku selanjutnya 6² = 36."
+        },
+        {
+          "category": "ARITMATIKA",
+          "question": "Tentukan angka berikutnya: 2, 5, 8, 11, ...",
+          "options": ["12", "13", "14", "15"],
+          "answer": 2,
+          "explanation": "Selisih tetapnya +3, sehingga 11 + 3 = 14."
+        },
+        {
+          "category": "POLA SELANG-SELING",
+          "question": "Tentukan angka berikutnya: 2, 6, 3, 9, 4, 12, ...",
+          "options": ["5", "8", "15", "16"],
+          "answer": 0,
+          "explanation": "Ada dua pola berselang-seling: 2, 3, 4, 5 dan 6, 9, 12. Jadi suku berikutnya adalah 5."
+        },
+        {
+          "category": "POLA BERTINGKAT",
+          "question": "Tentukan angka berikutnya: 1, 2, 4, 7, 11, ...",
+          "options": ["15", "16", "17", "18"],
+          "answer": 1,
+          "explanation": "Selisihnya berturut-turut +1, +2, +3, +4. Selanjutnya tambah 5: 11 + 5 = 16."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Level 3 — Analogi & Verbal",
+      "topic": "Hubungan kata, sinonim, antonim, dan penalaran verbal",
+      "description": "Latih ketepatan memahami hubungan antarkata serta menarik kesimpulan dari informasi tertulis.",
+      "material": [
+        "Dalam analogi, tentukan hubungan pasangan kata pertama (misalnya fungsi, tempat, profesi, atau bagian-keseluruhan), lalu terapkan hubungan yang sama.",
+        "Sinonim adalah kata yang maknanya mirip, sedangkan antonim memiliki makna berlawanan.",
+        "Untuk soal makna kata, perhatikan konteks kalimat; satu kata dapat memiliki arti berbeda pada konteks yang berbeda.",
+        "Dalam penalaran verbal, gunakan hanya informasi yang diberikan. Kesimpulan harus mengikuti premis dan tidak menambahkan asumsi.",
+        "Baca semua pilihan sebelum menjawab dan pilih hubungan atau kesimpulan yang paling tepat."
+      ],
+      "questions": [
+        {
+          "category": "ANALOGI",
+          "question": "Kompas berhubungan dengan arah, sebagaimana termometer berhubungan dengan ...",
+          "options": ["Kecepatan", "Suhu", "Jarak", "Berat"],
+          "answer": 1,
+          "explanation": "Kompas digunakan untuk mengetahui arah; termometer digunakan untuk mengukur suhu."
+        },
+        {
+          "category": "ANALOGI",
+          "question": "Dokter berhubungan dengan pasien, sebagaimana guru berhubungan dengan ...",
+          "options": ["Buku", "Sekolah", "Murid", "Kelas"],
+          "answer": 2,
+          "explanation": "Dokter melayani pasien, sedangkan guru mengajar murid."
+        },
+        {
+          "category": "ANALOGI",
+          "question": "Kunci berhubungan dengan pintu, sebagaimana kata sandi berhubungan dengan ...",
+          "options": ["Akun", "Layar", "Komputer", "Jaringan"],
+          "answer": 0,
+          "explanation": "Kunci digunakan untuk membuka pintu; kata sandi digunakan untuk membuka akses ke akun."
+        },
+        {
+          "category": "ANALOGI",
+          "question": "Padi berhubungan dengan beras, sebagaimana gandum berhubungan dengan ...",
+          "options": ["Tepung", "Roti", "Sawah", "Jagung"],
+          "answer": 0,
+          "explanation": "Beras dihasilkan dari pengolahan padi; tepung dapat dihasilkan dari pengolahan gandum."
+        },
+        {
+          "category": "SINONIM",
+          "question": "Kata yang paling dekat maknanya dengan \"cermat\" adalah ...",
+          "options": ["Ceroboh", "Teliti", "Cepat", "Ragu"],
+          "answer": 1,
+          "explanation": "Cermat berarti teliti atau berhati-hati dalam melakukan sesuatu."
+        },
+        {
+          "category": "ANTONIM",
+          "question": "Lawan kata \"optimis\" adalah ...",
+          "options": ["Antusias", "Pesimis", "Realistis", "Yakin"],
+          "answer": 1,
+          "explanation": "Optimis berarti memiliki harapan baik; pesimis berarti cenderung mengharapkan hal yang buruk."
+        },
+        {
+          "category": "MAKNA KATA",
+          "question": "Dalam kalimat \"Keputusan itu diambil secara objektif\", kata \"objektif\" berarti ...",
+          "options": ["Berdasarkan perasaan pribadi", "Berdasarkan fakta dan tidak memihak", "Dilakukan dengan tergesa-gesa", "Mengikuti pendapat terbanyak"],
+          "answer": 1,
+          "explanation": "Objektif berarti berdasarkan fakta atau keadaan sebenarnya, bukan kepentingan maupun perasaan pribadi."
+        },
+        {
+          "category": "PENALARAN VERBAL",
+          "question": "Semua peserta yang lulus administrasi boleh mengikuti tes. Rina lulus administrasi. Kesimpulan yang tepat adalah ...",
+          "options": ["Rina pasti lulus tes", "Rina boleh mengikuti tes", "Semua peserta adalah Rina", "Rina tidak mengikuti tes"],
+          "answer": 1,
+          "explanation": "Premis menyatakan peserta yang lulus administrasi boleh mengikuti tes. Karena Rina lulus administrasi, ia boleh mengikuti tes."
+        },
+        {
+          "category": "PENALARAN VERBAL",
+          "question": "Semua anggota klub membaca buku. Dita adalah anggota klub. Kesimpulan yang tepat adalah ...",
+          "options": ["Dita membaca buku", "Dita menulis buku", "Semua pembaca adalah anggota klub", "Dita bukan anggota klub"],
+          "answer": 0,
+          "explanation": "Karena semua anggota klub membaca buku dan Dita adalah anggota klub, Dita membaca buku."
+        },
+        {
+          "category": "ANTONIM",
+          "question": "Lawan kata \"sementara\" adalah ...",
+          "options": ["Singkat", "Sebentar", "Permanen", "Berubah"],
+          "answer": 2,
+          "explanation": "Sementara berarti tidak tetap atau hanya untuk waktu tertentu. Lawannya adalah permanen."
+        }
+      ]
+    }
+  ]
+}
