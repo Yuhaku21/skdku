@@ -290,6 +290,7 @@ async function listUsers(request, response) {
     if (typeof email !== "string" || !account || typeof account.name !== "string") {
       throw new Error("Data akun di database tidak valid.");
     }
+    if (account.dummy === true) continue;
     const expiresAt = account.expiresAt === undefined ? null : account.expiresAt;
     if (expiresAt !== null && !Number.isSafeInteger(expiresAt)) {
       throw new Error("Masa berlaku akun di database tidak valid.");

@@ -14,6 +14,8 @@ Buka `http://localhost:3030` di browser. Hentikan server dengan `Ctrl+C`. Bank s
 
 Untuk memakai login, pembuatan akun, leaderboard, dan ulasan lokal, server juga memerlukan `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `ADMIN_USERNAME`, dan `ADMIN_PASSWORD` di environment proses. E-book menggunakan tautan default yang telah dikonfigurasi; atur `EBOOK_URL` jika ingin menggantinya dengan tautan HTTPS lain.
 
+Untuk mengisi leaderboard dengan lima akun contoh Indonesia di database Redis yang sedang dikonfigurasi, jalankan `npm run seed:leaderboard`. Skrip ini menambah skor dummy (bukan akun yang bisa login) dan menyembunyikannya dari daftar akun admin. Gunakan hanya pada database development/preview, bukan production.
+
 ## Fitur
 
 - Login pengguna dan admin memakai sesi aman dari API server. Pengunjung dapat mendaftar sendiri untuk paket Starter gratis yang berlaku 1 hari; akun lainnya dibuat oleh admin dengan masa berlaku 1 hari, 7 hari, atau selamanya. Akun kedaluwarsa tidak dapat login dan sesi aktif dihentikan saat masa berlaku habis. Admin dapat melihat username, email, dan masa berlaku akun, serta meng-upgrade akun ke 7 hari atau selamanya dari tabel pengelolaan. Pengguna perlu memuat ulang halaman agar sesi aktif menerapkan paket baru. Password pengguna disimpan sebagai hash PBKDF2.

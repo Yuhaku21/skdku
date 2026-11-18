@@ -4,6 +4,7 @@
   "private": true,
   "description": "Website latihan tryout TIU SKD",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "seed:leaderboard": "node scripts/seed-leaderboard.js"
   }
 }
