@@ -20,13 +20,13 @@ const FIXED_ACCESS_LIMITS = {
 const PACKAGES = {
   starter: {
     name: "Starter",
-    price: 10000,
+    price: 0,
     benefits: [
       { included: true, text: "Akses selama 1 hari" },
       { included: true, text: "10 soal per sesi" },
       { included: false, text: "Pilih tingkat kesulitan" },
       { included: false, text: "Masuk leaderboard tertinggi" },
-      { included: true, text: "E-book gratis" }
+      { included: false, text: "E-book gratis" }
     ]
   },
   tempur: {
@@ -94,7 +94,7 @@ function showPackageDetails(packageKey) {
   const selectedPackage = PACKAGES[packageKey];
   if (!selectedPackage) return;
 
-  const formatPrice = (price) => new Intl.NumberFormat("id-ID", {
+  const formatPrice = (price) => price === 0 ? "Gratis" : new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
     maximumFractionDigits: 0
@@ -114,7 +114,20 @@ function showPackageDetails(packageKey) {
   $("package-summary-name").textContent = `Paket ${selectedPackage.name}`;
   $("package-summary-price").textContent = formatPrice(selectedPackage.price);
   $("package-summary-total").textContent = formatPrice(selectedPackage.price);
-  $("package-whatsapp-button").href = `https://wa.me/6283192124659?text=${encodeURIComponent(`hai saya ingin memesan harga paketan ${selectedPackage.name}`)}`;
+  const message = selectedPackage.price === 0
+    ? `hai saya ingin mengaktifkan paket ${selectedPackage.name} gratis`
+    : `hai saya ingin memesan harga paketan ${selectedPackage.name}`;
+  const whatsappButton = $("package-whatsapp-button");
+  whatsappButton.href = `https://wa.me/6283192124659?text=${encodeURIComponent(message)}`;
+  const arrow = document.createElement("span");
+  arrow.setAttribute("aria-hidden", "true");
+  arrow.textContent = "→";
+  whatsappButton.replaceChildren(
+    document.createTextNode(selectedPackage.price === 0
+      ? "Hubungi WhatsApp untuk aktivasi "
+      : "Lanjutkan pembayaran via WhatsApp "),
+    arrow
+  );
   $("package-dialog").showModal();
 }
 
@@ -173,6 +186,7 @@ function updateSessionOptions() {
 
 function configureAccountAccess() {
   const lifetimeAccess = currentValidity() === "forever";
+  $("ebook-card").classList.toggle("hidden", !["7-days", "forever"].includes(currentValidity()));
   $("difficulty-section").classList.toggle("hidden", !lifetimeAccess);
   $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((button) => {
     button.disabled = !lifetimeAccess;
@@ -312,12 +326,17 @@ async function renderScoreProgress() {
   const list = $("score-progress-list");
   const requestId = ++scoreProgressRequestId;
   list.innerHTML = '<p class="empty-state">Memuat progres skor...</p>';
+  $("certificate-status").textContent = "Memeriksa kelayakan sertifikat...";
+  $("certificate-status").classList.remove("success");
+  $("print-certificate-button").disabled = true;
   try {
     const response = await fetch("/api/leaderboard", { cache: "no-store" });
     const result = await readApiJson(response);
     if (!response.ok) throw new Error(result.error || `Progres skor gagal dimuat (${response.status}).`);
     if (!result.progress || Object.entries(TEST_TARGETS).some(([test]) =>
-      !Number.isSafeInteger(result.progress[test]) || result.progress[test] < 0)) {
+      !Number.isSafeInteger(result.progress[test]) || result.progress[test] < 0)
+      || typeof result.certificateEligible !== "boolean"
+      || (result.certificateEligible && (typeof result.certificateName !== "string" || !result.certificateName))) {
       throw new Error("Data progres skor dari server tidak valid.");
     }
     if (requestId !== scoreProgressRequestId) return;
@@ -333,11 +352,44 @@ async function renderScoreProgress() {
         </div>
       `;
     }).join("");
+    updateCertificate(result.progress, result.certificateEligible, result.certificateName);
   } catch (error) {
     console.error("Tidak dapat memuat progres skor:", error);
     if (requestId !== scoreProgressRequestId) return;
     list.innerHTML = `<p class="empty-state">${escapeHtml(error.message || "Progres skor tidak dapat dimuat.")}</p>`;
+    $("certificate-status").textContent = "Kelayakan sertifikat belum dapat diverifikasi. Coba muat ulang dashboard.";
   }
+}
+
+function updateCertificate(progress, eligible, certificateName) {
+  const status = $("certificate-status");
+  const button = $("print-certificate-button");
+  button.disabled = !eligible;
+  status.classList.toggle("success", eligible);
+  if (!eligible) {
+    status.textContent = currentValidity() === "forever"
+      ? "Akun Victory perlu mencapai seluruh target TIU, TKP, dan TWK untuk membuka sertifikat."
+      : "Sertifikat tersedia untuk akun Victory setelah seluruh target TIU, TKP, dan TWK tercapai.";
+    return;
+  }
+
+  const displayName = certificateName.replace(/\bVictory\b/gi, "").replace(/\s+/g, " ").trim();
+  $("certificate-name").textContent = displayName || "Peserta SKDKU";
+  $("certificate-score-tiu").textContent = progress.TIU;
+  $("certificate-score-tkp").textContent = progress.TKP;
+  $("certificate-score-twk").textContent = progress.TWK;
+  status.textContent = "Selamat! Akun Victory telah mencapai semua target. Sertifikat siap dicetak atau disimpan sebagai PDF.";
+}
+
+function printCertificate() {
+  if ($("print-certificate-button").disabled) return;
+  $("certificate-date").textContent = `Diterbitkan pada ${new Intl.DateTimeFormat("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  }).format(new Date())}`;
+  $("certificate-page").classList.remove("hidden");
+  window.print();
 }
 
 function renderReviews() {
@@ -797,6 +849,8 @@ function initialize() {
     }
   });
   $("home-button").addEventListener("click", showDashboard);
+  $("print-certificate-button").addEventListener("click", printCertificate);
+  window.addEventListener("afterprint", () => $("certificate-page").classList.add("hidden"));
   $("logout-button").addEventListener("click", async () => {
     try {
       const response = await fetch("/api/auth", {
@@ -810,6 +864,9 @@ function initialize() {
       console.error("Tidak dapat mengakhiri sesi:", error);
     } finally {
       clearAccountExpiryTimer();
+      scoreProgressRequestId += 1;
+      $("print-certificate-button").disabled = true;
+      $("certificate-status").textContent = "Masuk dengan akun Victory untuk memeriksa kelayakan sertifikat.";
       localStorage.removeItem(STORAGE.currentUser);
       localStorage.removeItem(STORAGE.currentName);
       localStorage.removeItem(STORAGE.currentValidity);

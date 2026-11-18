@@ -7,6 +7,7 @@ const LEADERBOARD_KEY = "ruangskd:leaderboard:v2";
 const LEADERBOARD_NAMES_KEY = "ruangskd:leaderboard:names";
 const LEADERBOARD_SCORES_KEY = "ruangskd:leaderboard:scores:v2";
 const MAX_BODY_BYTES = 2048;
+const CERTIFICATE_TARGETS = { TIU: 80, TKP: 156, TWK: 65 };
 const SAVE_ACCUMULATED_SCORE_SCRIPT = [
   "redis.call('HINCRBY', KEYS[2], ARGV[1] .. ':' .. ARGV[2], ARGV[3])",
   "local total = 0",
@@ -112,10 +113,19 @@ module.exports = async function leaderboardHandler(request, response) {
   try {
     if (request.method === "GET") {
       const session = await getSession(request);
-      const progress = session && session.role === "user" && session.email
+      const authenticatedUser = session && session.role === "user" && session.email;
+      const progress = authenticatedUser
         ? await getUserProgress(session.email)
         : null;
-      sendJson(response, 200, { users: await getLeaderboard(), progress });
+      const validity = authenticatedUser ? await getSessionValidity(session) : null;
+      const certificateEligible = validity === "forever" && progress
+        && Object.entries(CERTIFICATE_TARGETS).every(([test, target]) => progress[test] >= target);
+      sendJson(response, 200, {
+        users: await getLeaderboard(),
+        progress,
+        certificateEligible: Boolean(certificateEligible),
+        certificateName: authenticatedUser ? session.name : null
+      });
       return;
     }
     if (!/^application\/json(?:\s*;|$)/i.test(request.headers["content-type"] || "")) {

@@ -4,6 +4,7 @@ const path = require("node:path");
 const { getSession } = require("./lib/session");
 const authHandler = require("./api/auth");
 const leaderboardHandler = require("./api/leaderboard");
+const ebookHandler = require("./api/ebook");
 
 const HOST = process.env.HOST || "0.0.0.0";
 const PORT = Number(process.env.PORT) || 3030;
@@ -192,6 +193,11 @@ const server = http.createServer((request, response) => {
       console.error("API leaderboard gagal:", error);
       sendJson(response, 500, { error: "Leaderboard tidak dapat diproses saat ini." });
     });
+    return;
+  }
+
+  if (pathname === "/api/ebook") {
+    ebookHandler(request, response);
     return;
   }
 
