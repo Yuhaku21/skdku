@@ -1282,6 +1282,7 @@ function initialize() {
     if (event.key === "Escape") closeMobileMenu();
   });
   $("nav-start-test-button").addEventListener("click", showLogin);
+  $("landing-login-button").addEventListener("click", showLogin);
   $("back-to-landing-button").addEventListener("click", showLanding);
   $("starter-back-button").addEventListener("click", returnToPricing);
   $("starter-register-tab").addEventListener("click", () => setStarterAuthMode("register"));

@@ -53,7 +53,9 @@ main { flex: 1; }
 .landing-hero h1 span { color: var(--violet); }
 .landing-jargon { margin: 0 0 11px; color: #4a4680; font: 700 16px "Manrope", sans-serif; }
 .landing-hero-copy > .muted { max-width: 450px; margin-bottom: 23px; }
+.landing-cta-actions { display: grid; justify-items: start; gap: 8px; }
 .landing-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 49px; padding: 0 21px; text-decoration: none; }
+.landing-login-cta { min-height: 40px; padding: 9px 16px; }
 .landing-hero-stats { display: flex; flex-wrap: wrap; gap: 27px; margin-top: 30px; }
 .landing-hero-stats div { display: grid; gap: 4px; }
 .landing-hero-stats strong { font: 800 17px "Manrope", sans-serif; }
