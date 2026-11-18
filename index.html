@@ -262,7 +262,19 @@
               <h1 id="welcome-title">Siap latihan hari ini?</h1>
               <p class="muted">Pilih jenis tes yang ingin kamu latih.</p>
             </div>
-            <div class="welcome-icon" aria-hidden="true">✦</div>
+            <div class="dashboard-profile">
+              <span class="profile-avatar" id="profile-avatar">
+                <span class="avatar-initial" id="profile-avatar-initial">U</span>
+                <img class="avatar-image" id="profile-avatar-image" alt="" hidden />
+              </span>
+              <div class="dashboard-profile-copy">
+                <strong>Foto profil</strong>
+                <span>Tampil di ulasan dan leaderboard.</span>
+                <input class="sr-only" id="profile-photo-input" type="file" accept="image/*" />
+                <button class="button button-outline" id="profile-photo-button" type="button">Unggah foto</button>
+                <p class="form-message" id="profile-photo-message" role="status" aria-live="polite"></p>
+              </div>
+            </div>
           </div>
           <div class="dashboard-grid">
             <div class="level-card">

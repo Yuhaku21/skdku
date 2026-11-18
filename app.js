@@ -2,6 +2,7 @@ const STORAGE = {
   currentUser: "ruangskd.currentUser",
   currentName: "ruangskd.currentName",
   currentValidity: "ruangskd.currentValidity",
+  profilePhotoId: "ruangskd.profilePhotoId",
   history: "ruangskd.history",
   questionRotation: "ruangskd.questionRotation"
 };
@@ -210,6 +211,141 @@ function configureAccountAccess() {
   updateSessionOptions();
 }
 
+function profilePhotoUrl(profilePhotoId) {
+  return `/api/profile?id=${encodeURIComponent(profilePhotoId)}`;
+}
+
+function renderProfilePhoto() {
+  const profilePhotoId = localStorage.getItem(STORAGE.profilePhotoId);
+  const image = $("profile-avatar-image");
+  const initial = $("profile-avatar-initial");
+  initial.textContent = Array.from(currentUserName().trim())[0] || "U";
+  initial.hidden = false;
+  initial.classList.remove("hidden");
+  image.hidden = true;
+  image.classList.add("hidden");
+  if (!profilePhotoId) return;
+  image.src = `${profilePhotoUrl(profilePhotoId)}&v=${Date.now()}`;
+  activateAvatarImages($("profile-avatar"));
+}
+
+function activateAvatarImages(root) {
+  root.querySelectorAll(".avatar-image").forEach((image) => {
+    const fallback = image.parentElement.querySelector(".avatar-initial");
+    const showImage = () => {
+      image.hidden = false;
+      image.classList.remove("hidden");
+      fallback.classList.add("hidden");
+    };
+    const showFallback = () => {
+      image.hidden = true;
+      image.classList.add("hidden");
+      fallback.classList.remove("hidden");
+    };
+    image.addEventListener("load", showImage, { once: true });
+    image.addEventListener("error", showFallback, { once: true });
+    if (image.complete) {
+      if (image.naturalWidth) showImage();
+      else showFallback();
+    }
+  });
+}
+
+function avatarMarkup(profilePhotoId, name, className) {
+  const initial = Array.from(String(name).trim())[0] || "U";
+  const image = typeof profilePhotoId === "string" && profilePhotoId
+    ? `<img class="avatar-image" src="${escapeHtml(profilePhotoUrl(profilePhotoId))}" alt="" loading="lazy" decoding="async" hidden />`
+    : "";
+  return `<span class="profile-avatar ${className}"><span class="avatar-initial">${escapeHtml(initial)}</span>${image}</span>`;
+}
+
+function readProfilePhoto(file) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    image.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      if (!image.naturalWidth || !image.naturalHeight
+        || image.naturalWidth > 8000 || image.naturalHeight > 8000) {
+        reject(new Error("Ukuran gambar tidak didukung."));
+        return;
+      }
+      const sourceSize = Math.min(image.naturalWidth, image.naturalHeight);
+      const sourceX = (image.naturalWidth - sourceSize) / 2;
+      const sourceY = (image.naturalHeight - sourceSize) / 2;
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+      if (!context) {
+        reject(new Error("Foto tidak dapat diproses di browser ini."));
+        return;
+      }
+
+      const resize = async () => {
+        for (const dimension of [256, 192, 128]) {
+          canvas.width = dimension;
+          canvas.height = dimension;
+          context.drawImage(image, sourceX, sourceY, sourceSize, sourceSize, 0, 0, dimension, dimension);
+          for (const quality of [0.82, 0.68, 0.54, 0.4, 0.28]) {
+            const blob = await new Promise((resolveBlob) => canvas.toBlob(resolveBlob, "image/webp", quality));
+            if (blob && blob.type === "image/webp" && blob.size <= 20 * 1024) {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.onerror = () => reject(new Error("Foto tidak dapat dibaca."));
+              reader.readAsDataURL(blob);
+              return;
+            }
+          }
+        }
+        reject(new Error("Foto terlalu besar. Coba pilih gambar yang lebih sederhana."));
+      };
+      resize().catch(reject);
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error("File tersebut bukan gambar yang dapat dibuka."));
+    };
+    image.src = objectUrl;
+  });
+}
+
+async function handleProfilePhotoChange(event) {
+  const input = event.currentTarget;
+  const file = input.files && input.files[0];
+  const message = $("profile-photo-message");
+  message.classList.remove("success");
+  message.textContent = "";
+  if (!file) return;
+  if (!file.type.startsWith("image/") || file.size > 5 * 1024 * 1024) {
+    message.textContent = "Pilih file gambar dengan ukuran maksimal 5 MB.";
+    input.value = "";
+    return;
+  }
+  $("profile-photo-button").disabled = true;
+  message.textContent = "Memproses foto...";
+  try {
+    const image = await readProfilePhoto(file);
+    const response = await fetch("/api/profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image })
+    });
+    const result = await readApiJson(response);
+    if (!response.ok || typeof result.profilePhotoId !== "string") {
+      throw new Error(result.error || "Foto profil gagal disimpan.");
+    }
+    localStorage.setItem(STORAGE.profilePhotoId, result.profilePhotoId);
+    renderProfilePhoto();
+    message.textContent = "Foto profil berhasil diperbarui.";
+    message.classList.add("success");
+  } catch (error) {
+    console.error("Tidak dapat mengunggah foto profil:", error);
+    message.textContent = error.message || "Foto profil gagal diunggah. Coba lagi.";
+  } finally {
+    $("profile-photo-button").disabled = false;
+    input.value = "";
+  }
+}
+
 function syncHeader() {
   const email = currentUser();
   $("session-label").textContent = email ? `Hai, ${currentUserName()}` : "";
@@ -237,6 +373,7 @@ function scheduleAccountExpiry(expiresAt) {
     localStorage.removeItem(STORAGE.currentUser);
     localStorage.removeItem(STORAGE.currentName);
     localStorage.removeItem(STORAGE.currentValidity);
+    localStorage.removeItem(STORAGE.profilePhotoId);
     syncHeader();
     showScreen("auth-view");
     $("auth-message").textContent = "Masa berlaku akun telah habis. Hubungi admin.";
@@ -264,6 +401,8 @@ async function handleAuth(event) {
     localStorage.setItem(STORAGE.currentUser, result.user.email);
     localStorage.setItem(STORAGE.currentName, result.user.name);
     localStorage.setItem(STORAGE.currentValidity, result.user.validity);
+    if (result.user.profilePhotoId) localStorage.setItem(STORAGE.profilePhotoId, result.user.profilePhotoId);
+    else localStorage.removeItem(STORAGE.profilePhotoId);
     scheduleAccountExpiry(result.user.expiresAt);
     syncHeader();
     showDashboard();
@@ -278,6 +417,7 @@ function showDashboard() {
     return;
   }
   $("welcome-title").textContent = `Siap latihan hari ini, ${currentUserName().split(" ")[0]}?`;
+  renderProfilePhoto();
   syncHeader();
   configureAccountAccess();
   renderHistory();
@@ -329,6 +469,7 @@ function renderHistory() {
   list.innerHTML = history.map((item) => `
     <div class="history-item"><span>${escapeHtml(item.test || "TIU")} · ${escapeHtml(item.date)} · ${item.correct}/${item.questionCount || 10} benar</span><strong>${item.score}</strong></div>
   `).join("");
+  activateAvatarImages(list);
 }
 
 async function renderScoreProgress() {
@@ -361,6 +502,7 @@ async function renderScoreProgress() {
         </div>
       `;
     }).join("");
+    activateAvatarImages(track);
     updateCertificate(result.progress, result.certificateEligible, result.certificateName);
   } catch (error) {
     console.error("Tidak dapat memuat progres skor:", error);
@@ -458,7 +600,10 @@ function renderReviewCard(review) {
   const date = new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date(review.createdAt));
   return `<article class="user-review">
     <div class="user-review-heading">
-      <div><strong class="user-review-name">${escapeHtml(maskReviewUsername(review.username))}</strong><span class="user-review-date">${escapeHtml(date)}</span></div>
+      <div class="user-review-person">
+        ${avatarMarkup(review.profilePhotoId, review.username, "user-review-avatar")}
+        <div><strong class="user-review-name">${escapeHtml(maskReviewUsername(review.username))}</strong><span class="user-review-date">${escapeHtml(date)}</span></div>
+      </div>
       <span class="user-review-stars" aria-label="${review.rating} dari 5 bintang">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</span>
     </div>
     <p>${escapeHtml(review.comment)}</p>
@@ -498,6 +643,7 @@ async function fetchAndRenderReviews() {
     }
     landingReviews = reviews;
     $("reviews-list").innerHTML = reviews.map(renderReviewCard).join("");
+    activateAvatarImages($("reviews-list"));
     renderLandingReviewCarousel(renderReviewCard);
   } catch (error) {
     console.error("Tidak dapat memuat ulasan:", error);
@@ -531,6 +677,7 @@ async function fetchAndRenderLeaderboard() {
     if (!response.ok) throw new Error(result.error || `Leaderboard gagal dimuat (${response.status}).`);
     if (!result || !Array.isArray(result.users)
       || result.users.some((user) => !user || typeof user.username !== "string"
+        || (user.profilePhotoId !== null && typeof user.profilePhotoId !== "string")
         || !Number.isSafeInteger(user.score) || user.score < 0
         || !user.scores || Object.keys(TEST_TARGETS).some((test) =>
           !Number.isSafeInteger(user.scores[test]) || user.scores[test] < 0))) {
@@ -544,6 +691,7 @@ async function fetchAndRenderLeaderboard() {
     list.innerHTML = result.users.slice(0, 5).map((user, index) => `
       <li class="leaderboard-item">
         <span class="leaderboard-rank">${String(index + 1).padStart(2, "0")}</span>
+        ${avatarMarkup(user.profilePhotoId, user.username, "leaderboard-avatar")}
         <span class="leaderboard-player"><strong>${escapeHtml(user.username)}</strong><small>TIU ${user.scores.TIU} · TKP ${user.scores.TKP} · TWK ${user.scores.TWK}</small></span>
         <strong class="leaderboard-score">${user.score}<small>total</small></strong>
       </li>
@@ -833,6 +981,7 @@ async function restoreUserSession() {
       localStorage.removeItem(STORAGE.currentUser);
       localStorage.removeItem(STORAGE.currentName);
       localStorage.removeItem(STORAGE.currentValidity);
+      localStorage.removeItem(STORAGE.profilePhotoId);
       syncHeader();
       if (hadPreviousSession) {
         $("auth-message").textContent = "Sesi atau masa berlaku akun telah berakhir. Silakan login kembali.";
@@ -845,6 +994,8 @@ async function restoreUserSession() {
     localStorage.setItem(STORAGE.currentUser, result.user.email);
     localStorage.setItem(STORAGE.currentName, result.user.name);
     localStorage.setItem(STORAGE.currentValidity, result.user.validity);
+    if (result.user.profilePhotoId) localStorage.setItem(STORAGE.profilePhotoId, result.user.profilePhotoId);
+    else localStorage.removeItem(STORAGE.profilePhotoId);
     scheduleAccountExpiry(result.user.expiresAt);
     syncHeader();
     showDashboard();
@@ -854,6 +1005,7 @@ async function restoreUserSession() {
     localStorage.removeItem(STORAGE.currentUser);
     localStorage.removeItem(STORAGE.currentName);
     localStorage.removeItem(STORAGE.currentValidity);
+    localStorage.removeItem(STORAGE.profilePhotoId);
     syncHeader();
     showLogin();
     $("auth-message").textContent = error.message || "Sesi tidak dapat dipulihkan.";
@@ -922,6 +1074,8 @@ function initialize() {
     });
   });
   $("start-button").addEventListener("click", beginQuiz);
+  $("profile-photo-button").addEventListener("click", () => $("profile-photo-input").click());
+  $("profile-photo-input").addEventListener("change", handleProfilePhotoChange);
   $("open-reviews-button").addEventListener("click", showReviews);
   $("reviews-home-button").addEventListener("click", showDashboard);
   $("review-form").addEventListener("submit", handleReviewSubmit);
@@ -963,6 +1117,7 @@ function initialize() {
       localStorage.removeItem(STORAGE.currentUser);
       localStorage.removeItem(STORAGE.currentName);
       localStorage.removeItem(STORAGE.currentValidity);
+      localStorage.removeItem(STORAGE.profilePhotoId);
       syncHeader();
       showLanding();
     }

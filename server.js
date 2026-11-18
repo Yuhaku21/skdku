@@ -2,15 +2,19 @@ const http = require("node:http");
 const fs = require("node:fs");
 const path = require("node:path");
 const { getSession } = require("./lib/session");
+const { redisCommand } = require("./lib/redis");
 const authHandler = require("./api/auth");
 const leaderboardHandler = require("./api/leaderboard");
 const ebookHandler = require("./api/ebook");
+const profileHandler = require("./api/profile");
+const { ensureProfilePhotoId } = require("./lib/profile-photo");
 
 const HOST = process.env.HOST || "0.0.0.0";
 const PORT = Number(process.env.PORT) || 3030;
 const ROOT = __dirname;
 const REVIEWS_FILE = path.resolve(process.env.REVIEWS_FILE || path.join(ROOT, "data", "reviews.json"));
 const MAX_REVIEW_BODY_BYTES = 8192;
+const MAX_PROFILE_BODY_BYTES = 30 * 1024;
 const MAX_STORED_REVIEWS = 1000;
 const MIME_TYPES = {
   ".css": "text/css; charset=utf-8",
@@ -65,20 +69,20 @@ async function appendReview(review) {
   await operation;
 }
 
-async function readJsonBody(request) {
+async function readJsonBody(request, maxBodyBytes = MAX_REVIEW_BODY_BYTES) {
   const chunks = [];
   let byteLength = 0;
   let tooLarge = false;
   for await (const chunk of request) {
     byteLength += chunk.length;
-    if (byteLength > MAX_REVIEW_BODY_BYTES) {
+    if (byteLength > maxBodyBytes) {
       tooLarge = true;
     } else if (!tooLarge) {
       chunks.push(chunk);
     }
   }
   if (tooLarge) {
-    const error = new Error("Ukuran data ulasan terlalu besar.");
+    const error = new Error("Ukuran data permintaan terlalu besar.");
     error.statusCode = 413;
     throw error;
   }
@@ -128,6 +132,14 @@ async function handleReviewsApi(request, response) {
     throw error;
   }
   const review = { username, rating, comment, createdAt: new Date().toISOString() };
+  if (session.role === "user" && session.email) {
+    const stored = await redisCommand(["HGET", "ruangskd:users", session.email]);
+    if (typeof stored === "string") {
+      const account = JSON.parse(stored);
+      const profilePhotoId = await ensureProfilePhotoId(session.email, account);
+      review.profilePhotoId = account.profilePhotoUploadedAt ? profilePhotoId : null;
+    }
+  }
   await appendReview(review);
   sendJson(response, 201, review);
 }
@@ -144,6 +156,13 @@ async function handleLeaderboardApi(request, response) {
     request.body = await readJsonBody(request);
   }
   await leaderboardHandler(request, response);
+}
+
+async function handleProfileApi(request, response) {
+  if (request.method === "POST" && /^application\/json(?:\s*;|$)/i.test(request.headers["content-type"] || "")) {
+    request.body = await readJsonBody(request, MAX_PROFILE_BODY_BYTES);
+  }
+  await profileHandler(request, response);
 }
 
 const server = http.createServer((request, response) => {
@@ -192,6 +211,18 @@ const server = http.createServer((request, response) => {
       }
       console.error("API leaderboard gagal:", error);
       sendJson(response, 500, { error: "Leaderboard tidak dapat diproses saat ini." });
+    });
+    return;
+  }
+
+  if (pathname === "/api/profile") {
+    handleProfileApi(request, response).catch((error) => {
+      if (error.statusCode && error.statusCode < 600) {
+        sendJson(response, error.statusCode, { error: error.message });
+        return;
+      }
+      console.error("API foto profil gagal:", error);
+      sendJson(response, 500, { error: "Foto profil tidak dapat diproses saat ini." });
     });
     return;
   }

@@ -127,6 +127,7 @@ main { flex: 1; }
 .leaderboard-item:nth-child(1) .leaderboard-rank { background: #fff3d9; color: #c18a19; }
 .leaderboard-item:nth-child(2) .leaderboard-rank { background: #f0f1f5; color: #788294; }
 .leaderboard-item:nth-child(3) .leaderboard-rank { background: #faeee5; color: #aa7554; }
+.leaderboard-avatar { flex: 0 0 36px; width: 36px; height: 36px; font-size: 11px; }
 .leaderboard-player { display: grid; flex: 1; gap: 3px; min-width: 0; }
 .leaderboard-player strong { overflow: hidden; color: #374256; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
 .leaderboard-player small { color: #9aa2b0; font-size: 9px; }
@@ -208,6 +209,15 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .welcome-row h1 { margin: 14px 0 8px; font-size: 31px; letter-spacing: -1.2px; }
 .welcome-row p { margin-bottom: 0; }
 .welcome-icon { width: 58px; height: 58px; border-radius: 19px; display: grid; place-items: center; color: #776bf0; background: #e8e6ff; font-size: 24px; }
+.dashboard-profile { display: flex; align-items: center; gap: 14px; padding: 12px 15px; border: 1px solid #ebedf2; border-radius: 15px; background: white; }
+.profile-avatar { position: relative; display: grid; flex: 0 0 56px; width: 56px; height: 56px; place-items: center; overflow: hidden; border-radius: 50%; background: #ecebff; color: var(--violet); font: 800 17px "Manrope", sans-serif; }
+.avatar-initial { display: grid; width: 100%; height: 100%; place-items: center; }
+.avatar-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dashboard-profile-copy { display: grid; justify-items: start; gap: 4px; }
+.dashboard-profile-copy > strong { color: #374256; font-size: 11px; }
+.dashboard-profile-copy > span { color: #9aa2b0; font-size: 9px; }
+.dashboard-profile-copy .button { margin-top: 3px; padding: 7px 10px; font-size: 9px; }
+.dashboard-profile-copy .form-message { margin: 0; font-size: 9px; }
 .dashboard-grid { display: grid; grid-template-columns: 1.55fr .85fr; gap: 20px; align-items: stretch; }
 .level-card, .bank-card, .history-card { background: white; border: 1px solid #ebedf2; border-radius: 17px; }
 .level-card { padding: 25px; }
@@ -322,7 +332,9 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .reviews-list { display: grid; gap: 11px; }
 .user-review { padding: 15px; border: 1px solid #eceef3; border-radius: 12px; }
 .user-review-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
-.user-review-heading > div { display: grid; gap: 4px; }
+.user-review-person { display: flex; min-width: 0; align-items: center; gap: 9px; }
+.user-review-avatar { flex: 0 0 34px; width: 34px; height: 34px; font-size: 10px; }
+.user-review-heading > div > div { display: grid; gap: 4px; min-width: 0; }
 .user-review-name { color: #374256; font-size: 12px; }
 .user-review-date { color: #9aa2b0; font-size: 9px; }
 .user-review-stars { color: #f1b83d; font-size: 14px; letter-spacing: 1px; white-space: nowrap; }
@@ -478,7 +490,12 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .auth-back-button { margin-bottom: 12px; }
   .session-label { display: none; }
   .button-quiet { font-size: 10px; }
+  .welcome-row { align-items: flex-start; flex-direction: column; gap: 14px; }
+  .dashboard-profile { align-self: flex-end; }
   .welcome-row h1 { font-size: 25px; }
+  .dashboard-profile { gap: 8px; padding: 9px; }
+  .profile-avatar { flex-basis: 44px; width: 44px; height: 44px; }
+  .dashboard-profile-copy > span { max-width: 130px; line-height: 1.4; }
   .welcome-icon { width: 45px; height: 45px; }
   .admin-create-card, .admin-users-card { padding: 18px 15px; }
   .admin-users-heading { align-items: flex-start; }

@@ -1,6 +1,7 @@
 const { getSession } = require("../lib/session");
 const { redisCommand } = require("../lib/redis");
 const { sendJson } = require("../lib/http");
+const { attachReviewProfilePhotos, ensureProfilePhotoId } = require("../lib/profile-photo");
 
 const REVIEW_LIST_KEY = "ruangskd:reviews";
 const MAX_REVIEW_BODY_BYTES = 8192;
@@ -32,7 +33,7 @@ module.exports = async function reviewsHandler(request, response) {
     if (request.method === "GET") {
       const entries = await redisCommand(["LRANGE", REVIEW_LIST_KEY, 0, MAX_STORED_REVIEWS - 1]);
       if (!Array.isArray(entries)) throw new Error("Format data Redis tidak valid.");
-      sendJson(response, 200, entries.map((entry) => JSON.parse(entry)));
+      sendJson(response, 200, await attachReviewProfilePhotos(entries.map((entry) => JSON.parse(entry))));
       return;
     }
 
@@ -64,6 +65,14 @@ module.exports = async function reviewsHandler(request, response) {
     if (!review) {
       sendJson(response, 400, { error: "Nama, komentar (maksimal 1000 karakter), dan rating 1–5 wajib diisi." });
       return;
+    }
+    if (session.role === "user" && session.email) {
+      const stored = await redisCommand(["HGET", "ruangskd:users", session.email]);
+      if (typeof stored === "string") {
+        const account = JSON.parse(stored);
+        const profilePhotoId = await ensureProfilePhotoId(session.email, account);
+        review.profilePhotoId = account.profilePhotoUploadedAt ? profilePhotoId : null;
+      }
     }
 
     await redisCommand([

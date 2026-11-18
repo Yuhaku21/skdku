@@ -22,6 +22,7 @@ Untuk memakai login, pembuatan akun, leaderboard, dan ulasan lokal, server juga 
 - Landing page menyediakan section manfaat SKDKU dan panduan order tiga langkah: pilih paket, hubungi admin melalui WhatsApp, lalu gunakan akun yang dibuat admin untuk mulai tryout.
 - SEO landing page mencakup canonical URL, metadata Open Graph/Twitter dengan gambar pratinjau SKDKU, favicon, data terstruktur, `robots.txt`, dan `sitemap.xml`.
 - Dashboard pengguna menampilkan progres akumulasi TIU, TKP, dan TWK terhadap target masing-masing 80, 156, dan 65. Skor tiap sesi tryout (maksimal 100) ditambahkan ke akumulasi jenis tes terkait.
+- Pengguna dapat mengunggah foto profil dari dashboard. Foto otomatis dipotong persegi dan diperkecil sebelum disimpan di Upstash; foto ditampilkan di ulasan dan leaderboard, sehingga dapat dilihat oleh semua pengunjung.
 - Akun Victory dapat mencetak atau menyimpan sertifikat pencapaian setelah skor akumulasi mencapai seluruh target TIU, TKP, dan TWK. Sertifikat merupakan apresiasi latihan SKDKU, bukan sertifikat resmi instansi pemerintah.
 - Akumulasi baru disimpan terpisah dari format skor leaderboard lama karena data lama tidak mencatat jenis tesnya dan tidak dapat dibagi secara akurat.
 - Pengguna memilih tingkat mudah (10 soal, 12 menit), menengah (30 soal, 32 menit), atau sulit (50 soal, 52 menit) setelah memilih jenis tes. Bank soal TIU, TKP, dan TWK diputar acak tanpa pengulangan sampai seluruh bank kategori itu terpakai.
@@ -34,7 +35,7 @@ Untuk memakai login, pembuatan akun, leaderboard, dan ulasan lokal, server juga 
 
 ## Deploy ke Vercel
 
-Vercel menjalankan `api/reviews.js`, `api/auth.js`, `api/leaderboard.js`, dan `api/ebook.js` sebagai API. Upstash menyimpan ulasan, akun pengguna, sesi login, dan skor leaderboard:
+Vercel menjalankan `api/reviews.js`, `api/auth.js`, `api/leaderboard.js`, `api/profile.js`, dan `api/ebook.js` sebagai API. Upstash menyimpan ulasan, akun pengguna, sesi login, skor leaderboard, dan foto profil:
 
 1. Buat database Redis di [Upstash](https://console.upstash.com/redis).
 2. Di Vercel, buka **Project Settings → Environment Variables** dan tambahkan:

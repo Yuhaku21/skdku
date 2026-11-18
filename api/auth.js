@@ -2,6 +2,7 @@ const crypto = require("node:crypto");
 const { createSession, destroySession, getSession } = require("../lib/session");
 const { redisCommand } = require("../lib/redis");
 const { sendJson } = require("../lib/http");
+const { ensureProfilePhotoId } = require("../lib/profile-photo");
 
 const USERS_KEY = "ruangskd:users";
 const PASSWORD_ITERATIONS = 120000;
@@ -39,11 +40,16 @@ function getAccountValidity(account) {
 
 async function getAuthenticatedUser(request) {
   const session = await getSession(request);
-  if (!session || session.role !== "user" || session.validity || !session.email) return session;
+  if (!session || session.role !== "user" || !session.email) return session;
   const stored = await redisCommand(["HGET", USERS_KEY, session.email]);
   if (!stored) return session;
   const account = JSON.parse(stored);
-  return { ...session, validity: getAccountValidity(account) };
+  const profilePhotoId = await ensureProfilePhotoId(session.email, account);
+  return {
+    ...session,
+    validity: session.validity || getAccountValidity(account),
+    profilePhotoId: account.profilePhotoUploadedAt ? profilePhotoId : null
+  };
 }
 
 function readPayload(request, response) {
@@ -103,12 +109,14 @@ async function loginUser(request, response, payload) {
     sendJson(response, 403, { error: "Masa berlaku akun sudah habis. Hubungi admin." });
     return;
   }
+  const profilePhotoId = await ensureProfilePhotoId(email, account);
   const user = {
     role: "user",
     email,
     name: account.name,
     validity: getAccountValidity(account),
-    expiresAt
+    expiresAt,
+    profilePhotoId: account.profilePhotoUploadedAt ? profilePhotoId : null
   };
   await createSession(request, response, user);
   sendJson(response, 200, { user });
@@ -134,7 +142,14 @@ async function createUser(request, response, payload) {
   const expiresAt = ACCOUNT_VALIDITY_MS[validity] === null ? null : Date.now() + ACCOUNT_VALIDITY_MS[validity];
   const salt = crypto.randomBytes(16).toString("hex");
   const passwordHash = await hashPassword(password, salt);
-  const account = JSON.stringify({ name, salt, passwordHash, validity, expiresAt });
+  const account = JSON.stringify({
+    name,
+    salt,
+    passwordHash,
+    validity,
+    expiresAt,
+    profilePhotoId: crypto.randomUUID()
+  });
   const created = await redisCommand(["HSETNX", USERS_KEY, email, account]);
   if (created !== 1) {
     sendJson(response, 409, { error: "Email tersebut sudah memiliki akun." });

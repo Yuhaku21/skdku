@@ -61,6 +61,13 @@ async function getLeaderboard() {
   if (!Array.isArray(scores) || scores.length !== scoreFields.length) {
     throw new Error("Data skor leaderboard tidak lengkap.");
   }
+  const profilePhotoIds = new Map();
+  for (let index = 0; index < accounts.length; index += 2) {
+    const account = JSON.parse(accounts[index + 1]);
+    if (account.profilePhotoUploadedAt && typeof account.profilePhotoId === "string") {
+      profilePhotoIds.set(accounts[index], account.profilePhotoId);
+    }
+  }
   return emails.map((email, index) => {
     const score = Number(topEntries[index * 2 + 1]);
     const sectionScores = scores.slice(index * 3, index * 3 + 3).map((value) => Number(value || 0));
@@ -71,6 +78,7 @@ async function getLeaderboard() {
     }
     return {
       username: names[index],
+      profilePhotoId: profilePhotoIds.get(email) || null,
       score,
       scores: { TIU: sectionScores[0], TKP: sectionScores[1], TWK: sectionScores[2] }
     };
