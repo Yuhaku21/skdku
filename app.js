@@ -458,11 +458,17 @@ function renderReviewCard(review) {
   const date = new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date(review.createdAt));
   return `<article class="user-review">
     <div class="user-review-heading">
-      <div><strong class="user-review-name">${escapeHtml(review.username)}</strong><span class="user-review-date">${escapeHtml(date)}</span></div>
+      <div><strong class="user-review-name">${escapeHtml(maskReviewUsername(review.username))}</strong><span class="user-review-date">${escapeHtml(date)}</span></div>
       <span class="user-review-stars" aria-label="${review.rating} dari 5 bintang">${"★".repeat(review.rating)}${"☆".repeat(5 - review.rating)}</span>
     </div>
     <p>${escapeHtml(review.comment)}</p>
   </article>`;
+}
+
+function maskReviewUsername(username) {
+  const characters = Array.from(String(username).trim());
+  if (characters.length <= 4) return characters.join("");
+  return `${characters.slice(0, 4).join("")}${"*".repeat(characters.length - 4)}`;
 }
 
 function renderReviews() {
