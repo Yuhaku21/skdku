@@ -3,6 +3,7 @@ const { redisCommand } = require("../lib/redis");
 const { sendJson } = require("../lib/http");
 
 const USERS_KEY = "ruangskd:users";
+const DEFAULT_EBOOK_URL = "https://drive.google.com/file/d/1uLtzdWyozFUk6q4w6Ax3ngbY9xpy4LaC/view?usp=sharing";
 
 function getAccountValidity(account) {
   if (["1-day", "7-days", "forever"].includes(account.validity)) return account.validity;
@@ -38,7 +39,7 @@ module.exports = async function ebookHandler(request, response) {
 
     let ebookUrl;
     try {
-      ebookUrl = new URL(process.env.EBOOK_URL);
+      ebookUrl = new URL(process.env.EBOOK_URL || DEFAULT_EBOOK_URL);
     } catch {
       sendJson(response, 503, { error: "Tautan e-book belum dikonfigurasi." });
       return;

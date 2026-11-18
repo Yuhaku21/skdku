@@ -12,7 +12,7 @@ npm start
 
 Buka `http://localhost:3030` di browser. Hentikan server dengan `Ctrl+C`. Bank soal dimuat melalui `fetch`, jadi jangan buka `index.html` langsung sebagai file.
 
-Untuk memakai login, pembuatan akun, leaderboard, dan ulasan lokal, server juga memerlukan `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `ADMIN_USERNAME`, dan `ADMIN_PASSWORD` di environment proses. Atur `EBOOK_URL` ke tautan HTTPS e-book agar akun Tempur dan Victory dapat membukanya.
+Untuk memakai login, pembuatan akun, leaderboard, dan ulasan lokal, server juga memerlukan `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `ADMIN_USERNAME`, dan `ADMIN_PASSWORD` di environment proses. E-book menggunakan tautan default yang telah dikonfigurasi; atur `EBOOK_URL` jika ingin menggantinya dengan tautan HTTPS lain.
 
 ## Fitur
 
@@ -26,7 +26,7 @@ Untuk memakai login, pembuatan akun, leaderboard, dan ulasan lokal, server juga 
 - Akumulasi baru disimpan terpisah dari format skor leaderboard lama karena data lama tidak mencatat jenis tesnya dan tidak dapat dibagi secara akurat.
 - Pengguna memilih tingkat mudah (10 soal, 12 menit), menengah (30 soal, 32 menit), atau sulit (50 soal, 52 menit) setelah memilih jenis tes. Bank soal TIU, TKP, dan TWK diputar acak tanpa pengulangan sampai seluruh bank kategori itu terpakai.
 - Batas sesi mengikuti masa berlaku akun: akun 1 hari mendapat 10 soal/12 menit, akun 7 hari mendapat 15 soal/16 menit, dan akun selamanya dapat memilih tingkat kesulitan. Hanya akun selamanya yang masuk leaderboard.
-- E-book hanya dapat diakses akun Tempur (7 hari) dan Victory (selamanya), melalui endpoint yang memeriksa sesi pengguna. Atur `EBOOK_URL` ke tautan e-book HTTPS di environment server; pastikan izin berbagi di penyedia file sesuai kebutuhan akses.
+- E-book hanya dapat diakses akun Tempur (7 hari) dan Victory (selamanya), melalui endpoint yang memeriksa sesi pengguna. Endpoint menggunakan tautan default e-book dan dapat dioverride melalui `EBOOK_URL` HTTPS; pastikan izin berbagi di penyedia file mengizinkan pengguna membukanya.
 - Tryout menyediakan navigasi soal, penanda jawaban, skor persentase, dan pembahasan untuk jawaban salah atau yang belum dijawab.
 - Halaman ulasan dengan rating 1–5 bintang dan komentar yang dibagikan ke semua pengguna melalui API server, lalu diperbarui otomatis setiap 15 detik. Nama pengulas diambil dari sesi login server. Saat dijalankan lokal, data ulasan disimpan di `data/reviews.json`; saat di Vercel, API menggunakan Upstash Redis.
 - Semua soal disimpan dalam file JSON lokal sesuai kategori. Tryout tidak membutuhkan API key atau koneksi ke layanan AI.
@@ -40,7 +40,7 @@ Vercel menjalankan `api/reviews.js`, `api/auth.js`, `api/leaderboard.js`, dan `a
 2. Di Vercel, buka **Project Settings → Environment Variables** dan tambahkan:
    - `UPSTASH_REDIS_REST_URL` dan `UPSTASH_REDIS_REST_TOKEN` dari database Upstash.
    - `ADMIN_USERNAME` dan `ADMIN_PASSWORD` untuk akun admin pertama. Gunakan password unik minimal 12 karakter; jangan commit nilainya atau menambahkan awalan `NEXT_PUBLIC_`.
-   - `EBOOK_URL` dengan tautan HTTPS e-book.
+   - Opsional: `EBOOK_URL` dengan tautan HTTPS lain untuk mengganti tautan default e-book.
 3. Pilih environment yang digunakan (Production/Preview), lalu redeploy proyek.
 4. Buka `/admin-register` untuk login admin dan membuat akun pengguna. Pendaftaran publik dinonaktifkan.
 
