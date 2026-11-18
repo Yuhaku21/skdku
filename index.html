@@ -251,7 +251,7 @@
               <p class="form-message" id="auth-message" aria-live="polite"></p>
               <button class="button button-primary button-wide" id="auth-submit" type="submit">Masuk ke akun <span>→</span></button>
             </form>
-            <p class="tiny-note">Belum punya akun Starter? Pilih paket Starter untuk mendaftar. Untuk paket lainnya, hubungi admin. <a href="/admin-register">Login admin</a></p>
+            <p class="tiny-note">Akun Starter, Tempur, dan Victory dapat masuk di sini. Untuk mendaftar, pilih paket yang sesuai. <a href="/admin-register">Login admin</a></p>
           </div>
         </section>
 
@@ -351,6 +351,12 @@
                 <div class="section-heading compact"><div><span class="section-kicker">TARGET SKD</span><h2 id="score-progress-title">Progres belajarmu</h2></div></div>
                 <p class="muted score-progress-note">Pantau capaian nilai ambang tiap tes.</p>
                 <div id="score-progress-list" class="score-progress-list"><p class="empty-state">Memuat progres skor...</p></div>
+                <div class="starter-feature-gate hidden" id="score-progress-gate">
+                  <p>Selesaikan satu tryout TIU, TKP, dan TWK untuk membuka pantau progres.</p>
+                </div>
+                <div class="starter-upgrade-cta hidden" id="score-progress-upgrade">
+                  <button class="button button-outline upgrade-account-button" id="score-progress-upgrade-button" type="button">Upgrade akun <span aria-hidden="true">→</span></button>
+                </div>
               </section>
               <section class="ebook-card hidden" id="ebook-card" aria-labelledby="ebook-title">
                 <div class="ebook-card-icon" aria-hidden="true">▤</div>
@@ -463,7 +469,14 @@
           </div>
           <div class="review-section">
             <div class="section-heading compact"><div><span class="section-kicker">PEMBAHASAN</span><h2>Evaluasi jawabanmu</h2></div><span class="pill" id="review-count">0 perlu ditinjau</span></div>
+            <div class="starter-feature-gate hidden" id="review-upgrade-gate">
+              <p>Selesaikan satu tryout TIU, TKP, dan TWK untuk membuka kunci jawaban dan pembahasan.</p>
+              <button class="button button-primary upgrade-account-button" id="review-upgrade-locked-button" type="button">Upgrade akun <span aria-hidden="true">→</span></button>
+            </div>
             <div id="review-list" class="review-list"></div>
+            <div class="starter-upgrade-cta hidden" id="review-upgrade-available">
+              <button class="button button-outline upgrade-account-button" id="review-upgrade-button" type="button">Upgrade akun <span aria-hidden="true">→</span></button>
+            </div>
           </div>
         </section>
       </main>
@@ -485,6 +498,16 @@
       </div>
     </dialog>
 
+    <dialog class="upgrade-dialog" id="upgrade-dialog" aria-labelledby="upgrade-dialog-title" aria-describedby="upgrade-dialog-description">
+      <div class="upgrade-dialog-content">
+        <button class="package-dialog-close" id="upgrade-dialog-close" type="button" aria-label="Tutup pilihan upgrade">×</button>
+        <span class="section-kicker">TINGKATKAN AKUN</span>
+        <h2 id="upgrade-dialog-title">Pilih paket latihanmu</h2>
+        <p class="muted" id="upgrade-dialog-description">Pilih Tempur atau Victory untuk melanjutkan latihan dengan akses lebih lengkap.</p>
+        <div class="upgrade-package-options" id="upgrade-package-options"></div>
+      </div>
+    </dialog>
+
     <dialog class="starter-welcome-dialog" id="starter-welcome-dialog" aria-labelledby="starter-welcome-title" aria-describedby="starter-welcome-description">
       <div class="starter-welcome-content">
         <button class="starter-welcome-close" id="starter-welcome-close" type="button" aria-label="Tutup penawaran Starter">×</button>
@@ -496,8 +519,8 @@
           <span>1 hari akses</span>
           <span>10 soal per sesi</span>
         </div>
-        <button class="button button-primary button-wide starter-welcome-cta" id="starter-welcome-cta" type="button">Mulai coba sekarang <span>→</span></button>
-        <button class="starter-welcome-later" id="starter-welcome-later" type="button">Mungkin nanti</button>
+        <button class="button button-primary button-wide starter-welcome-cta" id="starter-welcome-cta" type="button">Daftar sekarang <span>→</span></button>
+        <button class="starter-welcome-login" id="starter-welcome-login" type="button">Sudah punya akun?</button>
       </div>
     </dialog>
 

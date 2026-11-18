@@ -109,6 +109,17 @@ main { flex: 1; }
 .package-dialog-close:hover { background: #eceef5; }
 .package-dialog-content h2 { margin: 10px 38px 6px 0; font: 800 22px "Manrope", sans-serif; }
 .package-dialog-content > .muted { margin: 0 0 19px; font-size: 11px; }
+.upgrade-dialog { width: min(920px, calc(100% - 28px)); max-width: none; max-height: calc(100vh - 28px); overflow-y: auto; overscroll-behavior: contain; padding: 0; border: 1px solid #e8ebf1; border-radius: 19px; background: white; color: var(--ink); box-shadow: 0 24px 80px #17203333; }
+.upgrade-dialog::backdrop { background: #17203380; backdrop-filter: blur(3px); }
+.upgrade-dialog-content { position: relative; padding: 29px; }
+.upgrade-dialog-content h2 { margin: 10px 38px 6px 0; font: 800 22px "Manrope", sans-serif; }
+.upgrade-dialog-content > .muted { margin: 0 0 19px; font-size: 11px; }
+.upgrade-package-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: stretch; gap: 15px; }
+.upgrade-package-options .pricing-card { min-width: 0; }
+.starter-feature-gate { padding: 16px; border: 1px solid #e8e6ff; border-radius: 12px; background: #f8f7ff; color: #687286; font-size: 11px; line-height: 1.65; text-align: center; }
+.starter-feature-gate p { margin: 0; }
+.starter-feature-gate .button { margin-top: 12px; }
+.starter-upgrade-cta { display: flex; justify-content: center; margin-top: 14px; }
 .starter-welcome-dialog { width: min(440px, calc(100% - 28px)); max-width: none; max-height: calc(100vh - 28px); padding: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; border: 1px solid #e8ebf1; border-radius: 21px; background: white; color: var(--ink); box-shadow: 0 24px 80px #17203340; }
 .starter-welcome-dialog[open] { animation: starter-welcome-enter .38s cubic-bezier(.2, .8, .2, 1) both; }
 .starter-welcome-dialog::backdrop { background: #17203388; backdrop-filter: blur(4px); animation: starter-welcome-backdrop .28s ease-out both; }
@@ -121,8 +132,8 @@ main { flex: 1; }
 .starter-welcome-benefits { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 20px; }
 .starter-welcome-benefits span { padding: 7px 10px; border-radius: 20px; background: #f4f3ff; color: #6254d9; font-size: 9px; font-weight: 700; }
 .starter-welcome-cta { margin: 0; }
-.starter-welcome-later { margin-top: 11px; padding: 7px 12px; border: 0; background: transparent; color: #8d95a4; font-size: 10px; font-weight: 600; }
-.starter-welcome-later:hover { color: #555f70; }
+.starter-welcome-login { margin-top: 11px; padding: 7px 12px; border: 0; background: transparent; color: #8d95a4; font-size: 10px; font-weight: 600; }
+.starter-welcome-login:hover { color: #555f70; }
 @keyframes starter-welcome-enter {
   from { opacity: 0; transform: translateY(12px) scale(.97); }
   to { opacity: 1; transform: translateY(0) scale(1); }
@@ -170,7 +181,7 @@ main { flex: 1; }
   .starter-welcome-dialog[open], .starter-welcome-dialog::backdrop { animation: none; }
 }
 .auth-back-button { margin-bottom: 18px; padding-left: 0; }
-.auth-view { display: grid; grid-template-columns: 1.1fr .9fr; gap: 80px; align-items: center; min-height: 640px; padding: 58px 28px 70px; }
+.auth-view { display: grid; place-items: center; min-height: 640px; padding: 58px 18px 70px; }
 .starter-auth-view { display: grid; min-height: 640px; place-items: center; padding: 58px 18px 70px; }
 .starter-auth-card { width: min(440px, 100%); padding: 27px 30px; border: 1px solid #ebedf2; border-radius: 18px; background: white; box-shadow: 0 12px 35px #1720330b; }
 .starter-auth-card h1 { margin: 10px 0 7px; color: var(--ink); font: 800 24px "Manrope", sans-serif; letter-spacing: -.7px; }
@@ -194,7 +205,8 @@ main { flex: 1; }
 .decor-orbit { position: absolute; border: 1px solid #d5d2ff; border-radius: 50%; }
 .orbit-one { width: 190px; height: 190px; right: -78px; top: -54px; }
 .orbit-two { width: 280px; height: 280px; right: -124px; top: -100px; }
-.auth-panel { width: 100%; max-width: 380px; margin: auto; }
+.auth-view > .auth-aside { display: none; }
+.auth-panel { width: min(440px, 100%); margin: auto; padding: 27px 30px; border: 1px solid #ebedf2; border-radius: 18px; background: white; box-shadow: 0 12px 35px #1720330b; }
 .auth-tabs { border-bottom: 1px solid var(--line); display: flex; gap: 28px; margin-bottom: 30px; }
 .auth-tab { padding: 0 0 12px; border: 0; border-bottom: 2px solid transparent; background: none; color: #9aa2b0; font-size: 13px; font-weight: 700; }
 .auth-tab.active { color: var(--violet); border-color: var(--violet); }
@@ -461,12 +473,8 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .pricing-description { min-height: 0; }
   .landing-community-card { padding: 21px; }
   .landing-review-slide { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .auth-view { grid-template-columns: 1fr; gap: 34px; min-height: 0; padding: 36px 0 45px; }
+  .auth-view { min-height: 0; padding: 36px 0 45px; }
   .starter-auth-view { min-height: 0; padding: 38px 0 48px; }
-  .auth-aside { min-height: 300px; padding: 30px; }
-  .auth-aside h1 { font-size: 31px; margin-top: 18px; }
-  .auth-stats { margin-top: 21px; gap: 24px; }
-  .auth-panel { max-width: none; }
   .admin-users-card { margin: 0 0 38px; }
   .dashboard-view { padding: 39px 0 48px; }
   .dashboard-grid { grid-template-columns: 1fr; }
@@ -512,6 +520,8 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .landing-section-intro h2 { font-size: 20px; }
   .landing-pricing { padding-top: 35px; }
   .pricing-card { padding: 20px; }
+  .upgrade-package-options { grid-template-columns: 1fr; }
+  .upgrade-dialog-content { padding: 24px 19px; }
   .package-dialog-content { padding: 24px 19px; }
   .starter-welcome-content { padding: 29px 20px 20px; }
   .starter-welcome-content h2 { font-size: 21px; }
@@ -573,7 +583,7 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .starter-welcome-content h2 { font-size: 20px; }
   .starter-welcome-content > .muted { margin-bottom: 12px; }
   .starter-welcome-benefits { margin-bottom: 14px; }
-  .starter-welcome-later { margin-top: 5px; }
+  .starter-welcome-login { margin-top: 5px; }
 }
 @media print {
   @page { size: A4 landscape; margin: 0; }

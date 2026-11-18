@@ -4,6 +4,7 @@ const STORAGE = {
   currentValidity: "ruangskd.currentValidity",
   profilePhotoId: "ruangskd.profilePhotoId",
   starterWelcomeDismissed: "ruangskd.starterWelcomeDismissed",
+  completedTests: "ruangskd.completedTests",
   history: "ruangskd.history",
   questionRotation: "ruangskd.questionRotation"
 };
@@ -97,6 +98,13 @@ function closeMobileMenu() {
   setMobileMenuOpen(false);
 }
 
+function packageWhatsAppUrl(selectedPackage) {
+  const message = selectedPackage.price === 0
+    ? `hai saya ingin mengaktifkan paket ${selectedPackage.name} gratis`
+    : `hai saya ingin memesan harga paketan ${selectedPackage.name}`;
+  return `https://wa.me/6283192124659?text=${encodeURIComponent(message)}`;
+}
+
 function showPackageDetails(packageKey) {
   const selectedPackage = PACKAGES[packageKey];
   if (!selectedPackage) return;
@@ -125,11 +133,8 @@ function showPackageDetails(packageKey) {
   $("package-summary-name").textContent = `Paket ${selectedPackage.name}`;
   $("package-summary-price").textContent = formatPrice(selectedPackage.price);
   $("package-summary-total").textContent = formatPrice(selectedPackage.price);
-  const message = selectedPackage.price === 0
-    ? `hai saya ingin mengaktifkan paket ${selectedPackage.name} gratis`
-    : `hai saya ingin memesan harga paketan ${selectedPackage.name}`;
   const whatsappButton = $("package-whatsapp-button");
-  whatsappButton.href = `https://wa.me/6283192124659?text=${encodeURIComponent(message)}`;
+  whatsappButton.href = packageWhatsAppUrl(selectedPackage);
   const arrow = document.createElement("span");
   arrow.setAttribute("aria-hidden", "true");
   arrow.textContent = "→";
@@ -140,6 +145,34 @@ function showPackageDetails(packageKey) {
     arrow
   );
   $("package-dialog").showModal();
+}
+
+function createUpgradePackageCard(packageKey) {
+  const sourceButton = document.querySelector(`[data-package="${packageKey}"]`);
+  const sourceCard = sourceButton && sourceButton.closest(".pricing-card");
+  if (!sourceCard) throw new Error(`Rincian paket ${packageKey} tidak ditemukan.`);
+
+  const card = sourceCard.cloneNode(true);
+  const originalButton = card.querySelector(".pricing-button");
+  if (!originalButton) throw new Error(`Tombol paket ${packageKey} tidak ditemukan.`);
+
+  const whatsappLink = document.createElement("a");
+  whatsappLink.className = originalButton.className;
+  whatsappLink.href = packageWhatsAppUrl(PACKAGES[packageKey]);
+  whatsappLink.target = "_blank";
+  whatsappLink.rel = "noopener noreferrer";
+  whatsappLink.setAttribute("aria-label", `Bayar paket ${PACKAGES[packageKey].name} via WhatsApp`);
+  whatsappLink.textContent = "Bayar via WhatsApp →";
+  originalButton.replaceWith(whatsappLink);
+  return card;
+}
+
+function showUpgradeOptions() {
+  $("upgrade-package-options").replaceChildren(
+    createUpgradePackageCard("tempur"),
+    createUpgradePackageCard("victory")
+  );
+  $("upgrade-dialog").showModal();
 }
 
 function showScreen(screenId) {
@@ -170,6 +203,40 @@ function currentValidity() {
   return localStorage.getItem(STORAGE.currentValidity);
 }
 
+function getCompletedTestTypes(email = currentUser()) {
+  const stored = readStored(STORAGE.completedTests, {});
+  const completed = new Set(
+    stored && typeof stored === "object" && !Array.isArray(stored) && Array.isArray(stored[email])
+      ? stored[email].filter((test) => Object.prototype.hasOwnProperty.call(TEST_BANKS, test))
+      : []
+  );
+  const history = readStored(STORAGE.history, []);
+  if (Array.isArray(history)) {
+    history.forEach((item) => {
+      if (item && item.email === email && Object.prototype.hasOwnProperty.call(TEST_BANKS, item.test)) {
+        completed.add(item.test);
+      }
+    });
+  }
+  return completed;
+}
+
+function recordCompletedTest(test) {
+  const email = currentUser();
+  if (!email || !Object.prototype.hasOwnProperty.call(TEST_BANKS, test)) return;
+  const stored = readStored(STORAGE.completedTests, {});
+  const completedByUser = stored && typeof stored === "object" && !Array.isArray(stored) ? stored : {};
+  const completed = getCompletedTestTypes(email);
+  completed.add(test);
+  completedByUser[email] = [...completed];
+  writeStored(STORAGE.completedTests, completedByUser);
+}
+
+function hasCompletedAllTestTypes() {
+  const completed = getCompletedTestTypes();
+  return Object.keys(TEST_BANKS).every((test) => completed.has(test));
+}
+
 function getCurrentSessionConfig() {
   if (currentValidity() === "forever") {
     return selectedDifficulty ? DIFFICULTIES[selectedDifficulty] : null;
@@ -195,7 +262,11 @@ function updateSessionOptions() {
     ? `Akses selamanya · ${config.questionCount} soal acak`
     : `Paket ${currentValidity() === "1-day" ? "1 hari" : "7 hari"} · ${config.questionCount} soal acak`;
   $("bank-title").textContent = `Bank soal ${selectedTest}`;
-  $("bank-description").textContent = `${config.questionCount} soal dipilih acak dari bank soal ${selectedTest}, lengkap dengan kunci jawaban dan pembahasan.`;
+  const answerKeysUnlocked = currentValidity() !== "1-day" || hasCompletedAllTestTypes();
+  const reviewAccessText = answerKeysUnlocked
+    ? "Kunci jawaban dan pembahasan tersedia setelah sesi."
+    : "Selesaikan satu tryout TIU, TKP, dan TWK untuk membuka kunci jawaban dan pembahasan.";
+  $("bank-description").textContent = `${config.questionCount} soal dipilih acak dari bank soal ${selectedTest}. ${reviewAccessText}`;
   $("start-button").disabled = false;
 }
 
@@ -465,9 +536,14 @@ function dismissStarterWelcome() {
   if (dialog.open) dialog.close();
 }
 
-function startStarterFromWelcome() {
+function showPricingFromStarterWelcome() {
   dismissStarterWelcome();
-  showStarterAuth("register");
+  returnToPricing();
+}
+
+function showLoginFromStarterWelcome() {
+  dismissStarterWelcome();
+  showLogin();
 }
 
 function setStarterAuthMode(mode) {
@@ -607,6 +683,17 @@ function renderHistory() {
 async function renderScoreProgress() {
   const list = $("score-progress-list");
   const requestId = ++scoreProgressRequestId;
+  const isStarter = currentValidity() === "1-day";
+  const progressLocked = isStarter && !hasCompletedAllTestTypes();
+  list.classList.toggle("hidden", progressLocked);
+  $("score-progress-gate").classList.toggle("hidden", !progressLocked);
+  $("score-progress-upgrade").classList.toggle("hidden", !isStarter);
+  if (progressLocked) {
+    $("certificate-status").textContent = "Sertifikat tersedia untuk akun Victory setelah seluruh target TIU, TKP, dan TWK tercapai.";
+    $("certificate-status").classList.remove("success");
+    $("print-certificate-button").disabled = true;
+    return;
+  }
   list.innerHTML = '<p class="empty-state">Memuat progres skor...</p>';
   $("certificate-status").textContent = "Memeriksa kelayakan sertifikat...";
   $("certificate-status").classList.remove("success");
@@ -1064,22 +1151,7 @@ function finishQuiz(expired = false) {
   $("result-source").textContent = "Bank soal lokal";
   $("result-heading").textContent = score >= 80 ? "Luar biasa, pertahankan!" : score >= 50 ? "Latihan yang hebat!" : "Terus berlatih, kamu pasti bisa!";
   $("result-subtitle").textContent = expired ? "Waktu habis. Pelajari pembahasan dan coba lagi untuk meningkatkan skor." : "Setiap latihan membawamu selangkah lebih siap.";
-  const review = $("review-list");
-  const incorrect = sessionQuestions.filter((question, index) => answers[index] !== question.answer).length;
-  $("review-count").textContent = `${incorrect} perlu ditinjau`;
-  review.innerHTML = sessionQuestions.map((question, index) => {
-    const isCorrect = answers[index] === question.answer;
-    const yourAnswer = answers[index] === null ? "Belum dijawab" : `${LETTERS[answers[index]] || answers[index] + 1}. ${question.options[answers[index]]}`;
-    const keyAnswer = `${LETTERS[question.answer] || question.answer + 1}. ${question.options[question.answer]}`;
-    return `
-      <article class="review-card ${isCorrect ? "correct" : "incorrect"}">
-        <div class="review-heading"><strong>SOAL ${String(index + 1).padStart(2, "0")} · ${escapeHtml(question.category)}</strong><span class="review-status">${isCorrect ? "✓ Benar" : "✕ Perlu dipelajari"}</span></div>
-        <p class="review-question">${escapeHtml(question.question)}</p>
-        <div class="review-answer"><span>Jawabanmu: <strong>${escapeHtml(yourAnswer)}</strong></span>${!isCorrect ? `<span>Kunci jawaban: <strong>${escapeHtml(keyAnswer)}</strong></span>` : ""}</div>
-        ${!isCorrect ? `<div class="review-explanation"><strong>Cara menjawab:</strong> ${escapeHtml(question.explanation)}</div>` : ""}
-      </article>
-    `;
-  }).join("");
+
   const history = readStored(STORAGE.history, []);
   history.unshift({
     email: currentUser(),
@@ -1090,6 +1162,29 @@ function finishQuiz(expired = false) {
     date: new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date())
   });
   writeStored(STORAGE.history, history.slice(0, 30));
+  const isStarter = currentValidity() === "1-day";
+  if (isStarter) recordCompletedTest(selectedTest);
+  const answerKeysUnlocked = !isStarter || hasCompletedAllTestTypes();
+
+  const review = $("review-list");
+  const incorrect = sessionQuestions.filter((question, index) => answers[index] !== question.answer).length;
+  $("review-count").textContent = `${incorrect} perlu ditinjau`;
+  review.classList.toggle("hidden", isStarter && !answerKeysUnlocked);
+  $("review-upgrade-gate").classList.toggle("hidden", !isStarter || answerKeysUnlocked);
+  $("review-upgrade-available").classList.toggle("hidden", !isStarter || !answerKeysUnlocked);
+  review.innerHTML = isStarter && !answerKeysUnlocked ? "" : sessionQuestions.map((question, index) => {
+    const isCorrect = answers[index] === question.answer;
+    const yourAnswer = answers[index] === null ? "Belum dijawab" : `${LETTERS[answers[index]] || answers[index] + 1}. ${question.options[answers[index]]}`;
+    const keyAnswer = `${LETTERS[question.answer] || question.answer + 1}. ${question.options[question.answer]}`;
+    return `
+      <article class="review-card ${isCorrect ? "correct" : "incorrect"}">
+        <div class="review-heading"><strong>SOAL ${String(index + 1).padStart(2, "0")} · ${escapeHtml(question.category)}</strong><span class="review-status">${isCorrect ? "✓ Benar" : "✕ Perlu dipelajari"}</span></div>
+        <p class="review-question">${escapeHtml(question.question)}</p>
+        <div class="review-answer"><span>Jawabanmu: <strong>${escapeHtml(yourAnswer)}</strong></span>${!isCorrect || (isStarter && answerKeysUnlocked) ? `<span>Kunci jawaban: <strong>${escapeHtml(keyAnswer)}</strong></span>` : ""}</div>
+        ${!isCorrect ? `<div class="review-explanation"><strong>Cara menjawab:</strong> ${escapeHtml(question.explanation)}</div>` : ""}
+      </article>
+    `;
+  }).join("");
   showScreen("result-view");
   $("leaderboard-submit-message").classList.remove("success");
   if (currentUser()) saveLeaderboardScore(selectedTest, score);
@@ -1151,9 +1246,16 @@ function initialize() {
   $("package-dialog").addEventListener("click", (event) => {
     if (event.target === $("package-dialog")) $("package-dialog").close();
   });
+  $("upgrade-dialog-close").addEventListener("click", () => $("upgrade-dialog").close());
+  $("upgrade-dialog").addEventListener("click", (event) => {
+    if (event.target === $("upgrade-dialog")) $("upgrade-dialog").close();
+  });
+  document.querySelectorAll(".upgrade-account-button").forEach((button) => {
+    button.addEventListener("click", showUpgradeOptions);
+  });
   $("starter-welcome-close").addEventListener("click", dismissStarterWelcome);
-  $("starter-welcome-later").addEventListener("click", dismissStarterWelcome);
-  $("starter-welcome-cta").addEventListener("click", startStarterFromWelcome);
+  $("starter-welcome-cta").addEventListener("click", showPricingFromStarterWelcome);
+  $("starter-welcome-login").addEventListener("click", showLoginFromStarterWelcome);
   $("starter-welcome-dialog").addEventListener("click", (event) => {
     if (event.target === $("starter-welcome-dialog")) dismissStarterWelcome();
   });
