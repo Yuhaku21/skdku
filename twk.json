@@ -698,5 +698,425 @@
     ],
     "answer": 1,
     "explanation": "Menghargai dan melaksanakan hasil musyawarah mencerminkan nilai sila keempat Pancasila."
+  },
+  {
+    "id": "twk-51",
+    "category": "UUD 1945",
+    "question": "Pasal 27 ayat (1) UUD 1945 menegaskan bahwa setiap warga negara memiliki kedudukan yang sama di dalam ...",
+    "options": [
+      "Pemerintahan dan organisasi politik",
+      "Keluarga dan lingkungan masyarakat",
+      "Hukum dan pemerintahan serta wajib menjunjungnya tanpa kecuali",
+      "Lembaga pendidikan dan kebudayaan",
+      "Kegiatan ekonomi dan perdagangan"
+    ],
+    "answer": 2,
+    "explanation": "Pasal 27 ayat (1) menjamin persamaan kedudukan warga negara di dalam hukum dan pemerintahan."
+  },
+  {
+    "id": "twk-52",
+    "category": "SEJARAH KEMERDEKAAN",
+    "question": "Panitia Persiapan Kemerdekaan Indonesia (PPKI) mengesahkan UUD 1945 pada tanggal ...",
+    "options": [
+      "1 Juni 1945",
+      "22 Juni 1945",
+      "17 Agustus 1945",
+      "18 Agustus 1945",
+      "27 Desember 1949"
+    ],
+    "answer": 3,
+    "explanation": "Pada sidang 18 Agustus 1945, PPKI mengesahkan UUD 1945 serta menetapkan Presiden dan Wakil Presiden."
+  },
+  {
+    "id": "twk-53",
+    "category": "PANCASILA",
+    "question": "Nilai utama sila kedua Pancasila adalah ...",
+    "options": [
+      "Mengutamakan kepentingan golongan dalam pengambilan keputusan",
+      "Mengakui persamaan derajat dan memperlakukan manusia secara adil dan beradab",
+      "Menyeragamkan seluruh kebudayaan daerah",
+      "Menempatkan kekuasaan di atas hukum",
+      "Membatasi partisipasi warga dalam kehidupan bersama"
+    ],
+    "answer": 1,
+    "explanation": "Sila kedua menegaskan nilai kemanusiaan, persamaan derajat, serta perlakuan yang adil dan beradab."
+  },
+  {
+    "id": "twk-54",
+    "category": "LEMBAGA NEGARA",
+    "question": "Lembaga negara yang bertugas memeriksa pengelolaan dan tanggung jawab keuangan negara adalah ...",
+    "options": [
+      "Badan Pemeriksa Keuangan",
+      "Komisi Pemilihan Umum",
+      "Mahkamah Konstitusi",
+      "Dewan Perwakilan Daerah",
+      "Komisi Yudisial"
+    ],
+    "answer": 0,
+    "explanation": "UUD 1945 mengatur Badan Pemeriksa Keuangan sebagai lembaga yang memeriksa pengelolaan dan tanggung jawab keuangan negara."
+  },
+  {
+    "id": "twk-55",
+    "category": "UUD 1945",
+    "question": "Jaminan kemerdekaan tiap-tiap penduduk untuk memeluk agama dan beribadat menurut agamanya terdapat pada ...",
+    "options": [
+      "Pasal 27 ayat (1)",
+      "Pasal 28A",
+      "Pasal 29 ayat (2)",
+      "Pasal 30 ayat (1)",
+      "Pasal 33 ayat (1)"
+    ],
+    "answer": 2,
+    "explanation": "Pasal 29 ayat (2) UUD 1945 menjamin kemerdekaan penduduk untuk memeluk agama dan beribadat."
+  },
+  {
+    "id": "twk-56",
+    "category": "WAWASAN KEBANGSAAN",
+    "question": "Empat konsensus dasar kehidupan berbangsa dan bernegara yang sering disebut empat pilar kebangsaan adalah ...",
+    "options": [
+      "Pancasila, UUD 1945, NKRI, dan Bhinneka Tunggal Ika",
+      "Pancasila, Garuda Pancasila, Indonesia Raya, dan Bahasa Indonesia",
+      "UUD 1945, DPR, Presiden, dan Mahkamah Agung",
+      "Demokrasi, liberalisme, federalisme, dan nasionalisme",
+      "Pancasila, otonomi daerah, pemilu, dan kabinet"
+    ],
+    "answer": 0,
+    "explanation": "Empat konsensus dasar tersebut adalah Pancasila, UUD 1945, NKRI, dan Bhinneka Tunggal Ika."
+  },
+  {
+    "id": "twk-57",
+    "category": "UUD 1945",
+    "question": "Menurut Pasal 31 ayat (1) UUD 1945, setiap warga negara berhak mendapat ...",
+    "options": [
+      "Pekerjaan yang ditetapkan pemerintah",
+      "Bantuan hukum tanpa syarat",
+      "Jabatan dalam lembaga negara",
+      "Pendidikan",
+      "Penghasilan yang sama"
+    ],
+    "answer": 3,
+    "explanation": "Pasal 31 ayat (1) UUD 1945 menyatakan bahwa setiap warga negara berhak mendapat pendidikan."
+  },
+  {
+    "id": "twk-58",
+    "category": "SEJARAH INDONESIA",
+    "question": "Peristiwa Sumpah Pemuda yang menghasilkan ikrar satu tanah air, satu bangsa, dan menjunjung bahasa persatuan berlangsung pada ...",
+    "options": [
+      "20 Mei 1908",
+      "28 Oktober 1928",
+      "1 Juni 1945",
+      "17 Agustus 1945",
+      "10 November 1945"
+    ],
+    "answer": 1,
+    "explanation": "Ikrar Sumpah Pemuda disampaikan pada Kongres Pemuda II tanggal 28 Oktober 1928."
+  },
+  {
+    "id": "twk-59",
+    "category": "LEMBAGA NEGARA",
+    "question": "Salah satu kewenangan Mahkamah Konstitusi menurut UUD 1945 adalah ...",
+    "options": [
+      "Menyusun dan menetapkan APBN",
+      "Mengangkat menteri negara",
+      "Membuat undang-undang bersama Presiden",
+      "Mengadili perkara kasasi",
+      "Menguji undang-undang terhadap UUD"
+    ],
+    "answer": 4,
+    "explanation": "Mahkamah Konstitusi berwenang menguji undang-undang terhadap UUD 1945."
+  },
+  {
+    "id": "twk-60",
+    "category": "PANCASILA",
+    "question": "Sikap yang paling mencerminkan sila kelima Pancasila dalam lingkungan kerja adalah ...",
+    "options": [
+      "Membagikan kesempatan dan beban kerja secara adil berdasarkan aturan dan kebutuhan",
+      "Mengutamakan rekan dekat dalam pembagian kesempatan",
+      "Memberikan hak hanya kepada pegawai yang paling lama bekerja",
+      "Menghindari pembahasan tentang kesejahteraan bersama",
+      "Menyamakan semua kebutuhan tanpa mempertimbangkan keadaan"
+    ],
+    "answer": 0,
+    "explanation": "Keadilan sosial mendorong perlakuan yang adil dan pemenuhan hak sesuai aturan serta kebutuhan."
+  },
+  {
+    "id": "twk-61",
+    "category": "UUD 1945",
+    "question": "Pasal 28J UUD 1945 mengatur bahwa dalam menjalankan hak dan kebebasannya, setiap orang wajib ...",
+    "options": [
+      "Mengutamakan kepentingan pemerintah di atas hukum",
+      "Meminta izin untuk setiap pendapat pribadi",
+      "Menghormati hak orang lain dan tunduk pada pembatasan yang ditetapkan undang-undang",
+      "Melepaskan hak asasi demi kepentingan kelompok",
+      "Mengikuti semua pendapat mayoritas"
+    ],
+    "answer": 2,
+    "explanation": "Pasal 28J mewajibkan penghormatan terhadap hak orang lain dan membolehkan pembatasan yang ditetapkan dengan undang-undang."
+  },
+  {
+    "id": "twk-62",
+    "category": "NASIONALISME",
+    "question": "Contoh sikap nasionalisme yang tetap menghargai bangsa lain adalah ...",
+    "options": [
+      "Menolak semua kerja sama dengan negara lain",
+      "Menganggap budaya Indonesia tidak boleh menerima pengaruh apa pun",
+      "Merendahkan negara lain untuk menunjukkan kebanggaan",
+      "Mendukung kemajuan Indonesia sambil menghormati kerja sama dan martabat bangsa lain",
+      "Mengutamakan produk luar negeri dalam semua keadaan"
+    ],
+    "answer": 3,
+    "explanation": "Nasionalisme yang sehat mencintai bangsa sendiri tanpa merendahkan bangsa lain dan tetap terbuka pada kerja sama yang bermanfaat."
+  },
+  {
+    "id": "twk-63",
+    "category": "LEMBAGA NEGARA",
+    "question": "Menurut UUD 1945, pemegang kekuasaan pemerintahan menurut Undang-Undang Dasar adalah ...",
+    "options": [
+      "Presiden",
+      "Dewan Perwakilan Rakyat",
+      "Mahkamah Agung",
+      "Majelis Permusyawaratan Rakyat",
+      "Dewan Perwakilan Daerah"
+    ],
+    "answer": 0,
+    "explanation": "Pasal 4 ayat (1) UUD 1945 menyatakan Presiden memegang kekuasaan pemerintahan menurut Undang-Undang Dasar."
+  },
+  {
+    "id": "twk-64",
+    "category": "SEJARAH INDONESIA",
+    "question": "Organisasi Budi Utomo yang berdiri pada 20 Mei 1908 sering diperingati sebagai awal ...",
+    "options": [
+      "Perumusan Pancasila",
+      "Kebangkitan Nasional",
+      "Proklamasi Kemerdekaan",
+      "Pembentukan ASEAN",
+      "Reformasi konstitusi"
+    ],
+    "answer": 1,
+    "explanation": "Tanggal berdirinya Budi Utomo, 20 Mei 1908, diperingati sebagai Hari Kebangkitan Nasional."
+  },
+  {
+    "id": "twk-65",
+    "category": "UUD 1945",
+    "question": "Menurut Pasal 23A UUD 1945, pajak dan pungutan lain yang bersifat memaksa untuk keperluan negara diatur dengan ...",
+    "options": [
+      "Keputusan kepala daerah",
+      "Peraturan internal lembaga",
+      "Keputusan Mahkamah Agung",
+      "Undang-undang",
+      "Kesepakatan organisasi masyarakat"
+    ],
+    "answer": 3,
+    "explanation": "Pasal 23A UUD 1945 menetapkan bahwa pajak dan pungutan yang bersifat memaksa diatur dengan undang-undang."
+  },
+  {
+    "id": "twk-66",
+    "category": "BHINNEKA TUNGGAL IKA",
+    "question": "Dalam masyarakat yang beragam, penerapan Bhinneka Tunggal Ika berarti ...",
+    "options": [
+      "Mengutamakan budaya mayoritas dalam semua kebijakan",
+      "Menghindari pergaulan dengan kelompok yang berbeda",
+      "Menjaga persatuan dengan menghormati perbedaan identitas dan budaya",
+      "Menghapus seluruh tradisi daerah",
+      "Mewajibkan setiap kelompok memiliki pendapat yang sama"
+    ],
+    "answer": 2,
+    "explanation": "Bhinneka Tunggal Ika mengajarkan persatuan yang tidak menghilangkan keberagaman."
+  },
+  {
+    "id": "twk-67",
+    "category": "LEMBAGA NEGARA",
+    "question": "Lembaga yang berwenang mengusulkan pengangkatan hakim agung kepada DPR adalah ...",
+    "options": [
+      "Komisi Yudisial",
+      "Komisi Pemilihan Umum",
+      "Badan Pemeriksa Keuangan",
+      "Mahkamah Konstitusi",
+      "Dewan Perwakilan Daerah"
+    ],
+    "answer": 0,
+    "explanation": "Komisi Yudisial mengusulkan pengangkatan hakim agung kepada DPR untuk mendapatkan persetujuan."
+  },
+  {
+    "id": "twk-68",
+    "category": "SEJARAH INDONESIA",
+    "question": "Salah satu hasil penting sidang PPKI pada 18 Agustus 1945 selain mengesahkan UUD 1945 adalah ...",
+    "options": [
+      "Membentuk ASEAN",
+      "Menetapkan Soekarno sebagai Presiden dan Mohammad Hatta sebagai Wakil Presiden",
+      "Menetapkan Deklarasi Djuanda",
+      "Membentuk BPUPKI",
+      "Menandatangani Perjanjian Linggarjati"
+    ],
+    "answer": 1,
+    "explanation": "Pada 18 Agustus 1945 PPKI menetapkan Soekarno dan Mohammad Hatta sebagai Presiden dan Wakil Presiden."
+  },
+  {
+    "id": "twk-69",
+    "category": "UUD 1945",
+    "question": "Menurut Pasal 30 ayat (1) UUD 1945, tiap-tiap warga negara berhak dan wajib ikut serta dalam usaha ...",
+    "options": [
+      "Pengelolaan perusahaan negara",
+      "Penyusunan semua peraturan daerah",
+      "Pengawasan pemilihan umum",
+      "Pertahanan dan keamanan negara",
+      "Pengangkatan pejabat pemerintahan"
+    ],
+    "answer": 3,
+    "explanation": "Pasal 30 ayat (1) menyatakan warga negara berhak dan wajib ikut serta dalam usaha pertahanan dan keamanan negara."
+  },
+  {
+    "id": "twk-70",
+    "category": "WAWASAN KEBANGSAAN",
+    "question": "Makna Indonesia sebagai negara kepulauan dalam wawasan kebangsaan adalah ...",
+    "options": [
+      "Setiap pulau menjadi negara yang berdiri sendiri",
+      "Hubungan antarpulau hanya dilakukan melalui pemerintah pusat",
+      "Laut memisahkan masyarakat dan tidak termasuk ruang persatuan",
+      "Wilayah laut hanya berfungsi untuk kegiatan perdagangan",
+      "Pulau-pulau dan laut di antaranya dipandang sebagai satu kesatuan wilayah nasional"
+    ],
+    "answer": 4,
+    "explanation": "Wawasan Nusantara memandang wilayah darat, laut, dan udara Indonesia sebagai satu kesatuan yang utuh."
+  },
+  {
+    "id": "twk-71",
+    "category": "PANCASILA",
+    "question": "Pengakuan terhadap kebebasan beragama sekaligus sikap saling menghormati antarumat beragama mencerminkan nilai ...",
+    "options": [
+      "Sila pertama Pancasila",
+      "Sila kedua Pancasila",
+      "Sila ketiga Pancasila",
+      "Sila keempat Pancasila",
+      "Sila kelima Pancasila"
+    ],
+    "answer": 0,
+    "explanation": "Sila pertama mengandung nilai ketuhanan dan sikap saling menghormati dalam kehidupan beragama."
+  },
+  {
+    "id": "twk-72",
+    "category": "UUD 1945",
+    "question": "Menurut UUD 1945, masa jabatan Presiden dan Wakil Presiden adalah lima tahun dan sesudahnya dapat dipilih kembali dalam jabatan yang sama ...",
+    "options": [
+      "Tanpa batas sepanjang didukung partai",
+      "Hanya untuk satu kali masa jabatan lagi",
+      "Hanya dapat menjabat satu masa jabatan tanpa dipilih kembali",
+      "Hanya jika disetujui Mahkamah Agung",
+      "Sampai berusia 70 tahun"
+    ],
+    "answer": 1,
+    "explanation": "Pasal 7 UUD 1945 mengatur masa jabatan lima tahun dan membatasi pemilihan kembali hanya satu kali."
+  },
+  {
+    "id": "twk-73",
+    "category": "SEJARAH INDONESIA",
+    "question": "Deklarasi Djuanda yang diumumkan pada 13 Desember 1957 terutama menegaskan ...",
+    "options": [
+      "Pembentukan negara federal Indonesia",
+      "Penyerahan kedaulatan kepada PBB",
+      "Pembentukan organisasi ASEAN",
+      "Kesatuan wilayah laut Indonesia yang menghubungkan pulau-pulau Nusantara",
+      "Penggantian Bahasa Indonesia sebagai bahasa nasional"
+    ],
+    "answer": 3,
+    "explanation": "Deklarasi Djuanda menyatakan bahwa laut di sekitar, di antara, dan di dalam kepulauan Indonesia merupakan bagian dari wilayah Indonesia."
+  },
+  {
+    "id": "twk-74",
+    "category": "LEMBAGA NEGARA",
+    "question": "Menurut UUD 1945, anggota Dewan Perwakilan Daerah dipilih dari setiap provinsi melalui ...",
+    "options": [
+      "Penunjukan oleh Presiden",
+      "Pemilihan oleh DPRD provinsi",
+      "Pemilihan umum",
+      "Seleksi oleh Mahkamah Agung",
+      "Pengangkatan oleh gubernur"
+    ],
+    "answer": 2,
+    "explanation": "Pasal 22C UUD 1945 mengatur bahwa anggota DPD dipilih dari setiap provinsi melalui pemilihan umum."
+  },
+  {
+    "id": "twk-75",
+    "category": "PANCASILA",
+    "question": "Mengutamakan musyawarah dan menghargai keputusan yang dicapai bersama mencerminkan sila ...",
+    "options": [
+      "Pertama",
+      "Keempat",
+      "Kedua",
+      "Ketiga",
+      "Kelima"
+    ],
+    "answer": 1,
+    "explanation": "Sila keempat menekankan kerakyatan yang dipimpin oleh hikmat kebijaksanaan dalam permusyawaratan/perwakilan."
+  },
+  {
+    "id": "twk-76",
+    "category": "UUD 1945",
+    "question": "Pasal 34 ayat (1) UUD 1945 menyatakan bahwa fakir miskin dan anak-anak terlantar dipelihara oleh ...",
+    "options": [
+      "Negara",
+      "Organisasi politik",
+      "Pemerintah daerah saja",
+      "Lembaga pendidikan",
+      "Setiap keluarga secara mandiri"
+    ],
+    "answer": 0,
+    "explanation": "Pasal 34 ayat (1) UUD 1945 menyatakan bahwa fakir miskin dan anak-anak terlantar dipelihara oleh negara."
+  },
+  {
+    "id": "twk-77",
+    "category": "NASIONALISME",
+    "question": "Menggunakan Bahasa Indonesia dalam komunikasi resmi nasional menunjukkan fungsi Bahasa Indonesia sebagai ...",
+    "options": [
+      "Bahasa daerah utama",
+      "Bahasa asing dalam hubungan internasional",
+      "Bahasa persatuan dan bahasa resmi negara",
+      "Pengganti seluruh bahasa daerah",
+      "Bahasa yang hanya digunakan di lembaga pendidikan"
+    ],
+    "answer": 2,
+    "explanation": "Bahasa Indonesia berkedudukan sebagai bahasa nasional dan, menurut UUD 1945, bahasa negara."
+  },
+  {
+    "id": "twk-78",
+    "category": "LEMBAGA NEGARA",
+    "question": "Menurut UUD 1945, anggota Komisi Pemilihan Umum yang menyelenggarakan pemilu bersifat ...",
+    "options": [
+      "Diangkat oleh Presiden untuk setiap pemilu",
+      "Berada di bawah satu partai politik",
+      "Bersifat sementara dan dibentuk oleh DPR",
+      "Nasional, tetap, dan mandiri",
+      "Ditunjuk bersama oleh kepala daerah"
+    ],
+    "answer": 3,
+    "explanation": "Pasal 22E ayat (5) UUD 1945 menyatakan bahwa pemilu diselenggarakan oleh komisi pemilihan umum yang bersifat nasional, tetap, dan mandiri."
+  },
+  {
+    "id": "twk-79",
+    "category": "SEJARAH INDONESIA",
+    "question": "Peristiwa Rengasdengklok pada 16 Agustus 1945 berkaitan dengan ...",
+    "options": [
+      "Perumusan Deklarasi Djuanda",
+      "Desakan agar Proklamasi Kemerdekaan segera dilaksanakan",
+      "Pembentukan Budi Utomo",
+      "Penandatanganan pengakuan kedaulatan oleh Belanda",
+      "Pemilihan anggota Konstituante"
+    ],
+    "answer": 1,
+    "explanation": "Peristiwa Rengasdengklok terjadi ketika golongan muda mendesak agar Proklamasi segera dilakukan tanpa menunggu keputusan Jepang."
+  },
+  {
+    "id": "twk-80",
+    "category": "UUD 1945",
+    "question": "Perubahan UUD 1945 yang disepakati MPR pada masa Reformasi dilakukan sebanyak ...",
+    "options": [
+      "Dua kali",
+      "Tiga kali",
+      "Empat kali",
+      "Lima kali",
+      "Enam kali"
+    ],
+    "answer": 2,
+    "explanation": "UUD 1945 mengalami empat tahap perubahan oleh MPR, yaitu pada 1999, 2000, 2001, dan 2002."
   }
 ]
