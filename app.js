@@ -3,6 +3,7 @@ const STORAGE = {
   currentName: "ruangskd.currentName",
   currentValidity: "ruangskd.currentValidity",
   profilePhotoId: "ruangskd.profilePhotoId",
+  starterWelcomeDismissed: "ruangskd.starterWelcomeDismissed",
   history: "ruangskd.history",
   questionRotation: "ruangskd.questionRotation"
 };
@@ -436,6 +437,7 @@ function showLanding() {
   }
   syncHeader();
   showScreen("landing-view");
+  maybeShowStarterWelcome();
   renderReviews();
   renderLeaderboard();
   clearInterval(reviewRefreshId);
@@ -449,6 +451,23 @@ function showLogin() {
   syncHeader();
   showScreen("auth-view");
   $("auth-email").focus();
+}
+
+function maybeShowStarterWelcome() {
+  if (currentUser() || localStorage.getItem(STORAGE.starterWelcomeDismissed) === "true") return;
+  const dialog = $("starter-welcome-dialog");
+  if (!dialog.open) dialog.showModal();
+}
+
+function dismissStarterWelcome() {
+  localStorage.setItem(STORAGE.starterWelcomeDismissed, "true");
+  const dialog = $("starter-welcome-dialog");
+  if (dialog.open) dialog.close();
+}
+
+function startStarterFromWelcome() {
+  dismissStarterWelcome();
+  showStarterAuth("register");
 }
 
 function setStarterAuthMode(mode) {
@@ -1131,6 +1150,15 @@ function initialize() {
   $("package-dialog-close").addEventListener("click", () => $("package-dialog").close());
   $("package-dialog").addEventListener("click", (event) => {
     if (event.target === $("package-dialog")) $("package-dialog").close();
+  });
+  $("starter-welcome-close").addEventListener("click", dismissStarterWelcome);
+  $("starter-welcome-later").addEventListener("click", dismissStarterWelcome);
+  $("starter-welcome-cta").addEventListener("click", startStarterFromWelcome);
+  $("starter-welcome-dialog").addEventListener("click", (event) => {
+    if (event.target === $("starter-welcome-dialog")) dismissStarterWelcome();
+  });
+  $("starter-welcome-dialog").addEventListener("close", () => {
+    localStorage.setItem(STORAGE.starterWelcomeDismissed, "true");
   });
   $("landing-reviews-previous").addEventListener("click", () => showLandingReviewPage(landingReviewPage - 1));
   $("landing-reviews-next").addEventListener("click", () => showLandingReviewPage(landingReviewPage + 1));

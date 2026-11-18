@@ -53,7 +53,7 @@ main { flex: 1; }
 .landing-hero h1 span { color: var(--violet); }
 .landing-jargon { margin: 0 0 11px; color: #4a4680; font: 700 16px "Manrope", sans-serif; }
 .landing-hero-copy > .muted { max-width: 450px; margin-bottom: 23px; }
-.landing-cta { min-height: 49px; padding: 0 21px; }
+.landing-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 49px; padding: 0 21px; text-decoration: none; }
 .landing-hero-stats { display: flex; flex-wrap: wrap; gap: 27px; margin-top: 30px; }
 .landing-hero-stats div { display: grid; gap: 4px; }
 .landing-hero-stats strong { font: 800 17px "Manrope", sans-serif; }
@@ -109,6 +109,28 @@ main { flex: 1; }
 .package-dialog-close:hover { background: #eceef5; }
 .package-dialog-content h2 { margin: 10px 38px 6px 0; font: 800 22px "Manrope", sans-serif; }
 .package-dialog-content > .muted { margin: 0 0 19px; font-size: 11px; }
+.starter-welcome-dialog { width: min(440px, calc(100% - 28px)); max-width: none; max-height: calc(100vh - 28px); padding: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain; border: 1px solid #e8ebf1; border-radius: 21px; background: white; color: var(--ink); box-shadow: 0 24px 80px #17203340; }
+.starter-welcome-dialog[open] { animation: starter-welcome-enter .38s cubic-bezier(.2, .8, .2, 1) both; }
+.starter-welcome-dialog::backdrop { background: #17203388; backdrop-filter: blur(4px); animation: starter-welcome-backdrop .28s ease-out both; }
+.starter-welcome-content { position: relative; display: grid; justify-items: center; padding: 31px 30px 24px; text-align: center; }
+.starter-welcome-close { position: absolute; top: 13px; right: 13px; display: grid; width: 33px; height: 33px; place-items: center; border: 0; border-radius: 10px; background: #f4f5f8; color: #687286; font-size: 22px; line-height: 1; }
+.starter-welcome-close:hover { background: #eceef5; }
+.starter-welcome-icon { display: grid; width: 56px; height: 56px; place-items: center; margin: 19px 0 13px; border-radius: 18px; background: #eeecff; color: var(--violet); font-size: 25px; }
+.starter-welcome-content h2 { margin: 0 20px 8px; font: 800 23px "Manrope", sans-serif; letter-spacing: -.7px; }
+.starter-welcome-content > .muted { max-width: 310px; margin: 0 0 17px; font-size: 11px; }
+.starter-welcome-benefits { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 20px; }
+.starter-welcome-benefits span { padding: 7px 10px; border-radius: 20px; background: #f4f3ff; color: #6254d9; font-size: 9px; font-weight: 700; }
+.starter-welcome-cta { margin: 0; }
+.starter-welcome-later { margin-top: 11px; padding: 7px 12px; border: 0; background: transparent; color: #8d95a4; font-size: 10px; font-weight: 600; }
+.starter-welcome-later:hover { color: #555f70; }
+@keyframes starter-welcome-enter {
+  from { opacity: 0; transform: translateY(12px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes starter-welcome-backdrop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 .package-summary { padding: 16px; border: 1px solid #ebedf2; border-radius: 13px; background: #fcfcfe; }
 .package-summary-heading, .package-summary-total { display: flex; justify-content: space-between; align-items: center; gap: 14px; }
 .package-summary-heading { font: 800 14px "Manrope", sans-serif; }
@@ -145,6 +167,7 @@ main { flex: 1; }
 .landing-reviews-controls span { min-width: 42px; color: #858b98; font-size: 10px; text-align: center; }
 @media (prefers-reduced-motion: reduce) {
   .landing-reviews-list { transition: none; }
+  .starter-welcome-dialog[open], .starter-welcome-dialog::backdrop { animation: none; }
 }
 .auth-back-button { margin-bottom: 18px; padding-left: 0; }
 .auth-view { display: grid; grid-template-columns: 1.1fr .9fr; gap: 80px; align-items: center; min-height: 640px; padding: 58px 28px 70px; }
@@ -490,6 +513,8 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .landing-pricing { padding-top: 35px; }
   .pricing-card { padding: 20px; }
   .package-dialog-content { padding: 24px 19px; }
+  .starter-welcome-content { padding: 29px 20px 20px; }
+  .starter-welcome-content h2 { font-size: 21px; }
   .landing-community-card { margin-top: 17px; padding: 18px 14px; }
   .landing-section-heading { align-items: flex-start; gap: 8px; }
   .landing-section-heading h2 { font-size: 17px; }
@@ -541,6 +566,14 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .result-hero { padding: 28px 16px; margin-top: 24px; }
   .result-hero h1 { font-size: 24px; }
   .review-section { padding: 0 0 35px; }
+}
+@media (max-height: 560px) {
+  .starter-welcome-content { padding: 23px 20px 16px; }
+  .starter-welcome-icon { width: 44px; height: 44px; margin: 11px 0 9px; font-size: 20px; }
+  .starter-welcome-content h2 { font-size: 20px; }
+  .starter-welcome-content > .muted { margin-bottom: 12px; }
+  .starter-welcome-benefits { margin-bottom: 14px; }
+  .starter-welcome-later { margin-top: 5px; }
 }
 @media print {
   @page { size: A4 landscape; margin: 0; }
