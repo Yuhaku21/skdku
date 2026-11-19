@@ -1818,5 +1818,85 @@
                     ],
         "answer":  4,
         "explanation":  "Bilangan berurutan 31, 32, 33. Hasil kali 31 × 33 = 1.023."
+    },
+    {
+        "id": "figural-01",
+        "category": "PENALARAN FIGURAL",
+        "question": "Pilih bentuk yang melanjutkan pola berikut.",
+        "options": ["Segitiga", "Belah ketupat", "Lingkaran", "Persegi", "Bintang"],
+        "figureSequence": ["circle", "square", "triangle", "circle", "square"],
+        "figureOptions": [["triangle"], ["diamond"], ["circle"], ["square"], ["star"]],
+        "answer": 0,
+        "explanation": "Pola berulang setiap tiga bentuk: lingkaran, persegi, lalu segitiga."
+    },
+    {
+        "id": "figural-02",
+        "category": "PENALARAN FIGURAL",
+        "question": "Pilih bentuk yang melanjutkan pola berikut.",
+        "options": ["Segitiga", "Persegi", "Lingkaran", "Belah ketupat", "Bintang"],
+        "figureSequence": ["triangle", "triangle", "square", "square", "circle", "circle"],
+        "figureOptions": [["triangle"], ["square"], ["circle"], ["diamond"], ["star"]],
+        "answer": 0,
+        "explanation": "Setiap bentuk muncul dua kali. Setelah dua lingkaran, pola kembali ke dua segitiga."
+    },
+    {
+        "id": "figural-03",
+        "category": "PENALARAN FIGURAL",
+        "question": "Pilih bentuk yang melanjutkan pola berikut.",
+        "options": ["Persegi", "Segitiga", "Lingkaran", "Bintang", "Pentagon"],
+        "figureSequence": ["circle", "triangle", "square", "diamond", "circle", "triangle"],
+        "figureOptions": [["square"], ["triangle"], ["circle"], ["star"], ["pentagon"]],
+        "answer": 0,
+        "explanation": "Pola mengulang urutan lingkaran, segitiga, persegi, dan belah ketupat."
+    },
+    {
+        "id": "figural-04",
+        "category": "PENALARAN FIGURAL",
+        "question": "Pilih bentuk yang melanjutkan pola berikut.",
+        "options": ["Bintang", "Belah ketupat", "Lingkaran", "Persegi", "Segitiga"],
+        "figureSequence": ["star", "diamond", "circle", "star", "diamond"],
+        "figureOptions": [["star"], ["diamond"], ["circle"], ["square"], ["triangle"]],
+        "answer": 2,
+        "explanation": "Urutan tiga bentuk berulang: bintang, belah ketupat, lalu lingkaran."
+    },
+    {
+        "id": "figural-05",
+        "category": "PENALARAN FIGURAL",
+        "question": "Pilih bentuk yang melanjutkan pola berikut.",
+        "options": ["Persegi", "Lingkaran", "Segitiga", "Pentagon", "Bintang"],
+        "figureSequence": ["square", "circle", "circle", "square", "circle", "circle"],
+        "figureOptions": [["square"], ["circle"], ["triangle"], ["pentagon"], ["star"]],
+        "answer": 0,
+        "explanation": "Pola berulang: satu persegi diikuti dua lingkaran."
+    },
+    {
+        "id": "figural-06",
+        "category": "PENALARAN FIGURAL",
+        "question": "Pilih bentuk yang melanjutkan pola berikut.",
+        "options": ["Segitiga", "Persegi", "Belah ketupat", "Pentagon", "Lingkaran"],
+        "figureSequence": ["triangle", "square", "diamond", "pentagon", "triangle", "square"],
+        "figureOptions": [["triangle"], ["square"], ["diamond"], ["pentagon"], ["circle"]],
+        "answer": 2,
+        "explanation": "Pola empat bentuk berulang: segitiga, persegi, belah ketupat, dan pentagon."
+    },
+    {
+        "id": "figural-07",
+        "category": "PENALARAN FIGURAL",
+        "question": "Pilih bentuk yang melanjutkan pola berikut.",
+        "options": ["Lingkaran", "Belah ketupat", "Persegi", "Segitiga", "Bintang"],
+        "figureSequence": ["circle", "diamond", "circle", "diamond", "circle"],
+        "figureOptions": [["circle"], ["diamond"], ["square"], ["triangle"], ["star"]],
+        "answer": 1,
+        "explanation": "Bentuk bergantian antara lingkaran dan belah ketupat."
+    },
+    {
+        "id": "figural-08",
+        "category": "PENALARAN FIGURAL",
+        "question": "Pilih bentuk yang melanjutkan pola berikut.",
+        "options": ["Pentagon", "Persegi", "Segitiga", "Bintang", "Belah ketupat"],
+        "figureSequence": ["pentagon", "square", "triangle", "pentagon", "square"],
+        "figureOptions": [["pentagon"], ["square"], ["triangle"], ["star"], ["diamond"]],
+        "answer": 2,
+        "explanation": "Pola tiga bentuk berulang: pentagon, persegi, lalu segitiga."
     }
 ]

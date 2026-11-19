@@ -6,8 +6,11 @@ const USERS_KEY = "ruangskd:users";
 const LEADERBOARD_KEY = "ruangskd:leaderboard:v2";
 const LEADERBOARD_NAMES_KEY = "ruangskd:leaderboard:names";
 const LEADERBOARD_SCORES_KEY = "ruangskd:leaderboard:scores:v2";
+const CAT_LEADERBOARD_KEY = "ruangskd:leaderboard:cat:v1";
+const CAT_SCORES_KEY = "ruangskd:leaderboard:cat-scores:v1";
 const MAX_BODY_BYTES = 2048;
 const CERTIFICATE_TARGETS = { TIU: 80, TKP: 156, TWK: 65 };
+const CAT_SCORE_MAXIMUMS = { TWK: 150, TIU: 150, TKP: 200 };
 const SAVE_ACCUMULATED_SCORE_SCRIPT = [
   "redis.call('HINCRBY', KEYS[2], ARGV[1] .. ':' .. ARGV[2], ARGV[3])",
   "local total = 0",
@@ -20,9 +23,15 @@ const SAVE_ACCUMULATED_SCORE_SCRIPT = [
   "redis.call('HSET', KEYS[3], ARGV[1], ARGV[4])",
   "return total"
 ].join("\n");
+const SAVE_CAT_SCORE_SCRIPT = [
+  "redis.call('ZADD', KEYS[1], ARGV[1], ARGV[2])",
+  "redis.call('HSET', KEYS[2], ARGV[2] .. ':TWK', ARGV[3], ARGV[2] .. ':TIU', ARGV[4], ARGV[2] .. ':TKP', ARGV[5])",
+  "redis.call('HSET', KEYS[3], ARGV[2], ARGV[6])",
+  "return ARGV[1]"
+].join("\n");
 
 async function getLeaderboard(currentEmail = null) {
-  const entries = await redisCommand(["ZREVRANGE", LEADERBOARD_KEY, 0, -1, "WITHSCORES"]);
+  const entries = await redisCommand(["ZREVRANGE", CAT_LEADERBOARD_KEY, 0, -1, "WITHSCORES"]);
   if (!Array.isArray(entries) || entries.length % 2 !== 0) {
     throw new Error("Format data leaderboard tidak valid.");
   }
@@ -32,20 +41,23 @@ async function getLeaderboard(currentEmail = null) {
   if (!Array.isArray(accounts) || accounts.length % 2 !== 0) {
     throw new Error("Format data akun leaderboard tidak valid.");
   }
-  const lifetimeEmails = new Set();
+  const eligibleAccountEmails = new Set();
+  const now = Date.now();
   for (let index = 0; index < accounts.length; index += 2) {
     const account = JSON.parse(accounts[index + 1]);
     if (!account || typeof account !== "object" || Array.isArray(account)) {
       throw new Error("Data akun leaderboard tidak valid.");
     }
     if (account.validity === "forever"
-      || (!account.validity && (account.expiresAt === null || account.expiresAt === undefined))) {
-      lifetimeEmails.add(accounts[index]);
+      || (!account.validity && (account.expiresAt === null || account.expiresAt === undefined))
+      || (account.validity === "7-days" && Number.isSafeInteger(account.expiresAt) && account.expiresAt > now)
+      || (!account.validity && Number.isSafeInteger(account.expiresAt) && account.expiresAt > now)) {
+      eligibleAccountEmails.add(accounts[index]);
     }
   }
   const eligibleEntries = [];
   for (let index = 0; index < entries.length; index += 2) {
-    if (lifetimeEmails.has(entries[index])) eligibleEntries.push(entries[index], entries[index + 1]);
+    if (eligibleAccountEmails.has(entries[index])) eligibleEntries.push(entries[index], entries[index + 1]);
   }
   const eligibleEmails = eligibleEntries.filter((_, index) => index % 2 === 0);
   const rankIndex = currentEmail ? eligibleEmails.indexOf(currentEmail) : -1;
@@ -53,10 +65,10 @@ async function getLeaderboard(currentEmail = null) {
   const emails = eligibleEmails.slice(0, 5);
   const topEntries = eligibleEntries.slice(0, emails.length * 2);
   if (!emails.length) return { users: [], rank: null, participantCount };
-  const scoreFields = emails.flatMap((email) => [`${email}:TIU`, `${email}:TKP`, `${email}:TWK`]);
+  const scoreFields = emails.flatMap((email) => [`${email}:TWK`, `${email}:TIU`, `${email}:TKP`]);
   const [names, scores] = await Promise.all([
     redisCommand(["HMGET", LEADERBOARD_NAMES_KEY, ...emails]),
-    redisCommand(["HMGET", LEADERBOARD_SCORES_KEY, ...scoreFields])
+    redisCommand(["HMGET", CAT_SCORES_KEY, ...scoreFields])
   ]);
   if (!Array.isArray(names) || names.length !== emails.length) {
     throw new Error("Data nama leaderboard tidak lengkap.");
@@ -75,7 +87,8 @@ async function getLeaderboard(currentEmail = null) {
     const score = Number(topEntries[index * 2 + 1]);
     const sectionScores = scores.slice(index * 3, index * 3 + 3).map((value) => Number(value || 0));
     if (typeof names[index] !== "string" || !Number.isSafeInteger(score) || score < 0
-      || sectionScores.some((value) => !Number.isSafeInteger(value) || value < 0)
+      || sectionScores.some((value, scoreIndex) => !Number.isSafeInteger(value) || value < 0
+        || value > CAT_SCORE_MAXIMUMS[["TWK", "TIU", "TKP"][scoreIndex]])
       || sectionScores.reduce((total, value) => total + value, 0) !== score) {
       throw new Error("Data leaderboard tidak valid.");
     }
@@ -83,7 +96,7 @@ async function getLeaderboard(currentEmail = null) {
       username: names[index],
       profilePhotoId: profilePhotoIds.get(email) || null,
       score,
-      scores: { TIU: sectionScores[0], TKP: sectionScores[1], TWK: sectionScores[2] }
+      scores: { TWK: sectionScores[0], TIU: sectionScores[1], TKP: sectionScores[2] }
     };
   });
   return {
@@ -163,9 +176,39 @@ module.exports = async function leaderboardHandler(request, response) {
     const payload = request.body;
     if (!payload || typeof payload !== "object" || Array.isArray(payload)
       || Buffer.byteLength(JSON.stringify(payload), "utf8") > MAX_BODY_BYTES
-      || !["TIU", "TKP", "TWK"].includes(payload.test)
-      || !Number.isInteger(payload.score) || payload.score < 0 || payload.score > 100) {
+      || !Number.isInteger(payload.score) || payload.score < 0
+      || (payload.test === "CAT"
+        ? payload.score > 500 || !payload.scores || typeof payload.scores !== "object"
+          || Array.isArray(payload.scores)
+          || Object.keys(CAT_SCORE_MAXIMUMS).some((test) => !Number.isInteger(payload.scores[test])
+            || payload.scores[test] < 0 || payload.scores[test] > CAT_SCORE_MAXIMUMS[test])
+          || Object.values(CAT_SCORE_MAXIMUMS).length !== Object.keys(payload.scores).length
+          || Object.entries(CAT_SCORE_MAXIMUMS).reduce((total, [test]) => total + payload.scores[test], 0) !== payload.score
+        : !["TIU", "TKP", "TWK"].includes(payload.test) || payload.score > 100)) {
       sendJson(response, 400, { error: "Skor tryout tidak valid." });
+      return;
+    }
+
+    if (payload.test === "CAT") {
+      if (!["7-days", "forever"].includes(validity)) {
+        sendJson(response, 403, { error: "Simulasi CAT dan leaderboard hanya tersedia untuk paket Tempur dan Victory." });
+        return;
+      }
+      await redisCommand([
+        "EVAL",
+        SAVE_CAT_SCORE_SCRIPT,
+        3,
+        CAT_LEADERBOARD_KEY,
+        CAT_SCORES_KEY,
+        LEADERBOARD_NAMES_KEY,
+        payload.score,
+        session.email,
+        payload.scores.TWK,
+        payload.scores.TIU,
+        payload.scores.TKP,
+        session.name
+      ]);
+      sendJson(response, 200, { success: true, leaderboardEligible: true });
       return;
     }
 

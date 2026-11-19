@@ -181,7 +181,7 @@
                   <li><span class="benefit-check" aria-hidden="true">✓</span>Akses selama 1 hari</li>
                   <li><span class="benefit-check" aria-hidden="true">✓</span>10 soal per sesi</li>
                   <li><span class="benefit-unavailable" aria-hidden="true">×</span>Pilih tingkat kesulitan</li>
-                  <li><span class="benefit-unavailable" aria-hidden="true">×</span>Masuk leaderboard tertinggi</li>
+                  <li><span class="benefit-unavailable" aria-hidden="true">×</span>Simulasi CAT dan leaderboard</li>
                   <li><span class="benefit-unavailable" aria-hidden="true">×</span>E-book gratis</li>
                   <li><span class="benefit-unavailable" aria-hidden="true">×</span>Analisis belajar lanjutan</li>
                 </ul>
@@ -196,7 +196,7 @@
                   <li><span class="benefit-check" aria-hidden="true">✓</span>Akses selama 7 hari</li>
                   <li><span class="benefit-check" aria-hidden="true">✓</span>15 soal per sesi</li>
                   <li><span class="benefit-unavailable" aria-hidden="true">×</span>Pilih tingkat kesulitan</li>
-                  <li><span class="benefit-unavailable" aria-hidden="true">×</span>Masuk leaderboard tertinggi</li>
+                  <li><span class="benefit-check" aria-hidden="true">✓</span>Ikut leaderboard dari simulasi CAT</li>
                   <li><span class="benefit-check" aria-hidden="true">✓</span>E-book gratis</li>
                   <li><span class="benefit-unavailable" aria-hidden="true">×</span>Analisis belajar lanjutan</li>
                 </ul>
@@ -211,7 +211,7 @@
                 <ul class="pricing-benefits">
                   <li><span class="benefit-check" aria-hidden="true">✓</span>Akses selamanya</li>
                   <li><span class="benefit-check" aria-hidden="true">✓</span>Pilih jumlah soal dan tingkat kesulitan</li>
-                  <li><span class="benefit-check" aria-hidden="true">✓</span>Masuk leaderboard tertinggi</li>
+                  <li><span class="benefit-check" aria-hidden="true">✓</span>Ikut leaderboard dari simulasi CAT</li>
                   <li><span class="benefit-check" aria-hidden="true">✓</span>E-book gratis</li>
                   <li><span class="benefit-check" aria-hidden="true">✓</span>Fitur materi belajar</li>
                   <li><span class="benefit-check" aria-hidden="true">✓</span>Analisis belajar lanjutan</li>
@@ -223,8 +223,8 @@
 
           <section class="landing-community-card" id="leaderboard-section" aria-labelledby="leaderboard-title">
             <div class="landing-section-heading">
-              <div><span class="section-kicker">APRESIASI LATIHAN</span><h2 id="leaderboard-title">Top 5 leaderboard</h2><p class="muted">Peringkat berdasarkan total akumulasi TIU, TKP, dan TWK.</p></div>
-              <span class="leaderboard-badge">SKOR AKUMULASI</span>
+              <div><span class="section-kicker">APRESIASI SIMULASI</span><h2 id="leaderboard-title">Top 5 leaderboard CAT</h2><p class="muted">Peringkat berdasarkan skor simulasi CAT terbaru dari 500 poin.</p></div>
+              <span class="leaderboard-badge">SKOR CAT TERBARU</span>
             </div>
             <p class="form-message" id="leaderboard-message" aria-live="polite"></p>
             <ol class="leaderboard-list" id="landing-leaderboard-list"><li class="community-empty">Memuat peringkat...</li></ol>
@@ -337,8 +337,20 @@
               <span class="section-kicker">PERINGKAT LEADERBOARD</span>
               <h2 id="home-rank-title">Rank kamu saat ini <strong id="home-rank-position">Memuat...</strong></h2>
               <p id="home-rank-participants">Memuat jumlah peserta...</p>
-              <p class="home-rank-message" id="home-rank-message">Kerjakan tryout untuk mengejar peringkat 1.</p>
-              <button class="button button-outline" id="home-rank-action" type="button">Kerjakan tryout <span aria-hidden="true">→</span></button>
+              <p class="home-rank-message" id="home-rank-message">Selesaikan simulasi CAT untuk masuk leaderboard.</p>
+              <button class="button button-outline" id="home-rank-action" type="button">Simulasi CAT <span aria-hidden="true">→</span></button>
+            </div>
+          </section>
+          <section class="cat-simulation-card" aria-labelledby="cat-simulation-title">
+            <div class="cat-simulation-copy">
+              <span class="section-kicker">KHUSUS PAKET TEMPUR &amp; VICTORY</span>
+              <h2 id="cat-simulation-title">Simulasi CAT SKD</h2>
+              <p>100 soal dalam 100 menit: TWK 30 soal, TIU 30 soal, dan TKP 40 soal. Ambang nilai: TWK 65, TIU 80, TKP 156. Nilai TKP latihan memberi 5 poin untuk opsi terbaik dan 1 poin untuk opsi lain yang dipilih.</p>
+            </div>
+            <button class="button button-primary" id="cat-simulation-start" type="button">Mulai simulasi CAT <span aria-hidden="true">→</span></button>
+            <div class="cat-simulation-locked hidden" id="cat-simulation-locked">
+              <span>Simulasi CAT dan leaderboard tersedia untuk paket Tempur dan Victory.</span>
+              <button class="button button-outline upgrade-account-button" type="button">Lihat pilihan paket <span aria-hidden="true">→</span></button>
             </div>
           </section>
           <div class="dashboard-grid">
@@ -556,6 +568,7 @@
             <div class="question-panel">
               <div class="question-category" id="question-category">PENALARAN NUMERIK</div>
               <h1 id="question-text"></h1>
+              <div class="question-figure hidden" id="question-figure"></div>
               <div class="answer-list" id="answer-list"></div>
               <div class="question-controls">
                 <button class="button button-outline" id="previous-button" type="button">← Sebelumnya</button>
@@ -580,12 +593,13 @@
             <p class="muted" id="result-subtitle">Setiap latihan membawamu selangkah lebih siap.</p>
             <p class="form-message" id="leaderboard-submit-message" aria-live="polite"></p>
             <div class="score-card">
-              <div class="score-main"><span>SKOR TRYOUT</span><strong id="score-value">0</strong><small>/ 100</small></div>
+              <div class="score-main"><span>SKOR TRYOUT</span><strong id="score-value">0</strong><small id="score-scale">/ 100</small></div>
               <div class="score-divider"></div>
-              <div class="score-stat"><span>Jawaban benar</span><strong id="correct-value">0 / 10</strong></div>
+              <div class="score-stat"><span id="correct-label">Jawaban benar</span><strong id="correct-value">0 / 10</strong></div>
               <div class="score-stat"><span>Jenis tes</span><strong id="result-test">TIU</strong></div>
               <div class="score-stat"><span>Sumber soal</span><strong id="result-source">Bank soal lokal</strong></div>
             </div>
+            <div class="cat-result-breakdown hidden" id="cat-result-breakdown"></div>
             <button class="button button-primary" id="home-button" type="button">Kembali ke beranda <span>→</span></button>
           </div>
           <div class="review-section">

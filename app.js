@@ -17,6 +17,14 @@ const DIFFICULTIES = {
   menengah: { questionCount: 30, durationSeconds: 30 * 60 },
   sulit: { questionCount: 50, durationSeconds: 50 * 60 }
 };
+const CAT_CONFIG = {
+  durationSeconds: 100 * 60,
+  questionCounts: { TWK: 30, TIU: 30, TKP: 40 },
+  passingScores: { TWK: 65, TIU: 80, TKP: 156 },
+  figuralQuestionCount: 2
+};
+const CAT_TESTS = ["TWK", "TIU", "TKP"];
+const CAT_SCORE_MAXIMUMS = { TWK: 150, TIU: 150, TKP: 200 };
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 const TIU_LEVEL_GROUPS = [
   {
@@ -98,7 +106,7 @@ const PACKAGES = {
       { included: true, text: "Akses selama 1 hari" },
       { included: true, text: "10 soal per sesi" },
       { included: false, text: "Pilih tingkat kesulitan" },
-      { included: false, text: "Masuk leaderboard tertinggi" },
+      { included: false, text: "Simulasi CAT dan leaderboard" },
       { included: false, text: "E-book gratis" },
       { included: false, text: "Analisis belajar lanjutan" }
     ]
@@ -110,7 +118,7 @@ const PACKAGES = {
       { included: true, text: "Akses selama 7 hari" },
       { included: true, text: "15 soal per sesi" },
       { included: false, text: "Pilih tingkat kesulitan" },
-      { included: false, text: "Masuk leaderboard tertinggi" },
+      { included: true, text: "Ikut leaderboard lewat simulasi CAT" },
       { included: true, text: "E-book gratis" },
       { included: false, text: "Analisis belajar lanjutan" }
     ]
@@ -121,7 +129,7 @@ const PACKAGES = {
     benefits: [
       { included: true, text: "Akses selamanya" },
       { included: true, text: "Pilih jumlah soal dan tingkat kesulitan" },
-      { included: true, text: "Masuk leaderboard tertinggi" },
+      { included: true, text: "Ikut leaderboard lewat simulasi CAT" },
       { included: true, text: "E-book gratis" },
       { included: true, text: "Fitur materi belajar" },
       { included: true, text: "Analisis belajar lanjutan" }
@@ -135,6 +143,7 @@ let selectedDifficulty = null;
 let sessionQuestions = [];
 let answers = [];
 let currentQuestion = 0;
+let isCatSimulation = false;
 let remainingSeconds = DIFFICULTIES.mudah.durationSeconds;
 let timerId = null;
 let reviewRefreshId = null;
@@ -361,6 +370,9 @@ function updateSessionOptions() {
 
 function configureAccountAccess() {
   const lifetimeAccess = currentValidity() === "forever";
+  const catAccess = ["7-days", "forever"].includes(currentValidity());
+  $("cat-simulation-start").classList.toggle("hidden", !catAccess);
+  $("cat-simulation-locked").classList.toggle("hidden", catAccess);
   $("ebook-card").classList.toggle("hidden", !["7-days", "forever"].includes(currentValidity()));
   $("difficulty-section").classList.toggle("hidden", !lifetimeAccess);
   $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((button) => {
@@ -753,7 +765,10 @@ function renderAnalysis() {
       const date = item.date || (Number.isFinite(completedAt)
         ? new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date(completedAt))
         : "Tanggal tidak tersedia");
-      return `<div class="history-item"><span>${escapeHtml(item.activity)} · ${escapeHtml(item.subject)}${item.level ? ` · ${escapeHtml(item.level)}` : ""} · ${escapeHtml(date)}</span><strong>${Number.isFinite(item.score) ? `${item.score}%` : "—"}</strong></div>`;
+      const scoreLabel = Number.isFinite(item.score)
+        ? item.subject === "CAT" ? `${item.score}/500` : `${item.score}%`
+        : "—";
+      return `<div class="history-item"><span>${escapeHtml(item.activity)} · ${escapeHtml(item.subject)}${item.level ? ` · ${escapeHtml(item.level)}` : ""} · ${escapeHtml(date)}</span><strong>${scoreLabel}</strong></div>`;
     }).join("")
     : '<p class="empty-state">Selesaikan latihan atau tryout untuk mulai melihat progresmu.</p>';
 }
@@ -763,22 +778,22 @@ function renderHomeLeaderboardRank() {
   const participants = $("home-rank-participants");
   const message = $("home-rank-message");
   const action = $("home-rank-action");
-  const hasLeaderboardAccess = currentValidity() === "forever";
+  const hasLeaderboardAccess = ["7-days", "forever"].includes(currentValidity());
   if (!hasLeaderboardAccess) {
     position.textContent = "Terkunci";
-    participants.textContent = "Fitur khusus paket Victory";
-    message.textContent = "Buka akses leaderboard untuk melihat peringkatmu.";
-    action.innerHTML = 'Buka kunci <span aria-hidden="true">→</span>';
+    participants.textContent = "Fitur paket Tempur dan Victory";
+    message.textContent = "Selesaikan simulasi CAT untuk masuk leaderboard.";
+    action.innerHTML = 'Lihat paket <span aria-hidden="true">→</span>';
     return;
   }
-  action.innerHTML = 'Kerjakan tryout <span aria-hidden="true">→</span>';
+  action.innerHTML = 'Simulasi CAT <span aria-hidden="true">→</span>';
   loadHomeLeaderboardRank(position, participants, message);
 }
 
 async function loadHomeLeaderboardRank(position, participants, message) {
   position.textContent = "Memuat...";
   participants.textContent = "Memuat jumlah peserta...";
-  message.textContent = "Kerjakan tryout untuk mengejar peringkat 1.";
+  message.textContent = "Selesaikan simulasi CAT untuk masuk leaderboard.";
   try {
     const response = await fetch("/api/leaderboard", { cache: "no-store" });
     const result = await readApiJson(response);
@@ -792,8 +807,10 @@ async function loadHomeLeaderboardRank(position, participants, message) {
     position.textContent = rank === null ? "Belum masuk" : `#${rank}`;
     participants.textContent = `dari ${participantCount} peserta`;
     message.textContent = rank === 1
-      ? "Kamu berada di peringkat 1. Kerjakan tryout lagi untuk mempertahankan posisi!"
-      : "Kerjakan tryout untuk mengejar peringkat 1.";
+      ? "Kamu berada di peringkat 1. Ikuti simulasi CAT lagi untuk memperbarui skor!"
+      : rank === null
+        ? "Selesaikan simulasi CAT untuk mendapatkan peringkat."
+        : "Ikuti simulasi CAT lagi untuk memperbarui skor dan mengejar peringkat 1.";
   } catch (error) {
     console.error("Tidak dapat memuat peringkat pengguna:", error);
     position.textContent = "—";
@@ -1339,9 +1356,13 @@ function renderHistory() {
     list.innerHTML = '<p class="empty-state">Belum ada sesi latihan. Setiap langkah kecil tetap berarti.</p>';
     return;
   }
-  list.innerHTML = history.map((item) => `
-    <div class="history-item"><span>${escapeHtml(item.test || "TIU")} · ${escapeHtml(item.date)} · ${item.correct}/${item.questionCount || 10} benar</span><strong>${item.score}</strong></div>
-  `).join("");
+  list.innerHTML = history.map((item) => {
+    const resultSummary = item.test === "CAT"
+      ? `${item.answeredCount || 0}/${item.questionCount || 100} terjawab`
+      : `${item.correct}/${item.questionCount || 10} benar`;
+    const scoreLabel = item.test === "CAT" ? `${item.score}/500` : item.score;
+    return `<div class="history-item"><span>${escapeHtml(item.test || "TIU")} · ${escapeHtml(item.date)} · ${resultSummary}</span><strong>${scoreLabel}</strong></div>`;
+  }).join("");
 }
 
 async function renderScoreProgress() {
@@ -1576,7 +1597,7 @@ async function fetchAndRenderLeaderboard() {
         <span class="leaderboard-rank">${String(index + 1).padStart(2, "0")}</span>
         ${avatarMarkup(user.profilePhotoId, user.username, "leaderboard-avatar")}
         <span class="leaderboard-player"><strong>${escapeHtml(maskReviewUsername(user.username))}</strong><small>TIU ${user.scores.TIU} · TKP ${user.scores.TKP} · TWK ${user.scores.TWK}</small></span>
-        <strong class="leaderboard-score">${user.score}<small>total</small></strong>
+        <strong class="leaderboard-score">${user.score}<small>/ 500</small></strong>
       </li>
     `).join("");
     activateAvatarImages(list);
@@ -1603,16 +1624,38 @@ async function saveLeaderboardScore(test, score) {
     if (typeof result.leaderboardEligible !== "boolean") {
       throw new Error("Status akses leaderboard dari server tidak valid.");
     }
-    message.textContent = result.leaderboardEligible
-      ? `Skor ${test} berhasil ditambahkan ke akumulasi progres dan leaderboard.`
-      : `Progres ${test} tersimpan. Leaderboard hanya tersedia untuk akun selamanya.`;
+    message.textContent = `Progres ${test} berhasil disimpan. Peringkat dihitung dari simulasi CAT terbaru.`;
     message.classList.add("success");
-    renderLeaderboard();
     renderScoreProgress();
   } catch (error) {
-    console.error("Tidak dapat menyimpan skor leaderboard:", error);
+    console.error("Tidak dapat menyimpan progres tryout:", error);
     message.classList.remove("success");
-    message.textContent = error.message || "Skor belum dapat disimpan ke leaderboard.";
+    message.textContent = error.message || "Progres tryout belum dapat disimpan.";
+  }
+}
+
+async function saveCatLeaderboardScore(score, scores) {
+  const message = $("leaderboard-submit-message");
+  message.textContent = "Menyimpan skor simulasi CAT terbaru...";
+  try {
+    const response = await fetch("/api/leaderboard", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ test: "CAT", score, scores })
+    });
+    const result = await readApiJson(response);
+    if (!response.ok) throw new Error(result.error || `Skor CAT gagal disimpan (${response.status}).`);
+    if (result.leaderboardEligible !== true) {
+      throw new Error("Akun ini tidak memenuhi syarat untuk leaderboard CAT.");
+    }
+    message.textContent = "Skor CAT terbaru berhasil disimpan dan digunakan untuk leaderboard.";
+    message.classList.add("success");
+    renderLeaderboard();
+    renderHomeLeaderboardRank();
+  } catch (error) {
+    console.error("Tidak dapat menyimpan skor simulasi CAT:", error);
+    message.classList.remove("success");
+    message.textContent = error.message || "Skor CAT belum dapat disimpan ke leaderboard.";
   }
 }
 
@@ -1720,6 +1763,60 @@ async function loadLocalQuestions(questionCount) {
   return selectedIds.map((id) => questionById.get(id));
 }
 
+function shuffleItems(items) {
+  const shuffled = [...items];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+  return shuffled;
+}
+
+async function loadCatQuestions() {
+  const banks = {};
+  await Promise.all(CAT_TESTS.map(async (test) => {
+    const response = await fetch(`./${TEST_BANKS[test]}`);
+    if (!response.ok) throw new Error(`Bank soal ${test} tidak dapat dimuat (${response.status}).`);
+    const questions = await response.json();
+    const requiredCount = CAT_CONFIG.questionCounts[test];
+    if (!Array.isArray(questions) || questions.length < requiredCount) {
+      throw new Error(`Bank soal ${test} harus memiliki sedikitnya ${requiredCount} soal.`);
+    }
+    banks[test] = questions;
+  }));
+
+  const figuralQuestions = banks.TIU.filter((question) => Array.isArray(question.figureSequence));
+  if (figuralQuestions.length < CAT_CONFIG.figuralQuestionCount) {
+    throw new Error(`Bank TIU memerlukan sedikitnya ${CAT_CONFIG.figuralQuestionCount} soal figural untuk simulasi CAT.`);
+  }
+  const tiuCount = CAT_CONFIG.questionCounts.TIU;
+  const tiuFigural = shuffleItems(figuralQuestions).slice(0, CAT_CONFIG.figuralQuestionCount);
+  const tiuRegular = shuffleItems(banks.TIU.filter((question) => !Array.isArray(question.figureSequence)))
+    .slice(0, tiuCount - tiuFigural.length);
+  if (tiuRegular.length !== tiuCount - tiuFigural.length) {
+    throw new Error("Bank TIU tidak memiliki cukup soal nonfigural.");
+  }
+  const questions = [
+    ...tiuFigural.map((question) => ({ ...question, test: "TIU" })),
+    ...tiuRegular.map((question) => ({ ...question, test: "TIU" })),
+    ...shuffleItems(banks.TWK).slice(0, CAT_CONFIG.questionCounts.TWK).map((question) => ({ ...question, test: "TWK" })),
+    ...shuffleItems(banks.TKP).slice(0, CAT_CONFIG.questionCounts.TKP).map((question) => ({ ...question, test: "TKP" }))
+  ];
+  return shuffleItems(questions);
+}
+
+function startQuizSession(questions, durationSeconds, catSimulation = false) {
+  sessionQuestions = questions;
+  answers = Array(sessionQuestions.length).fill(null);
+  currentQuestion = 0;
+  remainingSeconds = durationSeconds;
+  isCatSimulation = catSimulation;
+  sessionFinished = false;
+  renderQuestion();
+  showScreen("quiz-view");
+  startTimer();
+}
+
 async function beginQuiz() {
   const difficulty = getCurrentSessionConfig();
   if (!difficulty) {
@@ -1733,14 +1830,8 @@ async function beginQuiz() {
   $("level-options").querySelectorAll("[data-test]").forEach((button) => { button.disabled = true; });
   $("difficulty-options").querySelectorAll("[data-difficulty]").forEach((button) => { button.disabled = true; });
   try {
-    sessionQuestions = await loadLocalQuestions(difficulty.questionCount);
-    answers = Array(sessionQuestions.length).fill(null);
-    currentQuestion = 0;
-    remainingSeconds = difficulty.durationSeconds;
-    sessionFinished = false;
-    renderQuestion();
-    showScreen("quiz-view");
-    startTimer();
+    const questions = await loadLocalQuestions(difficulty.questionCount);
+    startQuizSession(questions, difficulty.durationSeconds);
   } catch (error) {
     showToast(error.message || "Soal gagal dimuat.");
     console.error(error);
@@ -1752,16 +1843,72 @@ async function beginQuiz() {
   }
 }
 
+async function beginCatSimulation() {
+  if (!["7-days", "forever"].includes(currentValidity())) {
+    showToast("Simulasi CAT hanya tersedia untuk paket Tempur dan Victory.");
+    return;
+  }
+  const button = $("cat-simulation-start");
+  button.disabled = true;
+  button.textContent = "Menyiapkan simulasi...";
+  try {
+    const questions = await loadCatQuestions();
+    if (questions.length !== 100) {
+      throw new Error("Simulasi CAT harus berisi tepat 100 soal.");
+    }
+    startQuizSession(questions, CAT_CONFIG.durationSeconds, true);
+  } catch (error) {
+    showToast(error.message || "Simulasi CAT gagal disiapkan.");
+    console.error("Simulasi CAT gagal disiapkan:", error);
+  } finally {
+    button.disabled = false;
+    button.innerHTML = 'Mulai simulasi CAT <span aria-hidden="true">→</span>';
+  }
+}
+
+const FIGURAL_SHAPES = {
+  circle: (x) => `<circle cx="${x}" cy="32" r="13" />`,
+  square: (x) => `<rect x="${x - 12}" y="20" width="24" height="24" rx="2" />`,
+  triangle: (x) => `<polygon points="${x},18 ${x + 14},44 ${x - 14},44" />`,
+  diamond: (x) => `<polygon points="${x},17 ${x + 14},32 ${x},47 ${x - 14},32" />`,
+  pentagon: (x) => `<polygon points="${x},17 ${x + 14},27 ${x + 9},44 ${x - 9},44 ${x - 14},27" />`,
+  star: (x) => `<polygon points="${x},17 ${x + 4},27 ${x + 15},28 ${x + 7},35 ${x + 10},46 ${x},40 ${x - 10},46 ${x - 7},35 ${x - 15},28 ${x - 4},27" />`
+};
+
+function renderFigureMarkup(shapes, label, sequence = false) {
+  if (!Array.isArray(shapes) || !shapes.length
+    || shapes.some((shape) => !Object.prototype.hasOwnProperty.call(FIGURAL_SHAPES, shape))) {
+    throw new Error("Data soal figural tidak valid.");
+  }
+  const spacing = sequence ? 60 : 54;
+  const width = shapes.length * spacing;
+  const figures = shapes.map((shape, index) => {
+    const x = spacing / 2 + index * spacing;
+    const arrow = sequence && index < shapes.length - 1
+      ? `<text x="${x + spacing / 2}" y="36" text-anchor="middle" class="figure-arrow">→</text>`
+      : "";
+    return `${FIGURAL_SHAPES[shape](x)}${arrow}`;
+  }).join("");
+  return `<svg class="figural-svg" width="${width}" height="64" viewBox="0 0 ${width} 64" role="img" aria-label="${escapeHtml(label)}"><g fill="#6254d9" stroke="#41369e" stroke-width="1">${figures}</g></svg>`;
+}
+
 function renderQuestion() {
   const question = sessionQuestions[currentQuestion];
-  $("quiz-test").textContent = selectedTest;
+  $("quiz-test").textContent = isCatSimulation ? "SIMULASI CAT" : selectedTest;
   $("quiz-counter").textContent = `SOAL ${String(currentQuestion + 1).padStart(2, "0")} / ${sessionQuestions.length}`;
-  $("question-category").textContent = question.category.toUpperCase();
+  $("question-category").textContent = isCatSimulation
+    ? `${question.test} · ${question.category.toUpperCase()}`
+    : question.category.toUpperCase();
   $("question-text").textContent = question.question;
+  const figure = $("question-figure");
+  figure.innerHTML = question.figureSequence
+    ? renderFigureMarkup(question.figureSequence, "Urutan gambar soal figural", true)
+    : "";
+  figure.classList.toggle("hidden", !question.figureSequence);
   $("progress-fill").style.width = `${((currentQuestion + 1) / sessionQuestions.length) * 100}%`;
   $("answer-list").innerHTML = question.options.map((option, index) => `
     <button class="answer-option ${answers[currentQuestion] === index ? "selected" : ""}" type="button" data-answer="${index}">
-      <span class="answer-letter">${LETTERS[index] || index + 1}</span><span>${escapeHtml(option)}</span>
+      <span class="answer-letter">${LETTERS[index] || index + 1}</span><span class="answer-content">${escapeHtml(option)}${question.figureOptions ? renderFigureMarkup(question.figureOptions[index], `Gambar opsi ${LETTERS[index] || index + 1}`) : ""}</span>
     </button>
   `).join("");
   $("answer-list").querySelectorAll("[data-answer]").forEach((button) => {
@@ -1774,6 +1921,9 @@ function renderQuestion() {
   $("previous-button").style.opacity = currentQuestion === 0 ? ".45" : "1";
   $("next-button").classList.toggle("hidden", currentQuestion === sessionQuestions.length - 1);
   $("submit-button").classList.toggle("hidden", currentQuestion !== sessionQuestions.length - 1);
+  $("submit-button").innerHTML = isCatSimulation
+    ? 'Selesaikan simulasi CAT <span>✓</span>'
+    : 'Selesaikan tryout <span>✓</span>';
   $("answered-count").textContent = `${answers.filter((answer) => answer !== null).length}/${sessionQuestions.length} terjawab`;
   $("question-grid").innerHTML = sessionQuestions.map((_, index) => `
     <button type="button" class="question-number ${answers[index] !== null ? "answered" : ""} ${index === currentQuestion ? "current" : ""}" data-question="${index}" aria-label="Soal ${index + 1}${answers[index] !== null ? ", terjawab" : ", belum dijawab"}">${String(index + 1).padStart(2, "0")}</button>
@@ -1808,25 +1958,70 @@ function finishQuiz(expired = false) {
   sessionFinished = true;
   clearInterval(timerId);
   const correct = answers.reduce((total, answer, index) => total + (answer === sessionQuestions[index].answer ? 1 : 0), 0);
-  const score = Math.round((correct / sessionQuestions.length) * 100);
   const answeredCount = answers.filter((answer) => answer !== null).length;
-  recordActivityQuestions("tryout", selectedTest, answeredCount);
+  const catScores = isCatSimulation
+    ? sessionQuestions.reduce((scores, question, index) => {
+      const answer = answers[index];
+      if (answer === null) return scores;
+      if (question.test === "TKP") {
+        scores.TKP += answer === question.answer ? 5 : 1;
+      } else if (answer === question.answer) {
+        scores[question.test] += 5;
+      }
+      return scores;
+    }, { TWK: 0, TIU: 0, TKP: 0 })
+    : null;
+  const score = isCatSimulation
+    ? Object.values(catScores).reduce((total, sectionScore) => total + sectionScore, 0)
+    : Math.round((correct / sessionQuestions.length) * 100);
+  const catPassed = isCatSimulation
+    && CAT_TESTS.every((test) => catScores[test] >= CAT_CONFIG.passingScores[test]);
+  if (isCatSimulation) {
+    CAT_TESTS.forEach((test) => {
+      const sectionAnswered = sessionQuestions.reduce((total, question, index) =>
+        total + (question.test === test && answers[index] !== null ? 1 : 0), 0);
+      recordActivityQuestions("tryout", test, sectionAnswered);
+    });
+  } else {
+    recordActivityQuestions("tryout", selectedTest, answeredCount);
+  }
   $("score-value").textContent = String(score);
-  $("correct-value").textContent = `${correct} / ${sessionQuestions.length}`;
-  $("result-test").textContent = selectedTest;
-  $("result-source").textContent = "Bank soal lokal";
-  $("result-heading").textContent = score >= 80 ? "Luar biasa, pertahankan!" : score >= 50 ? "Latihan yang hebat!" : "Terus berlatih, kamu pasti bisa!";
-  $("result-subtitle").textContent = expired ? "Waktu habis. Pelajari pembahasan dan coba lagi untuk meningkatkan skor." : "Setiap latihan membawamu selangkah lebih siap.";
+  $("score-scale").textContent = isCatSimulation ? "/ 500" : "/ 100";
+  $("correct-label").textContent = isCatSimulation ? "Jawaban terisi" : "Jawaban benar";
+  $("correct-value").textContent = isCatSimulation
+    ? `${answeredCount} / ${sessionQuestions.length}`
+    : `${correct} / ${sessionQuestions.length}`;
+  $("result-test").textContent = isCatSimulation ? "Simulasi CAT" : selectedTest;
+  $("result-source").textContent = isCatSimulation ? "100 soal · 100 menit" : "Bank soal lokal";
+  $("result-heading").textContent = isCatSimulation
+    ? catPassed ? "Selamat, seluruh ambang batas tercapai!" : "Terus berlatih dan coba lagi!"
+    : score >= 80 ? "Luar biasa, pertahankan!" : score >= 50 ? "Latihan yang hebat!" : "Terus berlatih, kamu pasti bisa!";
+  $("result-subtitle").textContent = isCatSimulation
+    ? expired
+      ? "Waktu habis. Skor dihitung dari jawaban yang sempat dipilih."
+      : "Simulasi CAT selesai. Skor ini adalah nilai latihan, bukan hasil tes resmi."
+    : expired
+      ? "Waktu habis. Pelajari pembahasan dan coba lagi untuk meningkatkan skor."
+      : "Setiap latihan membawamu selangkah lebih siap.";
+  const breakdown = $("cat-result-breakdown");
+  breakdown.classList.toggle("hidden", !isCatSimulation);
+  breakdown.innerHTML = isCatSimulation
+    ? CAT_TESTS.map((test) => {
+      const passed = catScores[test] >= CAT_CONFIG.passingScores[test];
+      return `<div class="cat-score-line ${passed ? "passed" : "below-target"}"><strong>${test}</strong><span>${catScores[test]} / ${CAT_SCORE_MAXIMUMS[test]}</span><small>Ambang ${CAT_CONFIG.passingScores[test]} · ${passed ? "Tercapai" : "Belum tercapai"}</small></div>`;
+    }).join("")
+    : "";
 
   const history = readStored(STORAGE.history, []);
   const completedAt = new Date().toISOString();
   history.unshift({
     email: currentUser(),
-    test: selectedTest,
+    test: isCatSimulation ? "CAT" : selectedTest,
     correct,
     score,
     questionCount: sessionQuestions.length,
     answeredCount,
+    ...(isCatSimulation ? { scores: catScores } : {}),
     completedAt,
     date: new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date())
   });
@@ -1836,27 +2031,52 @@ function finishQuiz(expired = false) {
   const answerKeysUnlocked = !isStarter || hasCompletedAllTestTypes();
 
   const review = $("review-list");
-  const incorrect = sessionQuestions.filter((question, index) => answers[index] !== question.answer).length;
-  $("review-count").textContent = `${incorrect} perlu ditinjau`;
+  const needsReview = sessionQuestions.filter((question, index) => {
+    if (!isCatSimulation || question.test !== "TKP") return answers[index] !== question.answer;
+    return answers[index] === null || answers[index] !== question.answer;
+  }).length;
+  $("review-count").textContent = `${needsReview} perlu ditinjau`;
   review.classList.toggle("hidden", isStarter && !answerKeysUnlocked);
   $("review-upgrade-gate").classList.toggle("hidden", !isStarter || answerKeysUnlocked);
   $("review-upgrade-available").classList.toggle("hidden", !isStarter || !answerKeysUnlocked);
   review.innerHTML = isStarter && !answerKeysUnlocked ? "" : sessionQuestions.map((question, index) => {
     const isCorrect = answers[index] === question.answer;
+    const tkpPoints = isCatSimulation && question.test === "TKP"
+      ? answers[index] === null ? 0 : isCorrect ? 5 : 1
+      : null;
+    const reviewClass = tkpPoints !== null
+      ? tkpPoints === 5 ? "correct" : answers[index] === null ? "incorrect" : "partial"
+      : isCorrect ? "correct" : "incorrect";
+    const status = tkpPoints !== null
+      ? `Poin TKP ${tkpPoints}/5`
+      : isCorrect ? "✓ Benar" : "✕ Perlu dipelajari";
     const yourAnswer = answers[index] === null ? "Belum dijawab" : `${LETTERS[answers[index]] || answers[index] + 1}. ${question.options[answers[index]]}`;
     const keyAnswer = `${LETTERS[question.answer] || question.answer + 1}. ${question.options[question.answer]}`;
+    const questionFigure = question.figureSequence
+      ? `<div class="review-figure">${renderFigureMarkup(question.figureSequence, "Urutan gambar soal figural", true)}</div>`
+      : "";
+    const answerFigure = question.figureOptions && answers[index] !== null
+      ? `<div class="review-figure">${renderFigureMarkup(question.figureOptions[answers[index]], "Gambar jawaban yang dipilih")}</div>`
+      : "";
+    const keyFigure = question.figureOptions
+      ? `<div class="review-figure">${renderFigureMarkup(question.figureOptions[question.answer], "Gambar kunci jawaban")}</div>`
+      : "";
     return `
-      <article class="review-card ${isCorrect ? "correct" : "incorrect"}">
-        <div class="review-heading"><strong>SOAL ${String(index + 1).padStart(2, "0")} · ${escapeHtml(question.category)}</strong><span class="review-status">${isCorrect ? "✓ Benar" : "✕ Perlu dipelajari"}</span></div>
+      <article class="review-card ${reviewClass}">
+        <div class="review-heading"><strong>SOAL ${String(index + 1).padStart(2, "0")} · ${escapeHtml(question.test || selectedTest)} · ${escapeHtml(question.category)}</strong><span class="review-status">${status}</span></div>
         <p class="review-question">${escapeHtml(question.question)}</p>
-        <div class="review-answer"><span>Jawabanmu: <strong>${escapeHtml(yourAnswer)}</strong></span>${!isCorrect || (isStarter && answerKeysUnlocked) ? `<span>Kunci jawaban: <strong>${escapeHtml(keyAnswer)}</strong></span>` : ""}</div>
+        ${questionFigure}
+        <div class="review-answer"><span>Jawabanmu: <strong>${escapeHtml(yourAnswer)}</strong>${answerFigure}</span>${!isCorrect || (isStarter && answerKeysUnlocked) ? `<span>Kunci jawaban: <strong>${escapeHtml(keyAnswer)}</strong>${keyFigure}</span>` : ""}</div>
         ${!isCorrect ? `<div class="review-explanation"><strong>Cara menjawab:</strong> ${escapeHtml(question.explanation)}</div>` : ""}
       </article>
     `;
   }).join("");
   showScreen("result-view");
   $("leaderboard-submit-message").classList.remove("success");
-  if (currentUser()) saveLeaderboardScore(selectedTest, score);
+  if (currentUser()) {
+    if (isCatSimulation) saveCatLeaderboardScore(score, catScores);
+    else saveLeaderboardScore(selectedTest, score);
+  }
 }
 
 function showToast(message) {
@@ -1994,6 +2214,7 @@ function initialize() {
     });
   });
   $("start-button").addEventListener("click", beginQuiz);
+  $("cat-simulation-start").addEventListener("click", beginCatSimulation);
   $("profile-menu-toggle").addEventListener("click", toggleProfileMenu);
   $("profile-menu-open-profile").addEventListener("click", () => {
     closeProfileMenu();
@@ -2012,7 +2233,10 @@ function initialize() {
   });
   $("analysis-unlock-button").addEventListener("click", () => showPackageDetails("victory"));
   $("home-rank-action").addEventListener("click", () => {
-    if (currentValidity() === "forever") showDashboard();
+    if (["7-days", "forever"].includes(currentValidity())) {
+      showDashboard();
+      $("cat-simulation-title").scrollIntoView({ behavior: "smooth", block: "center" });
+    }
     else showPackageDetails("victory");
   });
   $("practice-subject-picker").addEventListener("click", (event) => {
