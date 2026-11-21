@@ -19,12 +19,15 @@ const DIFFICULTIES = {
 };
 const CAT_CONFIG = {
   durationSeconds: 100 * 60,
-  questionCounts: { TWK: 30, TIU: 30, TKP: 40 },
-  passingScores: { TWK: 65, TIU: 80, TKP: 156 },
-  figuralQuestionCount: 2
+  questionCounts: { TWK: 30, TIU: 35, TKP: 45 },
+  passingScores: { TWK: 65, TIU: 80, TKP: 156 }
 };
 const CAT_TESTS = ["TWK", "TIU", "TKP"];
-const CAT_SCORE_MAXIMUMS = { TWK: 150, TIU: 150, TKP: 200 };
+const CAT_TOTAL_QUESTION_COUNT = Object.values(CAT_CONFIG.questionCounts)
+  .reduce((total, count) => total + count, 0);
+const CAT_SCORE_MAXIMUMS = { TWK: 150, TIU: 175, TKP: 225 };
+const CAT_TOTAL_SCORE = Object.values(CAT_SCORE_MAXIMUMS)
+  .reduce((total, score) => total + score, 0);
 const LETTERS = ["A", "B", "C", "D", "E", "F"];
 const TIU_LEVEL_GROUPS = [
   {
@@ -49,6 +52,14 @@ const TIU_LEVEL_GROUPS = [
       { id: 7, title: "Level 7", topic: "Analogi" },
       { id: 8, title: "Level 8", topic: "Kosakata verbal" },
       { id: 9, title: "Level 9", topic: "Penalaran verbal" }
+    ]
+  },
+  {
+    title: "Penalaran Logis & Analitis · Level 10–12",
+    levels: [
+      { id: 10, title: "Level 10", topic: "Silogisme" },
+      { id: 11, title: "Level 11", topic: "Logika bersyarat" },
+      { id: 12, title: "Level 12", topic: "Urutan dan posisi" }
     ]
   }
 ];
@@ -75,7 +86,7 @@ const TWK_LEVELS = [
 const PRACTICE_SUBJECTS = {
   TIU: {
     name: "Tes Intelegensia Umum",
-    description: "Numerik, deret, analogi, dan kemampuan verbal.",
+    description: "Numerik, deret, analogi, verbal, dan penalaran logis.",
     levels: TIU_LEVEL_GROUPS.flatMap((group) => group.levels),
     groups: TIU_LEVEL_GROUPS
   },
@@ -766,11 +777,15 @@ function renderAnalysis() {
         ? new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date(completedAt))
         : "Tanggal tidak tersedia");
       const scoreLabel = Number.isFinite(item.score)
-        ? item.subject === "CAT" ? `${item.score}/500` : `${item.score}%`
+        ? item.subject === "CAT" ? `${item.score}/${getCatScoreMaximum(item.questionCount)}` : `${item.score}%`
         : "—";
       return `<div class="history-item"><span>${escapeHtml(item.activity)} · ${escapeHtml(item.subject)}${item.level ? ` · ${escapeHtml(item.level)}` : ""} · ${escapeHtml(date)}</span><strong>${scoreLabel}</strong></div>`;
     }).join("")
     : '<p class="empty-state">Selesaikan latihan atau tryout untuk mulai melihat progresmu.</p>';
+}
+
+function getCatScoreMaximum(questionCount) {
+  return questionCount === CAT_TOTAL_QUESTION_COUNT ? CAT_TOTAL_SCORE : 500;
 }
 
 function renderHomeLeaderboardRank() {
@@ -1360,7 +1375,7 @@ function renderHistory() {
     const resultSummary = item.test === "CAT"
       ? `${item.answeredCount || 0}/${item.questionCount || 100} terjawab`
       : `${item.correct}/${item.questionCount || 10} benar`;
-    const scoreLabel = item.test === "CAT" ? `${item.score}/500` : item.score;
+    const scoreLabel = item.test === "CAT" ? `${item.score}/${getCatScoreMaximum(item.questionCount)}` : item.score;
     return `<div class="history-item"><span>${escapeHtml(item.test || "TIU")} · ${escapeHtml(item.date)} · ${resultSummary}</span><strong>${scoreLabel}</strong></div>`;
   }).join("");
 }
@@ -1597,7 +1612,7 @@ async function fetchAndRenderLeaderboard() {
         <span class="leaderboard-rank">${String(index + 1).padStart(2, "0")}</span>
         ${avatarMarkup(user.profilePhotoId, user.username, "leaderboard-avatar")}
         <span class="leaderboard-player"><strong>${escapeHtml(maskReviewUsername(user.username))}</strong><small>TIU ${user.scores.TIU} · TKP ${user.scores.TKP} · TWK ${user.scores.TWK}</small></span>
-        <strong class="leaderboard-score">${user.score}<small>/ 500</small></strong>
+        <strong class="leaderboard-score">${user.score}<small>/ ${CAT_TOTAL_SCORE}</small></strong>
       </li>
     `).join("");
     activateAvatarImages(list);
@@ -1785,24 +1800,20 @@ async function loadCatQuestions() {
     banks[test] = questions;
   }));
 
-  const figuralQuestions = banks.TIU.filter((question) => Array.isArray(question.figureSequence));
-  if (figuralQuestions.length < CAT_CONFIG.figuralQuestionCount) {
-    throw new Error(`Bank TIU memerlukan sedikitnya ${CAT_CONFIG.figuralQuestionCount} soal figural untuk simulasi CAT.`);
-  }
   const tiuCount = CAT_CONFIG.questionCounts.TIU;
-  const tiuFigural = shuffleItems(figuralQuestions).slice(0, CAT_CONFIG.figuralQuestionCount);
-  const tiuRegular = shuffleItems(banks.TIU.filter((question) => !Array.isArray(question.figureSequence)))
-    .slice(0, tiuCount - tiuFigural.length);
-  if (tiuRegular.length !== tiuCount - tiuFigural.length) {
+  const tiuRegular = shuffleItems(banks.TIU.filter((question) =>
+    question.category !== "PENALARAN FIGURAL"
+    && !Array.isArray(question.figureSequence)
+    && !Array.isArray(question.figureOptions)
+  )).slice(0, tiuCount);
+  if (tiuRegular.length !== tiuCount) {
     throw new Error("Bank TIU tidak memiliki cukup soal nonfigural.");
   }
-  const questions = [
-    ...tiuFigural.map((question) => ({ ...question, test: "TIU" })),
-    ...tiuRegular.map((question) => ({ ...question, test: "TIU" })),
+  return [
     ...shuffleItems(banks.TWK).slice(0, CAT_CONFIG.questionCounts.TWK).map((question) => ({ ...question, test: "TWK" })),
+    ...tiuRegular.map((question) => ({ ...question, test: "TIU" })),
     ...shuffleItems(banks.TKP).slice(0, CAT_CONFIG.questionCounts.TKP).map((question) => ({ ...question, test: "TKP" }))
   ];
-  return shuffleItems(questions);
 }
 
 function startQuizSession(questions, durationSeconds, catSimulation = false) {
@@ -1853,8 +1864,8 @@ async function beginCatSimulation() {
   button.textContent = "Menyiapkan simulasi...";
   try {
     const questions = await loadCatQuestions();
-    if (questions.length !== 100) {
-      throw new Error("Simulasi CAT harus berisi tepat 100 soal.");
+    if (questions.length !== CAT_TOTAL_QUESTION_COUNT) {
+      throw new Error(`Simulasi CAT harus berisi tepat ${CAT_TOTAL_QUESTION_COUNT} soal.`);
     }
     startQuizSession(questions, CAT_CONFIG.durationSeconds, true);
   } catch (error) {
@@ -1892,10 +1903,41 @@ function renderFigureMarkup(shapes, label, sequence = false) {
   return `<svg class="figural-svg" width="${width}" height="64" viewBox="0 0 ${width} 64" role="img" aria-label="${escapeHtml(label)}"><g fill="#6254d9" stroke="#41369e" stroke-width="1">${figures}</g></svg>`;
 }
 
+function renderCatSectionNavigation(activeTest) {
+  const navigation = $("cat-section-navigation");
+  navigation.classList.toggle("hidden", !isCatSimulation);
+  if (!isCatSimulation) return;
+
+  navigation.querySelectorAll("[data-cat-section]").forEach((button) => {
+    const test = button.dataset.catSection;
+    const sectionQuestions = sessionQuestions
+      .map((question, index) => ({ question, index }))
+      .filter((item) => item.question.test === test);
+    const answered = sectionQuestions.filter((item) => answers[item.index] !== null).length;
+    const selected = test === activeTest;
+    button.classList.toggle("selected", selected);
+    button.setAttribute("aria-pressed", String(selected));
+    button.setAttribute("aria-label", `${test}, ${answered} dari ${sectionQuestions.length} soal terjawab`);
+    button.querySelector("[data-cat-section-progress]").textContent =
+      `${answered}/${sectionQuestions.length}`;
+  });
+}
+
+function navigateToCatSection(test) {
+  const sectionIndices = sessionQuestions
+    .map((question, index) => question.test === test ? index : -1)
+    .filter((index) => index >= 0);
+  if (!sectionIndices.length) return;
+
+  currentQuestion = sectionIndices.find((index) => answers[index] === null) ?? sectionIndices[0];
+  renderQuestion();
+}
+
 function renderQuestion() {
   const question = sessionQuestions[currentQuestion];
   $("quiz-test").textContent = isCatSimulation ? "SIMULASI CAT" : selectedTest;
   $("quiz-counter").textContent = `SOAL ${String(currentQuestion + 1).padStart(2, "0")} / ${sessionQuestions.length}`;
+  renderCatSectionNavigation(question.test);
   $("question-category").textContent = isCatSimulation
     ? `${question.test} · ${question.category.toUpperCase()}`
     : question.category.toUpperCase();
@@ -1925,8 +1967,11 @@ function renderQuestion() {
     ? 'Selesaikan simulasi CAT <span>✓</span>'
     : 'Selesaikan tryout <span>✓</span>';
   $("answered-count").textContent = `${answers.filter((answer) => answer !== null).length}/${sessionQuestions.length} terjawab`;
-  $("question-grid").innerHTML = sessionQuestions.map((_, index) => `
-    <button type="button" class="question-number ${answers[index] !== null ? "answered" : ""} ${index === currentQuestion ? "current" : ""}" data-question="${index}" aria-label="Soal ${index + 1}${answers[index] !== null ? ", terjawab" : ", belum dijawab"}">${String(index + 1).padStart(2, "0")}</button>
+  const visibleQuestionIndices = sessionQuestions
+    .map((item, index) => ({ item, index }))
+    .filter((entry) => !isCatSimulation || entry.item.test === question.test);
+  $("question-grid").innerHTML = visibleQuestionIndices.map(({ index }, sectionIndex) => `
+    <button type="button" class="question-number ${answers[index] !== null ? "answered" : ""} ${index === currentQuestion ? "current" : ""}" data-question="${index}" aria-label="${isCatSimulation ? `${question.test} ` : ""}Soal ${sectionIndex + 1}${answers[index] !== null ? ", terjawab" : ", belum dijawab"}">${String(sectionIndex + 1).padStart(2, "0")}</button>
   `).join("");
   $("question-grid").querySelectorAll("[data-question]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -1986,13 +2031,15 @@ function finishQuiz(expired = false) {
     recordActivityQuestions("tryout", selectedTest, answeredCount);
   }
   $("score-value").textContent = String(score);
-  $("score-scale").textContent = isCatSimulation ? "/ 500" : "/ 100";
+  $("score-scale").textContent = isCatSimulation ? `/ ${CAT_TOTAL_SCORE}` : "/ 100";
   $("correct-label").textContent = isCatSimulation ? "Jawaban terisi" : "Jawaban benar";
   $("correct-value").textContent = isCatSimulation
     ? `${answeredCount} / ${sessionQuestions.length}`
     : `${correct} / ${sessionQuestions.length}`;
   $("result-test").textContent = isCatSimulation ? "Simulasi CAT" : selectedTest;
-  $("result-source").textContent = isCatSimulation ? "100 soal · 100 menit" : "Bank soal lokal";
+  $("result-source").textContent = isCatSimulation
+    ? `${CAT_TOTAL_QUESTION_COUNT} soal · ${CAT_CONFIG.durationSeconds / 60} menit`
+    : "Bank soal lokal";
   $("result-heading").textContent = isCatSimulation
     ? catPassed ? "Selamat, seluruh ambang batas tercapai!" : "Terus berlatih dan coba lagi!"
     : score >= 80 ? "Luar biasa, pertahankan!" : score >= 50 ? "Latihan yang hebat!" : "Terus berlatih, kamu pasti bisa!";
@@ -2262,6 +2309,10 @@ function initialize() {
   });
   $("next-button").addEventListener("click", () => { currentQuestion += 1; renderQuestion(); });
   $("previous-button").addEventListener("click", () => { currentQuestion = Math.max(0, currentQuestion - 1); renderQuestion(); });
+  $("cat-section-navigation").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-cat-section]");
+    if (button) navigateToCatSection(button.dataset.catSection);
+  });
   $("submit-button").addEventListener("click", () => {
     const unanswered = answers.filter((answer) => answer === null).length;
     if (unanswered && !window.confirm(`Masih ada ${unanswered} soal belum dijawab. Selesaikan tryout sekarang?`)) return;

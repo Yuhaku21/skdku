@@ -1,9 +1,9 @@
 const { redisCommand } = require("../lib/redis");
 
 const USERS_KEY = "ruangskd:users";
-const LEADERBOARD_KEY = "ruangskd:leaderboard:cat:v1";
+const LEADERBOARD_KEY = "ruangskd:leaderboard:cat:v2";
 const LEADERBOARD_NAMES_KEY = "ruangskd:leaderboard:names";
-const LEADERBOARD_SCORES_KEY = "ruangskd:leaderboard:cat-scores:v1";
+const LEADERBOARD_SCORES_KEY = "ruangskd:leaderboard:cat-scores:v2";
 
 const USERS = [
   { email: "aditya.pratama@example.com", name: "Aditya Pratama", TIU: 92, TKP: 185, TWK: 88 },

@@ -6,11 +6,13 @@ const USERS_KEY = "ruangskd:users";
 const LEADERBOARD_KEY = "ruangskd:leaderboard:v2";
 const LEADERBOARD_NAMES_KEY = "ruangskd:leaderboard:names";
 const LEADERBOARD_SCORES_KEY = "ruangskd:leaderboard:scores:v2";
-const CAT_LEADERBOARD_KEY = "ruangskd:leaderboard:cat:v1";
-const CAT_SCORES_KEY = "ruangskd:leaderboard:cat-scores:v1";
+const CAT_LEADERBOARD_KEY = "ruangskd:leaderboard:cat:v2";
+const CAT_SCORES_KEY = "ruangskd:leaderboard:cat-scores:v2";
 const MAX_BODY_BYTES = 2048;
 const CERTIFICATE_TARGETS = { TIU: 80, TKP: 156, TWK: 65 };
-const CAT_SCORE_MAXIMUMS = { TWK: 150, TIU: 150, TKP: 200 };
+const CAT_SCORE_MAXIMUMS = { TWK: 150, TIU: 175, TKP: 225 };
+const CAT_TOTAL_SCORE_MAXIMUM = Object.values(CAT_SCORE_MAXIMUMS)
+  .reduce((total, score) => total + score, 0);
 const SAVE_ACCUMULATED_SCORE_SCRIPT = [
   "redis.call('HINCRBY', KEYS[2], ARGV[1] .. ':' .. ARGV[2], ARGV[3])",
   "local total = 0",
@@ -178,7 +180,7 @@ module.exports = async function leaderboardHandler(request, response) {
       || Buffer.byteLength(JSON.stringify(payload), "utf8") > MAX_BODY_BYTES
       || !Number.isInteger(payload.score) || payload.score < 0
       || (payload.test === "CAT"
-        ? payload.score > 500 || !payload.scores || typeof payload.scores !== "object"
+        ? payload.score > CAT_TOTAL_SCORE_MAXIMUM || !payload.scores || typeof payload.scores !== "object"
           || Array.isArray(payload.scores)
           || Object.keys(CAT_SCORE_MAXIMUMS).some((test) => !Number.isInteger(payload.scores[test])
             || payload.scores[test] < 0 || payload.scores[test] > CAT_SCORE_MAXIMUMS[test])

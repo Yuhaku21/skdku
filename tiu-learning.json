@@ -220,6 +220,81 @@
         { "category": "KESIMPULAN DARI BEBERAPA PREMIS", "question": "Beberapa siswa adalah atlet. Semua atlet berlatih rutin. Kesimpulan yang tepat adalah ...", "options": ["Semua siswa adalah atlet", "Beberapa siswa berlatih rutin", "Tidak ada siswa yang berlatih rutin", "Semua yang berlatih rutin adalah siswa"], "answer": 1, "explanation": "Siswa yang termasuk atlet juga berlatih rutin, sehingga dapat disimpulkan beberapa siswa berlatih rutin." },
         { "category": "BATAS KESIMPULAN", "question": "Semua pelukis adalah orang kreatif. Beberapa orang kreatif disiplin. Kesimpulan tentang kedisiplinan pelukis adalah ...", "options": ["Semua pelukis pasti disiplin", "Tidak ada pelukis yang disiplin", "Belum dapat disimpulkan", "Semua orang disiplin adalah pelukis"], "answer": 2, "explanation": "Premis tidak menyebut apakah pelukis termasuk orang kreatif yang disiplin. Karena itu, kedisiplinan pelukis belum dapat disimpulkan." }
       ]
+    },
+    {
+      "id": 10,
+      "title": "Level 10 — Penalaran Logis: Silogisme",
+      "topic": "Kesimpulan dari hubungan kategori dan kelompok",
+      "description": "Gunakan premis untuk menarik kesimpulan yang pasti benar tanpa membalik hubungan.",
+      "material": [
+        "Silogisme menarik kesimpulan dari dua atau lebih premis. Pastikan kesimpulan benar-benar mengikuti informasi yang diberikan.",
+        "Jika semua A termasuk B dan suatu objek termasuk A, objek itu juga termasuk B. Contoh: semua mawar adalah bunga; tanaman ini mawar; jadi tanaman ini bunga.",
+        "Jika tidak ada A yang termasuk B dan suatu objek termasuk A, objek itu bukan B. Perhatikan bahwa larangan berlaku pada seluruh kelompok.",
+        "Kata sebagian berarti setidaknya ada anggota yang memenuhi hubungan tersebut; kata ini tidak berarti semua anggota.",
+        "Jangan membalik premis: dari semua A adalah B, tidak otomatis semua B adalah A. Jika hubungan antarkelompok tidak diketahui, pilih kesimpulan belum dapat ditentukan."
+      ],
+      "questions": [
+        { "category": "SILOGISME KATEGORIAL", "question": "Semua pustakawan teliti. Rani adalah pustakawan. Kesimpulan yang tepat adalah ...", "options": ["Rani teliti", "Rani seorang dokter", "Semua orang teliti adalah pustakawan", "Rani tidak teliti"], "answer": 0, "explanation": "Rani termasuk pustakawan, dan semua pustakawan teliti. Jadi, Rani teliti." },
+        { "category": "SILOGISME KATEGORIAL", "question": "Tidak satu pun kendaraan listrik menggunakan bensin. Mobil X adalah kendaraan listrik. Kesimpulan yang tepat adalah ...", "options": ["Mobil X menggunakan bensin", "Mobil X tidak menggunakan bensin", "Semua kendaraan menggunakan bensin", "Mobil X bukan kendaraan"], "answer": 1, "explanation": "Kendaraan listrik termasuk kelompok yang tidak menggunakan bensin, sehingga Mobil X tidak menggunakan bensin." },
+        { "category": "SILOGISME SEBAGIAN", "question": "Sebagian peserta adalah relawan. Semua relawan mendapat kartu identitas. Kesimpulan yang tepat adalah ...", "options": ["Semua peserta mendapat kartu identitas", "Sebagian peserta mendapat kartu identitas", "Tidak ada peserta mendapat kartu identitas", "Semua pemegang kartu adalah peserta"], "answer": 1, "explanation": "Peserta yang merupakan relawan mendapat kartu identitas. Karena sebagian peserta adalah relawan, sebagian peserta mendapat kartu." },
+        { "category": "BATAS KESIMPULAN", "question": "Semua dokter adalah tenaga kesehatan. Sebagian tenaga kesehatan adalah peneliti. Kesimpulan tentang dokter yang menjadi peneliti adalah ...", "options": ["Semua dokter adalah peneliti", "Tidak ada dokter yang menjadi peneliti", "Sebagian dokter pasti peneliti", "Belum dapat disimpulkan"], "answer": 3, "explanation": "Premis tidak menjelaskan apakah tenaga kesehatan yang menjadi peneliti termasuk dokter." },
+        { "category": "SILOGISME NEGATIF", "question": "Tidak ada burung yang merupakan mamalia. Kelelawar adalah mamalia. Kesimpulan yang tepat adalah ...", "options": ["Kelelawar adalah burung", "Kelelawar bukan burung", "Semua mamalia adalah kelelawar", "Tidak ada mamalia yang bernapas"], "answer": 1, "explanation": "Burung dan mamalia tidak memiliki anggota yang sama. Karena kelelawar adalah mamalia, kelelawar bukan burung." },
+        { "category": "RANTAI KATEGORI", "question": "Semua anggota kelompok A termasuk kelompok B. Semua anggota kelompok B termasuk kelompok C. Dita anggota kelompok A. Kesimpulannya adalah ...", "options": ["Dita termasuk kelompok C", "Dita bukan kelompok B", "Semua kelompok C adalah kelompok A", "Dita hanya termasuk kelompok A"], "answer": 0, "explanation": "Dita termasuk A, A termasuk B, dan B termasuk C. Jadi, Dita termasuk C." },
+        { "category": "SILOGISME SEBAGIAN", "question": "Sebagian buku adalah novel. Semua novel merupakan karya fiksi. Kesimpulan yang tepat adalah ...", "options": ["Semua buku adalah karya fiksi", "Sebagian buku merupakan karya fiksi", "Tidak ada buku yang merupakan karya fiksi", "Semua karya fiksi adalah buku"], "answer": 1, "explanation": "Buku yang termasuk novel merupakan karya fiksi, sehingga sebagian buku adalah karya fiksi." },
+        { "category": "SILOGISME NEGATIF", "question": "Semua anggota tim A memakai seragam. Tidak ada pemakai seragam yang boleh memasuki ruang steril. Kesimpulan yang tepat adalah ...", "options": ["Semua anggota tim A boleh masuk ruang steril", "Tidak ada anggota tim A yang boleh memasuki ruang steril", "Sebagian anggota tim A tidak memakai seragam", "Semua yang di ruang steril adalah anggota tim A"], "answer": 1, "explanation": "Anggota tim A memakai seragam, sedangkan pemakai seragam tidak boleh memasuki ruang steril." },
+        { "category": "SILOGISME SEBAGIAN", "question": "Sebagian seniman adalah guru. Tidak ada guru yang menjadi pilot. Kesimpulan yang tepat adalah ...", "options": ["Sebagian seniman bukan pilot", "Semua seniman adalah guru", "Semua pilot adalah seniman", "Tidak ada seniman yang menjadi guru"], "answer": 0, "explanation": "Seniman yang merupakan guru bukan pilot. Karena sebagian seniman adalah guru, sebagian seniman bukan pilot." },
+        { "category": "KESIMPULAN DARI KELOMPOK", "question": "Tidak ada anggota kelompok A yang termasuk kelompok B. Sebagian anggota kelompok C termasuk kelompok A. Kesimpulan yang tepat adalah ...", "options": ["Semua anggota C termasuk B", "Sebagian anggota C bukan B", "Tidak ada anggota C yang termasuk A", "Semua anggota A termasuk C"], "answer": 1, "explanation": "Anggota C yang termasuk A tidak termasuk B. Karena sebagian anggota C termasuk A, sebagian anggota C bukan B." }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Level 11 — Penalaran Logis: Pernyataan Bersyarat",
+      "topic": "Implikasi, kontraposisi, dan kesimpulan yang tidak valid",
+      "description": "Latih hubungan sebab-syarat dengan membedakan kesimpulan yang valid dan yang belum terbukti.",
+      "material": [
+        "Pernyataan jika P maka Q berarti P cukup untuk memastikan Q. Jika P benar, Q harus benar sesuai aturan.",
+        "Kontraposisi dari jika P maka Q adalah jika bukan Q maka bukan P. Bentuk ini menghasilkan kesimpulan yang setara.",
+        "Jangan membalik implikasi: jika P maka Q tidak berarti jika Q maka P. Q bisa saja terjadi karena alasan lain.",
+        "Jika P menyebabkan Q dan Q menyebabkan R, maka P menyebabkan R melalui rantai syarat.",
+        "Ungkapan hanya jika menetapkan syarat wajib. Jika seseorang dapat mengikuti final hanya jika lolos semifinal, maka mengikuti final berarti ia lolos semifinal."
+      ],
+      "questions": [
+        { "category": "IMPLIKASI", "question": "Jika hujan turun, jalan menjadi basah. Hujan turun. Kesimpulan yang tepat adalah ...", "options": ["Jalan menjadi basah", "Jalan pasti kering", "Hujan berhenti", "Tidak dapat disimpulkan apa pun"], "answer": 0, "explanation": "Hujan turun memenuhi syarat P, sehingga akibat yang dinyatakan, jalan basah, berlaku." },
+        { "category": "KONTRAPOSISI", "question": "Jika alarm aktif, lampu indikator menyala. Lampu indikator tidak menyala. Kesimpulan yang tepat adalah ...", "options": ["Alarm pasti rusak", "Alarm tidak aktif", "Alarm aktif", "Lampu indikator tidak pernah menyala"], "answer": 1, "explanation": "Jika alarm aktif maka lampu menyala. Karena lampu tidak menyala, alarm tidak aktif." },
+        { "category": "KESALAHAN MEMBALIK IMPLIKASI", "question": "Jika seseorang menyelesaikan pelatihan, ia memperoleh sertifikat. Bima memperoleh sertifikat. Kesimpulan bahwa Bima pasti menyelesaikan pelatihan adalah ...", "options": ["Pasti benar", "Pasti salah", "Belum dapat dipastikan", "Benar hanya jika semua orang ikut pelatihan"], "answer": 2, "explanation": "Pelatihan merupakan salah satu cara memperoleh sertifikat menurut premis, tetapi premis tidak menyatakan sertifikat hanya bisa diperoleh dengan cara itu." },
+        { "category": "KONTRAPOSISI", "question": "Jika tugas berstatus prioritas, tugas itu selesai paling lambat hari Jumat. Tugas tersebut belum selesai pada hari Jumat. Kesimpulan yang tepat adalah ...", "options": ["Tugas itu berstatus prioritas", "Tugas itu tidak berstatus prioritas", "Semua tugas selesai hari Jumat", "Tugas itu dibatalkan"], "answer": 1, "explanation": "Jika prioritas maka selesai paling lambat Jumat. Karena syarat akibat tidak terpenuhi, tugas tersebut bukan prioritas." },
+        { "category": "RANTAI IMPLIKASI", "question": "Jika P benar maka Q benar. Jika Q benar maka R benar. P benar. Kesimpulan yang tepat adalah ...", "options": ["R benar", "R salah", "Q salah", "P tidak dapat diketahui"], "answer": 0, "explanation": "P benar membuat Q benar, lalu Q benar membuat R benar." },
+        { "category": "HANYA JIKA", "question": "Peserta dapat mengikuti babak final hanya jika lulus semifinal. Dodi mengikuti babak final. Kesimpulan yang tepat adalah ...", "options": ["Dodi lulus semifinal", "Dodi menjadi juara final", "Semua yang lulus semifinal ikut final", "Dodi tidak mengikuti semifinal"], "answer": 0, "explanation": "Lulus semifinal adalah syarat wajib untuk mengikuti final. Karena Dodi mengikuti final, ia lulus semifinal." },
+        { "category": "KONTRAPOSISI", "question": "Jika jaringan terputus, video tidak dapat diputar. Video dapat diputar. Kesimpulan yang tepat adalah ...", "options": ["Jaringan terputus", "Jaringan tidak terputus", "Video pasti diunduh", "Semua jaringan berfungsi"], "answer": 1, "explanation": "Jika jaringan terputus maka video tidak dapat diputar. Karena video dapat diputar, jaringan tidak terputus." },
+        { "category": "KONTRAPOSISI", "question": "Jika pendaftaran selesai, email konfirmasi dikirim. Email konfirmasi tidak dikirim. Kesimpulan yang tepat adalah ...", "options": ["Pendaftaran selesai", "Pendaftaran belum selesai", "Email pasti masuk spam", "Pendaftaran dibatalkan"], "answer": 1, "explanation": "Berdasarkan kontraposisi, jika email tidak dikirim maka pendaftaran belum selesai." },
+        { "category": "PENALARAN KONDISIONAL", "question": "Jika Nia membaca petunjuk, ia dapat menjawab soal dengan benar. Nia tidak dapat menjawab soal dengan benar. Kesimpulan yang tepat adalah ...", "options": ["Nia membaca petunjuk", "Nia tidak membaca petunjuk", "Petunjuk pasti salah", "Nia menjawab semua soal"], "answer": 1, "explanation": "Jika membaca petunjuk maka dapat menjawab benar. Karena akibatnya tidak terjadi, Nia tidak membaca petunjuk." },
+        { "category": "KESALAHAN MEMBALIK IMPLIKASI", "question": "Jika sebuah bilangan habis dibagi 4, bilangan itu genap. Bilangan K adalah genap. Apakah dapat disimpulkan bahwa K habis dibagi 4?", "options": ["Ya, pasti", "Tidak, karena K pasti ganjil", "Belum dapat disimpulkan dari aturan itu", "Ya, semua bilangan genap habis dibagi 4"], "answer": 2, "explanation": "Aturan hanya menyatakan bilangan yang habis dibagi 4 pasti genap, bukan bahwa setiap bilangan genap habis dibagi 4." }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Level 12 — Penalaran Analitis: Urutan dan Posisi",
+      "topic": "Menyusun urutan berdasarkan beberapa petunjuk",
+      "description": "Gabungkan petunjuk sebelum, sesudah, dan posisi untuk menentukan urutan yang memenuhi semua syarat.",
+      "material": [
+        "Ubah setiap petunjuk menjadi hubungan urutan. Jika A sebelum B, tuliskan A < B; jika B tepat setelah A, kedua posisi harus bersebelahan.",
+        "Rangkai hubungan yang berurutan. Dari A sebelum B dan B sebelum C, dapat disimpulkan A sebelum C.",
+        "Tempatkan petunjuk posisi tetap terlebih dahulu, lalu isi posisi lain dengan memperhatikan urutan dan syarat bersebelahan.",
+        "Jangan menyimpulkan urutan antara dua objek jika tidak ada petunjuk yang menghubungkan keduanya.",
+        "Periksa kembali semua petunjuk pada urutan akhir agar tidak ada syarat yang terlewat."
+      ],
+      "questions": [
+        { "category": "URUTAN", "question": "A dipresentasikan sebelum B, dan B sebelum C. Siapa yang berada di urutan kedua?", "options": ["A", "B", "C", "Tidak dapat ditentukan"], "answer": 1, "explanation": "Urutannya A, B, C. Jadi, B berada di urutan kedua." },
+        { "category": "URUTAN", "question": "Rina datang sebelum Putri. Putri datang sebelum Sari. Siapa yang datang paling awal?", "options": ["Rina", "Putri", "Sari", "Tidak dapat ditentukan"], "answer": 0, "explanation": "Urutannya Rina, Putri, lalu Sari. Rina datang paling awal." },
+        { "category": "URUTAN DENGAN POSISI", "question": "Empat berkas disusun dari kiri ke kanan. Berkas X sebelum Y, Z berada di antara X dan Y, dan W setelah Y. Berkas apakah yang berada di posisi kedua?", "options": ["X", "Y", "Z", "W"], "answer": 2, "explanation": "Urutan yang memenuhi petunjuk adalah X, Z, Y, W. Posisi kedua ditempati Z." },
+        { "category": "URUTAN DENGAN PETUNJUK", "question": "Lima pembicara E, C, A, B, dan D tampil satu per satu. E tampil pertama, C sebelum A, B tepat setelah A, dan D setelah B. Siapa yang tampil terakhir?", "options": ["C", "A", "B", "D"], "answer": 3, "explanation": "Urutannya E, C, A, B, D. Jadi, D tampil terakhir." },
+        { "category": "RANTAI URUTAN", "question": "Tugas M selesai sebelum N. Tugas O selesai sebelum M. Tugas P selesai setelah N. Tugas apakah yang berada di urutan ketiga?", "options": ["O", "M", "N", "P"], "answer": 2, "explanation": "Urutannya O, M, N, P. Tugas ketiga adalah N." },
+        { "category": "POSISI TETAP", "question": "Empat orang menempati posisi 1 sampai 4. R berada di posisi 2, S sebelum R, dan T setelah R. Siapa yang pasti berada di posisi pertama?", "options": ["R", "S", "T", "Tidak dapat ditentukan"], "answer": 1, "explanation": "S harus berada sebelum R yang menempati posisi 2, sehingga S pasti berada di posisi 1." },
+        { "category": "URUTAN KEGIATAN", "question": "Laporan disusun sebelum wawancara. Wawancara berlangsung sebelum presentasi. Pelatihan dilakukan setelah presentasi. Kegiatan apakah yang berada di urutan kedua?", "options": ["Laporan", "Wawancara", "Presentasi", "Pelatihan"], "answer": 1, "explanation": "Urutannya laporan, wawancara, presentasi, lalu pelatihan. Wawancara berada di urutan kedua." },
+        { "category": "POSISI TERAKHIR", "question": "Tiga buku merah, biru, dan hijau disusun berjajar. Buku merah sebelum buku hijau dan buku biru sebelum buku hijau. Buku apakah yang pasti berada terakhir?", "options": ["Merah", "Biru", "Hijau", "Tidak dapat ditentukan"], "answer": 2, "explanation": "Buku hijau harus berada setelah buku merah dan biru, sehingga buku hijau pasti terakhir." },
+        { "category": "URUTAN DENGAN POSISI", "question": "Lima peserta V, W, X, Y, dan Z berbaris. Z di posisi kelima, V sebelum X, X sebelum Y, dan W sebelum V. Siapa yang berada di posisi ketiga?", "options": ["W", "V", "X", "Y"], "answer": 2, "explanation": "Empat posisi pertama harus berurutan W, V, X, Y, lalu Z di posisi kelima. Posisi ketiga ditempati X." },
+        { "category": "URUTAN BERSEBELAHAN", "question": "Tugas B dikerjakan tepat sebelum D. A dikerjakan sebelum B, C setelah D, dan E sebelum A. Tugas apakah yang tepat setelah B?", "options": ["A", "C", "D", "E"], "answer": 2, "explanation": "B harus tepat sebelum D, sehingga tugas yang langsung mengikuti B adalah D." }
+      ]
     }
   ]
 }

@@ -223,7 +223,7 @@
 
           <section class="landing-community-card" id="leaderboard-section" aria-labelledby="leaderboard-title">
             <div class="landing-section-heading">
-              <div><span class="section-kicker">APRESIASI SIMULASI</span><h2 id="leaderboard-title">Top 5 leaderboard CAT</h2><p class="muted">Peringkat berdasarkan skor simulasi CAT terbaru dari 500 poin.</p></div>
+              <div><span class="section-kicker">APRESIASI SIMULASI</span><h2 id="leaderboard-title">Top 5 leaderboard CAT</h2><p class="muted">Peringkat berdasarkan skor simulasi CAT terbaru dari 550 poin.</p></div>
               <span class="leaderboard-badge">SKOR CAT TERBARU</span>
             </div>
             <p class="form-message" id="leaderboard-message" aria-live="polite"></p>
@@ -345,7 +345,7 @@
             <div class="cat-simulation-copy">
               <span class="section-kicker">KHUSUS PAKET TEMPUR &amp; VICTORY</span>
               <h2 id="cat-simulation-title">Simulasi CAT SKD</h2>
-              <p>100 soal dalam 100 menit: TWK 30 soal, TIU 30 soal, dan TKP 40 soal. Ambang nilai: TWK 65, TIU 80, TKP 156. Nilai TKP latihan memberi 5 poin untuk opsi terbaik dan 1 poin untuk opsi lain yang dipilih.</p>
+              <p>110 soal dalam 100 menit dengan urutan TWK 30, TIU 35, lalu TKP 45. Gunakan tombol bagian soal untuk berpindah materi. Ambang nilai: TWK 65, TIU 80, TKP 156. Nilai TKP latihan memberi 5 poin untuk opsi terbaik dan 1 poin untuk opsi lain yang dipilih.</p>
             </div>
             <button class="button button-primary" id="cat-simulation-start" type="button">Mulai simulasi CAT <span aria-hidden="true">→</span></button>
             <div class="cat-simulation-locked hidden" id="cat-simulation-locked">
@@ -564,6 +564,17 @@
             <div class="timer" id="timer" aria-live="polite"><span class="timer-dot"></span><span id="timer-text">12:00</span></div>
           </div>
           <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+          <nav id="cat-section-navigation" class="cat-section-navigation hidden" aria-label="Pilih bagian soal simulasi CAT">
+            <button class="cat-section-button" type="button" data-cat-section="TWK" aria-pressed="false" aria-label="Pilih soal TWK">
+              <span>TWK</span><small data-cat-section-progress>0/30</small>
+            </button>
+            <button class="cat-section-button" type="button" data-cat-section="TIU" aria-pressed="false" aria-label="Pilih soal TIU">
+              <span>TIU</span><small data-cat-section-progress>0/35</small>
+            </button>
+            <button class="cat-section-button" type="button" data-cat-section="TKP" aria-pressed="false" aria-label="Pilih soal TKP">
+              <span>TKP</span><small data-cat-section-progress>0/45</small>
+            </button>
+          </nav>
           <div class="quiz-layout">
             <div class="question-panel">
               <div class="question-category" id="question-category">PENALARAN NUMERIK</div>
