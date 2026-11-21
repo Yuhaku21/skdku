@@ -83,6 +83,17 @@
             <button id="refresh-users-button" class="button button-outline" type="button">Muat ulang</button>
           </div>
           <p id="admin-users-message" class="form-message" aria-live="polite"></p>
+          <div class="admin-users-controls">
+            <label class="admin-user-filter" for="admin-user-email-filter">
+              <span>Filter berdasarkan email</span>
+              <input id="admin-user-email-filter" class="form-input" type="search" autocomplete="off" placeholder="Cari email..." />
+            </label>
+            <div class="admin-users-pagination" aria-label="Navigasi halaman akun">
+              <span id="admin-users-page-info" aria-live="polite">Memuat data akun...</span>
+              <button id="admin-users-prev-page" class="button button-outline" type="button" disabled>Sebelumnya</button>
+              <button id="admin-users-next-page" class="button button-outline" type="button" disabled>Berikutnya</button>
+            </div>
+          </div>
           <div class="admin-table-wrap">
             <table class="admin-users-table">
               <thead>

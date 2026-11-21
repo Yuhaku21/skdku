@@ -249,6 +249,13 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
 .admin-users-card { margin: 0 28px 48px; padding: 23px 25px; border: 1px solid #ebedf2; border-radius: 17px; background: white; }
 .admin-users-heading { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 15px; }
 .admin-users-heading h2 { margin: 8px 0 0; font: 800 18px "Manrope", sans-serif; letter-spacing: -.5px; }
+.admin-users-controls { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 16px; }
+.admin-user-filter { display: grid; width: min(360px, 100%); gap: 6px; color: #647084; font-size: 11px; font-weight: 600; }
+.admin-user-filter .form-input { height: 40px; }
+.admin-users-pagination { display: flex; align-items: center; gap: 8px; }
+.admin-users-pagination span { color: #8c95a4; font-size: 10px; white-space: nowrap; }
+.admin-users-pagination .button { padding: 8px 11px; font-size: 10px; white-space: nowrap; }
+.admin-users-pagination .button:disabled { cursor: not-allowed; opacity: .5; }
 .admin-table-wrap { overflow-x: auto; }
 .admin-users-table { width: 100%; min-width: 900px; border-collapse: collapse; text-align: left; }
 .admin-users-table th, .admin-users-table td { padding: 13px 12px; border-bottom: 1px solid #f0f1f5; font-size: 11px; }
@@ -636,6 +643,8 @@ form label { display: block; margin: 16px 0 8px; font-weight: 700; color: #4c586
   .admin-create-card, .admin-users-card { padding: 18px 15px; }
   .admin-users-heading { align-items: flex-start; }
   .admin-users-heading h2 { font-size: 16px; }
+  .admin-users-controls { align-items: stretch; flex-direction: column; }
+  .admin-users-pagination { justify-content: space-between; }
   .level-card { padding: 19px 16px; }
   .section-heading { align-items: flex-start; }
   .section-heading h2 { font-size: 16px; }

@@ -1,4 +1,7 @@
 const $ = (id) => document.getElementById(id);
+const USERS_PER_PAGE = 10;
+let userAccounts = [];
+let currentUserPage = 1;
 
 async function readJson(response) {
   const contentType = response.headers.get("content-type") || "";
@@ -45,7 +48,7 @@ function formatAccountValidity(user) {
   return `${duration} · hingga ${date}`;
 }
 
-function renderUserAccounts(users) {
+function renderUserAccounts(users, emptyMessage) {
   const body = $("admin-users-table-body");
   body.textContent = "";
   if (!users.length) {
@@ -53,7 +56,7 @@ function renderUserAccounts(users) {
     const cell = document.createElement("td");
     cell.colSpan = 5;
     cell.className = "admin-users-empty";
-    cell.textContent = "Belum ada akun pengguna.";
+    cell.textContent = emptyMessage;
     row.append(cell);
     body.append(row);
     return;
@@ -107,6 +110,30 @@ function renderUserAccounts(users) {
   }
 }
 
+function getFilteredUserAccounts() {
+  const query = $("admin-user-email-filter").value.trim().toLowerCase();
+  return userAccounts.filter((user) => user.email.toLowerCase().includes(query));
+}
+
+function renderFilteredUserAccounts() {
+  const query = $("admin-user-email-filter").value.trim();
+  const filteredUsers = getFilteredUserAccounts();
+  const pageCount = Math.ceil(filteredUsers.length / USERS_PER_PAGE);
+  currentUserPage = pageCount ? Math.min(currentUserPage, pageCount) : 1;
+  const startIndex = (currentUserPage - 1) * USERS_PER_PAGE;
+  const pageUsers = filteredUsers.slice(startIndex, startIndex + USERS_PER_PAGE);
+  const emptyMessage = query
+    ? "Tidak ada akun yang cocok dengan email tersebut."
+    : "Belum ada akun pengguna.";
+
+  renderUserAccounts(pageUsers, emptyMessage);
+  $("admin-users-page-info").textContent = filteredUsers.length
+    ? `Menampilkan ${startIndex + 1}–${startIndex + pageUsers.length} dari ${filteredUsers.length} akun`
+    : "Tidak ada akun";
+  $("admin-users-prev-page").disabled = currentUserPage <= 1;
+  $("admin-users-next-page").disabled = currentUserPage >= pageCount;
+}
+
 async function loadUserAccounts() {
   const message = $("admin-users-message");
   const body = $("admin-users-table-body");
@@ -124,8 +151,10 @@ async function loadUserAccounts() {
   try {
     const result = await sendAuthRequest({ action: "list-users" });
     if (!Array.isArray(result.users)) throw new Error("Format daftar akun dari server tidak valid.");
-    renderUserAccounts(result.users);
+    userAccounts = result.users;
+    renderFilteredUserAccounts();
   } catch (error) {
+    userAccounts = [];
     body.textContent = "";
     const errorRow = document.createElement("tr");
     const errorCell = document.createElement("td");
@@ -134,6 +163,9 @@ async function loadUserAccounts() {
     errorCell.textContent = "Daftar akun tidak dapat dimuat.";
     errorRow.append(errorCell);
     body.append(errorRow);
+    $("admin-users-page-info").textContent = "Data tidak tersedia";
+    $("admin-users-prev-page").disabled = true;
+    $("admin-users-next-page").disabled = true;
     message.textContent = error.message || "Daftar akun tidak dapat dimuat.";
   }
 }
@@ -242,6 +274,8 @@ async function handleCreateUser(event) {
     const duration = result.user.validity === "forever" ? "selamanya" : result.user.validity === "1-day" ? "1 hari" : "7 hari";
     message.textContent = `Akun ${result.user.email} berhasil dibuat dengan masa berlaku ${duration}. Berikan password awalnya dengan aman.`;
     message.classList.add("success");
+    $("admin-user-email-filter").value = "";
+    currentUserPage = 1;
     loadUserAccounts();
   } catch (error) {
     message.textContent = error.message || "Akun tidak dapat dibuat.";
@@ -282,6 +316,20 @@ function initializeAdminPage() {
     }
   });
   $("refresh-users-button").addEventListener("click", loadUserAccounts);
+  $("admin-user-email-filter").addEventListener("input", () => {
+    currentUserPage = 1;
+    renderFilteredUserAccounts();
+  });
+  $("admin-users-prev-page").addEventListener("click", () => {
+    if (currentUserPage <= 1) return;
+    currentUserPage -= 1;
+    renderFilteredUserAccounts();
+  });
+  $("admin-users-next-page").addEventListener("click", () => {
+    if (currentUserPage * USERS_PER_PAGE >= getFilteredUserAccounts().length) return;
+    currentUserPage += 1;
+    renderFilteredUserAccounts();
+  });
   restoreAdminSession();
 }
 
