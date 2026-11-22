@@ -353,6 +353,21 @@
               <button class="button button-outline upgrade-account-button" type="button">Lihat pilihan paket <span aria-hidden="true">→</span></button>
             </div>
           </section>
+          <section class="cat-history-card hidden" id="cat-history-card" aria-labelledby="cat-history-title">
+            <div class="section-heading compact">
+              <div><span class="section-kicker">PERKEMBANGAN SIMULASI</span><h2 id="cat-history-title">Riwayat simulasi CAT</h2></div>
+              <span class="pill">Skor maksimal 550</span>
+            </div>
+            <div id="cat-history-summary" class="cat-history-summary"></div>
+            <section class="cat-history-panel" aria-labelledby="cat-history-chart-title">
+              <div class="section-heading compact"><div><span class="section-kicker">TREN NILAI</span><h3 id="cat-history-chart-title">Simulasi terakhir</h3></div></div>
+              <div id="cat-history-chart"></div>
+            </section>
+            <section class="cat-history-panel" aria-labelledby="cat-history-breakdown-title">
+              <div class="section-heading compact"><div><span class="section-kicker">RINCIAN SKOR</span><h3 id="cat-history-breakdown-title">Hasil simulasi terbaru</h3></div></div>
+              <div id="cat-history-breakdown"></div>
+            </section>
+          </section>
           <div class="dashboard-grid">
             <div class="level-card">
               <div class="section-heading">
@@ -472,6 +487,11 @@
               <div class="section-heading compact"><div><span class="section-kicker">RINGKASAN PER MATERI</span><h2 id="analysis-chart-title">Aktivitas latihan & tryout</h2></div></div>
               <div class="analysis-legend"><span><i class="practice-legend"></i>Latihan</span><span><i class="tryout-legend"></i>Tryout</span></div>
               <div class="analysis-chart" id="analysis-chart"></div>
+            </section>
+            <section class="analysis-card analysis-category-card" aria-labelledby="analysis-category-title">
+              <div class="section-heading compact"><div><span class="section-kicker">AKURASI PER TOPIK</span><h2 id="analysis-category-title">Topik yang perlu diperkuat</h2></div></div>
+              <p class="muted analysis-category-note">Akurasi dihitung dari jawaban pada sesi tryout dan latihan yang tersimpan di perangkat ini. Progres membandingkan dua sesi terakhir pada topik yang sama.</p>
+              <div id="analysis-category-insights"></div>
             </section>
             <section class="history-card analysis-history-card">
               <div class="section-heading compact"><div><span class="section-kicker">SESI TERAKHIR</span><h2>Riwayat aktivitas</h2></div></div>

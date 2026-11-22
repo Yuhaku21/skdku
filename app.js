@@ -657,6 +657,7 @@ function showDashboard() {
   renderHomeSummary();
   renderHomeLeaderboardRank();
   renderHistory();
+  renderCatHistory();
   renderScoreProgress();
   showScreen("dashboard-view");
 }
@@ -766,6 +767,7 @@ function renderAnalysis() {
   `).join("");
   const tryouts = readStored(STORAGE.history, []);
   const practice = readStored(STORAGE.learningHistory, []);
+  renderCategoryAnalysis(tryouts, practice);
   const recentItems = [
     ...(Array.isArray(tryouts) ? tryouts.filter((item) => item.email === currentUser()).map((item) => ({ ...item, activity: "Tryout", subject: item.test })) : []),
     ...(Array.isArray(practice) ? practice.filter((item) => item.email === currentUser()).map((item) => ({ ...item, activity: "Latihan", subject: item.subject })) : [])
@@ -782,6 +784,111 @@ function renderAnalysis() {
       return `<div class="history-item"><span>${escapeHtml(item.activity)} · ${escapeHtml(item.subject)}${item.level ? ` · ${escapeHtml(item.level)}` : ""} · ${escapeHtml(date)}</span><strong>${scoreLabel}</strong></div>`;
     }).join("")
     : '<p class="empty-state">Selesaikan latihan atau tryout untuk mulai melihat progresmu.</p>';
+}
+
+function renderCategoryAnalysis(tryouts, practice) {
+  const subjectStats = Object.fromEntries(
+    Object.keys(PRACTICE_SUBJECTS).map((subject) => [subject, { topics: {}, answeredCount: 0, correctCount: 0 }])
+  );
+  const sessions = [
+    ...(Array.isArray(tryouts) ? tryouts : []),
+    ...(Array.isArray(practice) ? practice : [])
+  ].filter((item) => item && item.email === currentUser())
+    .sort((first, second) => {
+      const firstDate = Date.parse(first.completedAt || "");
+      const secondDate = Date.parse(second.completedAt || "");
+      return (Number.isFinite(secondDate) ? secondDate : 0) - (Number.isFinite(firstDate) ? firstDate : 0);
+    });
+
+  sessions.forEach((session) => {
+    const categoryStats = session.categoryStats;
+    if (!categoryStats || typeof categoryStats !== "object" || Array.isArray(categoryStats)) return;
+    Object.entries(categoryStats).forEach(([subject, topics]) => {
+      if (!Object.prototype.hasOwnProperty.call(subjectStats, subject)
+        || !topics || typeof topics !== "object" || Array.isArray(topics)) return;
+      Object.entries(topics).forEach(([category, result]) => {
+        if (typeof category !== "string" || !category.trim()
+          || !result || typeof result !== "object" || Array.isArray(result)) return;
+        const { questionCount, answeredCount, correctCount } = result;
+        if (!Number.isSafeInteger(questionCount) || questionCount < 1
+          || !Number.isSafeInteger(answeredCount) || answeredCount < 1 || answeredCount > questionCount
+          || !Number.isSafeInteger(correctCount) || correctCount < 0 || correctCount > answeredCount) return;
+
+        const subjectData = subjectStats[subject];
+        const topic = subjectData.topics[category] || {
+          answeredCount: 0,
+          correctCount: 0,
+          latestAccuracy: null,
+          previousAccuracy: null
+        };
+        const sessionAccuracy = correctCount / answeredCount;
+        if (topic.latestAccuracy === null) topic.latestAccuracy = sessionAccuracy;
+        else if (topic.previousAccuracy === null) topic.previousAccuracy = sessionAccuracy;
+        topic.answeredCount += answeredCount;
+        topic.correctCount += correctCount;
+        subjectData.answeredCount += answeredCount;
+        subjectData.correctCount += correctCount;
+        subjectData.topics[category] = topic;
+      });
+    });
+  });
+
+  const topics = Object.entries(subjectStats).flatMap(([subject, data]) =>
+    Object.entries(data.topics).map(([category, result]) => ({
+      subject,
+      category,
+      ...result,
+      accuracy: result.answeredCount ? result.correctCount / result.answeredCount : 0
+    }))
+  );
+  if (!topics.length) {
+    $("analysis-category-insights").innerHTML =
+      '<p class="empty-state">Rincian kategori akan muncul setelah kamu menyelesaikan tryout atau latihan berikutnya.</p>';
+    return;
+  }
+
+  const recommendedTopics = topics.filter((topic) => topic.answeredCount >= 3);
+  const weakest = [...(recommendedTopics.length ? recommendedTopics : topics)]
+    .sort((first, second) => first.accuracy - second.accuracy || second.answeredCount - first.answeredCount)[0];
+  const subjectCards = Object.entries(subjectStats).map(([subject, data]) => {
+    const subjectTopics = Object.entries(data.topics)
+      .map(([category, result]) => ({
+        category,
+        ...result,
+        accuracy: result.answeredCount ? result.correctCount / result.answeredCount : 0
+      }))
+      .sort((first, second) => first.accuracy - second.accuracy || second.answeredCount - first.answeredCount);
+    if (!subjectTopics.length) return "";
+    const overallAccuracy = Math.round((data.correctCount / data.answeredCount) * 100);
+    return `
+      <section class="analysis-topic-subject" aria-label="Analisis topik ${subject}">
+        <header><strong>${subject}</strong><span>Akurasi keseluruhan ${overallAccuracy}%</span></header>
+        <div class="analysis-topic-list">${subjectTopics.map((topic) => {
+          const accuracy = Math.round(topic.accuracy * 100);
+          const trend = topic.previousAccuracy === null
+            ? "Satu sesi tercatat"
+            : `${topic.latestAccuracy > topic.previousAccuracy ? "Naik" : topic.latestAccuracy < topic.previousAccuracy ? "Turun" : "Tetap"} ${Math.abs(Math.round((topic.latestAccuracy - topic.previousAccuracy) * 100))} poin persentase`;
+          const answerLabel = subject === "TKP" ? "jawaban bernilai penuh" : "jawaban benar";
+          return `
+            <article class="analysis-topic-item">
+              <div class="analysis-topic-heading"><strong>${escapeHtml(topic.category)}</strong><strong>${accuracy}%</strong></div>
+              <div class="analysis-topic-track" role="img" aria-label="Akurasi ${accuracy} persen"><span style="width:${accuracy}%"></span></div>
+              <small>${topic.correctCount}/${topic.answeredCount} ${answerLabel} · ${escapeHtml(trend)}</small>
+            </article>
+          `;
+        }).join("")}</div>
+      </section>
+    `;
+  }).join("");
+
+  const recommendationAccuracy = Math.round(weakest.accuracy * 100);
+  $("analysis-category-insights").innerHTML = `
+    <aside class="analysis-recommendation">
+      <div><span class="section-kicker">REKOMENDASI LATIHAN</span><strong>${weakest.subject} · ${escapeHtml(weakest.category)}</strong><p>Akurasi ${recommendationAccuracy}% dari ${weakest.answeredCount} jawaban. Ulangi materi terkait untuk memperkuat topik ini.</p></div>
+      <button class="button button-outline" type="button" data-analysis-practice="${weakest.subject}">Buka latihan ${weakest.subject} <span aria-hidden="true">→</span></button>
+    </aside>
+    <div class="analysis-topic-grid">${subjectCards}</div>
+  `;
 }
 
 function getCatScoreMaximum(questionCount) {
@@ -1125,6 +1232,28 @@ function startTiuLearningPractice() {
   renderLearning();
 }
 
+function buildCategoryStats(questions, selectedAnswers, defaultSubject) {
+  return questions.reduce((stats, question, index) => {
+    const subject = question.test || defaultSubject;
+    if (!Object.prototype.hasOwnProperty.call(PRACTICE_SUBJECTS, subject)
+      || typeof question.category !== "string" || !question.category.trim()) return stats;
+    const category = question.category.trim();
+    const subjectStats = stats[subject] || (stats[subject] = {});
+    const categoryStats = subjectStats[category] || (subjectStats[category] = {
+      questionCount: 0,
+      answeredCount: 0,
+      correctCount: 0
+    });
+    const answer = selectedAnswers[index];
+    categoryStats.questionCount += 1;
+    if (answer !== null) {
+      categoryStats.answeredCount += 1;
+      if (answer === question.answer) categoryStats.correctCount += 1;
+    }
+    return stats;
+  }, {});
+}
+
 function finishTiuLearningPractice() {
   const correct = activeLearningAnswers.reduce((total, answer, index) => total + (answer === activeLearningQuestions[index].answer ? 1 : 0), 0);
   const score = Math.round((correct / activeLearningQuestions.length) * 100);
@@ -1152,6 +1281,7 @@ function finishTiuLearningPractice() {
     correct,
     questionCount: activeLearningQuestions.length,
     answeredCount,
+    categoryStats: buildCategoryStats(activeLearningQuestions, activeLearningAnswers, activeLearningLevel.subject),
     completedAt
   });
   writeStored(STORAGE.learningHistory, learningHistory.slice(0, 200));
@@ -1378,6 +1508,76 @@ function renderHistory() {
     const scoreLabel = item.test === "CAT" ? `${item.score}/${getCatScoreMaximum(item.questionCount)}` : item.score;
     return `<div class="history-item"><span>${escapeHtml(item.test || "TIU")} · ${escapeHtml(item.date)} · ${resultSummary}</span><strong>${scoreLabel}</strong></div>`;
   }).join("");
+}
+
+function renderCatHistory() {
+  const card = $("cat-history-card");
+  const hasCatAccess = ["7-days", "forever"].includes(currentValidity());
+  card.classList.toggle("hidden", !hasCatAccess);
+  if (!hasCatAccess) return;
+
+  const history = readStored(STORAGE.history, []);
+  const catRuns = (Array.isArray(history) ? history : [])
+    .filter((item) => item && item.email === currentUser() && item.test === "CAT"
+      && Number.isSafeInteger(item.score) && item.score >= 0
+      && item.score <= getCatScoreMaximum(item.questionCount))
+    .map((item) => ({ ...item, maximum: getCatScoreMaximum(item.questionCount) }));
+  if (!catRuns.length) {
+    $("cat-history-summary").innerHTML = '<p class="empty-state">Belum ada simulasi CAT. Selesaikan simulasi untuk mulai melihat perkembangan skor.</p>';
+    $("cat-history-chart").innerHTML = "";
+    $("cat-history-breakdown").innerHTML = "";
+    return;
+  }
+
+  const latest = catRuns[0];
+  const comparableRuns = catRuns.filter((item) => item.maximum === latest.maximum);
+  const previous = comparableRuns[1];
+  const best = comparableRuns.reduce((highest, item) => item.score > highest.score ? item : highest, comparableRuns[0]);
+  const delta = previous ? latest.score - previous.score : null;
+  const formatScoreChange = (change) => change === null
+    ? "Belum ada pembanding"
+    : change > 0 ? `Naik ${change} poin` : change < 0 ? `Turun ${Math.abs(change)} poin` : "Tetap";
+  const summaryItems = [
+    { label: "Skor terbaru", value: `${latest.score}/${latest.maximum}`, note: latest.date || "Simulasi terakhir" },
+    { label: "Skor terbaik", value: `${best.score}/${best.maximum}`, note: best.date || "Format yang sama" },
+    { label: "Perubahan", value: formatScoreChange(delta), note: previous ? "Dibandingkan simulasi sebelumnya" : "Selesaikan simulasi berikutnya untuk membandingkan" }
+  ];
+  $("cat-history-summary").innerHTML = summaryItems.map((item) => `
+    <article class="cat-history-stat"><span>${item.label}</span><strong>${item.value}</strong><small>${escapeHtml(item.note)}</small></article>
+  `).join("");
+
+  const chartRuns = comparableRuns.slice(0, 6).reverse();
+  $("cat-history-chart").innerHTML = `
+    <ol class="cat-history-chart-list">
+      ${chartRuns.map((item) => {
+        const date = item.date || "Tanggal tidak tersedia";
+        const height = Math.max(2, Math.round((item.score / item.maximum) * 100));
+        return `<li aria-label="${escapeHtml(date)}: ${item.score} dari ${item.maximum} poin"><strong>${item.score}</strong><div class="cat-history-bar-track"><span style="height:${height}%"></span></div><small>${escapeHtml(date)}</small></li>`;
+      }).join("")}
+    </ol>
+    <p class="muted cat-history-note">Menampilkan hingga enam simulasi terakhir dengan skor maksimal yang sama.</p>
+  `;
+
+  const validScores = (item) => item && item.scores && CAT_TESTS.every((test) =>
+    Number.isSafeInteger(item.scores[test]) && item.scores[test] >= 0 && item.scores[test] <= CAT_SCORE_MAXIMUMS[test]);
+  if (!validScores(latest)) {
+    $("cat-history-breakdown").innerHTML = '<p class="empty-state">Rincian subtes belum tersedia untuk simulasi ini.</p>';
+    return;
+  }
+  $("cat-history-breakdown").innerHTML = `
+    <div class="cat-history-breakdown-grid">
+      ${CAT_TESTS.map((test) => {
+        const subtestDelta = validScores(previous) ? latest.scores[test] - previous.scores[test] : null;
+        return `
+          <article class="cat-history-subtest">
+            <span>${test}</span>
+            <strong>${latest.scores[test]} <small>/ ${CAT_SCORE_MAXIMUMS[test]}</small></strong>
+            <small>${escapeHtml(formatScoreChange(subtestDelta))}${previous ? " · dibanding simulasi sebelumnya" : ""}</small>
+          </article>
+        `;
+      }).join("")}
+    </div>
+  `;
 }
 
 async function renderScoreProgress() {
@@ -2019,6 +2219,7 @@ function finishQuiz(expired = false) {
   const score = isCatSimulation
     ? Object.values(catScores).reduce((total, sectionScore) => total + sectionScore, 0)
     : Math.round((correct / sessionQuestions.length) * 100);
+  const categoryStats = buildCategoryStats(sessionQuestions, answers, isCatSimulation ? null : selectedTest);
   const catPassed = isCatSimulation
     && CAT_TESTS.every((test) => catScores[test] >= CAT_CONFIG.passingScores[test]);
   if (isCatSimulation) {
@@ -2068,6 +2269,7 @@ function finishQuiz(expired = false) {
     score,
     questionCount: sessionQuestions.length,
     answeredCount,
+    categoryStats,
     ...(isCatSimulation ? { scores: catScores } : {}),
     completedAt,
     date: new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date())
@@ -2279,6 +2481,12 @@ function initialize() {
     if (actions[button.dataset.navScreen]) actions[button.dataset.navScreen]();
   });
   $("analysis-unlock-button").addEventListener("click", () => showPackageDetails("victory"));
+  $("analysis-content").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-analysis-practice]");
+    if (!button) return;
+    showPractice();
+    openPracticeSubject(button.dataset.analysisPractice);
+  });
   $("home-rank-action").addEventListener("click", () => {
     if (["7-days", "forever"].includes(currentValidity())) {
       showDashboard();
