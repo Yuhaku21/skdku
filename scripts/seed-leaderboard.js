@@ -4,13 +4,15 @@ const USERS_KEY = "ruangskd:users";
 const LEADERBOARD_KEY = "ruangskd:leaderboard:cat:v2";
 const LEADERBOARD_NAMES_KEY = "ruangskd:leaderboard:names";
 const LEADERBOARD_SCORES_KEY = "ruangskd:leaderboard:cat-scores:v2";
+const SCORE_LIMITS = { TIU: 175, TKP: 225, TWK: 150 };
+const TOTAL_SCORE_RANGE = { minimum: 300, maximum: 465 };
 
 const USERS = [
-  { email: "aditya.pratama@example.com", name: "Aditya Pratama", TIU: 92, TKP: 185, TWK: 88 },
-  { email: "siti.nurhaliza@example.com", name: "Siti Nurhaliza", TIU: 88, TKP: 190, TWK: 82 },
-  { email: "budi.santoso@example.com", name: "Budi Santoso", TIU: 90, TKP: 178, TWK: 85 },
-  { email: "dewi.anggraini@example.com", name: "Dewi Anggraini", TIU: 86, TKP: 180, TWK: 84 },
-  { email: "rizky.ramadhan@example.com", name: "Rizky Ramadhan", TIU: 84, TKP: 176, TWK: 83 }
+  { email: "aditya.pratama@example.com", name: "Aditya Pratama", TIU: 155, TKP: 180, TWK: 130 },
+  { email: "siti.nurhaliza@example.com", name: "Siti Nurhaliza", TIU: 140, TKP: 160, TWK: 120 },
+  { email: "budi.santoso@example.com", name: "Budi Santoso", TIU: 130, TKP: 140, TWK: 110 },
+  { email: "dewi.anggraini@example.com", name: "Dewi Anggraini", TIU: 120, TKP: 120, TWK: 100 },
+  { email: "rizky.ramadhan@example.com", name: "Rizky Ramadhan", TIU: 110, TKP: 100, TWK: 90 }
 ];
 
 const SEED_SCRIPT = [
@@ -43,7 +45,10 @@ const SEED_SCRIPT = [
 async function seedLeaderboard() {
   const args = USERS.flatMap((user) => {
     const scores = [user.TIU, user.TKP, user.TWK];
-    if (scores.some((score) => !Number.isSafeInteger(score) || score < 0)) {
+    const total = scores.reduce((sum, score) => sum + score, 0);
+    if (Object.entries(SCORE_LIMITS).some(([test, maximum]) =>
+      !Number.isSafeInteger(user[test]) || user[test] < 0 || user[test] > maximum)
+      || total < TOTAL_SCORE_RANGE.minimum || total > TOTAL_SCORE_RANGE.maximum) {
       throw new Error(`Skor contoh untuk ${user.name} tidak valid.`);
     }
     return [
@@ -69,9 +74,12 @@ async function seedLeaderboard() {
   }
 
   console.log("Leaderboard dummy berhasil diisi:");
-  USERS.forEach((user) => {
-    console.log(`- ${user.name}: ${user.TIU + user.TKP + user.TWK} poin`);
-  });
+  [...USERS]
+    .sort((first, second) =>
+      second.TIU + second.TKP + second.TWK - (first.TIU + first.TKP + first.TWK))
+    .forEach((user, index) => {
+      console.log(`${index + 1}. ${user.name}: ${user.TIU + user.TKP + user.TWK} poin`);
+    });
 }
 
 seedLeaderboard().catch((error) => {
